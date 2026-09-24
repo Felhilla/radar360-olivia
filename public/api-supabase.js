@@ -123,7 +123,9 @@
         if(await store.count('matriz') >= 500) return responder({ error: 'too_many_rows' }, 429);
         var now = new Date().toISOString();
         var fila = { id: idCorto('fila-'), cliente: body.cliente.trim(), necesidadCritica: body.necesidadCritica.trim(),
-          respuestaOlivia: (body.respuestaOlivia || '').trim(), trigger: body.trigger === true, createdAt: now, updatedAt: now };
+          respuestaOlivia: (body.respuestaOlivia || '').trim(), trigger: body.trigger === true,
+          puntoContacto: texto(body.puntoContacto, 1000), rutaEntrada: texto(body.rutaEntrada, 1000), sector: texto(body.sector, 80),
+          createdAt: now, updatedAt: now };
         await store.set('matriz', fila.id, fila);
         return responder(fila, 201);
       }

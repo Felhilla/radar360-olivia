@@ -771,8 +771,14 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
         <span class="hint" style="font-weight:400;">Sugiere los actores validados del Radar 360°; también puedes escribir uno nuevo.</span>
       </label>
       <datalist id="radarActorsList"></datalist>
+      <label class="field full">Punto de contacto
+        <textarea id="m-contacto" placeholder="Nombre y cargo del interlocutor, si se conoce"></textarea>
+      </label>
       <label class="field full">Necesidad crítica
         <textarea id="m-necesidad" placeholder="¿Qué tensión, trigger o necesidad justifica el acercamiento ahora?"></textarea>
+      </label>
+      <label class="field full">Ruta de entrada
+        <textarea id="m-ruta" placeholder="Comprador, patrocinador, vía de entrada y gremio"></textarea>
       </label>
       <label class="field full">Respuesta Olivia
         <textarea id="m-respuesta" placeholder="¿Qué servicio puede resolverla y qué experiencia demostrable tenemos?"></textarea>
@@ -792,7 +798,7 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
     <table class="actors">
       <thead>
         <tr>
-          <th>Cliente / mercado</th><th>Necesidad crítica</th><th>Respuesta Olivia</th><th>Trigger &rarr; H5</th><th>Actualizado</th><th></th>
+          <th>Cliente / mercado</th><th>Punto de contacto</th><th>Necesidad crítica</th><th>Ruta de entrada</th><th>Respuesta Olivia</th><th>Trigger &rarr; H5</th><th>Actualizado</th><th></th>
         </tr>
       </thead>
       <tbody id="matrizTbody"></tbody>
@@ -803,7 +809,7 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
     <summary>Conexión con Herramienta 5 &middot; esquema de datos</summary>
     <div class="tech-body">
       <p>Este sitio guarda las filas en Netlify Blobs a través de la función <code>/api/matriz</code> (GET lista, POST agrega, PATCH edita, DELETE elimina). Cualquier persona con el link puede leer y escribir, sin invitación ni cuenta.</p>
-      <div class="schema">{ id, cliente, necesidadCritica, respuestaOlivia, trigger: true|false, createdAt, updatedAt }</div>
+      <div class="schema">{ id, cliente, sector, puntoContacto, necesidadCritica, rutaEntrada, respuestaOlivia, trigger: true|false, origen, createdAt, updatedAt }</div>
       <p>La Herramienta 5 debe leer las filas con <code>trigger === true</code> — esos son los triggers y la oferta ya identificados que alimentan el Canvas. Puede leerlas directamente con <code>GET /api/matriz</code> sobre este mismo sitio.</p>
     </div>
   </details>
@@ -2340,7 +2346,8 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     if(!necesidad){ document.getElementById("matrizAddHint").textContent = "Escribe la necesidad crítica."; return; }
     var respuesta = document.getElementById("m-respuesta").value.trim();
     var trigger = document.getElementById("m-trigger").checked;
-    var payload = { cliente:cliente, necesidadCritica:necesidad, respuestaOlivia:respuesta, trigger:trigger };
+    var payload = { cliente:cliente, necesidadCritica:necesidad, respuestaOlivia:respuesta, trigger:trigger,
+      puntoContacto:document.getElementById("m-contacto").value.trim(), rutaEntrada:document.getElementById("m-ruta").value.trim() };
     var saveBtn = document.getElementById("matrizSaveAdd");
     saveBtn.disabled = true;
     document.getElementById("matrizAddHint").textContent = "Guardando…";
@@ -2354,6 +2361,8 @@ síntesis (por horizonte): { texto, updatedAt }</div>
         document.getElementById("m-cliente").value = "";
         document.getElementById("m-necesidad").value = "";
         document.getElementById("m-respuesta").value = "";
+        document.getElementById("m-contacto").value = "";
+        document.getElementById("m-ruta").value = "";
         document.getElementById("m-trigger").checked = false;
         document.getElementById("matrizAddHint").textContent = "";
         document.getElementById("matrizAddPanel").classList.remove("open");
@@ -2415,7 +2424,9 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     var patch = {
       cliente: tr.querySelector(".me-cliente").value.trim(),
       necesidadCritica: tr.querySelector(".me-necesidad").value.trim(),
-      respuestaOlivia: tr.querySelector(".me-respuesta").value.trim()
+      respuestaOlivia: tr.querySelector(".me-respuesta").value.trim(),
+      puntoContacto: tr.querySelector(".me-contacto").value.trim(),
+      rutaEntrada: tr.querySelector(".me-ruta").value.trim()
     };
     if(!patch.cliente || !patch.necesidadCritica) return;
     matrizEditingId = null;
@@ -2429,7 +2440,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 
     if(matrizFilters.q){
       list = list.filter(function(r){
-        var hay = (r.cliente+" "+(r.necesidadCritica||"")+" "+(r.respuestaOlivia||"")).toLowerCase();
+        var hay = (r.cliente+" "+(r.sector||"")+" "+(r.puntoContacto||"")+" "+(r.necesidadCritica||"")+" "+(r.rutaEntrada||"")+" "+(r.respuestaOlivia||"")).toLowerCase();
         return hay.indexOf(matrizFilters.q) !== -1;
       });
     }
@@ -2440,7 +2451,9 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 
       if(matrizEditingId === r.id){
         tr.appendChild(td('<input type="text" class="me-cliente" list="radarActorsList" autocomplete="off" value="'+esc(r.cliente)+'">'));
+        tr.appendChild(td('<textarea class="me-contacto">'+esc(r.puntoContacto||"")+'</textarea>'));
         tr.appendChild(td('<textarea class="me-necesidad">'+esc(r.necesidadCritica||"")+'</textarea>'));
+        tr.appendChild(td('<textarea class="me-ruta">'+esc(r.rutaEntrada||"")+'</textarea>'));
         tr.appendChild(td('<textarea class="me-respuesta">'+esc(r.respuestaOlivia||"")+'</textarea>'));
         tr.appendChild(matrizTriggerCell(r));
         tr.appendChild(td('<span class="mono" style="font-size:.76rem;">'+fmtTime(r.updatedAt)+'</span>'));
@@ -2449,9 +2462,11 @@ síntesis (por horizonte): { texto, updatedAt }</div>
         tdA.appendChild(btn("Cancelar", function(){ matrizEditingId=null; renderMatrizTable(); }, "ghost"));
         tr.appendChild(tdA);
       } else {
-        tr.appendChild(td('<strong>'+esc(r.cliente)+'</strong>'));
+        tr.appendChild(td('<strong>'+esc(r.cliente)+'</strong>'+(r.sector ? '<div class="hint" style="margin-top:2px;">'+esc(r.sector)+'</div>' : '')));
+        tr.appendChild(td('<span class="jt">'+esc(r.puntoContacto||"")+'</span>'));
         tr.appendChild(td('<span class="jt">'+esc(r.necesidadCritica||"")+'</span>'));
-        tr.appendChild(td('<span class="jt">'+esc(r.respuestaOlivia||"")+'</span>'));
+        tr.appendChild(td('<span class="jt">'+esc(r.rutaEntrada||"")+'</span>'));
+        tr.appendChild(td(r.respuestaOlivia ? '<span class="jt">'+esc(r.respuestaOlivia)+'</span>' : '<span class="ad-empty" style="font-size:.8rem;">Por construir en el taller</span>'));
         tr.appendChild(matrizTriggerCell(r));
         tr.appendChild(td('<span class="mono" style="font-size:.76rem; color:var(--ink-soft);">'+fmtTime(r.updatedAt)+'</span>'));
         var tdA2 = document.createElement("td"); tdA2.className="row-actions";
@@ -2464,7 +2479,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 
     if(!list.length){
       var tr0 = document.createElement("tr");
-      var td0 = document.createElement("td"); td0.colSpan = 6; td0.style.color="var(--ink-soft)"; td0.style.padding="18px 12px";
+      var td0 = document.createElement("td"); td0.colSpan = 8; td0.style.color="var(--ink-soft)"; td0.style.padding="18px 12px";
       td0.textContent = "Sin filas todavía. Agrega la primera con \"+ Agregar fila\".";
       tr0.appendChild(td0); tbody.appendChild(tr0);
     }
