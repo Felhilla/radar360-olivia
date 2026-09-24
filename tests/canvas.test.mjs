@@ -87,10 +87,17 @@ test('GET pagina más de 1000 canvas',async()=>{
  const {req,bucket}=entorno();for(let i=0;i<1002;i++)bucket('canvas').set(String(i),{id:String(i)});
  assert.equal((await req()).data.length,1002);
 });
-test('Actividades previas y Radar: igualdad exacta con respaldo al retirar solo las adiciones H5',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260924_pre-actividad5.html',import.meta.url))},()=>{
- const original=read('../../Radar360-web-backups/index_20260924_pre-actividad5.html');
- const sinH5=html.replace(/\/\* ACTIVIDAD 5: INICIO CSS \*\/[\s\S]*?\/\* ACTIVIDAD 5: FIN CSS \*\/\n/,'').replace(/<!-- ACTIVIDAD 5: INICIO HTML -->[\s\S]*?<!-- ACTIVIDAD 5: FIN HTML -->\n/,'').replace(/  \/\/ ACTIVIDAD 5: INICIO JS[\s\S]*?  \/\/ ACTIVIDAD 5: FIN JS\n\n/,'').replace('      <button data-view="canvas">De cuenta priorizada a oportunidad comercial</button>\n','');
- assert.equal(sinH5,original);
+test('Las cinco herramientas conservan HTML y JS respecto al respaldo previo a landing',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260924_pre-landing.html',import.meta.url))},()=>{
+ const original=read('../../Radar360-web-backups/index_20260924_pre-landing.html');
+ // La navegación cambia; comparamos las vistas y los bloques de lógica completos.
+ for(const id of ['ideas','radar','matriz','priorizacion','canvas']){
+  const section=source=>source.match(new RegExp('<section class="view(?: active)?" id="view-'+id+'">[\\s\\S]*?</section>'))[0].replace('<section class="view active"','<section class="view"');
+  assert.equal(section(html),section(original));
+ }
+ const logic=source=>source.slice(source.indexOf('<script>'),source.indexOf('  // ---------------- wiring ----------------'))
+  .replace(/document\.querySelector\('nav.views \[data-view="(priorizacion|canvas)"\]'\)\.addEventListener\('click'/g, (_,id)=>"$('view-"+id+"').addEventListener('vista:activar'")
+  .replace('// El manejador de navegación existente activa la vista durante este mismo evento.','// La navegación central emite el evento después de activar la vista.');
+ assert.equal(logic(html),logic(original));
 });
 test('Vista H5 con DOM mínimo: carga, estado vacío, edición manual, guardado y borrador durante sondeo',async()=>{
  const {context,bucket}=entorno();bucket('matriz').get('m1').trigger=false;
@@ -104,7 +111,7 @@ test('Vista H5 con DOM mínimo: carga, estado vacío, edición manual, guardado 
  context.getLogo=()=>'';context.openActorDialog=()=>{};const toasts=[];context.showToast=m=>toasts.push(m);
  const code=html.split('  // ACTIVIDAD 5: INICIO JS')[1].split('  // ACTIVIDAD 5: FIN JS')[0];
  vm.runInContext(code,context);
- await nav.handlers.click();await new Promise(r=>setImmediate(r));
+ await element('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));
  assert.match(element('p5Tarjetas').innerHTML,/Trigger → H5/);assert.match(element('p5AliadosAviso').textContent,/no hay aliados/);
  bucket('matriz').get('m1').trigger=true;await element('p5Reintentar').onclick();
  assert.match(element('p5Tarjetas').innerHTML,/Cuenta Uno/);assert.match(element('p5Tarjetas').innerHTML,/Oferta de H3/);

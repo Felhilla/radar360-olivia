@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Radar 360</title>
+<title>Ruta Colombia - Olivia</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
@@ -148,13 +148,43 @@
   .brand .sub{ color:var(--ink-soft); font-size:.86rem; margin-top:2px; }
   .top-right{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
 
-  nav.views{ display:flex; gap:2px; background:var(--panel-2); padding:3px; border-radius:10px; border:1px solid var(--line); }
-  nav.views button{
-    font-family:inherit; font-size:.86rem; font-weight:600; padding:8px 16px; border-radius:8px; border:none;
-    background:transparent; color:var(--ink-soft); cursor:pointer;
+  /* LANDING: INICIO CSS */
+  .ruta-nav{position:sticky;top:0;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:24px;box-shadow:var(--shadow);min-width:0;}
+  .ruta-enlaces{display:grid;grid-template-columns:.6fr repeat(5,minmax(0,1fr));gap:6px;}
+  .ruta-enlaces a{padding:10px;border-radius:8px;text-decoration:none;font-size:.88rem;color:var(--ink-soft);overflow-wrap:anywhere;}
+  .ruta-enlaces a[aria-current="page"]{background:var(--accent-soft);color:var(--accent-ink);font-weight:700;}
+  .ruta-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;}
+  .ruta-actions{display:flex;gap:8px;}
+  .ruta-nav button,.ruta-nav select{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px;cursor:pointer;}
+  .ruta-nav button:disabled{opacity:.45;cursor:default;}
+  .ruta-mobile{display:none;min-width:0;}
+  .ruta-nav :focus-visible,#view-inicio a:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  #view-inicio{min-width:0;overflow-wrap:anywhere;font-size:1.08rem;line-height:1.6;}
+  .landing-note{color:var(--ink-soft);font-size:.85rem;}
+  .landing-hero{padding:clamp(24px,5vw,64px);background:var(--accent-soft);border-radius:16px;border-top:4px solid var(--accent);}
+  .landing-hero h2{font-size:clamp(2.4rem,5vw,4.4rem);line-height:1.08;color:var(--accent-ink);}
+  .landing-title{font-size:clamp(1.5rem,3vw,2.3rem);line-height:1.25;max-width:850px;}
+  .landing-lema{font-size:1.35rem;font-weight:600;}
+  .landing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:24px;}
+  .landing-hero .landing-grid{border-top:1px solid var(--accent);padding-top:24px;}
+  .landing-block{margin:56px 0;}
+  .landing-block>h2{font-size:clamp(1.8rem,3vw,2.5rem);}
+  .landing-card{padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--panel);min-width:0;}
+  .landing-card h3{font-size:1.35rem;line-height:1.3;}
+  .landing-card h4{font-size:.9rem;margin:20px 0 0;}
+  .landing-question{color:var(--accent-ink);font-weight:600;}
+  .landing-photo{display:block;width:100%;height:280px;object-fit:cover;object-position:center top;margin-bottom:24px;}
+  @media(max-width:760px){
+    .ruta-enlaces{display:none;}
+    .ruta-mobile{display:block;}
+    .ruta-mobile select{display:block;width:100%;max-width:100%;min-width:0;margin-top:4px;}
+    .ruta-controls{font-size:.9rem;}
+    .ruta-actions{width:100%;justify-content:space-between;}
+    .landing-grid{grid-template-columns:1fr;}
+    .landing-block{margin:36px 0;}
+    .brand{min-width:0;}.brand>div:last-child{min-width:0;}.brand h1{overflow-wrap:anywhere;}
   }
-  nav.views button.active{ background:var(--panel); color:var(--ink); box-shadow:var(--shadow); }
-  nav.views button:hover:not(.active){ color:var(--ink); }
+  /* LANDING: FIN CSS */
 
   nav.subviews{ display:flex; gap:2px; background:var(--panel-2); padding:3px; border-radius:9px; border:1px solid var(--line); width:fit-content; margin-bottom:18px; }
   nav.subviews button{
@@ -497,7 +527,6 @@
   @media(max-width:600px){ #view-matriz .gremios-resumen{ grid-template-columns:1fr; } #view-matriz .gremios-eje{ font-size:.85rem; } }
 
 /* ACTIVIDAD 4: INICIO CSS */
-nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw - 32px); }
 #view-priorizacion{ min-width:0; }
 #view-priorizacion *, #view-priorizacion *::before{ box-sizing:border-box; }
 #view-priorizacion .p4-aviso{ padding:12px; border:2px solid var(--cf-media); border-radius:8px; background:var(--panel-2); }
@@ -560,7 +589,6 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
 }
 /* ACTIVIDAD 4: FIN CSS */
 /* ACTIVIDAD 5: INICIO CSS */
-nav.views button[data-view="canvas"]{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;}
 #view-canvas{min-width:0;overflow-wrap:anywhere;}
 #view-canvas *, #view-canvas *::before{box-sizing:border-box;}
 #view-canvas nav.subviews{flex-wrap:wrap;max-width:100%;}
@@ -587,21 +615,37 @@ nav.views button[data-view="canvas"]{min-width:0;max-width:100%;white-space:norm
   <div class="brand">
     <div class="mark"><img src="logos/olivia.jpeg" alt="Olivia"></div>
     <div>
-      <h1>Radar 360</h1>
-      <div class="sub">Universo de actores &middot; Olivia Colombia &middot; Taller estratégico 6 de octubre de 2026</div>
+      <h1>Ruta Colombia - Olivia</h1>
+      <div class="sub">Taller estratégico &middot; 6 de octubre de 2026</div>
     </div>
   </div>
   <div class="top-right">
     <span class="live-dot" id="liveDot"><span class="d"></span> <span id="liveLabel">conectando…</span></span>
-    <nav class="views">
-      <button data-view="ideas" class="active">Alinear el juego</button>
-      <button data-view="radar">Radar 360°</button>
-      <button data-view="matriz">Identificación de oportunidades directas</button>
-      <button data-view="priorizacion">Priorizar actores y mercados</button>
-      <button data-view="canvas">De cuenta priorizada a oportunidad comercial</button>
-    </nav>
   </div>
 </header>
+
+<!-- LANDING: INICIO HTML -->
+<nav class="ruta-nav" aria-label="Ruta del taller">
+  <div id="rutaEnlaces" class="ruta-enlaces"></div>
+  <label class="ruta-mobile" for="rutaSelector">Ir a una actividad
+    <select id="rutaSelector" disabled><option>Inicio</option></select>
+  </label>
+  <div class="ruta-controls">
+    <strong id="rutaEstado" role="status" aria-live="polite">Inicio · Ruta Colombia</strong>
+    <div class="ruta-actions">
+      <button type="button" id="rutaAnterior" disabled>← Anterior</button>
+      <button type="button" id="rutaSiguiente" disabled>Siguiente →</button>
+    </div>
+  </div>
+</nav>
+<section class="view active" id="view-inicio" aria-label="Inicio">
+  <p id="landingNota" class="landing-note" hidden></p>
+  <p id="landingEstado" role="status">Cargando la presentación…</p>
+  <button id="landingReintentar" type="button" class="btn secondary" hidden>Reintentar</button>
+  <div id="landingContenido"></div>
+</section>
+<!-- LANDING: FIN HTML -->
+
 
 <div class="conn-banner" id="connBanner" hidden></div>
 
@@ -908,7 +952,7 @@ nav.views button[data-view="canvas"]{min-width:0;max-width:100%;white-space:norm
   </div>
 </section>
 
-<section class="view active" id="view-ideas">
+<section class="view" id="view-ideas">
   <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
     <strong>Actividad 1 &middot; Alinear el juego (8:00–8:15): </strong>
     "¿Cuál es el objetivo que busca Olivia en 2026, 2028, 2030 en materia de acceso a mercado y consolidación en Colombia?" Se llena una ficha por horizonte, empezando por el corto plazo.
@@ -1063,7 +1107,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
   </details>
 </section>
 
-<footer class="credit">Radar 360 &middot; GH Studio para Olivia Colombia &middot; datos del informe "Colombia como mercado para Olivia" (14 de septiembre de 2026)</footer>
+<footer class="credit">Ruta Colombia - Olivia &middot; GH Studio para Olivia Colombia &middot; datos del informe "Colombia como mercado para Olivia" (14 de septiembre de 2026)</footer>
 <div class="toast" id="toast" hidden></div>
 <dialog class="actor-dialog" id="actorDialog" aria-labelledby="adTitle"></dialog>
 <dialog class="actor-dialog" id="sectorDialog" aria-labelledby="sdTitle"></dialog>
@@ -2897,8 +2941,8 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     ['p4SVG','p4Cuadrantes'].forEach(id=>['click','focusin','mouseover'].forEach(tipo=>$(id).addEventListener(tipo,e=>{const p=e.target.closest('[data-punto]');if(!p) return; if(tipo==='click') verActor(p.dataset.punto); else mostrarDetalle(p.dataset.punto);})));
     $('p4SVG').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const p=e.target.closest('[data-punto]');if(p){e.preventDefault();verActor(p.dataset.punto);}}});
     $('p4CSV').onclick=descargar;
-    document.querySelector('nav.views [data-view="priorizacion"]').addEventListener('click',()=>{
-      // El manejador de navegación existente activa la vista durante este mismo evento.
+    $('view-priorizacion').addEventListener('vista:activar',()=>{
+      // La navegación central emite el evento después de activar la vista.
       setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0);
     });
   })();
@@ -3037,19 +3081,92 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     try{$('p5Nombre').value=(localStorage.getItem('canvas-participante')||'').slice(0,60);}catch(e){}
     $('p5Nombre').oninput=()=>{try{localStorage.setItem('canvas-participante',$('p5Nombre').value);}catch(e){}};
     $('p5Reintentar').onclick=cargar;
-    document.querySelector('nav.views [data-view="canvas"]').addEventListener('click',()=>setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0));
+    $('view-canvas').addEventListener('vista:activar',()=>setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0));
   })();
   // ACTIVIDAD 5: FIN JS
 
   // ---------------- wiring ----------------
-  document.querySelectorAll("nav.views button").forEach(function(b){
-    b.addEventListener("click", function(){
-      document.querySelectorAll("nav.views button").forEach(function(x){ x.classList.remove("active"); });
-      b.classList.add("active");
-      document.querySelectorAll("section.view").forEach(function(v){ v.classList.remove("active"); });
-      document.getElementById("view-"+b.dataset.view).classList.add("active");
-    });
-  });
+  // LANDING: INICIO JS
+  (function iniciarRuta(){
+    const $ = id => document.getElementById(id);
+    let rutas = [], actual = null;
+    const hashRuta = r => r.numero ? '#actividad-'+r.numero : '#inicio';
+    function activarVista(id, navegar=false){
+      const ruta = rutas.find(r=>r.vista===id) || rutas[0];
+      if(!ruta) return;
+      const cambio = actual !== ruta.vista;
+      actual = ruta.vista;
+      document.querySelectorAll('section.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+actual));
+      const posicion = rutas.indexOf(ruta);
+      $('rutaEstado').textContent = ruta.numero ? 'Actividad '+ruta.numero+' de 5' : 'Inicio · Ruta Colombia';
+      $('rutaSelector').value = actual;
+      $('rutaAnterior').disabled = posicion===0;
+      $('rutaSiguiente').disabled = posicion===rutas.length-1;
+      $('rutaEnlaces').querySelectorAll('a').forEach(a=>{
+        if(a.dataset.view===actual) a.setAttribute('aria-current','page');
+        else a.removeAttribute('aria-current');
+      });
+      const hash = hashRuta(ruta);
+      if(location.hash!==hash){
+        if(navegar) history.pushState(null,'',hash);
+        else history.replaceState(null,'',hash);
+      }
+      if(cambio) $('view-'+actual).dispatchEvent(new Event('vista:activar'));
+      if(navegar && cambio){
+        const heading = $('view-'+actual).querySelector('h2');
+        if(heading){ heading.tabIndex=-1; heading.focus({preventScroll:true}); }
+        window.scrollTo({top:0,behavior:'instant'});
+      }
+    }
+    function desdeHash(){ activarVista((rutas.find(r=>hashRuta(r)===location.hash)||rutas[0]).vista); }
+    const cards = items => items.map(x=>'<article class="landing-card"><h3>'+esc(x.nombre)+'</h3><p>'+esc(x.descripcion)+'</p>'+(x.pregunta?'<p class="landing-question">'+esc(x.pregunta)+'</p>':'')+'</article>').join('');
+    function render(c){
+      const p=c.portada;
+      $('landingContenido').innerHTML =
+        '<div class="landing-hero"><p class="mono">'+esc(p.etiqueta)+'</p><h2>'+esc(c.nombre)+'</h2><p class="landing-title">'+esc(p.titulo)+'</p><p class="landing-lema">'+esc(p.lema)+'</p><p>'+esc(p.sesion)+' · '+esc(p.descripcion)+'</p><div class="landing-grid">'+p.marco.map(x=>'<article><span class="mono">'+esc(x.numero)+'</span><h3>'+esc(x.nombre)+'</h3><p>'+esc(x.proposito)+'</p></article>').join('')+'</div></div>'+
+        '<section class="landing-block"><h2>Objetivos del taller</h2><div class="landing-grid">'+cards(p.objetivos)+'</div></section>'+
+        '<section class="landing-block"><h2>'+esc(c.equipo.titulo)+'</h2><div class="landing-grid">'+c.equipo.personas.map(x=>'<article class="landing-card"><img class="landing-photo" src="'+esc(x.foto)+'" alt="'+esc(x.nombre)+'" width="240" height="300" loading="lazy"><h3>'+esc(x.nombre)+'</h3><p class="landing-question">'+esc(x.rol)+'</p><p>'+esc(x.bio)+'</p><h4>Áreas de expertise</h4><p>'+esc(x.areas)+'</p><h4>'+esc(x.trayectoriaTitulo)+'</h4><p>'+x.trayectoria.map(esc).join(' · ')+'</p><p><a href="mailto:'+esc(x.email)+'">'+esc(x.email)+'</a><br>'+esc(x.telefono)+'</p></article>').join('')+'</div></section>'+
+        '<section class="landing-block"><h2>'+esc(c.propuesta.titulo)+'</h2><p>'+esc(c.propuesta.descripcion)+'</p><p>'+esc(c.propuesta.detalle)+'</p><div class="landing-grid">'+cards(c.propuesta.practicas)+'</div></section>'+
+        '<section class="landing-block"><h2>'+esc(c.metodologia.titulo)+'</h2><p>'+esc(c.metodologia.descripcion)+'</p><div class="landing-grid">'+cards(c.metodologia.lentes)+'</div></section>'+
+        '<section class="landing-block"><h2>Las 5 actividades</h2><div class="landing-grid">'+c.actividades.map(x=>'<article class="landing-card"><p class="mono">Actividad '+x.numero+' de 5</p><h3><a href="'+hashRuta(x)+'" data-view="'+esc(x.vista)+'">'+esc(x.nombre)+'</a></h3><p>'+esc(x.proposito)+'</p></article>').join('')+'</div></section>';
+      $('landingNota').textContent=c.nota;
+      $('landingNota').hidden=!c.provisional;
+      rutas=[{vista:'inicio',nombre:'Inicio',numero:0},...c.actividades];
+      $('rutaEnlaces').innerHTML=rutas.map(r=>'<a href="'+hashRuta(r)+'" data-view="'+esc(r.vista)+'">'+(r.numero?'<span class="mono">'+r.numero+'</span> ':'')+esc(r.nombre)+'</a>').join('');
+      $('rutaSelector').innerHTML=rutas.map(r=>'<option value="'+esc(r.vista)+'">'+(r.numero?r.numero+'. ':'')+esc(r.nombre)+'</option>').join('');
+      $('rutaSelector').disabled=false;
+      desdeHash();
+    }
+    function enlace(e){
+      const a=e.target.closest('a[data-view]');
+      if(!a || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button>0) return;
+      e.preventDefault(); activarVista(a.dataset.view,true);
+    }
+    $('rutaEnlaces').addEventListener('click',enlace);
+    $('landingContenido').addEventListener('click',enlace);
+    $('rutaSelector').addEventListener('change',e=>activarVista(e.target.value,true));
+    $('rutaAnterior').addEventListener('click',()=>{const i=rutas.findIndex(r=>r.vista===actual);if(i>0)activarVista(rutas[i-1].vista,true);});
+    $('rutaSiguiente').addEventListener('click',()=>{const i=rutas.findIndex(r=>r.vista===actual);if(i>=0&&i<rutas.length-1)activarVista(rutas[i+1].vista,true);});
+    window.addEventListener('hashchange',()=>{if(rutas.length)desdeHash();});
+    window.addEventListener('popstate',()=>{if(rutas.length)desdeHash();});
+    async function cargarLanding(){
+      $('landingEstado').textContent='Cargando la presentación…';
+      $('landingReintentar').hidden=true;
+      try{
+        const response=await fetch('landing-config.json');
+        if(!response.ok) throw Error('HTTP '+response.status);
+        const c=await response.json();
+        render(c); $('landingEstado').textContent='';
+      }catch(error){
+        $('landingEstado').textContent='No se pudo cargar la presentación. Reintenta para abrir la ruta del taller.';
+        $('landingReintentar').hidden=false;
+      }
+    }
+    $('landingReintentar').addEventListener('click',cargarLanding);
+    cargarLanding();
+  })();
+  // LANDING: FIN JS
+
   document.querySelectorAll("nav.subviews button").forEach(function(b){
     b.addEventListener("click", function(){
       var nav = b.closest("nav.subviews");
