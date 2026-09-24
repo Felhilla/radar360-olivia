@@ -1,0 +1,9 @@
+{
+  "name": "radar360-web",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Radar 360 - mapa de actores en vivo, Olivia Colombia",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}

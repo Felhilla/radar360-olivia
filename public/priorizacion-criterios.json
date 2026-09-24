@@ -1,0 +1,121 @@
+{
+  "provisional": true,
+  "nota": "Pendiente de validación con German (reunión 25 sep 2026)",
+  "umbral": 3.0,
+  "impacto": [
+    {
+      "id": "I1",
+      "nombre": "Contribución al crecimiento y posicionamiento",
+      "pregunta": "¿Cuánto aporta este actor al crecimiento y posicionamiento de Olivia en Colombia?",
+      "peso": 25
+    },
+    {
+      "id": "I2",
+      "nombre": "Alineación estratégica",
+      "pregunta": "¿Qué tanto conecta con la propuesta de transformación organizacional de Olivia?",
+      "peso": 20
+    },
+    {
+      "id": "I3",
+      "nombre": "Potencial de articulación y acceso",
+      "pregunta": "¿Cuánto facilita conexiones, capacidades o proyectos con otros actores?",
+      "peso": 20
+    },
+    {
+      "id": "I4",
+      "nombre": "Conocimiento y capacidades",
+      "pregunta": "¿Cuánto aporta al aprendizaje, la innovación o la comprensión del mercado?",
+      "peso": 15
+    },
+    {
+      "id": "I5",
+      "nombre": "Resultados verificables",
+      "pregunta": "¿Qué potencial tiene para generar resultados medibles para Olivia y sus clientes?",
+      "peso": 20
+    }
+  ],
+  "esfuerzo": [
+    {
+      "id": "E1",
+      "nombre": "Recursos económicos",
+      "pregunta": "¿Cuánto dinero requiere activar y sostener la relación o el seguimiento de este actor?",
+      "peso": 25
+    },
+    {
+      "id": "E2",
+      "nombre": "Dedicación del equipo",
+      "pregunta": "¿Cuánto tiempo del equipo requiere gestionar y acompañar este actor?",
+      "peso": 25
+    },
+    {
+      "id": "E3",
+      "nombre": "Complejidad administrativa y jurídica",
+      "pregunta": "¿Qué tan exigentes son los acuerdos, trámites y requisitos para trabajar con este actor?",
+      "peso": 20
+    },
+    {
+      "id": "E4",
+      "nombre": "Complejidad de coordinación y ejecución",
+      "pregunta": "¿Cuánto esfuerzo exige coordinar interlocutores, alinear expectativas y resolver dependencias?",
+      "peso": 15
+    },
+    {
+      "id": "E5",
+      "nombre": "Costo de oportunidad relacional",
+      "pregunta": "¿Cuánta capacidad de relacionamiento consume que podría dedicarse a otros actores?",
+      "peso": 15
+    }
+  ],
+  "escala": {
+    "impacto": {
+      "1": "Marginal: sin efecto apreciable para Olivia.",
+      "2": "Bajo: aporte puntual o limitado.",
+      "3": "Medio: contribución clara a una prioridad estratégica.",
+      "4": "Alto: contribución relevante a varias prioridades.",
+      "5": "Transformador: habilita crecimiento o capacidades decisivas."
+    },
+    "esfuerzo": {
+      "1": "Mínimo: sin desembolso relevante y dedicación puntual.",
+      "2": "Bajo: recursos acotados y gestión ligera.",
+      "3": "Medio: dedicación regular o acuerdos simples.",
+      "4": "Alto: recursos importantes o alta dedicación y coordinación.",
+      "5": "Muy alto: compromisos prolongados y gestión compleja; más esfuerzo."
+    }
+  },
+  "cuadrantes": [
+    {
+      "id": "apuestas-estrategicas",
+      "nombre": "Apuestas estratégicas",
+      "impacto": "alto",
+      "esfuerzo": "alto",
+      "regla": "Sostener y gestionar activamente."
+    },
+    {
+      "id": "victorias-tempranas",
+      "nombre": "Victorias tempranas",
+      "impacto": "alto",
+      "esfuerzo": "bajo",
+      "regla": "Escalar con prioridad."
+    },
+    {
+      "id": "mantenimiento-selectivo",
+      "nombre": "Mantenimiento selectivo",
+      "impacto": "bajo",
+      "esfuerzo": "bajo",
+      "regla": "Mantener con gestión ligera."
+    },
+    {
+      "id": "racionalizacion",
+      "nombre": "Racionalización",
+      "impacto": "bajo",
+      "esfuerzo": "alto",
+      "regla": "Renegociar, transformar o cerrar."
+    }
+  ],
+  "metodologia": {
+    "fuente": "Metodología y herramienta de priorización de alianzas Esenttia, tablas 0–3; Excel Parámetros y Ficha de alianzas.",
+    "adaptacion": "Se conservan todos los pesos. I1 e I5 se orientan al negocio de Olivia; E4 mide coordinación y ejecución, no riesgo ESG. Relación incluye seguimiento competitivo y regulatorio, no presupone una alianza comercial.",
+    "noAplica": "El Excel remite a una redistribución de pesos ausente del documento. No se implementa: se exigen diez enteros de 1 a 5; si falta información, puede dejarse el actor sin calificar.",
+    "calculo": "Promedio de los índices ponderados individuales. Clasificación antes del redondeo, alto si índice >= umbral. Se redondean únicamente los índices publicados a dos decimales."
+  }
+}

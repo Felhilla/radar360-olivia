@@ -1,0 +1,38 @@
+[build]
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/actors"
+  to = "/.netlify/functions/actors"
+  status = 200
+
+[[redirects]]
+  from = "/api/matriz"
+  to = "/.netlify/functions/matriz"
+  status = 200
+
+[[redirects]]
+  from = "/api/ideas"
+  to = "/.netlify/functions/ideas"
+  status = 200
+
+[[redirects]]
+  from = "/api/ideas-sintesis"
+  to = "/.netlify/functions/ideas-sintesis"
+  status = 200
+
+[[redirects]]
+  from = "/api/gremios-votos"
+  to = "/.netlify/functions/gremios-votos"
+  status = 200
+
+[[redirects]]
+  from = "/api/gremios-taller"
+  to = "/.netlify/functions/gremios-taller"
+  status = 200
+
+[[redirects]]
+  from = "/api/priorizacion-votos"
+  to = "/.netlify/functions/priorizacion-votos"
+  status = 200

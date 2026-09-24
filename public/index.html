@@ -1,0 +1,2895 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radar 360</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --paper:#FFFFFF;
+    --panel:#FFFFFF;
+    --panel-2:#EFEAE0;
+    --ink:#1C1A15;
+    --ink-soft:#5B584E;
+    --line:#DCD5C6;
+    --accent:#0E7C74;
+    --accent-ink:#063E39;
+    --accent-soft:#DCEEEB;
+
+    --cat-competidores:#8E3B46;
+    --cat-competidores-bg:#F6E7E8;
+    --cat-mercados:#0E7C74;
+    --cat-mercados-bg:#E3F1EF;
+    --cat-aliados:#5C7A3A;
+    --cat-aliados-bg:#EBF1E2;
+    --cat-autoridades:#4F5B92;
+    --cat-autoridades-bg:#E9EAF4;
+
+    --cf-alta:#2E7D4F;
+    --cf-media:#B4791F;
+    --cf-baja:#B04A32;
+    --cf-por_identificar:#8A8579;
+
+    --hz-corto:#B4791F;
+    --hz-corto-bg:#F7EEDD;
+    --hz-medio:#0E7C74;
+    --hz-medio-bg:#E3F1EF;
+    --hz-largo:#4F5B92;
+    --hz-largo-bg:#E9EAF4;
+
+    --est-descartado:#8A8579;
+    --shadow: 0 1px 2px rgba(28,26,21,.06), 0 6px 20px -8px rgba(28,26,21,.18);
+    --logo-bg:#FFFFFF;
+    --divider:#00DCD3;
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#161510;
+      --panel:#201E17;
+      --panel-2:#28261D;
+      --ink:#EFEAE0;
+      --ink-soft:#B3AB98;
+      --line:#3A362A;
+      --accent:#4FCBBF;
+      --accent-ink:#BEEFE9;
+      --accent-soft:#20362F;
+
+      --cat-competidores:#E2919B;
+      --cat-competidores-bg:#3A2226;
+      --cat-mercados:#4FCBBF;
+      --cat-mercados-bg:#1D3733;
+      --cat-aliados:#A9C486;
+      --cat-aliados-bg:#293522;
+      --cat-autoridades:#AEB6EA;
+      --cat-autoridades-bg:#292C45;
+
+      --cf-alta:#6FCB93;
+      --cf-media:#E0AC5C;
+      --cf-baja:#E28E76;
+      --cf-por_identificar:#A6A091;
+
+      --hz-corto:#E0AC5C;
+      --hz-corto-bg:#332813;
+      --hz-medio:#4FCBBF;
+      --hz-medio-bg:#1D3733;
+      --hz-largo:#AEB6EA;
+      --hz-largo-bg:#292C45;
+
+      --est-descartado:#8A8579;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -10px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#161510;
+    --panel:#201E17;
+    --panel-2:#28261D;
+    --ink:#EFEAE0;
+    --ink-soft:#B3AB98;
+    --line:#3A362A;
+    --accent:#4FCBBF;
+    --accent-ink:#BEEFE9;
+    --accent-soft:#20362F;
+
+    --cat-competidores:#E2919B;
+    --cat-competidores-bg:#3A2226;
+    --cat-mercados:#4FCBBF;
+    --cat-mercados-bg:#1D3733;
+    --cat-aliados:#A9C486;
+    --cat-aliados-bg:#293522;
+    --cat-autoridades:#AEB6EA;
+    --cat-autoridades-bg:#292C45;
+
+    --cf-alta:#6FCB93;
+    --cf-media:#E0AC5C;
+    --cf-baja:#E28E76;
+    --cf-por_identificar:#A6A091;
+
+    --hz-corto:#E0AC5C;
+    --hz-corto-bg:#332813;
+    --hz-medio:#4FCBBF;
+    --hz-medio-bg:#1D3733;
+    --hz-largo:#AEB6EA;
+    --hz-largo-bg:#292C45;
+
+    --est-descartado:#8A8579;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -10px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'IBM Plex Sans', system-ui, sans-serif;
+    padding-inline: max(16px, calc((100vw - 1180px)/2));
+    padding-block: 28px 60px;
+  }
+  h1,h2,h3{ font-family:'Fraunces', Georgia, serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  ::selection{ background:var(--accent-soft); }
+  img{ max-width:100%; }
+
+  a{ color:var(--accent); }
+
+  /* ---------- header ---------- */
+  header.top{
+    display:flex; flex-wrap:wrap; gap:20px 32px; align-items:flex-end; justify-content:space-between;
+    padding-bottom:20px; border-bottom:2px solid var(--divider); margin-bottom:22px;
+  }
+  .brand{ display:flex; gap:14px; align-items:center; }
+  .brand .mark{
+    width:44px; height:44px; border-radius:10px; flex:none; overflow:hidden;
+    background:var(--logo-bg); border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+  }
+  .brand .mark img{ width:100%; height:100%; object-fit:contain; }
+  .brand h1{ font-size:1.7rem; font-weight:600; }
+  .brand .sub{ color:var(--ink-soft); font-size:.86rem; margin-top:2px; }
+  .top-right{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+
+  nav.views{ display:flex; gap:2px; background:var(--panel-2); padding:3px; border-radius:10px; border:1px solid var(--line); }
+  nav.views button{
+    font-family:inherit; font-size:.86rem; font-weight:600; padding:8px 16px; border-radius:8px; border:none;
+    background:transparent; color:var(--ink-soft); cursor:pointer;
+  }
+  nav.views button.active{ background:var(--panel); color:var(--ink); box-shadow:var(--shadow); }
+  nav.views button:hover:not(.active){ color:var(--ink); }
+
+  nav.subviews{ display:flex; gap:2px; background:var(--panel-2); padding:3px; border-radius:9px; border:1px solid var(--line); width:fit-content; margin-bottom:18px; }
+  nav.subviews button{
+    font-family:inherit; font-size:.8rem; font-weight:600; padding:6px 14px; border-radius:7px; border:none;
+    background:transparent; color:var(--ink-soft); cursor:pointer;
+  }
+  nav.subviews button.active{ background:var(--panel); color:var(--ink); box-shadow:var(--shadow); }
+  nav.subviews button:hover:not(.active){ color:var(--ink); }
+  .subview{ display:none; }
+  .subview.active{ display:block; }
+
+  .live-dot{ display:inline-flex; align-items:center; gap:7px; font-size:.78rem; color:var(--ink-soft); }
+  .live-dot .d{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .live-dot.off .d{ background:var(--cf-baja); box-shadow:0 0 0 3px var(--cat-competidores-bg); }
+  @media (prefers-reduced-motion:no-preference){ .live-dot:not(.off) .d{ animation: pulse 2.4s ease-in-out infinite; } }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  section.view{ display:none; }
+  section.view.active{ display:block; }
+
+  /* ---------- radar view: tablero ---------- */
+  .board-wrap{ position:relative; }
+  .board-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
+  @media (max-width:640px){
+    .board-grid{ grid-template-columns:1fr; }
+    .board-hub{ position:static !important; transform:none !important; margin:0 0 16px; width:100%; height:auto; border-radius:16px; flex-direction:row; justify-content:center; gap:10px; padding:14px; }
+  }
+
+  .board-hub{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:128px; height:128px; border-radius:50%; background:var(--panel); border:2px solid var(--divider);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:var(--shadow); z-index:2;
+    text-align:center;
+  }
+  .hub-n{ font-family:'IBM Plex Mono'; font-size:2rem; font-weight:600; line-height:1; font-variant-numeric:tabular-nums; }
+  .hub-l{ font-size:.66rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; margin-top:4px; line-height:1.25; }
+
+  .tile{
+    background:var(--panel); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow);
+    padding:26px 24px; cursor:pointer; text-align:left; font:inherit; color:inherit;
+    display:flex; flex-direction:column; gap:6px; min-height:158px; justify-content:center;
+    transition: box-shadow .15s ease, border-color .15s ease;
+  }
+  .tile.cat-competidores{ --tile-color:var(--cat-competidores); --tile-bg:var(--cat-competidores-bg); }
+  .tile.cat-mercados{ --tile-color:var(--cat-mercados); --tile-bg:var(--cat-mercados-bg); }
+  .tile.cat-aliados{ --tile-color:var(--cat-aliados); --tile-bg:var(--cat-aliados-bg); }
+  .tile.cat-autoridades{ --tile-color:var(--cat-autoridades); --tile-bg:var(--cat-autoridades-bg); }
+  .tile:hover{ border-color:var(--tile-color); }
+  .tile.active{ border-color:var(--tile-color); box-shadow:0 0 0 3px var(--tile-bg), var(--shadow); }
+  .tile .t-head{ display:flex; align-items:center; gap:9px; }
+  .tile .t-icon{ width:27px; height:27px; border-radius:8px; background:var(--logo-bg); border:1px solid var(--line); object-fit:contain; padding:4px; flex:none; }
+  .tile .t-label{ font-family:'Fraunces'; font-size:1.2rem; font-weight:600; color:var(--tile-color); }
+  .tile .t-n{ font-family:'IBM Plex Mono'; font-size:2.7rem; font-weight:600; font-variant-numeric:tabular-nums; }
+  .tile .t-hint{ font-size:.78rem; color:var(--ink-soft); display:flex; align-items:center; gap:5px; }
+  .tile .t-hint .car{ display:inline-block; transition:transform .15s ease; }
+  .tile.active .t-hint .car{ transform:rotate(180deg); }
+
+  #boardGrid .tile:nth-child(1){ justify-content:flex-start; }
+  #boardGrid .tile:nth-child(2){ justify-content:flex-start; align-items:flex-end; text-align:right; }
+  #boardGrid .tile:nth-child(3){ justify-content:flex-end; }
+  #boardGrid .tile:nth-child(4){ justify-content:flex-end; align-items:flex-end; text-align:right; }
+  @media (max-width:640px){
+    #boardGrid .tile{ justify-content:center; align-items:flex-start; text-align:left; }
+  }
+
+  .drawer{ margin-top:20px; background:var(--panel); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); padding:20px 22px; }
+  .drawer-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding-bottom:12px; border-bottom:2px solid var(--divider); margin-bottom:14px; }
+  .drawer-head h2{ font-size:1.3rem; }
+  .drawer-note{ font-size:.82rem; color:var(--ink-soft); margin-bottom:10px; }
+
+  .sector-block{ margin-bottom:24px; }
+  .sector-block:last-child{ margin-bottom:0; }
+  .sector-title{
+    font-size:.76rem; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-soft); font-weight:700;
+    padding-bottom:9px; margin-bottom:16px; border-bottom:1px dashed var(--divider);
+  }
+  button.sector-title{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%;
+    background:none; border:0; border-bottom:1px dashed var(--divider); padding:0 0 9px;
+    font-family:inherit; text-align:left; cursor:pointer;
+  }
+  button.sector-title:hover{ color:var(--accent); border-bottom-color:var(--accent); }
+  button.sector-title:focus-visible{ outline:2px solid var(--accent); outline-offset:4px; }
+  .sector-hint{ font-size:.7rem; text-transform:none; letter-spacing:normal; }
+  .actor-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(126px,1fr)); gap:18px 14px; }
+  .actor-card{
+    display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; cursor:pointer;
+    background:none; border:none; padding:0; font:inherit; color:inherit;
+  }
+  .actor-card:hover .actor-logo, .actor-card:focus-visible .actor-logo{ border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .actor-card:focus-visible{ outline:none; }
+  .actor-logo{
+    position:relative; width:100%; aspect-ratio:1; border-radius:14px; background:var(--logo-bg);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center; overflow:hidden; padding:14%;
+  }
+  .actor-logo img{ width:100%; height:100%; object-fit:contain; }
+  .actor-logo .conf-dot{ position:absolute; top:7px; right:7px; width:11px; height:11px; border-radius:50%; border:2px solid var(--panel); }
+  .actor-logo .new-badge{
+    position:absolute; bottom:6px; left:6px; font-family:'IBM Plex Mono'; font-size:.58rem; text-transform:uppercase;
+    letter-spacing:.04em; background:var(--accent); color:#fff; padding:1px 6px; border-radius:4px;
+  }
+  .actor-name{ font-size:.82rem; font-weight:600; line-height:1.28; }
+  .actor-est{ font-size:.66rem; font-weight:600; padding:2px 10px; border-radius:999px; background:var(--panel-2); color:var(--ink-soft); border:1px solid var(--line); white-space:nowrap; }
+  .empty-note{ color:var(--ink-soft); font-size:.85rem; font-style:italic; }
+
+  .gap-note{
+    background:var(--panel-2); border:1px dashed var(--line); border-radius:12px;
+    padding:12px 16px; font-size:.83rem; color:var(--ink-soft); margin-top:18px;
+  }
+  .gap-note strong{ color:var(--ink); }
+
+  .switch{ position:relative; display:inline-flex; align-items:center; cursor:pointer; width:38px; height:22px; flex:none; }
+  .switch input{ position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer; }
+  .switch .track{
+    position:absolute; inset:0; background:var(--line); border-radius:999px; transition:background .15s ease;
+  }
+  .switch .thumb{
+    position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:var(--panel);
+    box-shadow:0 1px 2px rgba(0,0,0,.25); transition:transform .15s ease;
+  }
+  .switch input:checked + .track{ background:var(--accent); }
+  .switch input:checked + .track + .thumb{ transform:translateX(16px); }
+  .switch input:focus-visible + .track{ outline:2px solid var(--accent); outline-offset:2px; }
+  .radar-cell{ display:flex; align-items:center; gap:8px; }
+  .radar-cell .lbl{ font-size:.76rem; color:var(--ink-soft); }
+
+  /* ---------- ficha emergente de actor (clic en logo) ---------- */
+  dialog.actor-dialog{
+    width:min(560px, calc(100vw - 32px)); max-height:calc(100vh - 48px); padding:0; border:1px solid var(--line);
+    border-radius:18px; background:var(--panel); color:var(--ink); box-shadow:var(--shadow);
+  }
+  dialog.actor-dialog::backdrop{ background:rgba(28,26,21,.45); }
+  .ad-head{ display:flex; gap:14px; align-items:center; padding:18px 20px; border-bottom:2px solid var(--divider); }
+  .ad-logo{ width:64px; height:64px; flex:none; border-radius:12px; border:1px solid var(--line); background:var(--logo-bg); padding:8px; object-fit:contain; }
+  .ad-head h3{ font-size:1.2rem; font-weight:600; }
+  .ad-pills{ display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .ad-close{ margin-left:auto; align-self:flex-start; white-space:nowrap; }
+  .ad-body{ padding:16px 20px 20px; font-size:.88rem; line-height:1.5; }
+  .ad-label{ font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin:14px 0 6px; }
+  .ad-label:first-child{ margin-top:0; }
+  .ad-body ul{ margin:0; padding-left:18px; }
+  .ad-body li{ margin-bottom:4px; }
+  .ad-empty{ color:var(--ink-soft); font-style:italic; }
+  .ad-just{ white-space:pre-line; }
+  .ad-titular{ margin-top:10px; padding:8px 12px; border-radius:10px; border-left:4px solid var(--cat-autoridades);
+    background:var(--cat-autoridades-bg); }
+  .ad-titular .t-label{ display:block; font-size:.66rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); }
+  .ad-titular strong{ display:block; font-size:1.02rem; color:var(--ink); }
+  .ad-titular .t-cargo{ display:block; font-size:.76rem; color:var(--ink-soft); }
+  .ad-note{ color:var(--ink-soft); font-size:.84rem; }
+
+  /* ---------- fichas de competidores ---------- */
+  .comp-grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:16px; }
+  @media (max-width:640px){ .comp-grid{ grid-template-columns:1fr; } }
+  .comp-card{
+    background:var(--panel); border:1px solid var(--line); border-top:3px solid var(--cat-competidores);
+    border-radius:14px; box-shadow:var(--shadow); padding:16px 18px; display:flex; flex-direction:column; gap:10px;
+    font-size:.86rem; line-height:1.5;
+  }
+  .comp-head{ display:flex; gap:12px; align-items:center; }
+  .comp-head img{ width:56px; height:56px; flex:none; border-radius:10px; border:1px solid var(--line); background:var(--logo-bg); padding:6px; object-fit:contain; }
+  .comp-head h3{ font-size:1.08rem; font-weight:600; }
+  .comp-head .comp-sector{ font-size:.76rem; color:var(--ink-soft); }
+  .comp-card .ad-label{ margin:4px 0 2px; }
+  .comp-card ul{ margin:0; padding-left:18px; }
+  .comp-card li{ margin-bottom:3px; }
+  .comp-why{ background:var(--cat-competidores-bg); border-radius:8px; padding:8px 10px; }
+  .comp-src{ font-size:.74rem; color:var(--ink-soft); margin-top:auto; padding-top:8px; border-top:1px dashed var(--line); }
+  .comp-src a{ word-break:break-word; }
+  .unverified{ font-size:.72rem; font-weight:600; color:var(--cf-media); }
+
+  /* ---------- gestion view ---------- */
+  .toolbar{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:16px; }
+  .toolbar input[type=search]{
+    flex:1 1 220px; font:inherit; font-size:.88rem; padding:9px 12px; border-radius:9px; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink);
+  }
+  .filter-chip{
+    font-size:.8rem; padding:6px 12px; border-radius:999px; border:1px solid var(--line); background:var(--panel);
+    color:var(--ink-soft); cursor:pointer; font-family:inherit; font-weight:500;
+  }
+  .filter-chip.on{ background:var(--accent-soft); color:var(--accent-ink); border-color:var(--accent); }
+  .btn{
+    font:inherit; font-weight:600; font-size:.86rem; padding:9px 16px; border-radius:9px; border:1px solid var(--accent);
+    background:var(--accent); color:var(--panel); cursor:pointer;
+  }
+  .btn.secondary{ background:var(--panel); color:var(--ink); border-color:var(--line); font-weight:500; }
+  .btn.ghost{ background:transparent; border-color:transparent; color:var(--ink-soft); font-weight:500; padding:6px 10px; }
+  .btn.ghost:hover{ color:var(--ink); text-decoration:underline; }
+  .btn:disabled{ opacity:.5; cursor:default; }
+
+  .add-panel{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:18px;
+    display:none; box-shadow:var(--shadow);
+  }
+  .add-panel.open{ display:block; }
+  .add-grid{ display:grid; grid-template-columns:2fr 1fr 1fr; gap:10px; }
+  .add-grid .full{ grid-column:1/-1; }
+  @media (max-width:640px){ .add-grid{ grid-template-columns:1fr 1fr; } }
+  label.field{ display:flex; flex-direction:column; gap:4px; font-size:.76rem; color:var(--ink-soft); font-weight:600; }
+  input, select, textarea{
+    font:inherit; font-size:.88rem; padding:8px 10px; border-radius:8px; border:1px solid var(--line);
+    background:var(--panel); color:var(--ink); width:100%;
+  }
+  textarea{ resize:vertical; min-height:56px; }
+  .add-actions{ display:flex; gap:10px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+  .hint{ font-size:.78rem; color:var(--ink-soft); }
+
+  table.actors{ width:100%; border-collapse:collapse; font-size:.86rem; }
+  .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--panel); }
+  table.actors th{
+    text-align:left; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft);
+    padding:10px 12px; border-bottom:2px solid var(--divider); white-space:nowrap; position:sticky; top:0; background:var(--panel);
+  }
+  table.actors td{ padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  table.actors tr:last-child td{ border-bottom:none; }
+  table.actors tr.discarded{ opacity:.5; }
+  .jt{ max-width:340px; color:var(--ink-soft); white-space:pre-line; }
+  .row-actions{ display:flex; gap:4px; flex-wrap:wrap; white-space:nowrap; }
+
+  /* ---------- ideas view: lluvia de ideas (fichas) ---------- */
+  .ficha{ border:2px solid var(--hz); border-radius:14px; background:var(--panel); box-shadow:var(--shadow); overflow:hidden; }
+  .ficha[data-hz="corto"]{ --hz:var(--hz-corto); --hz-bg:var(--hz-corto-bg); }
+  .ficha[data-hz="medio"]{ --hz:var(--hz-medio); --hz-bg:var(--hz-medio-bg); }
+  .ficha[data-hz="largo"]{ --hz:var(--hz-largo); --hz-bg:var(--hz-largo-bg); }
+  .ficha-head{ padding:14px 18px; border-bottom:2px solid var(--hz); background:var(--hz-bg); }
+  .ficha-head h3{ font-size:1.15rem; font-weight:600; color:var(--ink); }
+  .ficha-head .yr{ font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
+  .ficha-label{ font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin-bottom:10px; }
+
+  .ficha-body{ display:grid; grid-template-columns:1.7fr 1fr; }
+  @media (max-width:760px){ .ficha-body{ grid-template-columns:1fr; } }
+  .ficha-left{ padding:18px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); display:flex; flex-direction:column; }
+  @media (max-width:760px){ .ficha-left{ border-right:none; } }
+  .ficha-right{ padding:18px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; min-height:0; }
+
+  .ficha-guide{ margin:0 0 16px; padding-left:18px; flex:none; }
+  .ficha-guide li{ font-size:.86rem; color:var(--ink-soft); margin-bottom:6px; }
+  .ficha-guide li:last-child{ margin-bottom:0; }
+
+  .ficha-add{ display:flex; gap:8px; margin-top:auto; padding-top:4px; }
+  .ficha-add input{ flex:1; }
+
+  .ficha-answers{ display:flex; flex-direction:column; gap:8px; max-height:340px; overflow-y:auto; }
+  .idea-chip{
+    display:flex; align-items:flex-start; gap:6px; background:var(--panel-2); border:1px solid var(--line); border-radius:8px;
+    padding:8px 10px; font-size:.86rem;
+  }
+  .idea-chip .txt{ flex:1; word-break:break-word; }
+  .idea-chip .idea-del{
+    flex:none; border:none; background:transparent; color:var(--ink-soft); cursor:pointer; font-size:.9rem; line-height:1; padding:2px;
+  }
+  .idea-chip .idea-del:hover{ color:var(--cf-baja); }
+  .ideas-empty{ color:var(--ink-soft); font-size:.84rem; padding:6px 2px; }
+
+  .ficha-conclusion{ padding:18px; }
+
+  /* criterios por considerar (Actividad 1): franja horizontal bajo el encabezado de cada ficha */
+  .criterios{ padding:14px 18px 16px; border-bottom:1px solid var(--line); }
+  .criterios-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(min(190px,100%),1fr)); gap:10px; }
+  .criterio{ --c:#3A9CA3; display:flex; gap:10px; align-items:center; padding:10px 12px; border-radius:12px;
+    background:color-mix(in srgb, var(--c) 13%, var(--panel)); }
+  .criterio .ic{ width:40px; height:40px; flex:none; border-radius:50%; background:var(--c); color:#fff;
+    display:flex; align-items:center; justify-content:center; }
+  .criterio .ic svg{ width:22px; height:22px; }
+  .criterio h4{ font-size:.8rem; font-weight:800; letter-spacing:.03em; text-transform:uppercase; color:var(--c); margin:0 0 2px; }
+  .criterio p{ font-size:.8rem; line-height:1.35; color:var(--ink); margin:0; }
+  .criterio.atractivo{ --c:#3A9CA3; } .criterio.encaje{ --c:#4DB8AE; } .criterio.acceso{ --c:#E0922F; }
+  .criterio.escalabilidad{ --c:#5A84D6; } .criterio.momento{ --c:#E0573A; }
+  .ficha-conclusion textarea{ min-height:90px; margin-bottom:8px; }
+  .sintesis-saved{ font-size:.74rem; color:var(--ink-soft); }
+
+  .pill{ display:inline-flex; align-items:center; gap:5px; font-size:.76rem; font-weight:600; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+  .pill.cat-competidores{ background:var(--cat-competidores-bg); color:var(--cat-competidores); }
+  .pill.cat-mercados{ background:var(--cat-mercados-bg); color:var(--cat-mercados); }
+  .pill.cat-aliados{ background:var(--cat-aliados-bg); color:var(--cat-aliados); }
+  .pill.cat-autoridades{ background:var(--cat-autoridades-bg); color:var(--cat-autoridades); }
+  .pill.cf{ background:var(--panel-2); }
+  .pill.cf .dot{ width:6px; height:6px; border-radius:50%; }
+  .pill.est{ background:var(--panel-2); color:var(--ink-soft); border:1px solid var(--line); }
+  .new-id-pill{ font-family:'IBM Plex Mono'; background:var(--accent-soft); color:var(--accent-ink); border:1px solid var(--accent); }
+
+  details.tech{ margin-top:26px; border:1px solid var(--line); border-radius:14px; background:var(--panel); }
+  details.tech summary{ cursor:pointer; padding:12px 16px; font-weight:600; font-size:.88rem; list-style:none; display:flex; align-items:center; justify-content:space-between; }
+  details.tech summary::-webkit-details-marker{ display:none; }
+  details.tech summary:after{ content:'+'; font-size:1.2rem; color:var(--ink-soft); }
+  details.tech[open] summary:after{ content:'–'; }
+  .tech-body{ padding:0 16px 16px; font-size:.84rem; color:var(--ink-soft); line-height:1.55; }
+  .tech-body code{ background:var(--panel-2); padding:1px 5px; border-radius:4px; font-family:'IBM Plex Mono'; font-size:.82em; color:var(--ink); }
+  .tech-body .schema{ background:var(--panel-2); border-radius:8px; padding:10px 12px; font-family:'IBM Plex Mono'; font-size:.78rem; color:var(--ink); overflow-x:auto; }
+
+  footer.credit{ margin-top:34px; font-size:.76rem; color:var(--ink-soft); text-align:center; }
+
+  .toast{
+    position:fixed; left:50%; bottom:24px; transform:translate(-50%,0); z-index:50;
+    max-width:min(520px, calc(100vw - 32px)); padding:12px 16px; border-radius:10px; font-size:.86rem;
+    box-shadow:var(--shadow); border:1px solid var(--line); background:var(--panel); color:var(--ink);
+  }
+  .toast.error{ border-color:var(--cf-baja); background:var(--cat-competidores-bg); color:var(--cat-competidores); }
+  .toast.ok{ border-color:var(--cf-alta); background:var(--cat-aliados-bg); color:var(--cat-aliados); }
+
+  .conn-banner{
+    margin-bottom:20px; padding:12px 16px; border-radius:12px; font-size:.86rem; font-weight:500;
+    background:var(--cat-competidores-bg); color:var(--cat-competidores); border:1px solid var(--cat-competidores);
+  }
+
+  /* Actividad 3: calificación de gremios */
+  #view-matriz{ --gremio-corto:#E89A3C; --gremio-medio:#3A9CA3; --gremio-largo:#5A84D6; }
+  #view-matriz > nav.subviews{ max-width:100%; flex-wrap:wrap; }
+  #view-matriz > nav.subviews button{ white-space:normal; }
+  #view-matriz .gremios-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:16px; }
+  #view-matriz .gremio-card{ min-width:0; padding:18px; border:1px solid var(--line); border-radius:12px; background:var(--panel); overflow-wrap:anywhere; }
+  #view-matriz .gremio-card h3{ display:flex; align-items:center; gap:12px; }
+  #view-matriz .gremio-card img{ width:56px; height:56px; object-fit:contain; background:var(--logo-bg); border-radius:8px; }
+  #view-matriz .gremio-card dt{ font-weight:600; margin-top:12px; }
+  #view-matriz .gremio-card dd{ margin:4px 0 12px; color:var(--ink-soft); }
+  #view-matriz .gremio-card fieldset{ min-width:0; margin:16px 0 0; padding:10px; border:1px solid var(--line); border-radius:8px; }
+  #view-matriz .gremio-voto{ display:block; width:100%; margin:6px 0; padding:10px; text-align:left; white-space:normal; color:var(--ink); background:var(--panel-2); border:2px solid var(--voto-color); border-radius:6px; cursor:pointer; }
+  #view-matriz .gremio-voto[aria-pressed="true"]{ background:var(--voto-color); color:#161510; font-weight:700; }
+  #view-matriz .gremio-voto[aria-pressed="true"]::before{ content:'✓ '; }
+  #view-matriz .gremio-voto:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+  #view-matriz .gremio-voto:disabled{ opacity:.6; cursor:wait; }
+  #view-matriz .gremios-resumen{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:20px 0; }
+  #view-matriz .gremios-resumen article{ padding:12px; border:1px solid var(--line); border-top:5px solid var(--voto-color); border-radius:8px; background:var(--panel); overflow-wrap:anywhere; }
+  #view-matriz .gremios-resumen ul{ padding-left:18px; }
+  #view-matriz .gremios-eje{ position:relative; height:34px; font-weight:600; }
+  #view-matriz .gremios-eje span{ position:absolute; top:10px; transform:translateX(-50%); white-space:nowrap; }
+  #view-matriz .gremios-eje span:nth-child(1){ left:33.33%; } #view-matriz .gremios-eje span:nth-child(2){ left:66.67%; } #view-matriz .gremios-eje span:nth-child(3){ left:auto; right:0; transform:none; }
+  #view-matriz .gremio-resultado{ margin:14px 0; }
+  #view-matriz .gremio-etiqueta{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; }
+  #view-matriz .gremio-pista{ height:18px; margin-top:6px; border:1px solid var(--line); background:linear-gradient(to right, #5A84D622 0% 50%, #3A9CA322 50% 83.33%, #E89A3C22 83.33% 100%); }
+  #view-matriz .gremio-barra{ height:100%; min-width:4px; background:var(--voto-color); }
+  #view-matriz .gremios-agregar{ margin:6px 0 16px; }
+  #view-matriz .gremios-agregar .add-grid{ grid-template-columns:1fr; }
+  #view-matriz .gremio-card.taller{ border-style:dashed; border-color:var(--accent); }
+  #view-matriz .gremio-tag{ display:inline-block; font-size:.72rem; font-weight:700; padding:2px 8px; border-radius:999px; background:var(--accent-soft); color:var(--accent-ink); margin-top:4px; }
+  #view-matriz .gremio-card h3 .g-nombre{ display:flex; flex-direction:column; align-items:flex-start; }
+  #view-matriz .gremio-borrar{ margin-top:10px; font-size:.8rem; }
+  #view-matriz .gremio-sin-votos{ color:var(--ink-soft); background:var(--panel-2); padding:8px; }
+  @media(max-width:600px){ #view-matriz .gremios-resumen{ grid-template-columns:1fr; } #view-matriz .gremios-eje{ font-size:.85rem; } }
+
+/* ACTIVIDAD 4: INICIO CSS */
+nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw - 32px); }
+#view-priorizacion{ min-width:0; }
+#view-priorizacion *, #view-priorizacion *::before{ box-sizing:border-box; }
+#view-priorizacion .p4-aviso{ padding:12px; border:2px solid var(--cf-media); border-radius:8px; background:var(--panel-2); }
+#view-priorizacion nav.subviews{ flex-wrap:wrap; max-width:100%; }
+#view-priorizacion nav.subviews button{ white-space:normal; }
+#view-priorizacion .p4-filtros{ display:flex; flex-wrap:wrap; align-items:end; gap:12px; margin:16px 0; }
+#view-priorizacion .p4-filtros label{ flex:1 1 180px; min-width:0; }
+#view-priorizacion input, #view-priorizacion select{ width:100%; min-width:0; color:var(--ink); background:var(--panel); }
+#view-priorizacion .p4-trabajo{ display:grid; grid-template-columns:minmax(200px, .8fr) minmax(0,2fr); gap:20px; align-items:start; }
+#view-priorizacion .p4-actores{ max-height:760px; overflow-y:auto; padding:3px; }
+#view-priorizacion .p4-actor{ width:100%; display:flex; align-items:center; gap:10px; padding:10px; margin:0 0 6px; text-align:left; border:1px solid var(--line); border-radius:8px; color:var(--ink); background:var(--panel); cursor:pointer; overflow-wrap:anywhere; }
+#view-priorizacion .p4-actor[aria-pressed="true"]{ border:2px solid var(--accent); background:var(--accent-soft); }
+#view-priorizacion .p4-actor img{ width:36px; height:36px; object-fit:contain; background:var(--logo-bg); border-radius:6px; }
+#view-priorizacion .p4-actor small{ display:block; color:var(--ink-soft); }
+#view-priorizacion #p4Editor{ border:1px solid var(--line); background:var(--panel); border-radius:12px; padding:16px; min-width:0; overflow-wrap:anywhere; }
+#view-priorizacion .p4-ejes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 18px; align-items:stretch; }
+#view-priorizacion .p4-eje-cab h4{ margin:0; }
+#view-priorizacion .p4-ejes fieldset{ margin:0; display:flex; flex-direction:column; }
+#view-priorizacion .p4-ejes fieldset .p4-opciones{ margin-top:auto; }
+#view-priorizacion .p4-opciones span{ --sem:#888; border:2px solid var(--sem) !important; background:color-mix(in srgb, var(--sem) 16%, var(--panel)) !important; color:var(--ink); font-weight:600; }
+#view-priorizacion .p4-opciones span[data-n="1"]{ --sem:#D64545; } #view-priorizacion .p4-opciones span[data-n="2"]{ --sem:#E8872F; }
+#view-priorizacion .p4-opciones span[data-n="3"]{ --sem:#E3BC2E; } #view-priorizacion .p4-opciones span[data-n="4"]{ --sem:#3FA34D; }
+#view-priorizacion .p4-opciones span[data-n="5"]{ --sem:#3A6FD8; }
+#view-priorizacion .p4-opciones input:checked + span{ background:var(--sem) !important; color:#fff !important; font-weight:800; box-shadow:0 0 0 2px var(--panel), 0 0 0 4px var(--sem); }
+#view-priorizacion .p4-opciones input:checked + span[data-n="3"]{ color:#1c1a15 !important; }
+#view-priorizacion .p4-resultado-a4{ margin:0 0 14px; padding:10px 12px; border-radius:10px; background:var(--panel-2); border-left:4px solid var(--accent); }
+#view-priorizacion .p4-resultado-a4 strong{ display:block; }
+#view-priorizacion fieldset{ min-width:0; margin:12px 0; padding:10px; border:1px solid var(--line); border-radius:8px; }
+#view-priorizacion legend{ font-weight:600; }
+#view-priorizacion fieldset p{ margin:4px 0 10px; font-size:.9rem; color:var(--ink-soft); }
+#view-priorizacion .p4-opciones{ display:flex; gap:4px; }
+#view-priorizacion .p4-opciones label{ flex:1; position:relative; text-align:center; cursor:pointer; }
+#view-priorizacion .p4-opciones input{ position:absolute; width:1px; height:1px; opacity:0; }
+#view-priorizacion .p4-opciones span{ display:block; padding:10px 0; border:1px solid var(--line); border-radius:5px; background:var(--panel-2); }
+#view-priorizacion .p4-opciones input:checked + span{ background:var(--accent); color:var(--paper); font-weight:700; }
+#view-priorizacion .p4-opciones input:focus-visible + span, #view-priorizacion button:focus-visible{ outline:3px solid var(--ink); outline-offset:2px; }
+#view-priorizacion .p4-acciones{ display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+#view-priorizacion .p4-acciones button{ white-space:normal; }
+#view-priorizacion .p4-grafico, #view-priorizacion .p4-tabla{ overflow-x:auto; max-width:100%; border:1px solid var(--line); border-radius:8px; }
+#view-priorizacion #p4SVG{ display:block; width:100%; min-width:760px; background:var(--panel); }
+#view-priorizacion #p4SVG text{ fill:var(--ink); font-family:inherit; }
+#view-priorizacion #p4SVG .p4-punto{ cursor:pointer; }
+#view-priorizacion #p4SVG .p4-punto:focus circle, #view-priorizacion #p4SVG .p4-punto:hover circle{ stroke:var(--ink); stroke-width:4; }
+#view-priorizacion .p4-detalle{ padding:12px; background:var(--panel-2); border-radius:8px; min-height:50px; }
+#view-priorizacion .p4-cuadrantes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:16px 0; }
+#view-priorizacion .p4-cuadrantes article{ padding:14px; background:var(--panel); border:1px solid var(--line); border-radius:8px; overflow-wrap:anywhere; }
+#view-priorizacion .p4-cuadrantes ul{ padding-left:20px; }
+#view-priorizacion .p4-enlace{ background:none; border:0; color:var(--ink); text-align:left; cursor:pointer; text-decoration:underline; padding:5px; font:inherit; }
+#view-priorizacion .p4-color{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:5px; }
+#view-priorizacion .p4-leyenda{ display:inline-block; margin-right:15px; }
+#view-priorizacion .schema{ white-space:pre-wrap; overflow-wrap:anywhere; }
+#view-priorizacion table{ min-width:650px; }
+@media(max-width:700px){
+  #view-priorizacion .p4-trabajo, #view-priorizacion .p4-ejes, #view-priorizacion .p4-cuadrantes{ grid-template-columns:1fr; }
+  /* en una columna, los criterios vuelven a agruparse por eje */
+  #view-priorizacion .p4-ejes .eje-impacto.p4-eje-cab{ order:0; } #view-priorizacion .p4-ejes fieldset.eje-impacto{ order:1; }
+  #view-priorizacion .p4-ejes .eje-esfuerzo.p4-eje-cab{ order:2; } #view-priorizacion .p4-ejes fieldset.eje-esfuerzo{ order:3; }
+  #view-priorizacion .p4-actores{ max-height:230px; }
+  #view-priorizacion #p4Editor{ padding:12px; }
+}
+/* ACTIVIDAD 4: FIN CSS */
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div class="mark"><img src="logos/olivia.jpeg" alt="Olivia"></div>
+    <div>
+      <h1>Radar 360</h1>
+      <div class="sub">Universo de actores &middot; Olivia Colombia &middot; Taller estratégico 6 de octubre de 2026</div>
+    </div>
+  </div>
+  <div class="top-right">
+    <span class="live-dot" id="liveDot"><span class="d"></span> <span id="liveLabel">conectando…</span></span>
+    <nav class="views">
+      <button data-view="ideas" class="active">Alinear el juego</button>
+      <button data-view="radar">Radar 360°</button>
+      <button data-view="matriz">Identificación de oportunidades directas</button>
+      <button data-view="priorizacion">Priorizar actores y mercados</button>
+    </nav>
+  </div>
+</header>
+
+<div class="conn-banner" id="connBanner" hidden></div>
+
+<!-- ACTIVIDAD 4: INICIO HTML -->
+<section class="view" id="view-priorizacion">
+  <h2>Priorizar actores y mercados</h2>
+  <p>Actividad 4 · Valora el impacto y el esfuerzo de relacionarte con cada actor. Puedes calificar solo el subconjunto que conoces; no necesitas completar todo el Radar.</p>
+  <p id="p4Provisional" class="p4-aviso" hidden><strong>Criterios provisionales</strong> · <span></span></p>
+  <p id="p4Estado" role="status" aria-live="polite">Abre esta actividad para cargar las calificaciones.</p>
+  <nav class="subviews" aria-label="Actividad 4">
+    <button data-subview="p4-calificar" class="active">Calificar</button>
+    <button data-subview="p4-matriz">Matriz Impacto–Esfuerzo</button>
+  </nav>
+  <div class="subview active" id="subview-p4-calificar">
+    <div class="p4-filtros">
+      <label class="field">Tu nombre <input id="p4Nombre" maxlength="60" autocomplete="name" aria-describedby="p4Identidad"></label>
+      <label class="field">Categoría <select id="p4Categoria"><option value="">Todas las categorías</option></select></label>
+      <label class="field">Buscar actor <input id="p4Buscar" type="search" placeholder="Nombre o sector"></label>
+    </div>
+    <p class="hint" id="p4Identidad">Usa siempre el mismo nombre para cambiar tu calificación. Los nombres y votos se incluyen en la descarga. Las respuestas sin guardar se conservan en esta pestaña mientras esté abierta.</p>
+    <p id="p4Avance">Cargando actores…</p>
+    <div class="p4-trabajo">
+      <div id="p4Actores" class="p4-actores" aria-label="Actores disponibles"></div>
+      <div id="p4Editor"><p>Selecciona un actor para calificarlo.</p></div>
+    </div>
+  </div>
+  <div class="subview" id="subview-p4-matriz">
+    <h3>Matriz Impacto–Esfuerzo</h3>
+    <div class="p4-filtros">
+      <label class="field">Categoría <select id="p4CategoriaMatriz"><option value="">Todas las categorías</option></select></label>
+      <button class="btn secondary" id="p4CSV" disabled>Descargar resultados (CSV)</button>
+    </div>
+    <p id="p4Leyenda"></p>
+    <p class="hint">Cada número identifica un actor en las listas y la tabla. Pasa el cursor o enfoca con Tab un punto para ver su detalle; haz clic o tócalo para abrir la ficha del actor. Si coinciden, usa la lista de puntos. En celular, desliza el gráfico horizontalmente.</p>
+    <div class="p4-grafico" tabindex="0" role="region" aria-label="Gráfico desplazable Impacto–Esfuerzo"><svg id="p4SVG" viewBox="0 0 900 650" aria-labelledby="p4TituloGrafico" role="group"></svg></div>
+    <p id="p4Detalle" class="p4-detalle" aria-live="polite">Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.</p>
+    <div id="p4Cuadrantes" class="p4-cuadrantes"></div>
+    <div class="p4-tabla" tabindex="0" role="region" aria-label="Tabla de resultados desplazable">
+      <table class="actors"><caption>Resultados por actor · selecciona un encabezado para ordenar</caption><thead><tr id="p4Cabecera"></tr></thead><tbody id="p4Resultados"></tbody></table>
+    </div>
+    <details class="tech">
+      <summary>Conexión con Herramienta 5 · esquema de datos</summary>
+      <div class="tech-body">
+        <p><code>GET /api/priorizacion-votos?resumen=1</code> devuelve un arreglo JSON (vacío si no hay calificaciones). Cada elemento tiene exactamente esta forma:</p>
+        <pre class="schema">{
+  "actorId": "mercados-ejemplo",
+  "nombre": "Actor de ejemplo",
+  "categoria": "mercados",
+  "sector": "Servicios",
+  "indiceImpacto": 4.25,
+  "indiceEsfuerzo": 2.50,
+  "cuadrante": {
+    "id": "victorias-tempranas",
+    "nombre": "Victorias tempranas"
+  },
+  "votos": 3
+}</pre>
+        <p><code>actorId</code>, <code>nombre</code>, <code>categoria</code>, <code>sector</code> y los campos de <code>cuadrante</code> son cadenas. Categoría: competidores, mercados, aliados o autoridades. Índices: números entre 1 y 5, redondeados a dos decimales (JSON puede omitir ceros finales). Votos: entero positivo. Cada persona pesa igual: se promedian sus índices ponderados completos; no se guardan calificaciones parciales.</p>
+        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Los actores descartados o eliminados se excluyen; los ocultos del Radar conservan su resultado para la Herramienta 5. Esta pantalla y su CSV muestran solo actores visibles del Radar y respetan el filtro de categoría.</p>
+        <p>La fuente única es <code>GET /api/priorizacion-votos?criterios=1</code>: criterios, pesos, escalas, umbral y cuadrantes. <code>GET /api/priorizacion-votos</code> devuelve votos completos. PUT reemplaza el voto identificado por actor y nombre; DELETE recibe <code>{actorId, votante}</code>. Sin autenticación, como Gremios.</p>
+        <p>Nota metodológica: el Excel menciona una redistribución para «no aplica» que el documento no desarrolla. Se exigen diez respuestas de 1 a 5, sin redistribución. Si no tienes información suficiente, deja ese actor sin calificar.</p>
+        <div id="p4Metodologia"></div>
+      </div>
+    </details>
+  </div>
+</section>
+<!-- ACTIVIDAD 4: FIN HTML -->
+
+<section class="view" id="view-radar">
+  <nav class="subviews">
+    <button data-subview="mapa" class="active">Mapa</button>
+    <button data-subview="competidores">Competidores</button>
+    <button data-subview="gestion">Gestión</button>
+  </nav>
+
+  <div class="subview active" id="subview-mapa">
+    <div class="board-wrap">
+      <div class="board-grid" id="boardGrid"></div>
+      <div class="board-hub"><div class="hub-n mono" id="hubTotal">0</div><div class="hub-l">actores<br>mapeados</div></div>
+    </div>
+    <div class="drawer" id="drawer" hidden>
+      <div class="drawer-head">
+        <h2 id="drawerTitle"></h2>
+        <button class="btn ghost" id="drawerClose">Cerrar ×</button>
+      </div>
+      <div class="drawer-note" id="drawerNote"></div>
+      <div class="drawer-body" id="drawerBody"></div>
+    </div>
+    <div class="gap-note" id="radarGapNote"></div>
+  </div>
+
+  <div class="subview" id="subview-competidores">
+    <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
+      <strong>Fichas de competidores: </strong>
+      qué vende cada firma y dónde compite con Olivia. Fuentes: informe "Colombia como mercado para Olivia" y páginas web oficiales de cada firma (consultadas el 23 de septiembre de 2026). La justificación se toma en vivo de Gestión.
+    </div>
+    <div class="comp-grid" id="compGrid"></div>
+  </div>
+
+  <div class="subview" id="subview-gestion">
+    <div class="toolbar">
+      <input type="search" id="search" placeholder="Buscar por nombre o justificación…">
+      <div id="catChips" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+      <div id="cfChips" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
+      <button class="filter-chip" id="toggleDiscarded">Mostrar descartados</button>
+      <button class="filter-chip" id="toggleNewId">Solo New ID</button>
+      <button class="btn secondary" id="downloadBtn">Descargar respaldo (JSON)</button>
+      <button class="btn" id="openAdd">+ Agregar actor</button>
+    </div>
+
+    <div class="add-panel" id="addPanel">
+      <div class="add-grid">
+        <label class="field full">Nombre
+          <input type="text" id="f-nombre" placeholder="Nombre del actor">
+        </label>
+        <label class="field">Categoría
+          <select id="f-categoria"></select>
+        </label>
+        <label class="field">Confianza
+          <select id="f-confianza"></select>
+        </label>
+        <label class="field">Sector / etiqueta (opcional)
+          <input type="text" id="f-sector" placeholder="p. ej. Financiero, Prioridad alta…">
+        </label>
+        <label class="field full">Justificación
+          <textarea id="f-justificacion" placeholder="Por qué entra al mapa, en una frase"></textarea>
+        </label>
+      </div>
+      <div class="add-actions">
+        <label style="display:flex; align-items:center; gap:6px; font-size:.84rem; color:var(--ink-soft);">
+          <input type="checkbox" id="f-validar" style="width:auto;"> marcar como validado
+        </label>
+        <label style="display:flex; align-items:center; gap:6px; font-size:.84rem; color:var(--ink-soft);">
+          <input type="checkbox" id="f-enradar" style="width:auto;" checked> mostrar en el radar
+        </label>
+        <button class="btn" id="saveAdd">Guardar actor</button>
+        <button class="btn ghost" id="cancelAdd">Cancelar</button>
+        <span class="hint" id="addHint"></span>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="actors">
+        <thead>
+          <tr>
+            <th>Actor</th><th>Categoría</th><th>Sector</th><th>Confianza</th><th>Justificación</th><th>Estado</th><th>En el radar</th><th>Actualizado</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+
+    <details class="tech">
+      <summary>Conexión con Herramienta 4 &middot; esquema de datos</summary>
+      <div class="tech-body">
+        <p>Este sitio guarda los actores en Netlify Blobs a través de la función <code>/api/actors</code> (GET lista, POST agrega, PATCH edita). Cualquier persona con el link puede leer y escribir, sin invitación ni cuenta.</p>
+        <div class="schema">{ id, nombre, categoria: "competidores"|"mercados"|"aliados"|"autoridades", sector, confianza: "alta"|"media"|"baja"|"por_identificar", estado: "verificado"|"por_validar"|"agregado_taller"|"descartado", mostrarEnRadar: true|false, origenTaller: true|undefined, justificacion, createdAt, updatedAt }</div>
+        <p>La Herramienta 4 debe leer los actores con <code>mostrarEnRadar !== false</code> y <code>estado !== "descartado"</code> — esa es la lista final que efectivamente aparece en el radar y la que debe calificar en interés/influencia. Puede leerlos directamente con <code>GET /api/actors</code> sobre este mismo sitio.</p>
+        <p id="gapNoteTech"></p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="view" id="view-matriz">
+  <nav class="subviews" aria-label="Actividad 3">
+    <button data-subview="matriz-tabla" class="active">Matriz</button>
+    <button data-subview="gremios">Gremios</button>
+    <button data-subview="gremios-priorizacion">Priorización de gremios</button>
+  </nav>
+  <p id="gremiosEstado" role="status" aria-live="polite" hidden></p>
+  <div class="subview active" id="subview-matriz-tabla">
+  <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
+    <strong>Actividad 3 &middot; Identificación de oportunidades directas: </strong>
+    cliente/mercado a activar, necesidad crítica o trigger que justifica el acercamiento, y respuesta u oferta de Olivia que la resuelve — marco de la diapositiva 14. Marca "Trigger" cuando esa respuesta deba pasar como insumo directo a la Herramienta 5.
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="matrizSearch" placeholder="Buscar por cliente o necesidad…">
+    <button class="btn secondary" id="matrizDownloadBtn">Descargar respaldo (JSON)</button>
+    <button class="btn" id="matrizOpenAdd">+ Agregar fila</button>
+  </div>
+
+  <div class="add-panel" id="matrizAddPanel">
+    <div class="add-grid">
+      <label class="field">Cliente / mercado
+        <input type="text" id="m-cliente" list="radarActorsList" autocomplete="off" placeholder="Cuenta, grupo o mercado a activar">
+        <span class="hint" style="font-weight:400;">Sugiere los actores validados del Radar 360°; también puedes escribir uno nuevo.</span>
+      </label>
+      <datalist id="radarActorsList"></datalist>
+      <label class="field full">Necesidad crítica
+        <textarea id="m-necesidad" placeholder="¿Qué tensión, trigger o necesidad justifica el acercamiento ahora?"></textarea>
+      </label>
+      <label class="field full">Respuesta Olivia
+        <textarea id="m-respuesta" placeholder="¿Qué servicio puede resolverla y qué experiencia demostrable tenemos?"></textarea>
+      </label>
+    </div>
+    <div class="add-actions">
+      <label style="display:flex; align-items:center; gap:6px; font-size:.84rem; color:var(--ink-soft);">
+        <input type="checkbox" id="m-trigger" style="width:auto;"> marcar como trigger para la Herramienta 5
+      </label>
+      <button class="btn" id="matrizSaveAdd">Guardar fila</button>
+      <button class="btn ghost" id="matrizCancelAdd">Cancelar</button>
+      <span class="hint" id="matrizAddHint"></span>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table class="actors">
+      <thead>
+        <tr>
+          <th>Cliente / mercado</th><th>Necesidad crítica</th><th>Respuesta Olivia</th><th>Trigger &rarr; H5</th><th>Actualizado</th><th></th>
+        </tr>
+      </thead>
+      <tbody id="matrizTbody"></tbody>
+    </table>
+  </div>
+
+  <details class="tech">
+    <summary>Conexión con Herramienta 5 &middot; esquema de datos</summary>
+    <div class="tech-body">
+      <p>Este sitio guarda las filas en Netlify Blobs a través de la función <code>/api/matriz</code> (GET lista, POST agrega, PATCH edita, DELETE elimina). Cualquier persona con el link puede leer y escribir, sin invitación ni cuenta.</p>
+      <div class="schema">{ id, cliente, necesidadCritica, respuestaOlivia, trigger: true|false, createdAt, updatedAt }</div>
+      <p>La Herramienta 5 debe leer las filas con <code>trigger === true</code> — esos son los triggers y la oferta ya identificados que alimentan el Canvas. Puede leerlas directamente con <code>GET /api/matriz</code> sobre este mismo sitio.</p>
+    </div>
+  </details>
+
+  </div>
+  <div class="subview" id="subview-gremios">
+    <h2>Gremios</h2>
+    <p>Califica el horizonte en el que Olivia debería activar cada gremio. Selecciona de nuevo tu opción para quitar el voto.</p>
+    <label class="field">Tu nombre <input id="gremiosNombre" type="text" maxlength="60" autocomplete="name" aria-describedby="gremiosIdentidad"></label>
+    <p class="hint" id="gremiosIdentidad">Usa siempre el mismo nombre: identifica tu único voto por gremio. Los nombres y votos aparecen en la descarga de resultados.</p>
+    <button class="btn" id="gremiosAbrirAgregar" type="button" style="margin-bottom:16px;">+ Agregar gremio</button>
+    <div class="add-panel gremios-agregar" id="gremiosAgregarPanel">
+      <div class="add-grid">
+        <label class="field">Gremio
+          <input type="text" id="ga-nombre" maxlength="80" placeholder="Nombre del gremio o asociación">
+        </label>
+        <label class="field">Cabeza y contacto operativo
+          <textarea id="ga-contacto" maxlength="600" placeholder="Presidente y contacto de trabajo, si se conocen"></textarea>
+        </label>
+        <label class="field">Cuentas objetivo dentro
+          <textarea id="ga-cuentas" maxlength="600" placeholder="Empresas o cuentas que reúne este gremio"></textarea>
+        </label>
+        <label class="field">Qué ofrecer
+          <textarea id="ga-oferta" maxlength="600" placeholder="Qué podría ofrecerle Olivia a este gremio"></textarea>
+        </label>
+      </div>
+      <div class="add-actions">
+        <button class="btn" id="gremiosGuardarAgregar" type="button">Guardar gremio</button>
+        <button class="btn ghost" id="gremiosCancelarAgregar" type="button">Cancelar</button>
+        <span class="hint" id="gremiosAgregarHint"></span>
+      </div>
+    </div>
+    <div id="gremiosCards" class="gremios-grid"></div>
+  </div>
+  <div class="subview" id="subview-gremios-priorizacion">
+    <h2>Priorización de gremios</h2>
+    <p>Promedio ≥ 2,5: corto plazo; ≥ 1,5: mediano plazo; &lt; 1,5: largo plazo.</p>
+    <button class="btn secondary" id="gremiosCSV" disabled>Descargar resultados (CSV)</button>
+    <div id="gremiosResumen" class="gremios-resumen"></div>
+    <div class="gremios-eje" aria-label="Escala de 1 a 3"><span>Largo 1</span><span>Mediano 2</span><span>Corto 3</span></div>
+    <div id="gremiosGrafico" aria-label="Promedio de votos por gremio"></div>
+  </div>
+</section>
+
+<section class="view active" id="view-ideas">
+  <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
+    <strong>Actividad 1 &middot; Alinear el juego (8:00–8:15): </strong>
+    "¿Cuál es el objetivo que busca Olivia en 2026, 2028, 2030 en materia de acceso a mercado y consolidación en Colombia?" Se llena una ficha por horizonte, empezando por el corto plazo.
+  </div>
+
+  <nav class="subviews">
+    <button data-subview="ideas-corto" class="active">Corto plazo · 2026</button>
+    <button data-subview="ideas-medio">Mediano plazo · 2027–2028</button>
+    <button data-subview="ideas-largo">Largo plazo · 2030</button>
+  </nav>
+
+  <div class="subview active" id="subview-ideas-corto">
+    <div class="ficha" data-hz="corto">
+      <div class="ficha-head"><h3>Corto plazo</h3><div class="yr">2026</div></div>
+      <div class="criterios">
+        <div class="ficha-label">Criterios por considerar</div>
+        <div class="criterios-grid">
+          <div class="criterio atractivo"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4v7a3 3 0 0 0 6 0V4h4v7a7 7 0 0 1-14 0z"/><path d="M5 8h4M15 8h4"/></svg></span><div><h4>Atractivo</h4><p>¿Hay suficiente mercado, presupuesto o problema?</p></div></div>
+          <div class="criterio encaje"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h3a2 2 0 1 1 4 0v4a2 2 0 1 1 0 4v4h-4a2 2 0 1 0-4 0H5v-4a2 2 0 1 0 0-4V4z"/></svg></span><div><h4>Encaje</h4><p>¿Olivia tiene una propuesta diferenciada?</p></div></div>
+          <div class="criterio acceso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 11l5-5 5 4"/><path d="M22 11l-5-5-6 5 3 3"/><path d="M8 14l2 2m1-3 2 2m1-3 2 2"/></svg></span><div><h4>Acceso</h4><p>¿Existe una puerta de entrada real?</p></div></div>
+          <div class="criterio escalabilidad"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20v-5M10 20v-8M16 20v-11"/><path d="M4 11l6-5 4 3 6-5"/><path d="M16 4h4v4"/></svg></span><div><h4>Escalabilidad</h4><p>¿Una relación puede abrir otras cuentas o sectores?</p></div></div>
+          <div class="criterio momento"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><div><h4>Momento</h4><p>¿Existe trigger o urgencia durante los próximos 6–12 meses?</p></div></div>
+        </div>
+      </div>
+      <div class="ficha-body">
+        <div class="ficha-left">
+          <div class="ficha-label">Preguntas guía</div>
+          <ul class="ficha-guide">
+            <li>¿Qué espera Olivia para finales de 2026?</li>
+            <li>¿Olivia ha identificado algún mercado para este horizonte?</li>
+            <li>¿Existe un problema/necesidad claro que Olivia resuelve en ese mercado?</li>
+            <li>¿Qué aliados tiene actualmente?</li>
+          </ul>
+          <div class="ficha-add">
+            <input type="text" class="idea-input" data-hz="corto" placeholder="Escribe tu respuesta y Enter…" maxlength="200">
+            <button class="btn" data-hz-add="corto">Agregar</button>
+          </div>
+        </div>
+        <div class="ficha-right">
+          <div class="ficha-label">Respuestas obtenidas</div>
+          <div class="ficha-answers" id="ideasBody-corto"></div>
+        </div>
+      </div>
+      <div class="ficha-conclusion">
+        <div class="ficha-label">Conclusiones &middot; corto plazo</div>
+        <textarea class="sintesis-input" data-hz="corto" placeholder="Conclusión de cierre para este horizonte…"></textarea>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn secondary" data-hz-save="corto">Guardar</button>
+          <span class="sintesis-saved" data-hz-saved="corto"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subview" id="subview-ideas-medio">
+    <div class="ficha" data-hz="medio">
+      <div class="ficha-head"><h3>Mediano plazo</h3><div class="yr">2027–2028</div></div>
+      <div class="criterios">
+        <div class="ficha-label">Criterios por considerar</div>
+        <div class="criterios-grid">
+          <div class="criterio atractivo"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4v7a3 3 0 0 0 6 0V4h4v7a7 7 0 0 1-14 0z"/><path d="M5 8h4M15 8h4"/></svg></span><div><h4>Atractivo</h4><p>¿Hay suficiente mercado, presupuesto o problema?</p></div></div>
+          <div class="criterio encaje"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h3a2 2 0 1 1 4 0v4a2 2 0 1 1 0 4v4h-4a2 2 0 1 0-4 0H5v-4a2 2 0 1 0 0-4V4z"/></svg></span><div><h4>Encaje</h4><p>¿Olivia tiene una propuesta diferenciada?</p></div></div>
+          <div class="criterio acceso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 11l5-5 5 4"/><path d="M22 11l-5-5-6 5 3 3"/><path d="M8 14l2 2m1-3 2 2m1-3 2 2"/></svg></span><div><h4>Acceso</h4><p>¿Existe una puerta de entrada real?</p></div></div>
+          <div class="criterio escalabilidad"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20v-5M10 20v-8M16 20v-11"/><path d="M4 11l6-5 4 3 6-5"/><path d="M16 4h4v4"/></svg></span><div><h4>Escalabilidad</h4><p>¿Una relación puede abrir otras cuentas o sectores?</p></div></div>
+          <div class="criterio momento"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><div><h4>Momento</h4><p>¿Existe trigger o urgencia durante los próximos 6–12 meses?</p></div></div>
+        </div>
+      </div>
+      <div class="ficha-body">
+        <div class="ficha-left">
+          <div class="ficha-label">Preguntas guía</div>
+          <ul class="ficha-guide">
+            <li>¿Qué espera Olivia para 2028?</li>
+            <li>¿Considera que habrá mercado suficiente en este horizonte?</li>
+            <li>¿Qué problema/necesidad espera estar su oferta de servicios resolviendo en ese momento?</li>
+            <li>¿A qué mercados/clientes esperaría poder acceder?</li>
+            <li>¿Qué red de aliados le gustaría tener?</li>
+            <li>¿Cuál es el posicionamiento de marca que espera alcanzar Olivia?</li>
+          </ul>
+          <div class="ficha-add">
+            <input type="text" class="idea-input" data-hz="medio" placeholder="Escribe tu respuesta y Enter…" maxlength="200">
+            <button class="btn" data-hz-add="medio">Agregar</button>
+          </div>
+        </div>
+        <div class="ficha-right">
+          <div class="ficha-label">Respuestas obtenidas</div>
+          <div class="ficha-answers" id="ideasBody-medio"></div>
+        </div>
+      </div>
+      <div class="ficha-conclusion">
+        <div class="ficha-label">Conclusiones &middot; mediano plazo</div>
+        <textarea class="sintesis-input" data-hz="medio" placeholder="Conclusión de cierre para este horizonte…"></textarea>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn secondary" data-hz-save="medio">Guardar</button>
+          <span class="sintesis-saved" data-hz-saved="medio"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subview" id="subview-ideas-largo">
+    <div class="ficha" data-hz="largo">
+      <div class="ficha-head"><h3>Largo plazo</h3><div class="yr">2030</div></div>
+      <div class="criterios">
+        <div class="ficha-label">Criterios por considerar</div>
+        <div class="criterios-grid">
+          <div class="criterio atractivo"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4v7a3 3 0 0 0 6 0V4h4v7a7 7 0 0 1-14 0z"/><path d="M5 8h4M15 8h4"/></svg></span><div><h4>Atractivo</h4><p>¿Hay suficiente mercado, presupuesto o problema?</p></div></div>
+          <div class="criterio encaje"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4h3a2 2 0 1 1 4 0v4a2 2 0 1 1 0 4v4h-4a2 2 0 1 0-4 0H5v-4a2 2 0 1 0 0-4V4z"/></svg></span><div><h4>Encaje</h4><p>¿Olivia tiene una propuesta diferenciada?</p></div></div>
+          <div class="criterio acceso"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 11l5-5 5 4"/><path d="M22 11l-5-5-6 5 3 3"/><path d="M8 14l2 2m1-3 2 2m1-3 2 2"/></svg></span><div><h4>Acceso</h4><p>¿Existe una puerta de entrada real?</p></div></div>
+          <div class="criterio escalabilidad"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20v-5M10 20v-8M16 20v-11"/><path d="M4 11l6-5 4 3 6-5"/><path d="M16 4h4v4"/></svg></span><div><h4>Escalabilidad</h4><p>¿Una relación puede abrir otras cuentas o sectores?</p></div></div>
+          <div class="criterio momento"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><div><h4>Momento</h4><p>¿Existe trigger o urgencia durante los próximos 6–12 meses?</p></div></div>
+        </div>
+      </div>
+      <div class="ficha-body">
+        <div class="ficha-left">
+          <div class="ficha-label">Preguntas guía</div>
+          <ul class="ficha-guide">
+            <li>¿Cómo espera Olivia consolidar su estrategia para 2030?</li>
+            <li>¿Qué nivel de mercado espera haber capturado o consolidado?</li>
+            <li>¿A qué mercados/clientes esperaría poder acceder?</li>
+            <li>¿Qué red de aliados le gustaría tener?</li>
+            <li>¿Cuál es el posicionamiento de marca que espera alcanzar Olivia?</li>
+          </ul>
+          <div class="ficha-add">
+            <input type="text" class="idea-input" data-hz="largo" placeholder="Escribe tu respuesta y Enter…" maxlength="200">
+            <button class="btn" data-hz-add="largo">Agregar</button>
+          </div>
+        </div>
+        <div class="ficha-right">
+          <div class="ficha-label">Respuestas obtenidas</div>
+          <div class="ficha-answers" id="ideasBody-largo"></div>
+        </div>
+      </div>
+      <div class="ficha-conclusion">
+        <div class="ficha-label">Conclusiones &middot; largo plazo</div>
+        <textarea class="sintesis-input" data-hz="largo" placeholder="Conclusión de cierre para este horizonte…"></textarea>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <button class="btn secondary" data-hz-save="largo">Guardar</button>
+          <span class="sintesis-saved" data-hz-saved="largo"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <details class="tech">
+    <summary>Esquema de datos</summary>
+    <div class="tech-body">
+      <p>Cada respuesta se guarda en Netlify Blobs a través de la función <code>/api/ideas</code> (GET lista, POST agrega, DELETE elimina). Cualquier persona con el link puede leer y escribir, sin invitación ni cuenta. Las conclusiones de síntesis se guardan aparte en <code>/api/ideas-sintesis</code>.</p>
+      <div class="schema">sticker: { id, horizonte: "corto"|"medio"|"largo", texto, createdAt }
+síntesis (por horizonte): { texto, updatedAt }</div>
+      <p>No alimenta datos a ninguna otra herramienta: da el marco de objetivos del taller.</p>
+    </div>
+  </details>
+</section>
+
+<footer class="credit">Radar 360 &middot; GH Studio para Olivia Colombia &middot; datos del informe "Colombia como mercado para Olivia" (14 de septiembre de 2026)</footer>
+<div class="toast" id="toast" hidden></div>
+<dialog class="actor-dialog" id="actorDialog" aria-labelledby="adTitle"></dialog>
+<dialog class="actor-dialog" id="sectorDialog" aria-labelledby="sdTitle"></dialog>
+
+<script src="config.js"></script>
+<script src="api-supabase.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var CATS = {
+    competidores:{label:"Competidores"},
+    mercados:{label:"Mercados"},
+    aliados:{label:"Aliados estratégicos"},
+    autoridades:{label:"Autoridades"}
+  };
+  var CAT_ORDER = ["competidores","mercados","aliados","autoridades"];
+  var CONF = {
+    alta:{label:"Alta"}, media:{label:"Media"}, baja:{label:"Baja"}, por_identificar:{label:"Por identificar"}
+  };
+  var CONF_ORDER = ["alta","media","baja","por_identificar"];
+  var EST = {
+    verificado:{label:"Verificado"}, por_validar:{label:"Por validar"},
+    agregado_taller:{label:"Agregado en taller"}, descartado:{label:"Descartado"}
+  };
+
+  var GAP_NOTE = "El informe del 14 de septiembre reporta un universo NIT-verificado de 56 empresas + 23 gremios (79 entidades). Este mapa carga 91 actores individualizados por el equipo (12 competidores, 48 mercados, 20 aliados, 11 autoridades). Sigue habiendo entidades del universo NIT-verificado sin individualizar aquí; complétalas con \"Agregar actor\" desde \"Empresas Olivia – NIT verificados.xlsx\" antes del 6 de octubre.";
+  document.getElementById("gapNoteTech").textContent = GAP_NOTE;
+  document.getElementById("radarGapNote").innerHTML = '<strong>Universo por completar: </strong>' + esc(GAP_NOTE);
+
+  var actorsById = {};
+  var filters = { cats:new Set(), confs:new Set(), q:"", showDiscarded:false, onlyNewId:false };
+  var editingId = null;
+  var activeCategory = null;
+  var API = "/api/actors";
+  var POLL_MS = 6000;
+
+  function currentActors(){ return actorsById; }
+
+  function fmtTime(iso){
+    if(!iso) return "—";
+    var d = new Date(iso);
+    if(isNaN(d)) return "—";
+    return d.toLocaleDateString('es-CO',{day:'2-digit',month:'short'}) + ' ' + d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  }
+  function esc(s){
+    return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  var toastTimer = null;
+  function showToast(msg, kind){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast" + (kind ? " " + kind : "");
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.hidden = true; }, 6000);
+  }
+  function showConnBanner(msg){
+    var b = document.getElementById("connBanner");
+    b.textContent = msg;
+    b.hidden = false;
+  }
+  function hideConnBanner(){
+    document.getElementById("connBanner").hidden = true;
+  }
+  function setLive(ok, label){
+    var dot = document.getElementById("liveDot");
+    dot.classList.toggle("off", !ok);
+    document.getElementById("liveLabel").textContent = label;
+  }
+
+  // ---------------- network ----------------
+  function fetchActors(isPoll){
+    return fetch(API, { headers: { "accept": "application/json" } })
+      .then(function(res){
+        if(!res.ok) throw new Error("http_" + res.status);
+        return res.json();
+      })
+      .then(function(list){
+        var next = {};
+        list.forEach(function(a){ next[a.id] = a; });
+        actorsById = next;
+        hideConnBanner();
+        setLive(true, "en vivo · " + list.length + " actores");
+        afterActorsLoaded();
+        if(!isPoll || shouldRerenderOnPoll()){
+          render();
+        } else {
+          renderStatsOnly();
+        }
+        return list;
+      })
+      .catch(function(err){
+        setLive(false, "sin conexión");
+        if(!isPoll){
+          showConnBanner("No se pudo conectar con el servidor. Revisa tu conexión y recarga la página.");
+        }
+      });
+  }
+
+  function shouldRerenderOnPoll(){
+    // avoid yanking the UI from under someone mid-typing or mid-edit
+    var ae = document.activeElement;
+    if(editingId) return false;
+    if(matrizEditingId) return false;
+    if(ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.tagName === "SELECT")) return false;
+    if(document.hidden) return false;
+    return true;
+  }
+  function renderStatsOnly(){
+    // still refresh the radar board (read-only) even while a form is focused, so counts update live
+    renderRadar();
+  }
+  // suggestions only feed the Matriz datalist, so refreshing them never disturbs someone typing
+  function afterActorsLoaded(){ renderActorSuggestions(); }
+
+  function addActor(){
+    var nombre = document.getElementById("f-nombre").value.trim();
+    if(!nombre){ document.getElementById("addHint").textContent = "Escribe un nombre."; return; }
+    var categoria = document.getElementById("f-categoria").value;
+    var confianza = document.getElementById("f-confianza").value;
+    var sector = document.getElementById("f-sector").value.trim();
+    var justificacion = document.getElementById("f-justificacion").value.trim();
+    var validar = document.getElementById("f-validar").checked;
+    var enRadar = document.getElementById("f-enradar").checked;
+    var payload = {
+      nombre:nombre, categoria:categoria, sector:sector, confianza:confianza,
+      justificacion:justificacion, estado: validar ? "agregado_taller" : "por_validar",
+      mostrarEnRadar: enRadar
+    };
+    var saveBtn = document.getElementById("saveAdd");
+    saveBtn.disabled = true;
+    document.getElementById("addHint").textContent = "Guardando…";
+    fetch(API, { method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify(payload) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){
+        saveBtn.disabled = false;
+        document.getElementById("f-nombre").value = "";
+        document.getElementById("f-sector").value = "";
+        document.getElementById("f-justificacion").value = "";
+        document.getElementById("f-validar").checked = false;
+        document.getElementById("f-enradar").checked = true;
+        document.getElementById("addHint").textContent = "";
+        document.getElementById("addPanel").classList.remove("open");
+        showToast("\"" + nombre + "\" se agregó correctamente.", "ok");
+        return fetchActors(false);
+      })
+      .catch(function(err){
+        saveBtn.disabled = false;
+        document.getElementById("addHint").textContent = "";
+        showToast("No se pudo guardar: " + err.message + ". Inténtalo de nuevo.", "error");
+      });
+  }
+
+  function patchActor(id, patch){
+    return fetch(API, { method:"PATCH", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id, patch:patch}) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){ return fetchActors(false); })
+      .catch(function(err){
+        showToast("No se pudo guardar el cambio: " + err.message + ".", "error");
+        render();
+      });
+  }
+
+  // ---------------- boot ----------------
+  function boot(){
+    initGremios();
+    populateSelects();
+    buildFilterChips();
+    fetchActors(false).then(function(){
+      setInterval(function(){ fetchActors(true); }, POLL_MS);
+    });
+    fetchMatriz(false).then(function(){
+      setInterval(function(){ fetchMatriz(true); }, POLL_MS);
+    });
+    fetchIdeas(false).then(function(){
+      setInterval(function(){ fetchIdeas(true); }, POLL_MS);
+    });
+    fetchSintesis(false).then(function(){
+      setInterval(function(){ fetchSintesis(true); }, POLL_MS);
+    });
+  }
+
+  function populateSelects(){
+    var catSel = document.getElementById("f-categoria");
+    CAT_ORDER.forEach(function(k){
+      var o = document.createElement("option"); o.value=k; o.textContent=CATS[k].label; catSel.appendChild(o);
+    });
+    var cfSel = document.getElementById("f-confianza");
+    CONF_ORDER.forEach(function(k){
+      var o = document.createElement("option"); o.value=k; o.textContent=CONF[k].label; cfSel.appendChild(o);
+    });
+    cfSel.value = "por_identificar";
+  }
+
+  function buildFilterChips(){
+    var catWrap = document.getElementById("catChips");
+    CAT_ORDER.forEach(function(k){
+      var b = document.createElement("button");
+      b.className = "filter-chip"; b.textContent = CATS[k].label; b.dataset.cat = k;
+      b.addEventListener("click", function(){
+        if(filters.cats.has(k)) filters.cats.delete(k); else filters.cats.add(k);
+        b.classList.toggle("on"); renderTable();
+      });
+      catWrap.appendChild(b);
+    });
+    var cfWrap = document.getElementById("cfChips");
+    CONF_ORDER.forEach(function(k){
+      var b = document.createElement("button");
+      b.className = "filter-chip"; b.textContent = CONF[k].label; b.dataset.cf = k;
+      b.addEventListener("click", function(){
+        if(filters.confs.has(k)) filters.confs.delete(k); else filters.confs.add(k);
+        b.classList.toggle("on"); renderTable();
+      });
+      cfWrap.appendChild(b);
+    });
+  }
+
+  // ---------------- rendering ----------------
+  function render(){ renderRadar(); renderTable(); renderCompetidores(); }
+
+  function radarVisible(a){
+    return a.estado !== "descartado" && a.mostrarEnRadar !== false;
+  }
+
+  function renderRadar(){
+    var all = Object.values(currentActors());
+    var visible = all.filter(radarVisible);
+    document.getElementById("hubTotal").textContent = visible.length;
+
+    var grid = document.getElementById("boardGrid");
+    grid.innerHTML = "";
+    CAT_ORDER.forEach(function(catKey){
+      var n = visible.filter(function(a){ return a.categoria === catKey; }).length;
+      var tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "tile cat-" + catKey + (activeCategory === catKey ? " active" : "");
+      tile.innerHTML =
+        '<span class="t-head"><img class="t-icon" src="'+GENERIC_LOGO_BY_CAT[catKey]+'" alt=""><span class="t-label">'+CATS[catKey].label+'</span></span>'+
+        '<span class="t-n mono">'+n+'</span>'+
+        '<span class="t-hint">Ver actores <span class="car">▾</span></span>';
+      tile.addEventListener("click", function(){
+        activeCategory = (activeCategory === catKey) ? null : catKey;
+        renderRadar();
+      });
+      grid.appendChild(tile);
+    });
+
+    var drawer = document.getElementById("drawer");
+    if(!activeCategory){
+      drawer.hidden = true;
+      return;
+    }
+    drawer.hidden = false;
+    var catKeyA = activeCategory;
+    var items = visible.filter(function(a){ return a.categoria === catKeyA; });
+    var registered = all.filter(function(a){ return a.categoria === catKeyA && a.estado !== "descartado"; }).length;
+
+    document.getElementById("drawerTitle").innerHTML = CATS[catKeyA].label + ' <span class="mono" style="color:var(--ink-soft); font-size:.85rem;">('+items.length+')</span>';
+    var note = document.getElementById("drawerNote");
+    var hiddenCount = registered - items.length;
+    note.textContent = hiddenCount > 0
+      ? hiddenCount + " actor(es) registrado(s) en esta categoría no se muestran en el radar final (revisa 'En el radar' en Gestión)."
+      : "";
+
+    var body = document.getElementById("drawerBody");
+    body.innerHTML = "";
+    if(!items.length){
+      var empty = document.createElement("div");
+      empty.className = "empty-note";
+      empty.textContent = "Sin actores en el radar todavía en esta categoría.";
+      body.appendChild(empty);
+    } else {
+      var groups = {};
+      items.forEach(function(a){
+        var g = a.sector || "General";
+        (groups[g] = groups[g] || []).push(a);
+      });
+      sortedSectorKeys(catKeyA, Object.keys(groups)).forEach(function(g){
+        var gd = document.createElement("div"); gd.className = "sector-block";
+        var hasSectorFicha = catKeyA === "mercados" && Object.prototype.hasOwnProperty.call(SECTOR_FICHAS, g);
+        var lab = document.createElement(hasSectorFicha ? "button" : "div");
+        lab.className = "sector-title"; lab.textContent = g;
+        if(hasSectorFicha){
+          lab.type = "button";
+          lab.setAttribute("aria-haspopup", "dialog");
+          lab.setAttribute("aria-controls", "sectorDialog");
+          var hint = document.createElement("span"); hint.className = "sector-hint";
+          hint.textContent = "Ver ficha ↗"; lab.appendChild(hint);
+          lab.addEventListener("click", function(){ openSectorDialog(g); });
+        }
+        gd.appendChild(lab);
+        var actorGrid = document.createElement("div"); actorGrid.className = "actor-grid";
+        groups[g].sort(function(a,b){return a.nombre.localeCompare(b.nombre);}).forEach(function(a){
+          actorGrid.appendChild(makeCard(a));
+        });
+        gd.appendChild(actorGrid);
+        body.appendChild(gd);
+      });
+    }
+  }
+
+  var SECTOR_ORDER = {
+    mercados: ["Financiero","Energía","Retail","Industrial","Telecomunicaciones","Salud"],
+    aliados: ["Prioridad máxima","Prioridad alta","Prioridad media","Prioridad baja-media","Prioridad no evaluada en el informe"],
+    competidores: ["Firma global","Boutique / talento especializado","Por confirmar"],
+    autoridades: ["Ministerio","Entidad adscrita"]
+  };
+  function sortedSectorKeys(catKey, keys){
+    var order = SECTOR_ORDER[catKey] || [];
+    return keys.slice().sort(function(x,y){
+      var ix = order.indexOf(x), iy = order.indexOf(y);
+      if(ix === -1 && iy === -1) return x.localeCompare(y);
+      if(ix === -1) return 1;
+      if(iy === -1) return -1;
+      return ix - iy;
+    });
+  }
+
+  var GENERIC_LOGO = "logos/generic-competidores.png";
+  var GENERIC_LOGO_BY_CAT = {
+    competidores: "logos/generic-competidores.png",
+    mercados: "logos/generic-mercados.png",
+    aliados: "logos/generic-aliados.png",
+    autoridades: "logos/generic-autoridades.png"
+  };
+  var LOGO_MAP = {
+    "competidores-ey": "logos/competidores-ey.png",
+    "competidores-deloitte": "logos/competidores-deloitte.png",
+    "competidores-pwc": "logos/competidores-pwc.webp",
+    "competidores-kpmg": "logos/competidores-kpmg.webp",
+    "competidores-accenture": "logos/competidores-accenture.webp",
+    "competidores-mercer": "logos/competidores-mercer.png",
+    "competidores-korn-ferry": "logos/competidores-korn-ferry.png",
+    "competidores-wtw-willis-towers-watson": "logos/competidores-wtw-willis-towers-watson.png",
+    "competidores-grant-thornton": "logos/competidores-grant-thornton.png",
+    "competidores-trebol-consultoria": "logos/competidores-trebol-consultoria.png",
+    "competidores-conlagente": "logos/competidores-conlagente.png",
+    "competidores-caramelo": "logos/competidores-caramelo.png",
+    "competidores-caramelo-escaso": "logos/competidores-caramelo.png",
+
+    "mercados-acesco-colombia-familiar": "logos/mercados-acesco-colombia-familiar.webp",
+    "mercados-addi-capital-extranjero": "logos/mercados-addi-capital-extranjero.jpg",
+    "mercados-almacenes-exito-grupo-calleja": "logos/mercados-almacenes-exito-grupo-calleja.svg",
+    "mercados-alpina-bic": "logos/mercados-alpina-bic.webp",
+    "mercados-banco-falabella-matriz-chilena": "logos/mercados-banco-falabella-matriz-chilena.webp",
+    "mercados-banco-gnb-sudameris-grupo-gilinski": "logos/mercados-banco-gnb-sudameris-grupo-gilinski.webp",
+    "mercados-banco-popular-grupo-aval": "logos/mercados-banco-popular-grupo-aval.png",
+    "mercados-banco-de-bogota-grupo-aval": "logos/mercados-banco-de-bogota-grupo-aval.png",
+    "mercados-bancolombia-grupo-cibest": "logos/mercados-bancolombia-grupo-cibest.jpeg",
+    "mercados-bavaria-ab-inbev": "logos/mercados-bavaria-ab-inbev.webp",
+    "mercados-bold-cf-compania-de-financiamiento": "logos/mercados-bold-cf-compania-de-financiamiento.png",
+    "mercados-carvajal-grupo-caleno": "logos/mercados-carvajal-grupo-caleno.svg",
+    "mercados-celsia-grupo-argos": "logos/mercados-celsia-grupo-argos.png",
+    "mercados-cementos-argos-grupo-argos": "logos/mercados-cementos-argos-grupo-argos.png",
+    "mercados-challenger-familiar-bogota": "logos/mercados-challenger-familiar-bogota.jpg",
+    "mercados-tuya-cibest-50-bancolombia": "logos/mercados-tuya-cibest-50-bancolombia.png",
+    "mercados-claro-colombia-america-movil": "logos/mercados-claro-colombia-america-movil.svg",
+    "mercados-compensar": "logos/mercados-compensar.jpeg",
+    "mercados-constructora-bolivar-grupo-bolivar": "logos/mercados-constructora-bolivar-grupo-bolivar.png",
+    "mercados-d1": "logos/mercados-d1.webp",
+    "mercados-davivienda-group-banco-davivienda-grupo-bolivar": "logos/mercados-davivienda-group-banco-davivienda-grupo-bolivar.jpg",
+    "mercados-epm-municipio-de-medellin": "logos/mercados-epm-municipio-de-medellin.svg",
+    "mercados-etb-distrito-de-bogota": "logos/mercados-etb-distrito-de-bogota.png",
+    "mercados-ecopetrol-nacion-88-5": "logos/mercados-ecopetrol-nacion-88-5.jpg",
+    "mercados-enel-colombia-enel-americas-57-3-geb-42-5": "logos/mercados-enel-colombia-enel-americas-57-3-geb-42-5.jpg",
+    "mercados-erco-energia-medellin-capital-extranjero": "logos/mercados-erco-energia-medellin-capital-extranjero.jpeg",
+    "mercados-frisby-bic-pereira": "logos/mercados-frisby-bic-pereira.jpg",
+    "mercados-fundacion-santa-fe": "logos/mercados-fundacion-santa-fe.gif",
+    "mercados-fundacion-valle-del-lili": "logos/mercados-fundacion-valle-del-lili.jpeg",
+    "mercados-greenyellow-colombia-filial-francesa": "logos/mercados-greenyellow-colombia-filial-francesa.png",
+    "mercados-grupo-energia-bogota-distrito-de-bogota": "logos/mercados-grupo-energia-bogota-distrito-de-bogota.png",
+    "mercados-grupo-nutresa-gilinski-ihc": "logos/mercados-grupo-nutresa-gilinski-ihc.png",
+    "mercados-industrias-haceb-familiar-medellin": "logos/mercados-industrias-haceb-familiar-medellin.jpg",
+    "mercados-isa-nacion": "logos/mercados-isa-nacion.png",
+    "mercados-jeronimo-martins-colombia-ara-portugal": "logos/mercados-jeronimo-martins-colombia-ara-portugal.webp",
+    "mercados-keralty-colsanitas": "logos/mercados-keralty-colsanitas.jpeg",
+    "mercados-lulo-bank-grupo-gilinski": "logos/mercados-lulo-bank-grupo-gilinski.png",
+    "mercados-mercadolibre-colombia-nasdaq": "logos/mercados-mercadolibre-colombia-nasdaq.webp",
+    "mercados-organizacion-corona-holding": "logos/mercados-organizacion-corona-holding.webp",
+    "mercados-organizacion-terpel-copec-chile": "logos/mercados-organizacion-terpel-copec-chile.png",
+    "mercados-plastilene-familiar-soacha": "logos/mercados-plastilene-familiar-soacha.jpeg",
+    "mercados-promigas": "logos/mercados-promigas.jpg",
+    "mercados-productos-ramo": "logos/mercados-productos-ramo.png",
+    "mercados-superpolo-jv-marcopolo-fanalca": "logos/mercados-superpolo-jv-marcopolo-fanalca.jpg",
+    "mercados-sura": "logos/mercados-sura.webp",
+    "mercados-tecnoglass-nasdaq-familia-daes": "logos/mercados-tecnoglass-nasdaq-familia-daes.webp",
+    "mercados-tigo-millicom-integracion-de-movistar": "logos/mercados-tigo-millicom-integracion-de-movistar.webp",
+    "mercados-vatia-cali": "logos/mercados-vatia-cali.jpeg",
+
+    "autoridades-ministerio-del-trabajo": "logos/autoridades-ministerio-del-trabajo.png",
+    "autoridades-ministerio-de-comercio-industria-y-turismo": "logos/autoridades-ministerio-de-comercio-industria-y-turismo.png",
+    "autoridades-ministerio-tic": "logos/autoridades-ministerio-tic.webp",
+    "autoridades-ministerio-de-ciencia-tecnologia-e-innovacion": "logos/autoridades-ministerio-de-ciencia-tecnologia-e-innovacion.png",
+    "autoridades-departamento-nacional-de-planeacion-dnp": "logos/autoridades-departamento-nacional-de-planeacion-dnp.webp",
+    "autoridades-funcion-publica": "logos/autoridades-funcion-publica.jpeg",
+    "autoridades-sena": "logos/autoridades-sena.png",
+    "autoridades-ministerio-de-hacienda": "logos/autoridades-ministerio-de-hacienda.png",
+    "autoridades-superintendencia-financiera": "logos/autoridades-superintendencia-financiera.png",
+    "autoridades-ministerio-de-salud": "logos/autoridades-ministerio-de-salud.webp",
+    "autoridades-ministerio-de-minas-y-energia": "logos/autoridades-ministerio-de-minas-y-energia.webp",
+
+    "aliados-andesco": "logos/aliados-andesco.png",
+    "aliados-asobancaria": "logos/aliados-asobancaria.png",
+    "aliados-fenalco": "logos/aliados-fenalco.png",
+    "aliados-camacol": "logos/aliados-camacol.jpeg",
+    "aliados-colombia-fintech": "logos/aliados-colombia-fintech.jpeg",
+    "aliados-andi": "logos/aliados-andi.jpg",
+    "aliados-acrip": "logos/aliados-acrip.jpg",
+    "aliados-acp": "logos/aliados-acp.png",
+    "aliados-cci": "logos/aliados-cci.jpeg",
+    "aliados-naturgas": "logos/aliados-naturgas.jpg",
+    "aliados-acolgen": "logos/aliados-acolgen.png",
+    "aliados-ser-colombia": "logos/aliados-ser-colombia.jpg",
+    "aliados-acoplasticos": "logos/aliados-acoplasticos.png",
+    "aliados-ccce-camara-colombiana-de-comercio-electronico": "logos/aliados-ccce-camara-colombiana-de-comercio-electronico.jpg",
+    "aliados-cecodes": "logos/aliados-cecodes.png",
+    "aliados-asofondos": "logos/aliados-asofondos.png",
+    "aliados-anda": "logos/aliados-anda.jpg",
+    "aliados-acopi": "logos/aliados-acopi.jpeg"
+  };
+  function getLogo(a){ return LOGO_MAP[a.id] || GENERIC_LOGO_BY_CAT[a.categoria] || GENERIC_LOGO; }
+
+  // Fichas de producto por competidor (Ajuste 2). Contenido estático de investigación, no editable en vivo:
+  // informe "Colombia como mercado para Olivia" (14 sept. 2026) + páginas web oficiales, consultadas el 23 sept. 2026.
+  // `sinVerificar` marca datos que no se pudieron confirmar en la página oficial de Colombia.
+  var INFORME = "Informe \"Colombia como mercado para Olivia\"";
+  var COMPETIDOR_FICHAS = {
+    "competidores-accenture": {
+      productos: [
+        "Gestión del cambio para transformaciones continuas",
+        "Liderazgo y cultura",
+        "Modelo operativo y diseño de la organización",
+        "Transformación de RR. HH. y servicios gestionados",
+        "Transformación del talento y desarrollo de habilidades (reskilling)",
+        "Experiencia del empleado con datos e IA; adopción de IA generativa"
+      ],
+      compite: "Gestión del cambio con capacidad de ejecución tecnológica integrada: gana cuando el cambio va amarrado a una implementación de tecnología o IA.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "accenture.com · Talent & Organization", url: "https://www.accenture.com/co-es/services/talent-organization"}
+      ]
+    },
+    "competidores-deloitte": {
+      productos: [
+        "Gestión estratégica del cambio organizacional (implementación tecnológica, reestructuraciones, fusiones y adquisiciones, alineación cultural)",
+        "Diseño organizacional y redefinición de modelos operativos",
+        "Cultura y liderazgo",
+        "Estrategia e inteligencia de RR. HH. basada en datos",
+        "Predicción del ajuste del talento a la cultura organizacional"
+      ],
+      compite: "Entra por el cambio asociado a implementaciones tecnológicas, reestructuraciones y fusiones, y desde ahí vende cultura y liderazgo en las cuentas grandes.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "deloitte.com · Capital Humano Colombia", url: "https://www2.deloitte.com/co/es/pages/human-capital/solutions/human-capital.html"}
+      ]
+    },
+    "competidores-pwc": {
+      productos: [
+        "Workforce Transformation",
+        "Gestión del cambio con cuatro núcleos de acción: Conocer, Reconocer, Acompañar y Decidir",
+        "Rutas de cambio co-creadas según la cultura organizacional requerida por la estrategia",
+        "Identificación de potencial de liderazgo y cierre de brechas de habilidades",
+        "Transformación digital: de la estrategia a la ejecución"
+      ],
+      compite: "Transformación organizacional con componente digital; argumenta con datos de éxito (cita un 34 % más de éxito en proyectos acompañados con gestión del cambio).",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "pwc.com/co · Workforce Transformation", url: "https://www.pwc.com/co/es/nuestros-servicios/consultoria/gestion-del-talento.html"}
+      ]
+    },
+    "competidores-kpmg": {
+      productos: [
+        "Capital Humano y Cambio Organizacional (práctica en Colombia)",
+        "Gestión del cambio con metodología propia, orientada a resultados medibles",
+        "Transformación cultural en contextos de digitalización, integraciones o cambio de modelo de negocio",
+        "Diseño organizacional, transformación de RR. HH. y planeación de fuerza laboral",
+        "Experiencia del empleado (servicio digital al empleado)",
+        "Estrategias de reskilling y upskilling"
+      ],
+      compite: "Práctica consolidada de transformación organizacional; fuerte en integraciones y cambios de estructura.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "kpmg.com/co · Gestión del Cambio", url: "https://kpmg.com/co/es/home/services/advisory/management-consulting/corporate-services/capital-humano-y-cambio-organizacional/gestion-del-cambio.html"}
+      ]
+    },
+    "competidores-ey": {
+      productos: [
+        "EY Change Experience: gestión del cambio centrada en la experiencia",
+        "EY Change Insights: plataforma de analítica del cambio",
+        "Transformación organizacional y de fuerza laboral; Transformation EQ",
+        "Transformación de RR. HH.",
+        "Liderazgo, cultura y D&I; consultoría de aprendizaje y desarrollo",
+        "People Experience; analítica de fuerza laboral; recompensas"
+      ],
+      compite: "Gestión del cambio y experiencia organizacional para la gran empresa colombiana; su Change Insights compite directo con la analítica de Olivia.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "ey.com/es_co · Gestión del cambio y experiencia", url: "https://www.ey.com/es_co/services/workforce/change-management-experience"}
+      ]
+    },
+    "competidores-mercer": {
+      productos: [
+        "Encuesta de Remuneración Total (TRS)",
+        "Mercer WIN: plataforma de datos de compensación",
+        "Consultoría en compensación ejecutiva",
+        "Evaluación del talento y brechas de competencias"
+      ],
+      compite: "Talento y compensación; referencia obligada en las juntas bancarias del mapeo. Compite con Olivia en people analytics y experiencia del empleado.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "mercer.com/es-co · Talento y recompensas", url: "https://www.mercer.com/es-co/solutions/talent-and-rewards/executive-compensation/"}
+      ]
+    },
+    "competidores-korn-ferry": {
+      productos: [
+        "Consultoría organizacional y transformación empresarial (estrategia + operación + talento)",
+        "Desarrollo de liderazgo",
+        "Evaluación (assessment), incluida la preparación de la organización para la IA",
+        "Método Hay: valoración de cargos y diseño de recompensas",
+        "Búsqueda de ejecutivos"
+      ],
+      compite: "Domina talento, compensación y mandatos de liderazgo directivo; incumbente en transformación cultural y academias de liderazgo.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "kornferry.com", url: "https://www.kornferry.com/"}
+      ]
+    },
+    "competidores-wtw-willis-towers-watson": {
+      productos: [
+        "Compensación total y encuestas de compensación",
+        "Remuneración ejecutiva; estrategia y diseño de compensaciones",
+        "Employee Insights: encuestas de experiencia y clima (10 millones de empleados al año)",
+        "Salud y beneficios",
+        "Corretaje de seguros y asesoría de riesgos (negocio principal)"
+      ],
+      compite: "Talento y compensación junto con Mercer y Korn Ferry; entra por beneficios y encuestas de clima.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "wtwco.com/es-co · Encuestas de compensación", url: "https://www.wtwco.com/es-co/insights/campaigns/encuestas-de-compensacion"}
+      ]
+    },
+    "competidores-grant-thornton": {
+      productos: [
+        "Talento y cultura: alineación de estrategia y personas",
+        "Consultoría sobre el ciclo de vida del empleado",
+        "Auditoría, impuestos, NIIF, legal y outsourcing contable (negocio principal)"
+      ],
+      compite: "Cultura y liderazgo con oferta de menor ticket; más de 400 profesionales en Bogotá, Medellín, Cali, Cartagena y Villavicencio.",
+      sinVerificar: "El detalle del portafolio de talento y cultura viene de páginas de Grant Thornton en otros países; en la página de Colombia no aparece desglosado.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "grantthornton.com.co", url: "https://www.grantthornton.com.co/es/"}
+      ]
+    },
+    "competidores-trebol-consultoria": {
+      productos: [
+        "Transformación cultural (\"Cultura Ágil Sostenible\")",
+        "Diagnósticos de cultura con el modelo Barrett (Cultural Transformation Tools)",
+        "Certificación CTT® Practitioner",
+        "Certificación TCS (Transformación Cultural Sistémica)"
+      ],
+      compite: "Boutique de Medellín, socia global de Barrett Values Centre; compite directo en cultura con metodología certificable.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+      ]
+    },
+    "competidores-conlagente": {
+      productos: [
+        "Cultura corporativa: propósito y valores en la toma de decisiones",
+        "Liderazgo: competencias estratégicas y conversacionales",
+        "Comunicación colaborativa y equipos de alto desempeño",
+        "Bienestar, adaptabilidad y servicio al cliente",
+        "Formación de formadores internos",
+        "Formatos: conferencias, talleres, bootcamps, mentorías y consultoría (virtual, presencial o híbrido)"
+      ],
+      compite: "Boutique local que compite en cultura y liderazgo, con fuerte componente formativo.",
+      fuentes: [
+        {label: INFORME + ", §1.4"},
+        {label: "conlagente.com.co", url: "https://conlagente.com.co/"}
+      ]
+    },
+    "competidores-caramelo": {
+      productos: [
+        "Cooltura®: metodología propia para movilizar cultura organizacional",
+        "Medición de cultura (Thick Data + Big Data)",
+        "Transformación cultural y cambio",
+        "Líderes que Mueven Cooltura® (programa de liderazgo)",
+        "Experiencia del empleado: puntos de contacto y narrativas",
+        "Membresía y Bowl de Cooltura® (comunidad y evento anual)"
+      ],
+      compite: "Boutique de Medellín (fundada en 2009) que vende cultura y experiencia del empleado con marca propia.",
+      fuentes: [
+        {label: "Señalado en reunión previa con el cliente (no está en el informe)"},
+        {label: "carameloescaso.com", url: "https://carameloescaso.com/"}
+      ]
+    }
+  };
+  COMPETIDOR_FICHAS["competidores-caramelo-escaso"] = COMPETIDOR_FICHAS["competidores-caramelo"];
+
+  function makeCard(a){
+    var card = document.createElement("button");
+    card.type = "button";
+    card.className = "actor-card";
+    card.title = "Ver por qué es relevante";
+    card.addEventListener("click", function(){ openActorDialog(a.id); });
+
+    var logoBox = document.createElement("div"); logoBox.className = "actor-logo";
+    var img = document.createElement("img");
+    img.src = getLogo(a); img.alt = a.nombre;
+    img.addEventListener("error", function(){
+      var fallback = GENERIC_LOGO_BY_CAT[a.categoria] || GENERIC_LOGO;
+      if(img.src.indexOf(fallback) === -1) img.src = fallback;
+    });
+    logoBox.appendChild(img);
+    var dot = document.createElement("span"); dot.className = "conf-dot";
+    dot.style.background = "var(--cf-"+a.confianza+")";
+    dot.title = "Confianza: " + CONF[a.confianza].label;
+    logoBox.appendChild(dot);
+    if(a.origenTaller){
+      var nb = document.createElement("span"); nb.className = "new-badge"; nb.textContent = "New ID";
+      nb.title = "Agregado en vivo durante el taller";
+      logoBox.appendChild(nb);
+    }
+    card.appendChild(logoBox);
+
+    var name = document.createElement("div"); name.className = "actor-name"; name.textContent = a.nombre;
+    card.appendChild(name);
+
+    var est = document.createElement("span"); est.className = "actor-est"; est.textContent = EST[a.estado].label;
+    card.appendChild(est);
+
+    return card;
+  }
+
+  function productosHtml(ficha){
+    var h = '<div class="ad-label">Productos y servicios</div><ul>';
+    ficha.productos.forEach(function(p){ h += '<li>' + esc(p) + '</li>'; });
+    h += '</ul><div class="ad-label">Dónde compite con Olivia</div><div>' + esc(ficha.compite) + '</div>';
+    if(ficha.sinVerificar) h += '<div class="unverified" style="margin-top:6px;">Sin verificar: ' + esc(ficha.sinVerificar) + '</div>';
+    return h;
+  }
+  function fuentesHtml(ficha){
+    return 'Fuentes: ' + ficha.fuentes.map(function(f){
+      return f.url ? '<a href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.label) + '</a>' : esc(f.label);
+    }).join(' &middot; ');
+  }
+
+  const SECTOR_FICHAS = {
+    "Financiero": {
+      "estado": [
+        "Grupo Cibest opera desde el 19 de mayo de 2025 como matriz de Bancolombia y sus negocios bancarios y digitales.",
+        "Davivienda integra Scotiabank en Colombia, Costa Rica y Panamá, con cierre previsto para el segundo semestre de 2026 y activos de COP 263,7 billones.",
+        "El Decreto 368 de 2026 hace obligatorias las finanzas abiertas; Bre-B ya opera y exige capacidades para pagos interoperables.",
+        "Con la tasa de interés en 12 %, la cartera se estrecha y las juntas exigen eficiencia."
+      ],
+      "priorizacion": [
+        "Es un sector foco con alta demanda de transformación y la mayor capacidad de pago, según el informe.",
+        "Las integraciones y las nuevas estructuras de grupo requieren cultura común, liderazgo y claridad sobre las decisiones de matrices y filiales.",
+        "Las finanzas abiertas requieren gobierno de datos, rediseño de decisiones y gestión del cambio; las empresas de tecnología financiera necesitan estructura para escalar."
+      ],
+      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.1 y 1.3."
+    },
+    "Energía": {
+      "estado": [
+        "La transición energética, la automatización y la digitalización cambian el trabajo de miles de operarios y equipos de campo.",
+        "Cuatro de las siete grandes empresas están bajo control público; Enel Colombia tiene participación del Distrito a través de GEB (42,5 %).",
+        "En 2026 Ecopetrol atraviesa una renovación de gobierno corporativo e ISA sigue sin presidencia en firme tras la anulación de su elección.",
+        "Enel Colombia integra cuatro culturas de origen: Emgesa, Codensa, EGP y ESSA2."
+      ],
+      "priorizacion": [
+        "Es un sector foco de alta demanda, aunque condicionado por el gobierno corporativo y el riesgo político.",
+        "La transición de equipos de campo hacia entornos digitales exige gestión del cambio y cultura de seguridad.",
+        "Las integraciones y las participadas sin control operativo requieren cultura común, estándares de gestión y alineación del liderazgo."
+      ],
+      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §2.2."
+    },
+    "Retail": {
+      "estado": [
+        "Comercio y gastronomía están especialmente expuestos a la reforma laboral: el recargo dominical y festivo pasó a 90 % en julio de 2026 y llegará a 100 % en julio de 2027.",
+        "Éxito reconvierte tiendas hacia Carulla y Éxito: 19 intervenciones reportan ventas +14 % y hay 30 más en curso.",
+        "D1 supera 2.400 tiendas y 26.000 empleos, con meta de 30.000 en 2026, tras más de 200 inspecciones laborales.",
+        "Nutresa avanza en «One Nutresa», reorganiza categorías y cambia su estructura de transformación."
+      ],
+      "priorizacion": [
+        "Es un sector foco porque la reforma laboral impone cambios concretos en operaciones nocturnas, dominicales y por turnos.",
+        "El rediseño del modelo de tienda, los turnos y la dotación requiere gestión del cambio vinculada a la productividad.",
+        "La reconversión de tiendas y las reorganizaciones empresariales generan necesidades de cultura y liderazgo; las inspecciones refuerzan la demanda de cultura de cumplimiento."
+      ],
+      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.3 y 1.3."
+    },
+    "Industrial": {
+      "estado": [
+        "Cementos Argos anunció el 1 de abril de 2026 su separación en Argos Materials y Argos Latam, esta última en 15 países, con un plazo estimado de 24 meses.",
+        "Más del 70 % de los clientes de Argos en Colombia compra cemento por Argos ONE, un caso de adopción digital organizacional.",
+        "Las ventas de vivienda nueva crecieron 12,4 % en 2025; Camacol proyecta entre 5 % y 12 % para 2026, con iniciaciones de obra en mínimos históricos.",
+        "La industria familiar avanza en profesionalización y la manufactura enfrenta competencia importada y reforma laboral en planta."
+      ],
+      "priorizacion": [
+        "Es un sector foco y contiene el mejor objetivo individual del informe: la escisión de Cementos Argos, con una transformación de fecha definida.",
+        "Separar personas, procesos y sistemas y construir dos culturas a partir de una exige gestión del cambio y alineación del liderazgo.",
+        "La profesionalización familiar, la automatización y la baja productividad de la construcción generan demanda de transformación organizacional y cambio en planta."
+      ],
+      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.4 y 1.3."
+    },
+    "Salud": {
+      "estado": [
+        "El sistema atraviesa una reorganización forzada con ocho EPS intervenidas que reúnen más del 45 % de los afiliados.",
+        "La siniestralidad se acerca al 110 %, en un contexto de traslados masivos hacia IPS y redes privadas.",
+        "La reforma laboral afecta operaciones de atención permanente: jornada máxima de 42 horas y recargo dominical y festivo de 90 % desde julio de 2026."
+      ],
+      "priorizacion": [
+        "Es uno de los «sectores emergentes fuera del radar» (§2.5); el informe pide decidir explícitamente en el taller si se incorpora.",
+        "Las IPS, redes privadas y prestadores con respaldo financiero que absorben traslados necesitan rediseñar capacidad, modelo de atención y turnos.",
+        "Estos cambios conectan con gestión del cambio y liderazgo clínico; el informe condiciona la exploración a la capacidad de pago."
+      ],
+      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.5 y 1.3."
+    },
+    "Telecomunicaciones": {
+      "estado": [
+        "Millicom tomó el control total de Movistar Colombia en febrero de 2026 y completó en abril la compra de la participación estatal por COP 856.000 millones.",
+        "La integración Tigo–Movistar incluye retiros voluntarios y el traslado de sede al edificio de Movistar.",
+        "La operación está sujeta a condiciones de la SIC y define su arquitectura organizacional en los primeros 12 a 18 meses."
+      ],
+      "priorizacion": [
+        "Es uno de los «sectores emergentes fuera del radar» (§2.5); el informe pide decidir explícitamente en el taller si se incorpora.",
+        "El informe considera la integración Tigo–Movistar el proceso de transformación organizacional más intenso del país.",
+        "La arquitectura organizacional, la armonización de dos culturas y el acompañamiento a salidas voluntarias requieren cultura, liderazgo y gestión del cambio."
+      ],
+      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.5 y 1.3."
+    }
+  };
+
+  function openSectorDialog(sector){
+    if(!Object.prototype.hasOwnProperty.call(SECTOR_FICHAS, sector)) return;
+    var ficha = SECTOR_FICHAS[sector];
+    var dlg = document.getElementById("sectorDialog");
+    function bullets(items){
+      return '<ul>' + items.map(function(item){ return '<li>' + esc(item) + '</li>'; }).join('') + '</ul>';
+    }
+    dlg.innerHTML =
+      '<div class="ad-head"><div><h3 id="sdTitle">' + esc(sector) + '</h3>' +
+        '<div class="ad-pills"><span class="pill cat-mercados">Mercados</span></div></div>' +
+        '<button type="button" class="btn ghost ad-close" data-close>Cerrar ×</button></div>' +
+      '<div class="ad-body"><div class="ad-label">Estado del sector</div>' + bullets(ficha.estado) +
+        '<div class="ad-label">Por qué fue priorizado</div>' + bullets(ficha.priorizacion) +
+        '<div class="comp-src" style="margin-top:14px;">' + esc(ficha.fuente) + '</div></div>';
+    dlg.querySelector("[data-close]").addEventListener("click", function(){ dlg.close(); });
+    if(!dlg.open) dlg.showModal();
+  }
+  document.getElementById("sectorDialog").addEventListener("click", function(e){
+    if(e.target === e.currentTarget) e.currentTarget.close();
+  });
+
+  function openActorDialog(id){
+    var a = currentActors()[id];
+    if(!a) return;
+    var dlg = document.getElementById("actorDialog");
+    var ficha = a.categoria === "competidores" ? COMPETIDOR_FICHAS[a.id] : null;
+    var hasMarketFicha = a.categoria === "mercados" && a.queHace && a.relevancia;
+    var hasAliadoFicha = a.categoria === "aliados" && a.descripcion;
+    var hasAutoridadFicha = a.categoria === "autoridades" && a.funciones;
+    var empresas = Array.isArray(a.empresas) ? a.empresas : [];
+    var body;
+    if(hasMarketFicha){
+      body = '<div class="ad-label">Qué hace</div><div class="ad-just">' + esc(a.queHace) + '</div>' +
+        '<div class="ad-label">Relevancia para Olivia</div><div class="ad-just">' + esc(a.relevancia) + '</div>';
+    } else if(hasAliadoFicha){
+      body = '<div class="ad-label">Qué es</div><div class="ad-just">' + esc(a.descripcion) + '</div>' +
+        '<div class="ad-label">Empresas del gremio en el mapa</div>' +
+        (empresas.length ? '<ul>' + empresas.map(function(e){ return '<li>' + esc(e) + '</li>'; }).join('') + '</ul>' : '') +
+        (a.empresasNota ? '<div class="ad-note">' + esc(a.empresasNota) + '</div>' : '') +
+        (a.relevancia ? '<div class="ad-label">Relación con Olivia</div><div class="ad-just">' + esc(a.relevancia) + '</div>' : '');
+    } else if(hasAutoridadFicha){
+      body = '<div class="ad-label">Funciones</div><div class="ad-just">' + esc(a.funciones) + '</div>' +
+        (a.relevancia ? '<div class="ad-label">Por qué importa para el despliegue de Olivia</div><div class="ad-just">' + esc(a.relevancia) + '</div>' : '');
+    } else {
+      body = '<div class="ad-label">Por qué es relevante</div>' +
+        (a.justificacion ? '<div class="ad-just">' + esc(a.justificacion) + '</div>' : '<div class="ad-empty">Sin justificación registrada todavía (se agrega en Gestión).</div>');
+    }
+    var titular = (hasAutoridadFicha && a.titular)
+      ? '<div class="ad-titular"><span class="t-label">Titular</span><strong>' + esc(a.titular) + '</strong>' +
+        (a.cargo ? '<span class="t-cargo">' + esc(a.cargo) + '</span>' : '') + '</div>'
+      : '';
+    var h =
+      '<div class="ad-head">' +
+        '<img class="ad-logo" src="' + esc(getLogo(a)) + '" alt="">' +
+        '<div><h3 id="adTitle">' + esc(a.nombre) + '</h3>' +
+          '<div class="ad-pills"><span class="pill cat-' + a.categoria + '">' + CATS[a.categoria].label + '</span>' +
+          (a.sector ? '<span class="pill est">' + esc(a.sector) + '</span>' : '') +
+          (a.categoria === "mercados" ? '' : '<span class="pill cf"><span class="dot" style="background:var(--cf-' + a.confianza + ')"></span>Confianza ' + CONF[a.confianza].label.toLowerCase() + '</span>') + '</div>' +
+          titular +
+        '</div>' +
+        '<button type="button" class="btn ghost ad-close" data-close>Cerrar ×</button>' +
+      '</div>' +
+      '<div class="ad-body">' + body +
+        (ficha ? productosHtml(ficha) + '<div class="comp-src" style="margin-top:14px;">' + fuentesHtml(ficha) + '</div>' : '') +
+      '</div>';
+    dlg.innerHTML = h;
+    dlg.querySelector("[data-close]").addEventListener("click", function(){ dlg.close(); });
+    var img = dlg.querySelector(".ad-logo");
+    img.addEventListener("error", function(){ img.src = GENERIC_LOGO_BY_CAT[a.categoria] || GENERIC_LOGO; }, {once:true});
+    if(!dlg.open) dlg.showModal();
+  }
+  document.getElementById("actorDialog").addEventListener("click", function(e){
+    // click on the backdrop (outside the dialog box) closes it
+    if(e.target === e.currentTarget) e.currentTarget.close();
+  });
+
+  function renderCompetidores(){
+    var grid = document.getElementById("compGrid");
+    grid.innerHTML = "";
+    var list = Object.values(currentActors()).filter(function(a){ return a.categoria === "competidores" && radarVisible(a); });
+    // same sector order as the Mapa drawer (Firma global → Boutique → Por confirmar), then by name
+    var sectorOrder = sortedSectorKeys("competidores", list.map(function(a){ return a.sector || ""; }));
+    list.sort(function(a,b){
+      var d = sectorOrder.indexOf(a.sector || "") - sectorOrder.indexOf(b.sector || "");
+      return d || a.nombre.localeCompare(b.nombre);
+    });
+    list.forEach(function(a){
+      var ficha = COMPETIDOR_FICHAS[a.id];
+      var card = document.createElement("article");
+      card.className = "comp-card";
+      card.innerHTML =
+        '<div class="comp-head"><img src="' + esc(getLogo(a)) + '" alt="">' +
+          '<div><h3>' + esc(a.nombre) + '</h3><div class="comp-sector">' + esc(a.sector || "Sin tipo") + '</div></div></div>' +
+        '<div class="comp-why"><div class="ad-label" style="margin-top:0;">Por qué es relevante</div>' +
+          (a.justificacion ? esc(a.justificacion) : '<span class="ad-empty">Sin justificación registrada.</span>') + '</div>' +
+        (ficha ? productosHtml(ficha) + '<div class="comp-src">' + fuentesHtml(ficha) + '</div>'
+               : '<div class="ad-empty">Ficha de productos pendiente: competidor agregado después de la investigación.</div>');
+      var img = card.querySelector("img");
+      img.addEventListener("error", function(){ img.src = GENERIC_LOGO_BY_CAT.competidores; }, {once:true});
+      grid.appendChild(card);
+    });
+    if(!list.length){
+      grid.innerHTML = '<div class="empty-note">Sin competidores en el radar.</div>';
+    }
+  }
+
+  // Ajuste 1: la Matriz sugiere actores validados del Radar, sin crear filas automáticamente
+  function renderActorSuggestions(){
+    var dl = document.getElementById("radarActorsList");
+    var list = Object.values(currentActors()).filter(function(a){
+      return radarVisible(a) && (a.estado === "verificado" || a.estado === "agregado_taller");
+    });
+    // mercados first: the Matriz column is "Cliente / mercado"
+    var order = ["mercados","aliados","autoridades","competidores"];
+    list.sort(function(a,b){
+      if(a.categoria !== b.categoria) return order.indexOf(a.categoria) - order.indexOf(b.categoria);
+      return a.nombre.localeCompare(b.nombre);
+    });
+    dl.innerHTML = list.map(function(a){
+      return '<option value="' + esc(a.nombre) + '" label="' + esc(CATS[a.categoria].label + (a.sector ? " · " + a.sector : "")) + '"></option>';
+    }).join("");
+  }
+
+  function renderTable(){
+    var tbody = document.getElementById("tbody");
+    tbody.innerHTML = "";
+    var list = Object.values(currentActors());
+
+    list = list.filter(function(a){
+      if(!filters.showDiscarded && a.estado === "descartado") return false;
+      if(filters.onlyNewId && !a.origenTaller) return false;
+      if(filters.cats.size && !filters.cats.has(a.categoria)) return false;
+      if(filters.confs.size && !filters.confs.has(a.confianza)) return false;
+      if(filters.q){
+        var hay = (a.nombre+" "+(a.justificacion||"")).toLowerCase();
+        if(hay.indexOf(filters.q) === -1) return false;
+      }
+      return true;
+    });
+    list.sort(function(a,b){
+      if(a.categoria !== b.categoria) return CAT_ORDER.indexOf(a.categoria)-CAT_ORDER.indexOf(b.categoria);
+      return a.nombre.localeCompare(b.nombre);
+    });
+
+    list.forEach(function(a){
+      var tr = document.createElement("tr");
+      if(a.estado === "descartado") tr.className = "discarded";
+
+      if(editingId === a.id){
+        tr.appendChild(td('<input type="text" class="e-nombre" value="'+esc(a.nombre)+'">'));
+        tr.appendChild(td(selectHtml("e-categoria", CATS, CAT_ORDER, a.categoria)));
+        tr.appendChild(td('<input type="text" class="e-sector" value="'+esc(a.sector||"")+'">'));
+        tr.appendChild(td(selectHtml("e-confianza", CONF, CONF_ORDER, a.confianza)));
+        tr.appendChild(td('<textarea class="e-justificacion">'+esc(a.justificacion||"")+'</textarea>'));
+        tr.appendChild(td(selectHtml("e-estado", EST, ["verificado","por_validar","agregado_taller","descartado"], a.estado)));
+        tr.appendChild(radarCell(a));
+        tr.appendChild(td('<span class="mono" style="font-size:.76rem;">'+fmtTime(a.updatedAt)+'</span>'));
+        var tdA = document.createElement("td"); tdA.className="row-actions";
+        var save = btn("Guardar", function(){ saveEdit(a.id, tr); });
+        var cancel = btn("Cancelar", function(){ editingId=null; renderTable(); }, "ghost");
+        tdA.appendChild(save); tdA.appendChild(cancel);
+        tr.appendChild(tdA);
+      } else {
+        tr.appendChild(td('<strong>'+esc(a.nombre)+'</strong>' + (a.origenTaller ? ' <span class="pill new-id-pill" title="Agregado en vivo durante el taller">New ID</span>' : '')));
+        tr.appendChild(td('<span class="pill cat-'+a.categoria+'">'+CATS[a.categoria].label+'</span>'));
+        tr.appendChild(td(esc(a.sector||"—")));
+        tr.appendChild(td('<span class="pill cf"><span class="dot" style="background:var(--cf-'+a.confianza+')"></span>'+CONF[a.confianza].label+'</span>'));
+        tr.appendChild(td('<span class="jt">'+esc(a.justificacion||"")+'</span>'));
+        tr.appendChild(td('<span class="pill est">'+EST[a.estado].label+'</span>'));
+        tr.appendChild(radarCell(a));
+        tr.appendChild(td('<span class="mono" style="font-size:.76rem; color:var(--ink-soft);">'+fmtTime(a.updatedAt)+'</span>'));
+        var tdA2 = document.createElement("td"); tdA2.className="row-actions";
+        tdA2.appendChild(btn("Editar", function(){ editingId=a.id; renderTable(); }, "ghost"));
+        if(a.estado === "por_validar"){
+          tdA2.appendChild(btn("Validar", function(){ patchActor(a.id, {estado:"agregado_taller"}); }, "ghost"));
+        }
+        if(a.estado !== "descartado"){
+          tdA2.appendChild(btn("Descartar", function(){ patchActor(a.id, {estado:"descartado"}); }, "ghost"));
+        } else {
+          tdA2.appendChild(btn("Restaurar", function(){ patchActor(a.id, {estado:"verificado"}); }, "ghost"));
+        }
+        tr.appendChild(tdA2);
+      }
+      tbody.appendChild(tr);
+    });
+
+    if(!list.length){
+      var tr0 = document.createElement("tr");
+      var td0 = document.createElement("td"); td0.colSpan = 9; td0.style.color="var(--ink-soft)"; td0.style.padding="18px 12px";
+      td0.textContent = "Sin actores para este filtro.";
+      tr0.appendChild(td0); tbody.appendChild(tr0);
+    }
+  }
+
+  function radarCell(a){
+    var t = document.createElement("td");
+    var id = "radar-" + a.id;
+    var wrap = document.createElement("div"); wrap.className = "radar-cell";
+    var label = document.createElement("label"); label.className = "switch"; label.htmlFor = id;
+    var input = document.createElement("input");
+    input.type = "checkbox"; input.id = id; input.checked = a.mostrarEnRadar !== false;
+    input.addEventListener("change", function(){ patchActor(a.id, {mostrarEnRadar: input.checked}); });
+    label.appendChild(input);
+    label.appendChild(Object.assign(document.createElement("span"), {className:"track"}));
+    label.appendChild(Object.assign(document.createElement("span"), {className:"thumb"}));
+    wrap.appendChild(label);
+    var lbl = document.createElement("span"); lbl.className = "lbl";
+    lbl.textContent = a.mostrarEnRadar !== false ? "Sí" : "No";
+    wrap.appendChild(lbl);
+    t.appendChild(wrap);
+    return t;
+  }
+
+  function td(html){ var t=document.createElement("td"); t.innerHTML=html; return t; }
+  function selectHtml(cls, dict, order, val){
+    var h = '<select class="'+cls+'">';
+    order.forEach(function(k){ h += '<option value="'+k+'"'+(k===val?' selected':'')+'>'+dict[k].label+'</option>'; });
+    return h + '</select>';
+  }
+  function btn(label, fn, variant){
+    var b = document.createElement("button");
+    b.className = "btn" + (variant?(" "+variant):"");
+    b.textContent = label;
+    b.addEventListener("click", fn);
+    return b;
+  }
+
+  function saveEdit(id, tr){
+    var patch = {
+      nombre: tr.querySelector(".e-nombre").value.trim(),
+      categoria: tr.querySelector(".e-categoria").value,
+      sector: tr.querySelector(".e-sector").value.trim(),
+      confianza: tr.querySelector(".e-confianza").value,
+      justificacion: tr.querySelector(".e-justificacion").value.trim(),
+      estado: tr.querySelector(".e-estado").value
+    };
+    if(!patch.nombre) return;
+    editingId = null;
+    patchActor(id, patch);
+  }
+
+  const GREMIOS_32 = [
+  {
+    "id": "aliados-andesco",
+    "nombre": "Andesco",
+    "contacto": "Camilo Sánchez Ortega (presidente, RL). Mario Federico Pinedo, Gerente de Gestión del Conocimiento (no hay cargo de TI directivo).",
+    "cuentas": "EPM, ISA, GEB, Celsia, Enel, Promigas, Vatia, Enercer, GreenYellow: la mayor concentración de objetivos por punto de contacto.",
+    "oferta": "Bilaterales en el Congreso (23–25 sep); taller o estudio «operaciones 24/7, cultura de seguridad y Ley 2466» para la agenda 2027."
+  },
+  {
+    "id": "aliados-asobancaria",
+    "nombre": "Asobancaria",
+    "contacto": "Jonathan Malagón (presidente). Jaime Rincón, Director de Transformación Digital e Inclusión Financiera; Alejandro Vera, VP Técnico. Junta presidida por Javier Suárez (Davivienda).",
+    "cuentas": "Bancolombia, Davivienda, Banco de Bogotá, GNB, Popular, Falabella, Tuya, Lulo.",
+    "oferta": "Estudio «brecha entre adopción y madurez digital en banca: el factor organizacional»; sesión en el Congreso de Riesgos (22–23 oct). Propuesta de contenido, no comercial, a Rincón con copia a la VP Técnica."
+  },
+  {
+    "id": "aliados-fenalco",
+    "nombre": "Fenalco",
+    "contacto": "Jaime Alberto Cabal (presidente). Katherine Tabares, Directora de Productividad y Competitividad (agenda sectorial); Paola Huertas, Directora de Talento Humano (gremio como cliente).",
+    "cuentas": "Éxito, Ramo, Frisby, D1, Ara, Locatel, MercadoLibre.",
+    "oferta": "Programa sectorial con entregables: rediseño del modelo operativo ante la reforma laboral (diagnóstico, herramientas, formación). Congreso de Comerciantes (reprogramado tras el terremoto del 10 de agosto; fecha por confirmar), Góndola (28–30 oct)."
+  },
+  {
+    "id": "aliados-camacol",
+    "nombre": "Camacol",
+    "contacto": "Guillermo Herrera (presidente, RL). Katherine Bobadilla, Directora de Productividad y Sostenibilidad.",
+    "cuentas": "Cementos Argos, Corona, Constructora Bolívar, Tecnoglass.",
+    "oferta": "Contenido de productividad para el Congreso (21–23 oct)."
+  },
+  {
+    "id": "aliados-colombia-fintech",
+    "nombre": "Colombia Fintech",
+    "contacto": "Gabriel Santos (presidente ejecutivo, RL). Junta 2025–2026 de 15 miembros (nombres por extraer).",
+    "cuentas": "Addi, Bold, Lulo, Sempli, Zinobe, Finsocial, Monet.",
+    "oferta": "Latam Fintech Market (17–18 sep); taller «del modo fundador al modo organización». Bajo ticket, alto acceso."
+  },
+  {
+    "id": "aliados-acodres",
+    "nombre": "Acodres",
+    "contacto": "Presidencia nacional; RL inscrito es el capítulo Santander; capítulos regionales con NIT propio.",
+    "cuentas": "Frisby y la industria gastronómica.",
+    "oferta": "Programa SENA de rediseño de turnos y dotación ante la Ley 2466: la jugada de mayor relación valor/esfuerzo del bloque retail."
+  },
+  {
+    "id": "aliados-andi",
+    "nombre": "ANDI",
+    "contacto": "Bruce Mac Master (presidente); RL Juan Carlos Beltrán. Seccional Antioquia y cámaras sectoriales.",
+    "cuentas": "Nutresa, Bavaria, Alpina, Haceb, Corona, Carvajal, Argos, Acesco, Celsia, Bancolombia.",
+    "oferta": "Comités de gestión humana seccionales; Colombia Genera (primer trimestre 2027); Congreso Empresarial (agosto 2027)."
+  },
+  {
+    "id": "aliados-acrip",
+    "nombre": "ACRIP",
+    "contacto": "Federación Colombiana de Gestión Humana; capítulos regionales.",
+    "cuentas": "Directores de gestión humana de todos los sectores (más de 800 en el Congreso).",
+    "oferta": "XXIV Congreso Nacional de Gestión Humana (Cali, 30 sep – 2 oct): asistencia, una charla de Olivia y lanzamiento de un estudio."
+  },
+  {
+    "id": "aliados-acp",
+    "nombre": "ACP",
+    "contacto": "Frank Pearl (presidente, RL). Mesa directiva: Drummond, Primax, SierraCol.",
+    "cuentas": "Ecopetrol, Terpel, operadores.",
+    "oferta": "IX Cumbre del Petróleo, Gas y Energía (4–6 nov): presencia y monitoreo de la nueva cúpula de Ecopetrol."
+  },
+  {
+    "id": "aliados-cci",
+    "nombre": "CCI",
+    "contacto": "Tatyana Orozco (presidenta desde el 14 sep; ex CEO de Consultia, consultora regional).",
+    "cuentas": "Inmel, constructoras, concesionarios.",
+    "oferta": "XXIII Congreso Nacional de la Infraestructura (25–27 nov). Decidir antes el abordaje: interlocución fácil o competencia instalada en la puerta."
+  },
+  {
+    "id": "aliados-naturgas",
+    "nombre": "Naturgas",
+    "contacto": "Luz Stella Murgas (Naturgas; consejo presidido por Promigas).",
+    "cuentas": "Promigas y filiales",
+    "oferta": "Presencia, no venta."
+  },
+  {
+    "id": "aliados-acolgen",
+    "nombre": "Acolgen",
+    "contacto": "Natalia Gutiérrez (Acolgen; preside el CGN).",
+    "cuentas": "generadoras",
+    "oferta": "Presencia, no venta. Acolgen es la puerta al Consejo Gremial Nacional y a la agenda del PND."
+  },
+  {
+    "id": "aliados-andeg",
+    "nombre": "Andeg",
+    "contacto": "Alejandro Castañeda (Andeg).",
+    "cuentas": "generadoras",
+    "oferta": "Presencia, no venta."
+  },
+  {
+    "id": "aliados-ser-colombia",
+    "nombre": "SER Colombia",
+    "contacto": "Presidencia por confirmar: el informe nombra a Diana Hernández, pero el sitio oficial de SER Colombia no lo confirma.",
+    "cuentas": "renovables medianas.",
+    "oferta": "Presencia, no venta."
+  },
+  {
+    "id": "aliados-acoplasticos",
+    "nombre": "Acoplásticos",
+    "contacto": "Daniel Mitchell",
+    "cuentas": "Plastilene",
+    "oferta": "Colombiaplast (28 sep – 2 oct); contenidos de sostenibilidad y talento"
+  },
+  {
+    "id": "aliados-ccce-camara-colombiana-de-comercio-electronico",
+    "nombre": "CCCE",
+    "contacto": "María Fernanda Quiñones",
+    "cuentas": "MercadoLibre",
+    "oferta": "contenidos de sostenibilidad y talento"
+  },
+  {
+    "id": "aliados-cecodes",
+    "nombre": "Cecodes",
+    "contacto": "Edgar Solano",
+    "cuentas": "Bancolombia y Corona (Cecodes)",
+    "oferta": "contenidos de sostenibilidad y talento"
+  },
+  {
+    "id": "aliados-asofondos",
+    "nombre": "Asofondos",
+    "contacto": "Andrés Velasco (VP del CGN)",
+    "cuentas": "fondos",
+    "oferta": "contenidos de sostenibilidad y talento; Asofondos como segunda puerta al CGN."
+  },
+  {
+    "id": "aliados-anda",
+    "nombre": "Anda",
+    "contacto": "Elizabeth Melo.",
+    "cuentas": "anunciantes.",
+    "oferta": "contenidos de sostenibilidad y talento"
+  }
+];
+  var gremiosVotos = [], gremiosNombre = '', gremiosCargados = false;
+  var gremiosTaller = [], gremiosTallerFirma = '', gremiosBorrarPendiente = null;
+  function todosGremios(){ return GREMIOS_32.concat(gremiosTaller); }
+  var gremiosPendientes = new Set(), gremiosVersion = 0, gremiosLeyendo = false;
+  var GREMIOS_HORIZONTES = [
+    {valor:3, nombre:'Corto plazo', etiqueta:'Corto plazo · sep–dic 2026', color:'var(--gremio-corto)'},
+    {valor:2, nombre:'Mediano plazo', etiqueta:'Mediano plazo · 2027–2028', color:'var(--gremio-medio)'},
+    {valor:1, nombre:'Largo plazo', etiqueta:'Largo plazo · 2029–2030', color:'var(--gremio-largo)'}
+  ];
+  // Misma identidad normalizada que usa la función de almacenamiento.
+  function gremiosSlug(nombre){
+    return nombre.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'u-' + Array.from(nombre.trim().toLowerCase()).map(function(c){ return c.codePointAt(0).toString(16); }).join('-');
+  }
+  function gremiosMensaje(texto){
+    var el = document.getElementById('gremiosEstado'); el.textContent = texto; el.hidden = !texto;
+  }
+  function gremiosMiVoto(id){
+    return gremiosVotos.find(function(v){ return v.gremioId === id && gremiosSlug(v.votante) === gremiosSlug(gremiosNombre); });
+  }
+  function actualizarBotonesGremios(){
+    document.querySelectorAll('#gremiosCards button').forEach(function(b){
+      var voto = gremiosMiVoto(b.dataset.gremio);
+      b.setAttribute('aria-pressed', String(!!voto && voto.valor === Number(b.dataset.valor)));
+      b.disabled = !gremiosCargados || gremiosPendientes.has(b.dataset.gremio);
+    });
+  }
+  function resultadosGremios(){
+    return todosGremios().map(function(g){
+      var votos = gremiosVotos.filter(function(v){ return v.gremioId === g.id; });
+      var promedio = votos.length ? votos.reduce(function(s,v){ return s+v.valor; },0)/votos.length : null;
+      var horizonte = promedio === null ? null : GREMIOS_HORIZONTES[promedio >= 2.5 ? 0 : promedio >= 1.5 ? 1 : 2];
+      return {gremio:g, votos:votos, promedio:promedio, horizonte:horizonte};
+    }).sort(function(a,b){ return (b.promedio || 0)-(a.promedio || 0) || a.gremio.nombre.localeCompare(b.gremio.nombre,'es'); });
+  }
+  function promedioGremio(n){ return n.toFixed(1).replace('.',','); }
+  function renderResultadosGremios(){
+    var resultados = resultadosGremios();
+    document.getElementById('gremiosResumen').innerHTML = GREMIOS_HORIZONTES.map(function(h){
+      var grupo = resultados.filter(function(r){ return r.horizonte === h; });
+      return '<article style="--voto-color:'+h.color+'"><h3>'+h.nombre+'</h3>'+(grupo.length ? '<ul>'+grupo.map(function(r){ return '<li>'+esc(r.gremio.nombre)+'</li>'; }).join('')+'</ul>' : '<p>Sin gremios calificados en este horizonte.</p>')+'</article>';
+    }).join('');
+    document.getElementById('gremiosGrafico').innerHTML = resultados.map(function(r){
+      var detalle = r.promedio === null ? 'Sin calificar · 0 votos' : promedioGremio(r.promedio)+' · '+r.votos.length+(r.votos.length === 1 ? ' voto · ' : ' votos · ')+r.horizonte.nombre;
+      // Escala desde cero: 1 = un tercio de la pista, 3 = pista completa.
+      return '<div class="gremio-resultado'+(r.horizonte ? '' : ' gremio-sin-votos')+'"><div class="gremio-etiqueta"><strong>'+esc(r.gremio.nombre)+(r.gremio.origenTaller ? ' <span class="gremio-tag">Agregado en el taller</span>' : '')+'</strong><span>'+detalle+'</span></div>'+(r.horizonte ? '<div class="gremio-pista" role="img" aria-label="'+esc(r.gremio.nombre+': '+detalle)+'"><div class="gremio-barra" style="--voto-color:'+r.horizonte.color+';width:'+(r.promedio/3*100)+'%"></div></div>' : '')+'</div>';
+    }).join('');
+  }
+  async function cargarGremios(){
+    if(gremiosLeyendo || gremiosPendientes.size) return;
+    gremiosLeyendo = true;
+    var version = gremiosVersion;
+    try {
+      var resp = await Promise.all([fetch('/api/gremios-votos', {cache:'no-store'}), fetch('/api/gremios-taller', {cache:'no-store'})]);
+      if(!resp[0].ok || !resp[1].ok) throw new Error('lectura');
+      var votos = await resp[0].json(), agregados = await resp[1].json();
+      if(!Array.isArray(votos) || !Array.isArray(agregados)) throw new Error('formato');
+      if(version !== gremiosVersion) return;
+      gremiosVotos = votos; gremiosCargados = true;
+      setGremiosTaller(agregados);
+      actualizarBotonesGremios(); renderResultadosGremios();
+      document.getElementById('gremiosCSV').disabled = false;
+      gremiosMensaje('');
+    } catch(e){ gremiosMensaje('No se pudieron actualizar los votos de gremios. Se conservan los últimos resultados; se volverá a intentar automáticamente.'); }
+    finally { gremiosLeyendo = false; }
+  }
+  async function votarGremio(id,valor){
+    var nombre = gremiosNombre.trim();
+    if(!nombre){ showToast('Escribe tu nombre antes de calificar un gremio.', 'error'); gremiosMensaje('Escribe tu nombre antes de calificar un gremio.'); document.getElementById('gremiosNombre').focus(); return; }
+    if(nombre.length > 60){ gremiosMensaje('Tu nombre debe tener máximo 60 caracteres.'); return; }
+    if(!gremiosCargados || gremiosPendientes.has(id)) return;
+    var previo = gremiosMiVoto(id), borrar = previo && previo.valor === valor;
+    gremiosPendientes.add(id); gremiosVersion++; actualizarBotonesGremios();
+    gremiosMensaje(borrar ? 'Quitando voto…' : 'Guardando voto…');
+    try {
+      var res = await fetch('/api/gremios-votos', {method:borrar ? 'DELETE' : 'PUT', headers:{'content-type':'application/json'}, body:JSON.stringify({gremioId:id,votante:nombre,valor:valor})});
+      if(!res.ok) throw new Error('guardado');
+      var voto = await res.json();
+      gremiosVotos = gremiosVotos.filter(function(v){ return !(v.gremioId === id && gremiosSlug(v.votante) === gremiosSlug(nombre)); });
+      if(!borrar) gremiosVotos.push(voto);
+      renderResultadosGremios(); gremiosMensaje(borrar ? 'Voto retirado.' : 'Voto guardado.');
+    } catch(e){ gremiosMensaje('No se pudo guardar el cambio. Revisa tu conexión e inténtalo de nuevo.'); }
+    finally { gremiosPendientes.delete(id); gremiosVersion++; actualizarBotonesGremios(); }
+  }
+  function descargarGremiosCSV(){
+    var filas = [['Gremio','Promedio','Votos','Horizonte','Participante','Valor','Horizonte del participante','Actualizado']];
+    resultadosGremios().forEach(function(r){
+      var base = [r.gremio.nombre,r.promedio === null ? '' : promedioGremio(r.promedio),r.votos.length,r.horizonte ? r.horizonte.nombre : 'Sin calificar'];
+      filas.push(base.concat(['','','','']));
+      r.votos.forEach(function(v){ filas.push(base.concat([v.votante,v.valor,GREMIOS_HORIZONTES.find(function(h){return h.valor === v.valor;}).nombre,v.updatedAt])); });
+    });
+    var csv = '\uFEFF'+filas.map(function(f){ return f.map(function(v){
+      var texto = String(v); if(/^[\s]*[=+@-]/.test(texto)) texto = "'"+texto;
+      return '"'+texto.replace(/"/g,'""')+'"';
+    }).join(';'); }).join('\r\n');
+    var url = URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    var a = document.createElement('a'); a.href=url; a.download='priorizacion_gremios.csv'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+  }
+  function tarjetaGremio(g){
+    var taller = !!g.origenTaller;
+    var logo = taller ? GENERIC_LOGO_BY_CAT.aliados : getLogo({id:g.id,categoria:'aliados'});
+    var vacio = '<span class="ad-empty">Sin información registrada.</span>';
+    return '<article class="gremio-card'+(taller ? ' taller' : '')+'"><h3><img src="'+esc(logo)+'" alt=""><span class="g-nombre">'+esc(g.nombre)+
+      (taller ? '<span class="gremio-tag">Agregado en el taller</span>' : '')+'</span></h3><dl>'+
+      '<dt>Cabeza y contacto operativo</dt><dd>'+(g.contacto ? esc(g.contacto) : vacio)+'</dd>'+
+      '<dt>Cuentas objetivo dentro</dt><dd>'+(g.cuentas ? esc(g.cuentas) : vacio)+'</dd>'+
+      '<dt>Qué ofrecer</dt><dd>'+(g.oferta ? esc(g.oferta) : vacio)+'</dd></dl>'+
+      '<fieldset><legend>Horizonte para activar '+esc(g.nombre)+'</legend>'+GREMIOS_HORIZONTES.map(function(h){ return '<button type="button" class="gremio-voto" data-gremio="'+esc(g.id)+'" data-valor="'+h.valor+'" aria-pressed="false" disabled style="--voto-color:'+h.color+'">'+h.etiqueta+'</button>'; }).join('')+'</fieldset>'+
+      (taller ? '<button type="button" class="btn ghost gremio-borrar" data-borrar="'+esc(g.id)+'">'+(gremiosBorrarPendiente === g.id ? 'Confirmar: eliminar gremio y sus votos' : 'Eliminar gremio')+'</button>' : '')+
+      '</article>';
+  }
+  function renderGremiosCards(){
+    var cont = document.getElementById('gremiosCards');
+    cont.innerHTML = todosGremios().map(tarjetaGremio).join('');
+    cont.querySelectorAll('img').forEach(function(img){ img.addEventListener('error',function(){ img.onerror=null; if(img.getAttribute('src') !== GENERIC_LOGO_BY_CAT.aliados) img.src=GENERIC_LOGO_BY_CAT.aliados; }); });
+    actualizarBotonesGremios();
+  }
+  function setGremiosTaller(lista){
+    lista = lista.slice().sort(function(a,b){ return String(a.createdAt).localeCompare(String(b.createdAt)); });
+    var firma = lista.map(function(g){ return g.id; }).join('|');
+    gremiosTaller = lista;
+    // solo se vuelven a dibujar las tarjetas cuando cambia la lista de gremios agregados
+    if(firma !== gremiosTallerFirma){ gremiosTallerFirma = firma; renderGremiosCards(); }
+  }
+  function toggleAgregarGremio(abrir){
+    document.getElementById('gremiosAgregarPanel').classList.toggle('open', abrir);
+    document.getElementById('gremiosAbrirAgregar').hidden = abrir;
+    document.getElementById('gremiosAgregarHint').textContent = '';
+    if(abrir) document.getElementById('ga-nombre').focus();
+  }
+  async function guardarGremioTaller(){
+    var hint = document.getElementById('gremiosAgregarHint');
+    var nombre = document.getElementById('ga-nombre').value.trim();
+    if(!nombre){ hint.textContent = 'Escribe el nombre del gremio.'; document.getElementById('ga-nombre').focus(); return; }
+    var repetido = todosGremios().some(function(g){ return gremiosSlug(g.nombre) === gremiosSlug(nombre); });
+    if(repetido){ hint.textContent = 'Ese gremio ya está en la lista.'; return; }
+    var btn = document.getElementById('gremiosGuardarAgregar'); btn.disabled = true; hint.textContent = 'Guardando…';
+    try {
+      var res = await fetch('/api/gremios-taller', {method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({
+        nombre:nombre, contacto:document.getElementById('ga-contacto').value, cuentas:document.getElementById('ga-cuentas').value,
+        oferta:document.getElementById('ga-oferta').value, autor:gremiosNombre.trim()
+      })});
+      var data = await res.json().catch(function(){ return {}; });
+      if(!res.ok) throw new Error(data.error || 'No se pudo guardar el gremio.');
+      ['ga-nombre','ga-contacto','ga-cuentas','ga-oferta'].forEach(function(id){ document.getElementById(id).value = ''; });
+      setGremiosTaller(gremiosTaller.concat([data])); renderResultadosGremios();
+      toggleAgregarGremio(false);
+      showToast('Gremio agregado: ya se puede calificar.');
+    } catch(e){ hint.textContent = e.message; }
+    finally { btn.disabled = false; }
+  }
+  async function borrarGremioTaller(id){
+    if(gremiosBorrarPendiente !== id){ gremiosBorrarPendiente = id; renderGremiosCards(); return; }
+    gremiosBorrarPendiente = null;
+    try {
+      var res = await fetch('/api/gremios-taller', {method:'DELETE', headers:{'content-type':'application/json'}, body:JSON.stringify({id:id})});
+      if(!res.ok) throw new Error('borrado');
+      gremiosVotos = gremiosVotos.filter(function(v){ return v.gremioId !== id; });
+      setGremiosTaller(gremiosTaller.filter(function(g){ return g.id !== id; })); renderResultadosGremios();
+      showToast('Gremio eliminado.');
+    } catch(e){ renderGremiosCards(); showToast('No se pudo eliminar el gremio.', 'error'); }
+  }
+  function initGremios(){
+    var nombre = document.getElementById('gremiosNombre');
+    try { gremiosNombre = (localStorage.getItem('gremios-votante') || '').slice(0,60); } catch(e){}
+    nombre.value = gremiosNombre;
+    nombre.addEventListener('input',function(){
+      gremiosNombre = nombre.value;
+      try { localStorage.setItem('gremios-votante',gremiosNombre); } catch(e){}
+      actualizarBotonesGremios();
+    });
+    renderGremiosCards();
+    document.getElementById('gremiosCards').addEventListener('click',function(e){
+      var d=e.target.closest('button[data-borrar]'); if(d){ borrarGremioTaller(d.dataset.borrar); return; }
+      var b=e.target.closest('button[data-gremio]'); if(b) votarGremio(b.dataset.gremio,Number(b.dataset.valor));
+    });
+    document.getElementById('gremiosAbrirAgregar').addEventListener('click',function(){ toggleAgregarGremio(true); });
+    document.getElementById('gremiosCancelarAgregar').addEventListener('click',function(){ toggleAgregarGremio(false); });
+    document.getElementById('gremiosGuardarAgregar').addEventListener('click',guardarGremioTaller);
+    document.getElementById('ga-nombre').addEventListener('keydown',function(e){ if(e.key === 'Enter'){ e.preventDefault(); guardarGremioTaller(); } });
+    document.getElementById('gremiosCSV').addEventListener('click',descargarGremiosCSV);
+    gremiosMensaje('Cargando votos de gremios…');
+    cargarGremios(); setInterval(cargarGremios,POLL_MS);
+  }
+
+  // ---------------- matriz cliente-necesidad-respuesta ----------------
+  var API_MATRIZ = "/api/matriz";
+  var matrizById = {};
+  var matrizEditingId = null;
+  var matrizFilters = { q:"" };
+
+  function currentMatrizRows(){ return matrizById; }
+
+  function fetchMatriz(isPoll){
+    return fetch(API_MATRIZ, { headers: { "accept": "application/json" } })
+      .then(function(res){
+        if(!res.ok) throw new Error("http_" + res.status);
+        return res.json();
+      })
+      .then(function(list){
+        var next = {};
+        list.forEach(function(r){ next[r.id] = r; });
+        matrizById = next;
+        if(!isPoll || shouldRerenderOnPoll()) renderMatrizTable();
+        return list;
+      })
+      .catch(function(err){
+        if(!isPoll) showToast("No se pudo cargar la matriz: " + err.message + ".", "error");
+      });
+  }
+
+  function addMatrizRow(){
+    var cliente = document.getElementById("m-cliente").value.trim();
+    var necesidad = document.getElementById("m-necesidad").value.trim();
+    if(!cliente){ document.getElementById("matrizAddHint").textContent = "Escribe un cliente o mercado."; return; }
+    if(!necesidad){ document.getElementById("matrizAddHint").textContent = "Escribe la necesidad crítica."; return; }
+    var respuesta = document.getElementById("m-respuesta").value.trim();
+    var trigger = document.getElementById("m-trigger").checked;
+    var payload = { cliente:cliente, necesidadCritica:necesidad, respuestaOlivia:respuesta, trigger:trigger };
+    var saveBtn = document.getElementById("matrizSaveAdd");
+    saveBtn.disabled = true;
+    document.getElementById("matrizAddHint").textContent = "Guardando…";
+    fetch(API_MATRIZ, { method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify(payload) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){
+        saveBtn.disabled = false;
+        document.getElementById("m-cliente").value = "";
+        document.getElementById("m-necesidad").value = "";
+        document.getElementById("m-respuesta").value = "";
+        document.getElementById("m-trigger").checked = false;
+        document.getElementById("matrizAddHint").textContent = "";
+        document.getElementById("matrizAddPanel").classList.remove("open");
+        showToast("\"" + cliente + "\" se agregó a la matriz.", "ok");
+        return fetchMatriz(false);
+      })
+      .catch(function(err){
+        saveBtn.disabled = false;
+        document.getElementById("matrizAddHint").textContent = "";
+        showToast("No se pudo guardar: " + err.message + ". Inténtalo de nuevo.", "error");
+      });
+  }
+
+  function patchMatrizRow(id, patch){
+    return fetch(API_MATRIZ, { method:"PATCH", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id, patch:patch}) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){ return fetchMatriz(false); })
+      .catch(function(err){
+        showToast("No se pudo guardar el cambio: " + err.message + ".", "error");
+        renderMatrizTable();
+      });
+  }
+
+  function deleteMatrizRow(id){
+    return fetch(API_MATRIZ, { method:"DELETE", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id}) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){ return fetchMatriz(false); })
+      .catch(function(err){
+        showToast("No se pudo eliminar la fila: " + err.message + ".", "error");
+      });
+  }
+
+  function matrizTriggerCell(r){
+    var t = document.createElement("td");
+    var id = "trigger-" + r.id;
+    var wrap = document.createElement("div"); wrap.className = "radar-cell";
+    var label = document.createElement("label"); label.className = "switch"; label.htmlFor = id;
+    var input = document.createElement("input");
+    input.type = "checkbox"; input.id = id; input.checked = r.trigger === true;
+    input.addEventListener("change", function(){ patchMatrizRow(r.id, {trigger: input.checked}); });
+    label.appendChild(input);
+    label.appendChild(Object.assign(document.createElement("span"), {className:"track"}));
+    label.appendChild(Object.assign(document.createElement("span"), {className:"thumb"}));
+    wrap.appendChild(label);
+    var lbl = document.createElement("span"); lbl.className = "lbl";
+    lbl.textContent = r.trigger === true ? "Sí" : "No";
+    wrap.appendChild(lbl);
+    t.appendChild(wrap);
+    return t;
+  }
+
+  function saveMatrizEdit(id, tr){
+    var patch = {
+      cliente: tr.querySelector(".me-cliente").value.trim(),
+      necesidadCritica: tr.querySelector(".me-necesidad").value.trim(),
+      respuestaOlivia: tr.querySelector(".me-respuesta").value.trim()
+    };
+    if(!patch.cliente || !patch.necesidadCritica) return;
+    matrizEditingId = null;
+    patchMatrizRow(id, patch);
+  }
+
+  function renderMatrizTable(){
+    var tbody = document.getElementById("matrizTbody");
+    tbody.innerHTML = "";
+    var list = Object.values(currentMatrizRows());
+
+    if(matrizFilters.q){
+      list = list.filter(function(r){
+        var hay = (r.cliente+" "+(r.necesidadCritica||"")+" "+(r.respuestaOlivia||"")).toLowerCase();
+        return hay.indexOf(matrizFilters.q) !== -1;
+      });
+    }
+    list.sort(function(a,b){ return (a.createdAt||"").localeCompare(b.createdAt||""); });
+
+    list.forEach(function(r){
+      var tr = document.createElement("tr");
+
+      if(matrizEditingId === r.id){
+        tr.appendChild(td('<input type="text" class="me-cliente" list="radarActorsList" autocomplete="off" value="'+esc(r.cliente)+'">'));
+        tr.appendChild(td('<textarea class="me-necesidad">'+esc(r.necesidadCritica||"")+'</textarea>'));
+        tr.appendChild(td('<textarea class="me-respuesta">'+esc(r.respuestaOlivia||"")+'</textarea>'));
+        tr.appendChild(matrizTriggerCell(r));
+        tr.appendChild(td('<span class="mono" style="font-size:.76rem;">'+fmtTime(r.updatedAt)+'</span>'));
+        var tdA = document.createElement("td"); tdA.className="row-actions";
+        tdA.appendChild(btn("Guardar", function(){ saveMatrizEdit(r.id, tr); }));
+        tdA.appendChild(btn("Cancelar", function(){ matrizEditingId=null; renderMatrizTable(); }, "ghost"));
+        tr.appendChild(tdA);
+      } else {
+        tr.appendChild(td('<strong>'+esc(r.cliente)+'</strong>'));
+        tr.appendChild(td('<span class="jt">'+esc(r.necesidadCritica||"")+'</span>'));
+        tr.appendChild(td('<span class="jt">'+esc(r.respuestaOlivia||"")+'</span>'));
+        tr.appendChild(matrizTriggerCell(r));
+        tr.appendChild(td('<span class="mono" style="font-size:.76rem; color:var(--ink-soft);">'+fmtTime(r.updatedAt)+'</span>'));
+        var tdA2 = document.createElement("td"); tdA2.className="row-actions";
+        tdA2.appendChild(btn("Editar", function(){ matrizEditingId=r.id; renderMatrizTable(); }, "ghost"));
+        tdA2.appendChild(btn("Eliminar", function(){ deleteMatrizRow(r.id); }, "ghost"));
+        tr.appendChild(tdA2);
+      }
+      tbody.appendChild(tr);
+    });
+
+    if(!list.length){
+      var tr0 = document.createElement("tr");
+      var td0 = document.createElement("td"); td0.colSpan = 6; td0.style.color="var(--ink-soft)"; td0.style.padding="18px 12px";
+      td0.textContent = "Sin filas todavía. Agrega la primera con \"+ Agregar fila\".";
+      tr0.appendChild(td0); tbody.appendChild(tr0);
+    }
+  }
+
+  document.getElementById("matrizSearch").addEventListener("input", function(e){
+    matrizFilters.q = e.target.value.trim().toLowerCase(); renderMatrizTable();
+  });
+  document.getElementById("matrizOpenAdd").addEventListener("click", function(){
+    document.getElementById("matrizAddPanel").classList.toggle("open");
+  });
+  document.getElementById("matrizCancelAdd").addEventListener("click", function(){
+    document.getElementById("matrizAddPanel").classList.remove("open");
+  });
+  document.getElementById("matrizSaveAdd").addEventListener("click", addMatrizRow);
+  document.getElementById("matrizDownloadBtn").addEventListener("click", function(){
+    var data = JSON.stringify(Object.values(currentMatrizRows()), null, 2);
+    var blob = new Blob([data], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a"); a.href = url; a.download = "matriz_cliente_necesidad_respuesta.json";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  // ---------------- lluvia de ideas ----------------
+  var API_IDEAS = "/api/ideas";
+  var API_SINTESIS = "/api/ideas-sintesis";
+  var HORIZON_ORDER = ["corto","medio","largo"];
+  var ideasState = { stickers:[] };
+  var sintesisState = { corto:{texto:""}, medio:{texto:""}, largo:{texto:""} };
+  var ideasBusy = false;
+
+  function fetchIdeas(isPoll){
+    return fetch(API_IDEAS, { headers:{"accept":"application/json"} })
+      .then(function(res){
+        if(!res.ok) throw new Error("http_" + res.status);
+        return res.json();
+      })
+      .then(function(data){
+        ideasState = data;
+        if(!isPoll || shouldRerenderOnPoll()) renderIdeas();
+        return data;
+      })
+      .catch(function(err){
+        if(!isPoll) showToast("No se pudo cargar la lluvia de ideas: " + err.message + ".", "error");
+      });
+  }
+
+  function fetchSintesis(isPoll){
+    return fetch(API_SINTESIS, { headers:{"accept":"application/json"} })
+      .then(function(res){
+        if(!res.ok) throw new Error("http_" + res.status);
+        return res.json();
+      })
+      .then(function(data){
+        sintesisState = data;
+        if(!isPoll || shouldRerenderOnPoll()) renderSintesis();
+        return data;
+      })
+      .catch(function(err){
+        if(!isPoll) showToast("No se pudo cargar la síntesis: " + err.message + ".", "error");
+      });
+  }
+
+  function addIdea(hz, inputEl){
+    var texto = inputEl.value.trim();
+    if(!texto || ideasBusy) return;
+    ideasBusy = true;
+    inputEl.disabled = true;
+    fetch(API_IDEAS, { method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({horizonte:hz, texto:texto}) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){
+        inputEl.value = "";
+        return fetchIdeas(false);
+      })
+      .catch(function(err){
+        showToast("No se pudo agregar: " + err.message + ". Inténtalo de nuevo.", "error");
+      })
+      .then(function(){
+        ideasBusy = false;
+        inputEl.disabled = false;
+        inputEl.focus();
+      });
+  }
+
+  function deleteIdea(id){
+    return fetch(API_IDEAS, { method:"DELETE", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id}) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(){ return fetchIdeas(false); })
+      .catch(function(err){
+        showToast("No se pudo eliminar la respuesta: " + err.message + ".", "error");
+      });
+  }
+
+  function saveSintesis(hz, textareaEl, savedEl){
+    var texto = textareaEl.value.trim();
+    savedEl.textContent = "Guardando…";
+    fetch(API_SINTESIS, { method:"PUT", headers:{"content-type":"application/json"}, body: JSON.stringify({horizonte:hz, texto:texto}) })
+      .then(function(res){
+        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
+        return res.json();
+      })
+      .then(function(rec){
+        sintesisState[hz] = rec;
+        savedEl.textContent = "Guardado " + fmtTime(rec.updatedAt);
+        showToast("Conclusión guardada.", "ok");
+      })
+      .catch(function(err){
+        savedEl.textContent = "";
+        showToast("No se pudo guardar la conclusión: " + err.message + ".", "error");
+      });
+  }
+
+  function renderIdeas(){
+    HORIZON_ORDER.forEach(function(hz){
+      var body = document.getElementById("ideasBody-" + hz);
+      body.innerHTML = "";
+      var stickers = (ideasState.stickers || []).filter(function(s){ return s.horizonte === hz; });
+      stickers.sort(function(a,b){ return (a.createdAt||"").localeCompare(b.createdAt||""); });
+
+      if(!stickers.length){
+        var empty = document.createElement("div");
+        empty.className = "ideas-empty";
+        empty.textContent = "Aún no hay respuestas en este horizonte.";
+        body.appendChild(empty);
+        return;
+      }
+
+      stickers.forEach(function(s){
+        var chip = document.createElement("div");
+        chip.className = "idea-chip";
+        var txt = document.createElement("span");
+        txt.className = "txt";
+        txt.textContent = s.texto;
+        chip.appendChild(txt);
+        var del = document.createElement("button");
+        del.className = "idea-del";
+        del.title = "Eliminar";
+        del.textContent = "×";
+        del.addEventListener("click", function(){ deleteIdea(s.id); });
+        chip.appendChild(del);
+        body.appendChild(chip);
+      });
+    });
+  }
+
+  function renderSintesis(){
+    HORIZON_ORDER.forEach(function(hz){
+      var ta = document.querySelector('.sintesis-input[data-hz="' + hz + '"]');
+      if(document.activeElement === ta) return; // don't yank text from under whoever is typing
+      var rec = sintesisState[hz] || { texto:"", updatedAt:null };
+      ta.value = rec.texto || "";
+      var savedEl = document.querySelector('[data-hz-saved="' + hz + '"]');
+      savedEl.textContent = rec.updatedAt ? "Guardado " + fmtTime(rec.updatedAt) : "";
+    });
+  }
+
+  document.querySelectorAll(".idea-input").forEach(function(input){
+    var hz = input.dataset.hz;
+    input.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){ e.preventDefault(); addIdea(hz, input); }
+    });
+  });
+  document.querySelectorAll("[data-hz-add]").forEach(function(btnEl){
+    var hz = btnEl.dataset.hzAdd;
+    btnEl.addEventListener("click", function(){
+      var input = document.querySelector('.idea-input[data-hz="' + hz + '"]');
+      addIdea(hz, input);
+    });
+  });
+  document.querySelectorAll("[data-hz-save]").forEach(function(btnEl){
+    var hz = btnEl.dataset.hzSave;
+    btnEl.addEventListener("click", function(){
+      var ta = document.querySelector('.sintesis-input[data-hz="' + hz + '"]');
+      var savedEl = document.querySelector('[data-hz-saved="' + hz + '"]');
+      saveSintesis(hz, ta, savedEl);
+    });
+  });
+
+  // ACTIVIDAD 4: INICIO JS
+  (function(){
+    const $ = id => document.getElementById(id), API4 = '/api/priorizacion-votos';
+    const categorias = {competidores:'Competidores', mercados:'Mercados', aliados:'Aliados', autoridades:'Autoridades'};
+    let config = null, actores = [], votos = [], resumen = [], seleccionado = null;
+    let cargando = false, guardando = false, version = 0, listo = false, iniciado = false;
+    let orden = 'nombre', direccion = 1, firmaLista = '', firmaResultados = '', detalleId = null;
+    const pendientes = new Map();
+    const slug = nombre => nombre.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'u-' + Array.from(nombre.trim().toLowerCase()).map(c=>c.codePointAt(0).toString(16)).join('-');
+    const nombre = () => $('p4Nombre').value.trim();
+    const clave = id => id + '--' + slug(nombre());
+    const mio = id => votos.find(v => v.actorId === id && slug(v.votante) === slug(nombre()));
+    const numero = n => n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
+    const mensaje = t => { $('p4Estado').textContent = t; };
+    const visibles = () => actores.filter(a => a.estado !== 'descartado' && a.mostrarEnRadar !== false);
+    const filtrados = () => visibles().filter(a => (!$('p4Categoria').value || a.categoria === $('p4Categoria').value) && (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes($('p4Buscar').value.trim().toLocaleLowerCase('es'))).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+    const resultados = () => resumen.filter(r => visibles().some(a=>a.id===r.actorId) && (!$('p4CategoriaMatriz').value || r.categoria===$('p4CategoriaMatriz').value));
+    async function leer(url, opciones){
+      const r = await fetch(url, Object.assign({cache:'no-store'},opciones));
+      const data = await r.json();
+      if(!r.ok) throw new Error(data.error || 'No se pudo completar la solicitud.');
+      return data;
+    }
+    function renderLista(){
+      const lista = filtrados(), todos = visibles();
+      $('p4Avance').textContent = 'Has calificado '+todos.filter(a=>mio(a.id)).length+' de '+todos.length+' · '+lista.length+' en este filtro.';
+      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || '<p>No hay actores que coincidan.</p>';
+      if(html !== firmaLista){ $('p4Actores').innerHTML=html; firmaLista=html; }
+    }
+    function renderEditor(enfocar){
+      const actor = visibles().find(a=>a.id===seleccionado);
+      if(!actor || !config){ $('p4Editor').innerHTML='<p>Selecciona un actor para calificarlo.</p>'; return; }
+      const voto = pendientes.get(clave(actor.id)) || mio(actor.id) || {impacto:{},esfuerzo:{}};
+      $('p4Editor').innerHTML='<h3 id="p4ActorTitulo" tabindex="-1">'+esc(actor.nombre)+'</h3><p class="hint">'+esc(categorias[actor.categoria])+' · '+esc(actor.sector||'Sin sector')+'</p>'+
+        '<p>Evalúa el valor y el costo de relacionarte con este actor, incluido su seguimiento competitivo o regulatorio. Elige una respuesta por criterio. En esfuerzo, 5 significa más esfuerzo.</p>'+
+        '<form id="p4Formulario"><div class="p4-ejes">'+['impacto','esfuerzo'].map(eje=>'<div class="p4-eje-cab eje-'+eje+'"><h4>'+(eje==='impacto'?'Impacto':'Esfuerzo')+'</h4><details><summary>Significado de la escala 1–5</summary><ol>'+Object.values(config.escala[eje]).map(s=>'<li>'+esc(s)+'</li>').join('')+'</ol></details></div>').join('')+config.impacto.map((_,k)=>['impacto','esfuerzo'].map(eje=>{const c=config[eje][k]; if(!c) return ''; return '<fieldset class="eje-'+eje+'"><legend>'+esc(c.nombre)+' · '+c.peso+' %</legend><p id="p4Guia'+c.id+'">'+esc(c.pregunta)+'</p><div class="p4-opciones">'+[1,2,3,4,5].map(n=>'<label title="'+esc(config.escala[eje][n])+'"><input type="radio" name="'+c.id+'" data-eje="'+eje+'" value="'+n+'" aria-describedby="p4Guia'+c.id+'" aria-label="'+esc(n+': '+config.escala[eje][n])+'" required '+(voto[eje][c.id]===n?'checked':'')+'><span data-n="'+n+'">'+n+'</span></label>').join('')+'</div></fieldset>';}).join('')).join('')+'</div><p id="p4Completos" class="hint"></p><div class="p4-acciones"><button class="btn" type="submit" value="guardar">'+(mio(actor.id)?'Guardar cambios':'Guardar calificación')+'</button><button class="btn" type="submit" value="siguiente">Guardar y pasar al siguiente</button><button class="btn secondary" type="button" id="p4Borrar" '+(!mio(actor.id)?'disabled':'')+'>Borrar mi calificación</button></div><div class="p4-acciones"><button class="btn ghost" type="button" id="p4Anterior">← Anterior</button><button class="btn ghost" type="button" id="p4Siguiente">Siguiente →</button></div></form>';
+      $('p4Formulario').addEventListener('change',()=>{ pendientes.set(clave(seleccionado),recoger()); renderLista(); avanceFormulario(); });
+      $('p4Formulario').addEventListener('submit',e=>{e.preventDefault(); guardar(false,e.submitter && e.submitter.value==='siguiente');});
+      $('p4Borrar').onclick=()=>guardar(true,false);
+      $('p4Anterior').onclick=()=>mover(-1);
+      $('p4Siguiente').onclick=()=>mover(1);
+      const lista=filtrados(), pos=lista.findIndex(a=>a.id===seleccionado);
+      $('p4Anterior').disabled=pos<=0; $('p4Siguiente').disabled=pos<0 || pos===lista.length-1;
+      avanceFormulario();
+      if(enfocar) $('p4ActorTitulo').focus();
+    }
+    function recoger(){
+      const v={impacto:{},esfuerzo:{}};
+      $('p4Editor').querySelectorAll('input[type=radio]:checked').forEach(input=>{v[input.dataset.eje][input.name]=Number(input.value);});
+      return v;
+    }
+    function avanceFormulario(){
+      const v=recoger(); $('p4Completos').textContent=(Object.keys(v.impacto).length+Object.keys(v.esfuerzo).length)+' de 10 criterios respondidos. Usa Tab y las flechas para responder con el teclado.';
+    }
+    function abrir(id){ if(guardando) return; seleccionado=id; renderLista(); renderEditor(true); }
+    function mover(paso){
+      const lista=filtrados(), i=lista.findIndex(a=>a.id===seleccionado), next=lista[i+paso];
+      if(next) abrir(next.id); else mensaje('Llegaste al final de los actores de este filtro. Puedes elegir otra categoría.');
+    }
+    function bloquear(valor){
+      $('p4Nombre').disabled=valor; $('p4Categoria').disabled=valor; $('p4Buscar').disabled=valor;
+      $('p4Editor').querySelectorAll('input,button').forEach(el=>{el.disabled=valor;});
+      renderLista();
+    }
+    async function guardar(borrar,siguiente){
+      if(guardando || !listo) return;
+      if(!nombre()){mensaje('Escribe tu nombre antes de guardar.');$('p4Nombre').focus();return;}
+      const actorId=seleccionado, votante=nombre(), key=clave(actorId), valores=recoger();
+      guardando=true; version++; bloquear(true); mensaje(borrar?'Borrando calificación…':'Guardando calificación…');
+      try{
+        const data=await leer(API4,{method:borrar?'DELETE':'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(Object.assign({actorId,votante},valores))});
+        votos=votos.filter(v=>!(v.actorId===actorId && slug(v.votante)===slug(votante)));
+        if(!borrar) votos.push(data);
+        pendientes.delete(key);
+        mensaje(borrar?'Calificación borrada.':'Calificación guardada.');
+        guardando=false; bloquear(false); renderEditor(false);
+        if(siguiente) mover(1);
+      }catch(e){mensaje(e.message+' Tus respuestas siguen en el formulario.');}
+      finally{guardando=false;version++;bloquear(false);renderEditor(false);}
+      cargar();
+    }
+    function textoDetalle(r){return r.nombre+' · Impacto '+numero(r.indiceImpacto)+' · Esfuerzo '+numero(r.indiceEsfuerzo)+' · '+r.votos+' voto(s) · '+r.cuadrante.nombre;}
+    function verActor(id){
+      mostrarDetalle(id);
+      const r=resumen.find(r=>r.actorId===id);
+      if(!currentActors()[id]) return;
+      openActorDialog(id);
+      if(!r) return;
+      const cuerpo=document.querySelector('#actorDialog .ad-body');
+      if(cuerpo) cuerpo.insertAdjacentHTML('afterbegin','<div class="p4-resultado-a4" style="margin:0 0 14px;padding:10px 12px;border-radius:10px;background:var(--panel-2);border-left:4px solid var(--accent);"><strong style="display:block;">Resultado en la Actividad 4 · '+esc(r.cuadrante.nombre)+'</strong>Impacto '+numero(r.indiceImpacto)+' · Esfuerzo '+numero(r.indiceEsfuerzo)+' · '+r.votos+(r.votos===1?' voto':' votos')+'</div>');
+    }
+    function mostrarDetalle(id){
+      detalleId=id;
+      const r=resumen.find(r=>r.actorId===id);
+      $('p4Detalle').textContent=r?textoDetalle(r):'Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';
+    }
+    function renderResultados(){
+      if(!config) return;
+      const datos=resultados(), firma=JSON.stringify([datos,orden,direccion]);
+      if(firma===firmaResultados) return;
+      firmaResultados=firma;
+      const ids=new Map(datos.map((r,i)=>[r.actorId,i+1]));
+      $('p4CSV').disabled=!datos.length;
+      const t=config.umbral, x=n=>80+(n-1)*190, y=n=>565-(n-1)*120;
+      let svg='<title id="p4TituloGrafico">Impacto vertical, esfuerzo horizontal, escala de 1 a 5. Umbral '+t+'.</title>';
+      const bloques=config.cuadrantes.map(q=>{
+        const izq=q.esfuerzo==='bajo', arriba=q.impacto==='alto';
+        // los rótulos de los cuadrantes inferiores van al fondo para no tapar los puntos cercanos al umbral
+        const x0=izq?80:x(t), x1=izq?x(t):840, y0=arriba?85:y(t), y1=arriba?y(t):565;
+        return '<rect x="'+x0+'" y="'+y0+'" width="'+(x1-x0)+'" height="'+(y1-y0)+'" fill="var(--'+(arriba?'accent-soft':'panel-2')+')" opacity=".6"/><text x="'+(x0+12)+'" y="'+(arriba?y0+22:y1-31)+'" font-size="17" font-weight="600">'+esc(q.nombre)+'</text><text x="'+(x0+12)+'" y="'+(arriba?y0+43:y1-10)+'" font-size="13">'+esc(q.regla)+'</text>';
+      }).join('');
+      svg+=bloques;
+      for(let n=1;n<=5;n++) svg+='<text x="'+x(n)+'" y="590" text-anchor="middle" font-size="16">'+n+'</text><text x="60" y="'+(y(n)+5)+'" text-anchor="end" font-size="16">'+n+'</text>';
+      svg+='<path d="M80 85V565H840" stroke="var(--ink)" fill="none"/><path d="M'+x(t)+' 85V565M80 '+y(t)+'H840" stroke="var(--ink-soft)" stroke-dasharray="6 5"/><text x="450" y="625" text-anchor="middle" font-size="18">Esfuerzo → (5 = más esfuerzo)</text><text x="22" y="325" transform="rotate(-90 22 325)" text-anchor="middle" font-size="18">Impacto →</text>';
+      // Etiquetas numéricas separadas; los círculos mantienen los índices exactos, sin alterar los datos.
+      const ocupados=[];
+      datos.forEach(r=>{
+        const px=x(r.indiceEsfuerzo), py=y(r.indiceImpacto); let lx=px+15,ly=py-12;
+        for(let k=0;k<150;k++){
+          const ang=k*2.4, radio=18+Math.sqrt(k)*8;
+          lx=Math.max(92,Math.min(825,px+Math.cos(ang)*radio));ly=Math.max(98,Math.min(553,py+Math.sin(ang)*radio));
+          if(!ocupados.some(p=>Math.abs(p[0]-lx)<26&&Math.abs(p[1]-ly)<22)) break;
+        }
+        ocupados.push([lx,ly]);
+        const color='var(--cat-'+(categorias[r.categoria]?r.categoria:'mercados')+')';
+        svg+='<g class="p4-punto" tabindex="0" role="button" data-punto="'+esc(r.actorId)+'" aria-label="'+esc(textoDetalle(r))+'"><title>'+esc(textoDetalle(r))+'</title><path d="M'+px+' '+py+'L'+lx+' '+ly+'" stroke="'+color+'" opacity=".6"/><circle cx="'+px+'" cy="'+py+'" r="6" fill="'+color+'" stroke="var(--panel)" stroke-width="2"/><rect x="'+(lx-12)+'" y="'+(ly-10)+'" width="24" height="20" rx="4" fill="var(--panel)" stroke="'+color+'"/><text x="'+lx+'" y="'+(ly+5)+'" font-size="13" text-anchor="middle">'+ids.get(r.actorId)+'</text></g>';
+      });
+      const foco=$('p4SVG').contains(document.activeElement)?document.activeElement.dataset.punto:null;
+      if($('p4SVG').innerHTML!==svg){$('p4SVG').innerHTML=svg;if(foco) Array.from($('p4SVG').querySelectorAll('[data-punto]')).find(el=>el.dataset.punto===foco)?.focus();}
+      $('p4Cuadrantes').innerHTML=config.cuadrantes.map(q=>{
+        const grupo=datos.filter(r=>r.cuadrante.id===q.id);
+        return '<article><h4>'+esc(q.nombre)+'</h4><p>'+esc(q.regla)+'</p>'+(grupo.length?'<ul>'+grupo.map(r=>'<li><button class="p4-enlace" data-punto="'+esc(r.actorId)+'">'+ids.get(r.actorId)+'. '+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>Sin actores calificados.</p>')+'</article>';
+      }).join('');
+      const valor=(r,k)=>k==='cuadrante'?r.cuadrante.nombre:k==='categoria'?categorias[r.categoria]:r[k];
+      const lista=datos.slice().sort((a,b)=>{const av=valor(a,orden),bv=valor(b,orden);return direccion*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'es'))||a.nombre.localeCompare(b.nombre,'es');});
+      $('p4Cabecera').innerHTML=[['nombre','Actor'],['categoria','Categoría'],['indiceImpacto','Impacto'],['indiceEsfuerzo','Esfuerzo'],['cuadrante','Cuadrante'],['votos','Votos']].map(([k,n])=>'<th scope="col" aria-sort="'+(orden===k?(direccion===1?'ascending':'descending'):'none')+'"><button class="p4-enlace" data-orden="'+k+'">'+n+(orden===k?(direccion===1?' ↑':' ↓'):'')+'</button></th>').join('');
+      $('p4Resultados').innerHTML=lista.map(r=>'<tr><td>'+ids.get(r.actorId)+'. '+esc(r.nombre)+'</td><td><span class="p4-color" style="background:var(--cat-'+esc(r.categoria)+')"></span>'+esc(categorias[r.categoria])+'</td><td>'+numero(r.indiceImpacto)+'</td><td>'+numero(r.indiceEsfuerzo)+'</td><td>'+esc(r.cuadrante.nombre)+'</td><td>'+r.votos+'</td></tr>').join('')||'<tr><td colspan="6">Aún no hay calificaciones completas para este filtro.</td></tr>';
+      if(detalleId) mostrarDetalle(detalleId);
+    }
+    async function cargar(){
+      if(cargando||guardando||!$('view-priorizacion').classList.contains('active')) return;
+      cargando=true; const v=version;
+      try{
+        if(!config){
+          config=await leer(API4+'?criterios=1');
+          $('p4Provisional').hidden=!config.provisional;$('p4Provisional').querySelector('span').textContent=config.nota;
+          $('p4Metodologia').textContent=config.metodologia.adaptacion;
+        }
+        const data=await Promise.all([leer('/api/actors'),leer(API4),leer(API4+'?resumen=1')]);
+        if(v!==version) return;
+        [actores,votos,resumen]=data;listo=true;
+        if(seleccionado&&!visibles().some(a=>a.id===seleccionado)){seleccionado=null;renderEditor(false);}
+        renderLista();renderResultados();
+        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Se actualiza cada '+(POLL_MS/1000)+' segundos.');
+      }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan tus respuestas y los últimos resultados. Se reintentará automáticamente.');}
+      finally{cargando=false;}
+    }
+    function descargar(){
+      const datos=resultados(), filas=[['tipo','actorId','nombre','categoria','sector','indiceImpacto','indiceEsfuerzo','cuadranteId','cuadrante','votos','votante','eje','criterioId','criterio','pesoPorcentaje','valor','updatedAt']];
+      datos.forEach(r=>{
+        const base=[r.actorId,r.nombre,r.categoria,r.sector,r.indiceImpacto,r.indiceEsfuerzo,r.cuadrante.id,r.cuadrante.nombre,r.votos];
+        filas.push(['resumen',...base,'','','','','','','']);
+        votos.filter(v=>v.actorId===r.actorId&&!v.borrador).forEach(v=>['impacto','esfuerzo'].forEach(eje=>config[eje].forEach(c=>filas.push(['detalle',...base,v.votante,eje,c.id,c.nombre,c.peso,v[eje][c.id],v.updatedAt]))));
+      });
+      const celda=x=>{let s=String(x==null?'':x);if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
+      const url=URL.createObjectURL(new Blob(['\ufeff'+filas.map(f=>f.map(celda).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}));
+      const a=document.createElement('a');a.href=url;a.download='priorizacion_actores.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    }
+    ['p4Categoria','p4CategoriaMatriz'].forEach(id=>Object.entries(categorias).forEach(([k,n])=>{const o=document.createElement('option');o.value=k;o.textContent=n;$(id).appendChild(o);}));
+    $('p4Leyenda').innerHTML=Object.entries(categorias).map(([k,n])=>'<span class="p4-leyenda"><span class="p4-color" style="background:var(--cat-'+k+')"></span>'+n+'</span>').join('');
+    try{$('p4Nombre').value=(localStorage.getItem('priorizacion-votante')||'').slice(0,60);}catch(e){}
+    $('p4Nombre').addEventListener('input',()=>{try{localStorage.setItem('priorizacion-votante',$('p4Nombre').value);}catch(e){}renderLista();renderEditor(false);});
+    ['p4Categoria','p4Buscar'].forEach(id=>$(id).addEventListener('input',()=>{renderLista();renderEditor(false);}));
+    $('p4CategoriaMatriz').onchange=()=>{detalleId=null;$('p4Detalle').textContent='Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';renderResultados();};
+    $('p4Actores').onclick=e=>{const b=e.target.closest('[data-actor]');if(b)abrir(b.dataset.actor);};
+    $('p4Cabecera').onclick=e=>{const b=e.target.closest('[data-orden]');if(b){direccion=orden===b.dataset.orden?-direccion:1;orden=b.dataset.orden;renderResultados();Array.from($('p4Cabecera').querySelectorAll('button')).find(el=>el.dataset.orden===orden).focus();}};
+    ['p4SVG','p4Cuadrantes'].forEach(id=>['click','focusin','mouseover'].forEach(tipo=>$(id).addEventListener(tipo,e=>{const p=e.target.closest('[data-punto]');if(!p) return; if(tipo==='click') verActor(p.dataset.punto); else mostrarDetalle(p.dataset.punto);})));
+    $('p4SVG').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const p=e.target.closest('[data-punto]');if(p){e.preventDefault();verActor(p.dataset.punto);}}});
+    $('p4CSV').onclick=descargar;
+    document.querySelector('nav.views [data-view="priorizacion"]').addEventListener('click',()=>{
+      // El manejador de navegación existente activa la vista durante este mismo evento.
+      setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0);
+    });
+  })();
+  // ACTIVIDAD 4: FIN JS
+
+  // ---------------- wiring ----------------
+  document.querySelectorAll("nav.views button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll("nav.views button").forEach(function(x){ x.classList.remove("active"); });
+      b.classList.add("active");
+      document.querySelectorAll("section.view").forEach(function(v){ v.classList.remove("active"); });
+      document.getElementById("view-"+b.dataset.view).classList.add("active");
+    });
+  });
+  document.querySelectorAll("nav.subviews button").forEach(function(b){
+    b.addEventListener("click", function(){
+      var nav = b.closest("nav.subviews");
+      nav.querySelectorAll("button").forEach(function(x){ x.classList.remove("active"); });
+      b.classList.add("active");
+      var container = nav.parentElement;
+      container.querySelectorAll(":scope > .subview").forEach(function(v){ v.classList.remove("active"); });
+      document.getElementById("subview-"+b.dataset.subview).classList.add("active");
+    });
+  });
+
+  document.getElementById("drawerClose").addEventListener("click", function(){
+    activeCategory = null; renderRadar();
+  });
+  document.getElementById("search").addEventListener("input", function(e){
+    filters.q = e.target.value.trim().toLowerCase(); renderTable();
+  });
+  document.getElementById("toggleNewId").addEventListener("click", function(e){
+    filters.onlyNewId = !filters.onlyNewId;
+    e.target.classList.toggle("on");
+    renderTable();
+  });
+  document.getElementById("toggleDiscarded").addEventListener("click", function(e){
+    filters.showDiscarded = !filters.showDiscarded;
+    e.target.classList.toggle("on");
+    renderTable();
+  });
+  document.getElementById("openAdd").addEventListener("click", function(){
+    document.getElementById("addPanel").classList.toggle("open");
+  });
+  document.getElementById("cancelAdd").addEventListener("click", function(){
+    document.getElementById("addPanel").classList.remove("open");
+  });
+  document.getElementById("saveAdd").addEventListener("click", addActor);
+  document.getElementById("downloadBtn").addEventListener("click", function(){
+    var data = JSON.stringify(Object.values(currentActors()), null, 2);
+    var blob = new Blob([data], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a"); a.href = url; a.download = "radar360_respaldo.json";
+    document.body.appendChild(a); a.click(); a.remove();
+  });
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", boot);
+  } else { boot(); }
+})();
+</script>
+</body>
+</html>
