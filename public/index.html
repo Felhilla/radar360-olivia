@@ -559,6 +559,26 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
   #view-priorizacion #p4Editor{ padding:12px; }
 }
 /* ACTIVIDAD 4: FIN CSS */
+/* ACTIVIDAD 5: INICIO CSS */
+nav.views button[data-view="canvas"]{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;}
+#view-canvas{min-width:0;overflow-wrap:anywhere;}
+#view-canvas *, #view-canvas *::before{box-sizing:border-box;}
+#view-canvas nav.subviews{flex-wrap:wrap;max-width:100%;}
+#view-canvas button{white-space:normal;max-width:100%;}
+#view-canvas .p5-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:16px 0;min-width:0;}
+#view-canvas .p5-card p{white-space:pre-wrap;}
+#view-canvas .p5-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0;}
+#view-canvas label{display:block;min-width:0;}
+#view-canvas input, #view-canvas textarea, #view-canvas select{display:block;width:100%;min-width:0;max-width:100%;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px;font:inherit;}
+#view-canvas textarea{resize:vertical;}
+#view-canvas .p5-identidad{max-width:360px;}
+#view-canvas #p5Reglas{padding:12px;border:2px solid var(--cf-media);border-radius:8px;background:var(--panel-2);}
+#view-canvas .p5-ficha button{display:flex;align-items:center;gap:8px;margin-top:10px;}
+#view-canvas .p5-ficha img{width:32px;height:32px;object-fit:contain;background:var(--logo-bg);}
+#view-canvas .schema{white-space:pre-wrap;overflow-wrap:anywhere;}
+#view-canvas :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+@media(max-width:600px){#view-canvas .p5-fields{grid-template-columns:1fr;}#view-canvas .p5-card{padding:12px;}}
+/* ACTIVIDAD 5: FIN CSS */
 </style>
 </head>
 <body>
@@ -578,6 +598,7 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
       <button data-view="radar">Radar 360°</button>
       <button data-view="matriz">Identificación de oportunidades directas</button>
       <button data-view="priorizacion">Priorizar actores y mercados</button>
+      <button data-view="canvas">De cuenta priorizada a oportunidad comercial</button>
     </nav>
   </div>
 </header>
@@ -585,6 +606,39 @@ nav.views:has([data-view="priorizacion"]){ flex-wrap:wrap; max-width:calc(100vw 
 <div class="conn-banner" id="connBanner" hidden></div>
 
 <!-- ACTIVIDAD 4: INICIO HTML -->
+<!-- ACTIVIDAD 5: INICIO HTML -->
+<section class="view" id="view-canvas">
+  <h2>De cuenta priorizada a oportunidad comercial</h2>
+  <p>Actividad 5 · Convierte cada oportunidad en una propuesta con comprador, patrocinador y próximos pasos comerciales.</p>
+  <p id="p5Reglas" hidden></p>
+  <p id="p5Estado" role="status">Abre esta actividad para cargar las oportunidades.</p>
+  <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
+  <nav class="subviews" aria-label="Actividad 5">
+    <button data-subview="p5-canvas" class="active">Canvas por oportunidad</button>
+    <button data-subview="p5-hoja">Hoja de ruta a 90 días</button>
+  </nav>
+  <div class="subview active" id="subview-p5-canvas">
+    <label class="p5-identidad">Tu nombre<input id="p5Nombre" maxlength="60" autocomplete="name" placeholder="Nombre del participante"></label>
+    <p id="p5AliadosAviso"></p>
+    <div id="p5Tarjetas"></div>
+  </div>
+  <div class="subview" id="subview-p5-hoja">
+    <p>Todos los canvas guardados, agrupados por el horizonte de la regla aplicada al guardar. Los datos de la oportunidad reflejan la Matriz vigente; si se elimina, se usa la copia del último guardado.</p>
+    <button type="button" class="btn secondary" id="p5CSV" disabled>Descargar hoja de ruta (CSV)</button>
+    <div id="p5Hoja"></div>
+  </div>
+  <details class="tech"><summary>Esquema técnico · Canvas</summary>
+    <p>Colección <code>canvas</code> en <code>public.registros</code>. Un registro por fila de la Matriz: <code>id = matrizId</code>. GET lista; PUT reemplaza un canvas y exige trigger:true y editadoPor; DELETE recibe {id}. El último guardado prevalece.</p>
+    <pre class="schema">{ id, matrizId, cliente, sector, problema, oferta,
+  aliado: { tipo: "actor" | "gremio", id, nombre,
+    cuadrante?: { id, nombre }, promedio?: number } | null,
+  buyer, sponsor, ruta90, rutaAuto: boolean, cta,
+  horizonte: "30" | "60–90" | null,
+  editadoPor, updatedAt: "ISO 8601" }</pre>
+    <p>cliente, sector, problema y oferta son una copia de la Matriz al guardar; no se editan aquí. horizonte conserva la regla aplicada, incluso con ruta manual. Sin aliado, queda sin horizonte. Se permiten campos pendientes. Límites: nombre 60, buyer/sponsor 300, CTA 1000 y ruta 4000 caracteres. Las reglas se leen de canvas-config.json.</p>
+  </details>
+</section>
+<!-- ACTIVIDAD 5: FIN HTML -->
 <section class="view" id="view-priorizacion">
   <h2>Priorizar actores y mercados</h2>
   <p>Actividad 4 · Valora el impacto y el esfuerzo de relacionarte con cada actor. Puedes calificar solo el subconjunto que conoces; no necesitas completar todo el Radar.</p>
@@ -2849,6 +2903,143 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     });
   })();
   // ACTIVIDAD 4: FIN JS
+
+  // ACTIVIDAD 5: INICIO JS
+  // Funciones puras compartidas por la vista y sus pruebas locales.
+  function canvasOportunidades(filas){ return filas.filter(f => f.trigger === true); }
+  function canvasAliados(config, actores, gremios, votos){
+    // los competidores no pueden ser aliado impulsor (lista configurable en canvas-config.json)
+    const excluidas = config.categoriasExcluidas || [];
+    const lista = actores.filter(a => config.cuadrantesElegibles.includes(a.cuadrante?.id) && !excluidas.includes(a.categoria)).map(a => ({
+      tipo:'actor', id:a.actorId, nombre:a.nombre, cuadrante:a.cuadrante,
+      indiceImpacto:a.indiceImpacto, indiceEsfuerzo:a.indiceEsfuerzo, categoria:a.categoria
+    }));
+    const grupos = new Map();
+    votos.forEach(v => { if([1,2,3].includes(v.valor)){ const g=grupos.get(v.gremioId)||[]; g.push(v.valor); grupos.set(v.gremioId,g); } });
+    const vistos = new Set();
+    gremios.forEach(g => {
+      if(vistos.has(g.id)) return; vistos.add(g.id);
+      const vs=grupos.get(g.id)||[]; if(!vs.length) return;
+      const promedio=vs.reduce((s,v)=>s+v,0)/vs.length;
+      if(config.gremios.estricto ? promedio>config.gremios.umbral : promedio>=config.gremios.umbral)
+        lista.push({tipo:'gremio',id:g.id,nombre:g.nombre,promedio,votos:vs.length});
+    });
+    return lista.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+  }
+  function canvasRegla(config, aliado){ return aliado ? config.rutas[aliado.tipo==='gremio'?'gremio':aliado.cuadrante?.id] || null : null; }
+  function canvasElegir(config, borrador, aliado){
+    const regla=canvasRegla(config,aliado);
+    return {...borrador,aliado,ruta90:borrador.rutaAuto ? (regla?.texto || '') : borrador.ruta90};
+  }
+  function canvasCSV(filas){
+    return '\uFEFF'+filas.map(f=>f.map(v=>{
+      let t=String(v ?? ''); if(/^[\s]*[=+@-]/.test(t)) t="'"+t;
+      return '"'+t.replace(/"/g,'""')+'"';
+    }).join(';')).join('\r\n');
+  }
+  (function iniciarCanvas(){
+    const $=id=>document.getElementById(id), drafts=new Map();
+    let config=null, matriz=[], guardados=[], aliados=[], cargando=false, guardando=false, iniciado=false, firma='', revision=0;
+    const clave=a=>a ? a.tipo+':'+a.id : '';
+    const numero=n=>Number(n).toLocaleString('es-CO',{maximumFractionDigits:2});
+    const detalle=a=>a.tipo==='actor' ? a.cuadrante.nombre+' · Impacto '+numero(a.indiceImpacto)+' · Esfuerzo '+numero(a.indiceEsfuerzo) : 'Promedio '+numero(a.promedio)+' · '+a.votos+(a.votos===1?' voto':' votos');
+    const sello=c=>c?.updatedAt ? 'Guardado por '+c.editadoPor+' a las '+new Date(c.updatedAt).toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})+' · '+new Date(c.updatedAt).toLocaleDateString('es-CO') : 'Sin guardar';
+    async function leer(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error('No se pudo cargar la Actividad 5. Intenta de nuevo.'); return r.json(); }
+    function borrador(f){
+      return drafts.get(f.id) || {...(guardados.find(c=>c.id===f.id)||{id:f.id,matrizId:f.id,aliado:null,buyer:'',sponsor:'',cta:'',ruta90:'',rutaAuto:true})};
+    }
+    function renderTarjetas(){
+      const oportunidades=canvasOportunidades(matriz);
+      $('p5AliadosAviso').textContent=aliados.length ? aliados.length+' aliados elegibles. Actor y Gremio son opciones distintas.' : 'Aún no hay aliados elegibles. La lista se llena con las calificaciones de impacto alto de la Actividad 4 y los votos de gremios de la Actividad 3.';
+      $('p5Tarjetas').innerHTML=oportunidades.length ? oportunidades.map(f=>{
+        const d=borrador(f), actual=guardados.find(c=>c.id===f.id);
+        const fuera=d.aliado&&!aliados.some(a=>clave(a)===clave(d.aliado));
+        const opciones=['actor','gremio'].map(tipo=>'<optgroup label="'+(tipo==='actor'?'Actor':'Gremio')+'">'+aliados.filter(a=>a.tipo===tipo).map(a=>'<option value="'+esc(clave(a))+'" '+(clave(a)===clave(d.aliado)?'selected':'')+'>'+esc(a.nombre+' · '+detalle(a))+'</option>').join('')+'</optgroup>').join('');
+        return '<article class="p5-card" data-id="'+esc(f.id)+'"><h3>'+esc(f.cliente)+'</h3><p>'+esc(f.sector||'Sector pendiente')+'</p>'+[
+          ['Problema',f.necesidadCritica],['Oferta',f.respuestaOlivia||'Pendiente: se define en la Actividad 3'],['Punto de contacto',f.puntoContacto||'Pendiente'],['Ruta de entrada',f.rutaEntrada||'Pendiente']
+        ].map(([k,v])=>'<p><strong>'+k+':</strong> '+esc(v)+'</p>').join('')+
+        '<label>Aliado impulsor<select data-field="aliado"><option value="">Sin aliado seleccionado</option>'+opciones+(fuera?'<option selected value="'+esc(clave(d.aliado))+'">'+esc(d.aliado.nombre)+' · Ya no elegible; selecciona otro aliado</option>':'')+'</select></label>'+
+        '<div class="p5-ficha">'+ficha(d.aliado)+'</div><div class="p5-fields">'+[['buyer','Buyer (comprador)',300],['sponsor','Sponsor (patrocinador)',300],['cta','CTA (llamado a la acción concreto)',1000],['ruta90','Ruta a 90 días',4000]].map(([k,label,max])=>'<label>'+label+'<textarea data-field="'+k+'" maxlength="'+max+'" rows="'+(k==='ruta90'?5:2)+'">'+esc(d[k])+'</textarea></label>').join('')+'</div><p class="p5-auto">'+(d.rutaAuto?'Ruta automática al elegir aliado.':'Ruta ajustada manualmente; se conserva al cambiar de aliado.')+'</p><button type="button" class="btn ghost" data-action="auto">Restablecer ruta automática</button> <button type="button" class="btn" data-action="guardar">Guardar canvas</button><p class="p5-sello" aria-live="polite">'+esc(sello(actual))+(drafts.has(f.id)?' · Cambios sin guardar':'')+'</p></article>';
+      }).join('') : '<p class="p5-card">Aún no hay oportunidades marcadas. Ve a Actividad 3 → Matriz → «Trigger → H5» y marca las filas que se trabajarán aquí.</p>';
+    }
+    function ficha(a){
+      return a?.tipo==='actor' ? '<button type="button" class="btn ghost" data-action="ficha"><img alt="" src="'+esc(getLogo(a))+'">Ver ficha de '+esc(a.nombre)+'</button>' : '';
+    }
+    function datos(c){
+      const f=matriz.find(f=>f.id===c.matrizId);
+      return {...c,cliente:f?.cliente??c.cliente,sector:f?.sector??c.sector,problema:f?.necesidadCritica??c.problema,oferta:f?.respuestaOlivia??c.oferta,retirado:!f||f.trigger!==true};
+    }
+    function horizonte(c){ return c.horizonte || canvasRegla(config,c.aliado)?.horizonte || 'Sin horizonte'; }
+    function renderHoja(){
+      const grupos=new Map(); guardados.forEach(c=>{const h=horizonte(c);if(!grupos.has(h))grupos.set(h,[]);grupos.get(h).push(datos(c));});
+      $('p5CSV').disabled=!guardados.length;
+      $('p5Hoja').innerHTML=guardados.length ? [...grupos].sort(([a],[b])=>a.localeCompare(b)).map(([h,cs])=>'<h3>'+esc(h)+(h==='Sin horizonte'?'':' días')+'</h3>'+cs.map(c=>'<article class="p5-card"><h4>'+esc(c.cliente)+'</h4><p>'+esc(c.sector)+' · '+esc(c.aliado ? (c.aliado.tipo==='actor'?'Actor: ':'Gremio: ')+c.aliado.nombre : 'Sin aliado')+'</p>'+(c.retirado?'<p>Esta oportunidad ya no está marcada en la Matriz. Se conserva el canvas guardado.</p>':'')+[['Problema',c.problema],['Oferta',c.oferta||'Pendiente: se define en la Actividad 3'],['Buyer',c.buyer],['Sponsor',c.sponsor],['Ruta a 90 días',c.ruta90],['CTA',c.cta]].map(([k,v])=>'<p><strong>'+k+':</strong> '+esc(v||'Pendiente')+'</p>').join('')+'<small>'+esc(sello(c))+'</small></article>').join('')).join('') : '<p>No hay canvas guardados. Completa una oportunidad y pulsa «Guardar canvas».</p>';
+    }
+    async function cargar(){
+      if(cargando||guardando||!$('view-canvas').classList.contains('active')) return;
+      cargando=true;
+      const version=revision;
+      try{
+        const [cfg,fs,cs,as,gs,vs]=await Promise.all([leer('canvas-config.json'),leer('/api/matriz'),leer('/api/canvas'),leer('/api/priorizacion-votos?resumen=1'),leer('/api/gremios-taller'),leer('/api/gremios-votos')]);
+        if(version!==revision)return;
+        config=cfg;matriz=fs;guardados=cs;aliados=canvasAliados(cfg,as,GREMIOS_32.concat(gs),vs);
+        $('p5Reglas').hidden=!cfg.provisional; $('p5Reglas').textContent='Reglas provisionales · '+cfg.nota;
+        const nueva=JSON.stringify([cfg,fs,cs,aliados]);
+        // No reconstruir campos mientras se escribe; reintentar después de salir de la tarjeta.
+        if(nueva!==firma&&!$('p5Tarjetas').contains(document.activeElement)){renderTarjetas();firma=nueva;}
+        renderHoja();$('p5Estado').textContent='Actualizado '+new Date().toLocaleTimeString('es-CO')+' · El último guardado prevalece. Los cambios sin guardar se conservan durante el sondeo.';
+      }catch(e){$('p5Estado').textContent=e.message;}finally{cargando=false;}
+    }
+    function cambio(e){
+      const card=e.target.closest('[data-id]'),field=e.target.dataset.field;if(!card||!field)return;
+      const f=matriz.find(f=>f.id===card.dataset.id);if(!f)return;
+      let d=borrador(f);
+      if(field==='aliado'){
+        d=canvasElegir(config,d,aliados.find(a=>clave(a)===e.target.value)||null);
+        card.querySelector('[data-field="ruta90"]').value=d.ruta90;card.querySelector('.p5-ficha').innerHTML=ficha(d.aliado);
+      }else{d={...d,[field]:e.target.value};if(field==='ruta90')d.rutaAuto=false;}
+      drafts.set(f.id,d);card.querySelector('.p5-auto').textContent=d.rutaAuto?'Ruta automática al elegir aliado.':'Ruta ajustada manualmente; se conserva al cambiar de aliado.';
+      card.querySelector('.p5-sello').textContent=sello(guardados.find(c=>c.id===f.id))+' · Cambios sin guardar';
+    }
+    $('p5Tarjetas').addEventListener('input',cambio);
+    $('p5Tarjetas').addEventListener('click',async e=>{
+      const b=e.target.closest('[data-action]'),card=b?.closest('[data-id]');if(!card||!config)return;
+      const f=matriz.find(f=>f.id===card.dataset.id);if(!f)return;
+      let d=borrador(f);
+      if(b.dataset.action==='ficha'){if(d.aliado?.tipo==='actor')openActorDialog(d.aliado.id);return;}
+      if(b.dataset.action==='auto'){
+        d=canvasElegir(config,{...d,rutaAuto:true},d.aliado);drafts.set(f.id,d);renderTarjetas();return;
+      }
+      if(guardando)return;
+      const nombre=$('p5Nombre').value.trim();if(!nombre){showToast('Escribe tu nombre antes de guardar.','error');$('p5Nombre').focus();return;}
+      if(d.aliado){
+        const vigente=aliados.find(a=>clave(a)===clave(d.aliado));
+        if(!vigente){showToast('El aliado ya no es elegible. Selecciona otro o deja la opción sin aliado.','error');return;}
+        d=canvasElegir(config,d,vigente);
+      }
+      const borradorEnviado=drafts.get(f.id);
+      revision++;guardando=true;b.disabled=true;
+      try{
+        const r=await fetch('/api/canvas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({...d,id:f.id,matrizId:f.id,editadoPor:nombre})});
+        const c=await r.json();if(!r.ok)throw new Error(c.error||'No se pudo guardar.');
+        guardados=guardados.filter(x=>x.id!==c.id).concat(c);
+        // Si se siguió escribiendo durante la petición, conservar ese borrador.
+        const pendiente=drafts.get(f.id);
+        if(!pendiente||JSON.stringify(pendiente)===JSON.stringify(borradorEnviado))drafts.delete(f.id);
+        firma='';renderTarjetas();renderHoja();showToast('Canvas guardado.');
+      }catch(error){showToast(error.message,'error');}finally{guardando=false;b.disabled=false;}
+    });
+    $('p5CSV').onclick=()=>{
+      const filas=[['Cliente','Sector','Problema','Oferta','Aliado','Tipo','Cuadrante / promedio','Buyer','Sponsor','Ruta90','CTA','Editado por','Fecha','Horizonte','Trigger vigente']];
+      guardados.map(datos).forEach(c=>filas.push([c.cliente,c.sector,c.problema,c.oferta,c.aliado?.nombre,c.aliado?.tipo,c.aliado?.cuadrante?.nombre??c.aliado?.promedio,c.buyer,c.sponsor,c.ruta90,c.cta,c.editadoPor,c.updatedAt,horizonte(c),c.retirado?'No':'Sí']));
+      const url=URL.createObjectURL(new Blob([canvasCSV(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='hoja_de_ruta_90_dias.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
+    try{$('p5Nombre').value=(localStorage.getItem('canvas-participante')||'').slice(0,60);}catch(e){}
+    $('p5Nombre').oninput=()=>{try{localStorage.setItem('canvas-participante',$('p5Nombre').value);}catch(e){}};
+    $('p5Reintentar').onclick=cargar;
+    document.querySelector('nav.views [data-view="canvas"]').addEventListener('click',()=>setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0));
+  })();
+  // ACTIVIDAD 5: FIN JS
 
   // ---------------- wiring ----------------
   document.querySelectorAll("nav.views button").forEach(function(b){

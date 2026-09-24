@@ -1,0 +1,29 @@
+{
+  "provisional": true,
+  "nota": "Pendiente de validación con German (reunión 25 sep 2026)",
+  "gremios": {
+    "umbral": 2.5,
+    "estricto": true
+  },
+  "cuadrantesElegibles": [
+    "victorias-tempranas",
+    "apuestas-estrategicas"
+  ],
+  "categoriasExcluidas": [
+    "competidores"
+  ],
+  "rutas": {
+    "victorias-tempranas": {
+      "horizonte": "30",
+      "texto": "30 días: reunir al buyer y al sponsor con el aliado y presentar una propuesta de piloto con alcance, precio y responsable. 60 días: ejecutar el piloto y medir resultados acordados. 90 días: negociar la ampliación y cerrar el siguiente contrato."
+    },
+    "apuestas-estrategicas": {
+      "horizonte": "60–90",
+      "texto": "30 días: validar con el aliado el problema, el buyer, el sponsor y el proceso de compra. 60 días: acordar presupuesto, alcance y responsables de un piloto. 90 días: presentar la propuesta final y obtener una decisión de contratación."
+    },
+    "gremio": {
+      "horizonte": "30",
+      "texto": "30 días: acordar con el gremio una presentación a las cuentas objetivo y realizar una reunión con buyer y sponsor. 60 días: presentar una propuesta de piloto a las cuentas interesadas. 90 días: cerrar el primer piloto y acordar con el gremio cómo extenderlo a sus afiliados."
+    }
+  }
+}

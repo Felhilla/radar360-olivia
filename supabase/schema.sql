@@ -6,7 +6,7 @@
 create table if not exists public.registros (
   coleccion  text        not null check (coleccion in (
                'actors', 'matriz', 'ideas', 'ideas-sintesis',
-               'gremios-votos', 'gremios-taller', 'priorizacion-votos')),
+               'gremios-votos', 'gremios-taller', 'priorizacion-votos', 'canvas')),
   id         text        not null check (length(id) between 1 and 400),
   data       jsonb       not null,
   updated_at timestamptz not null default now(),
