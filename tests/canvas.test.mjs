@@ -1,130 +1,64 @@
-// Sin red ni credenciales: el fetch nativo es un almacén Supabase simulado.
-// Ejecutar: node --test tests/canvas.test.mjs
+// Sustituye el contrato anterior por Matriz/trigger con el embudo por actor.
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {readFileSync,existsSync} from 'node:fs';
-const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
-const shim=read('../public/api-supabase.js'), html=read('../public/index.html');
-const config=JSON.parse(read('../public/canvas-config.json'));
-const criterios=JSON.parse(read('../public/priorizacion-criterios.json'));
-const funcs=html.split('  // ACTIVIDAD 5: INICIO JS')[1].split('  (function iniciarCanvas(){')[0];
-const ctx=vm.createContext({}); vm.runInContext(funcs,ctx);
-const {canvasAliados,canvasRegla,canvasElegir,canvasOportunidades,canvasCSV}=ctx;
-function entorno(){
- const db=new Map(), calls=[];
- const bucket=c=>{if(!db.has(c))db.set(c,new Map());return db.get(c);};
- const context=vm.createContext({Response,URL,console,location:{href:'https://local.invalid/'},window:{RADAR_CONFIG:{supabaseUrl:'https://supabase.invalid',supabaseAnonKey:'mock-only'},fetch:async(url,init={})=>{
-  calls.push([url,init]);
-  if(url==='canvas-config.json')return Response.json(config);
-  if(url==='priorizacion-criterios.json')return Response.json(criterios);
-  const u=new URL(url);assert.equal(u.origin,'https://supabase.invalid');assert.equal(u.pathname,'/rest/v1/registros');
-  if(init.method==='POST'){const r=JSON.parse(init.body);bucket(r.coleccion).set(r.id,r.data);return new Response(null,{status:201});}
-  const col=u.searchParams.get('coleccion').slice(3),id=u.searchParams.get('id')?.slice(3);
-  if(init.method==='DELETE'){bucket(col).delete(id);return new Response(null,{status:204});}
-  let rows=[...bucket(col)].filter(([k])=>id===undefined||id===k).map(([id,data])=>({id,data}));
-  const range=init.headers.Range;if(range){const [a,b]=range.split('-').map(Number);rows=rows.slice(a,b+1);}
-  return Response.json(rows);
- }}});
- vm.runInContext(shim,context);
- async function req(method='GET',body,route='canvas'){
-  const r=await context.window.fetch('/api/'+route,{method,...(body===undefined?{}:{body:typeof body==='string'?body:JSON.stringify(body)})});
-  return {status:r.status,data:await r.json()};
- }
- bucket('matriz').set('m1',{id:'m1',cliente:'Cuenta Uno',sector:'Energía',necesidadCritica:'Problema',respuestaOlivia:'Oferta de H3',trigger:true});
- bucket('matriz').set('m2',{id:'m2',trigger:false});
- return {bucket,calls,req,context};
+import {existsSync} from 'node:fs';
+import {Embudo,entorno,calificacion,gremios,html,read,dom} from './embudo-support.mjs';
+function base(){
+ const s=entorno();const a=s.actor('e','mercados',{nombre:'Empresa'}),g=s.actor('g','aliados',{relevancia:'Red de contactos'});
+ s.bucket('matriz').set('m',{id:'m',cliente:'Empresa',necesidadCritica:'Necesidad',respuestaOlivia:'Oferta original',trigger:false});
+ return {...s,a,g,body:()=>Embudo.ficha(a,[...s.bucket('matriz').values()],gremios)};
 }
-const body=(extra={})=>({id:'m1',matrizId:'m1',aliado:null,buyer:'Ana',sponsor:'Luis',cta:'Agendar reunión',ruta90:'Ruta manual',rutaAuto:false,editadoPor:' Ana ',...extra});
-test('CRUD, copia de H3, un canvas por oportunidad, último guardado y DELETE',async()=>{
- const {req,bucket}=entorno();assert.deepEqual((await req()).data,[]);
- let r=await req('PUT',body({oferta:'No se puede cambiar desde H5',cliente:'Falso',updatedAt:'falso'}));
- assert.equal(r.status,200);assert.equal(r.data.oferta,'Oferta de H3');assert.equal(r.data.cliente,'Cuenta Uno');assert.equal(r.data.editadoPor,'Ana');assert.ok(Number.isFinite(Date.parse(r.data.updatedAt)));
- await req('PUT',body({editadoPor:'Pedro',buyer:'Comprador nuevo'}));
- assert.equal(bucket('canvas').size,1);assert.equal((await req()).data[0].buyer,'Comprador nuevo');assert.equal((await req()).data[0].editadoPor,'Pedro');
- assert.equal((await req('DELETE',{id:'m1'})).status,200);assert.deepEqual((await req()).data,[]);
+test('Canvas de empresa: oferta editable, acciones independientes, sin nombre ni trigger, copia de contexto',async()=>{
+ const s=base();let r=await s.req('canvas','PUT',{...s.body(),oferta:'Oferta acordada',acciones30:'Reunión',acciones60:'Piloto',acciones90:'Contrato',problema:'Inventado',nombre:'Falso'});
+ assert.equal(r.status,200);assert.equal(r.data.oferta,'Oferta acordada');assert.equal(r.data.problema,'Necesidad');assert.equal(r.data.nombre,'Empresa');assert.equal(r.data.editadoPor,'');
+ assert.equal(r.data.acciones30,'Reunión');assert.equal(r.data.acciones60,'Piloto');assert.equal(r.data.acciones90,'Contrato');assert(!('ruta90' in r.data));assert(Number.isFinite(Date.parse(r.data.updatedAt)));
+ r=await s.req('canvas','PUT',{...s.body(),acciones60:'Otro piloto',editadoPor:' Julio '});assert.equal(r.data.editadoPor,'Julio');assert.equal(s.bucket('canvas').size,1);
+ assert.equal((await s.req('canvas','DELETE',{id:s.body().id})).status,200);assert.deepEqual((await s.req('canvas')).data,[]);
 });
-test('Rechaza fila sin trigger, inexistente, nombre y longitudes inválidas, JSON y método',async()=>{
- const {req,bucket}=entorno();
- assert.equal((await req('PUT',body({id:'m2',matrizId:'m2'}))).status,400);
- assert.equal((await req('PUT',body({id:'ausente',matrizId:'ausente'}))).status,404);
- for(const b of [null,{},body({matrizId:'otro'}),body({editadoPor:' '}),body({editadoPor:'a'.repeat(61)}),body({buyer:'a'.repeat(301)}),body({sponsor:7}),body({cta:'a'.repeat(1001)}),body({ruta90:'a'.repeat(4001)}),body({rutaAuto:'true'}),body({aliado:{tipo:'otro'}}),body({aliado:{tipo:'gremio',id:'g',nombre:'G',promedio:4}}),body({aliado:{tipo:'actor',id:'a',nombre:'A'}})]) assert.equal((await req('PUT',b)).status,400,JSON.stringify(b));
- assert.equal((await req('PUT','{')).status,400);assert.equal((await req('POST',body())).status,405);assert.equal(bucket('canvas').size,0);
+test('Ficha de aliados: qué ofrece precargado, aporte Olivia y acciones 30/60/90',async()=>{
+ const s=base(),b=Embudo.ficha(s.g,[],gremios);assert.equal(b.queOfrece,'Red de contactos');
+ let r=await s.req('canvas','PUT',{...b,aporteOlivia:'Facilitación',acciones30:'Conectar',acciones60:'Taller',acciones90:'Ampliar'});
+ assert.equal(r.status,200);assert.equal(r.data.id,'aliado:g');assert.equal(r.data.queOfrece,'Red de contactos');assert.equal(r.data.aporteOlivia,'Facilitación');
+ assert.equal(r.data.acciones30,'Conectar');assert.equal(r.data.acciones60,'Taller');assert.equal(r.data.acciones90,'Ampliar');
+ assert.equal(Embudo.contexto({id:gremios[0].id,categoria:'aliados'},[],gremios).oferta,gremios[0].oferta);
 });
-test('Sin triggers; igualdad exacta 2,5 excluida e inclusión configurable; votos válidos y gremios en vivo',()=>{
- assert.equal(canvasOportunidades([{trigger:false},{trigger:'true'},{}]).length,0);
- assert.equal(canvasOportunidades([{trigger:true}]).length,1);
- assert.equal(canvasAliados(config,[],[],[]).length,0);
- const gs=[{id:'g',nombre:'Fijo'},{id:'nuevo',nombre:'En vivo'},{id:'sin-votos',nombre:'Sin votos'}],vs=[{gremioId:'g',valor:2},{gremioId:'g',valor:3},{gremioId:'nuevo',valor:3},{gremioId:'nuevo',valor:8}];
- let lista=canvasAliados(config,[],gs,vs);assert.equal(lista.length,1);assert.equal(lista[0].id,'nuevo');assert.equal(lista[0].votos,1);
- lista=canvasAliados({...config,gremios:{umbral:2.5,estricto:false}},[],gs,vs);assert.equal(lista.length,2);assert.equal(lista.find(a=>a.id==='g').promedio,2.5);
+test('Validación nueva: actor existente, grupo/prefijo correcto, no descartados, límites y tipos',async()=>{
+ const s=base(),b=s.body();
+ for(const body of [null,{}, {...b,id:'e'},{...b,id:'aliado:e'},{...b,grupo:'aliados'},{...b,buyer:'a'.repeat(301)},{...b,sponsor:7},{...b,oferta:'a'.repeat(4001)},{...b,acciones30:[]},{...b,acciones60:'a'.repeat(4001)},{...b,acciones90:null},{...b,editadoPor:'a'.repeat(61)},{...b,aliado:{id:'ausente'}}])assert.equal((await s.req('canvas','PUT',body)).status,400,JSON.stringify(body));
+ assert.equal((await s.req('canvas','PUT',{...b,id:'empresa:ausente',actorId:'ausente'})).status,404);
+ s.bucket('actors').get('e').estado='descartado';assert.equal((await s.req('canvas','PUT',b)).status,400);
+ s.bucket('actors').get('e').estado='verificado';s.bucket('actors').get('e').categoria='competidores';assert.equal((await s.req('canvas','PUT',b)).status,400);
+ assert.equal((await s.req('canvas','PUT','{')).status,400);assert.equal((await s.req('canvas','POST',b)).status,405);assert.equal(s.bucket('canvas').size,0);
 });
-test('Lista y rutas desde fetch simulado de Supabase, todos los cuadrantes y horizontes',async()=>{
- const {req,bucket}=entorno();
- const eje=(name,n)=>Object.fromEntries(criterios[name].map(c=>[c.id,n]));
- for(const [id,i,e] of [['a',3,2],['b',3,4],['c',2,2],['d',2,4]]){
-  bucket('actors').set(id,{id,nombre:id,categoria:'aliados',estado:'verificado'});
-  bucket('priorizacion-votos').set(id,{actorId:id,impacto:eje('impacto',i),esfuerzo:eje('esfuerzo',e)});
+test('Aliado impulsor: solo aliado activado en cuadrante alto, nombre desde actor',async()=>{
+ const s=base(),b={...s.body(),aliado:{id:'g',nombre:'Falso'}};
+ assert.equal((await s.req('canvas','PUT',b)).status,400);
+ await s.activar('g');await s.req('priorizacion-votos','PUT',calificacion('g',4,4));
+ let r=await s.req('canvas','PUT',b);assert.equal(r.status,200);assert.equal(r.data.aliado.nombre,'g');
+ await s.req('priorizacion-votos','PUT',calificacion('g',2,2));assert.equal((await s.req('canvas','PUT',b)).status,400);
+});
+test('CSV con BOM, fórmulas protegidas, comillas y saltos; GET pagina más de 1000',async()=>{
+ const csv=Embudo.csv([['=1+1',' +CMD','@SUM','-2','"texto"','Línea\n2',null]]);
+ assert(csv.startsWith('\ufeff'));assert(csv.includes('"\'=1+1"'));assert(csv.includes('"\' +CMD"'));assert(csv.includes('"\'@SUM"'));assert(csv.includes('"\'-2"'));assert(csv.includes('"""texto"""'));assert(csv.includes('"Línea\n2"'));
+ const s=base();for(let i=0;i<1002;i++)s.bucket('canvas').set(String(i),{id:String(i)});assert.equal((await s.req('canvas')).data.length,1002);
+});
+test('Vista 5: grupo, borrador durante sondeo, guardado sin nombre, hoja y salida del embudo',async()=>{
+ const s=base(),$=dom(s.context);vm.runInContext(html.split('// ACTIVIDAD 5: INICIO JS')[1].split('// ACTIVIDAD 5: FIN JS')[0],s.context);
+ await $('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));assert.match($('p5Tarjetas-empresas').innerHTML,/Aún no hay/);
+ for(const id of ['e','g']){await s.activar(id);await s.req('priorizacion-votos','PUT',calificacion(id));}
+ await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Empresa/);assert.match($('p5Tarjetas-aliados').innerHTML,/Red de contactos/);
+ const card={dataset:{id:'empresa:e'},querySelector:()=>$('sello')};
+ for(const [field,value] of [['oferta','Oferta editada'],['acciones30','Reunión'],['acciones60','Piloto'],['acciones90','Evaluar']])$('p5Tarjetas-empresas').handlers.input({target:{dataset:{field},value,closest:()=>card}});
+ await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Oferta editada/);
+ await $('p5Tarjetas-empresas').handlers.click({target:{closest:()=>({dataset:{guardar:'empresa:e'}})}});
+ assert.equal(s.bucket('canvas').get('empresa:e').acciones60,'Piloto');assert.equal(s.bucket('canvas').get('empresa:e').editadoPor,'');assert.match($('p5Hoja-empresas').innerHTML,/Último guardado/);
+ await s.activar('e',1);await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Aún no hay/);assert.match($('p5Hoja-empresas').innerHTML,/Fuera del embudo/);
+});
+test('Regresión: Actividad 1, Radar, portada y landing fuera de actividades se conservan',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260925_pre-embudo.html',import.meta.url))},()=>{
+ const prev=read('../../Radar360-web-backups/index_20260925_pre-embudo.html');
+ for(const id of ['ideas','radar','inicio']){
+  const section=s=>s.match(new RegExp('<section class="view(?: active)?" id="view-'+id+'"[^>]*>[\\s\\S]*?</section>'))[0];assert.equal(section(html),section(prev));
  }
- bucket('gremios-taller').set('g',{id:'g',nombre:'Gremio'});
- bucket('gremios-votos').set('g--ana',{gremioId:'g',votante:'Ana',valor:3});
- const lista=canvasAliados(config,(await req('GET',undefined,'priorizacion-votos?resumen=1')).data,(await req('GET',undefined,'gremios-taller')).data,(await req('GET',undefined,'gremios-votos')).data);
- assert.equal(lista.length,3);
- for(const a of lista){
-  const d=canvasElegir(config,body({rutaAuto:true,ruta90:''}),a),regla=canvasRegla(config,a);
-  assert.equal(d.ruta90,regla.texto);
-  const r=await req('PUT',d);assert.equal(r.status,200);assert.equal(r.data.horizonte,a.id==='b'?'60–90':'30');
- }
- const manual=canvasElegir(config,body({rutaAuto:false,ruta90:'No sobrescribir'}),lista[0]);assert.equal(manual.ruta90,'No sobrescribir');
- assert.equal(canvasElegir(config,manual,lista[1]).ruta90,'No sobrescribir');
- assert.equal(canvasElegir(config,body({rutaAuto:true}),null).ruta90,'');assert.equal(canvasRegla(config,null),null);
-});
-test('CSV con BOM, todas las celdas protegidas, comillas y saltos',()=>{
- const csv=canvasCSV([['=1+1',' +CMD','@SUM','-2','"texto"','Línea\n2',null]]);
- assert.ok(csv.startsWith('\uFEFF'));assert.ok(csv.includes('"\'=1+1"'));assert.ok(csv.includes('"\' +CMD"'));assert.ok(csv.includes('"\'@SUM"'));assert.ok(csv.includes('"\'-2"'));assert.ok(csv.includes('"""texto"""'));assert.ok(csv.includes('"Línea\n2"'));
-});
-test('GET pagina más de 1000 canvas',async()=>{
- const {req,bucket}=entorno();for(let i=0;i<1002;i++)bucket('canvas').set(String(i),{id:String(i)});
- assert.equal((await req()).data.length,1002);
-});
-test('Las cinco herramientas conservan HTML y JS respecto al respaldo previo a landing',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260924_pre-landing.html',import.meta.url))},()=>{
- const original=read('../../Radar360-web-backups/index_20260924_pre-landing.html');
- // La navegación cambia; comparamos las vistas y los bloques de lógica completos.
- for(const id of ['ideas','radar','matriz','priorizacion','canvas']){
-  const section=source=>source.match(new RegExp('<section class="view(?: active)?" id="view-'+id+'">[\\s\\S]*?</section>'))[0].replace('<section class="view active"','<section class="view"');
-  assert.equal(section(html),section(original));
- }
- const logic=source=>source.slice(source.indexOf('<script>'),source.indexOf('  // ---------------- wiring ----------------'))
-  .replace(/document\.querySelector\('nav.views \[data-view="(priorizacion|canvas)"\]'\)\.addEventListener\('click'/g, (_,id)=>"$('view-"+id+"').addEventListener('vista:activar'")
-  .replace('// El manejador de navegación existente activa la vista durante este mismo evento.','// La navegación central emite el evento después de activar la vista.');
- assert.equal(logic(html),logic(original));
-});
-test('Vista H5 con DOM mínimo: carga, estado vacío, edición manual, guardado y borrador durante sondeo',async()=>{
- const {context,bucket}=entorno();bucket('matriz').get('m1').trigger=false;
- const elements=new Map();
- const element=id=>{if(!elements.has(id))elements.set(id,{value:'',innerHTML:'',textContent:'',hidden:false,disabled:false,dataset:{},handlers:{},addEventListener(t,fn){this.handlers[t]=fn;},classList:{contains:()=>true},contains:()=>false,focus(){}});return elements.get(id);};
- const nav=element('nav');
- context.document={getElementById:element,querySelector:()=>nav,activeElement:null};
- context.fetch=context.window.fetch;context.localStorage={getItem(){throw Error('Bloqueado');},setItem(){throw Error('Bloqueado');}};
- context.setInterval=()=>0;context.setTimeout=fn=>fn();context.GREMIOS_32=[];context.POLL_MS=6000;
- context.esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- context.getLogo=()=>'';context.openActorDialog=()=>{};const toasts=[];context.showToast=m=>toasts.push(m);
- const code=html.split('  // ACTIVIDAD 5: INICIO JS')[1].split('  // ACTIVIDAD 5: FIN JS')[0];
- vm.runInContext(code,context);
- await element('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));
- assert.match(element('p5Tarjetas').innerHTML,/Trigger → H5/);assert.match(element('p5AliadosAviso').textContent,/no hay aliados/);
- bucket('matriz').get('m1').trigger=true;await element('p5Reintentar').onclick();
- assert.match(element('p5Tarjetas').innerHTML,/Cuenta Uno/);assert.match(element('p5Tarjetas').innerHTML,/Oferta de H3/);
- const card={dataset:{id:'m1'},querySelector:element};
- const fieldEvent=(field,value)=>({target:{dataset:{field},value,closest:()=>card}});
- element('p5Tarjetas').handlers.input(fieldEvent('buyer','Buyer local'));
- element('p5Tarjetas').handlers.input(fieldEvent('ruta90','Ruta manual'));
- bucket('matriz').get('m1').sector='Sector actualizado por otro participante';
- await element('p5Reintentar').onclick();
- assert.match(element('p5Tarjetas').innerHTML,/Sector actualizado por otro participante/);assert.match(element('p5Tarjetas').innerHTML,/Buyer local/);assert.match(element('p5Tarjetas').innerHTML,/Ruta manual/);
- element('p5Nombre').value='Laura';element('p5Nombre').oninput();
- const button={dataset:{action:'guardar'},closest:()=>card};
- await element('p5Tarjetas').handlers.click({target:{closest:()=>button}});
- assert.equal(bucket('canvas').get('m1').ruta90,'Ruta manual');assert.equal(bucket('canvas').get('m1').rutaAuto,false);assert.equal(bucket('canvas').get('m1').editadoPor,'Laura');
- assert.match(element('p5Hoja').innerHTML,/Guardado por Laura/);assert.match(element('p5Tarjetas').innerHTML,/Guardado por Laura/);assert.equal(toasts.at(-1),'Canvas guardado.');
+
 });

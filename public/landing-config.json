@@ -247,20 +247,20 @@
     },
     {
       "numero": 3,
-      "nombre": "Identificación de oportunidades directas",
-      "proposito": "Conectar cliente, necesidad y oferta de Olivia.",
+      "nombre": "Activar empresas y gremios-aliados",
+      "proposito": "Votar Sí o No para activar empresas y gremios-aliados con un umbral de promedio configurable.",
       "vista": "matriz"
     },
     {
       "numero": 4,
       "nombre": "Priorizar actores y mercados",
-      "proposito": "Valorar Impacto–Esfuerzo: Victorias tempranas, Apuestas estratégicas, Mantenimiento selectivo y Racionalización.",
+      "proposito": "Calificar el impacto y esfuerzo de los actores activados. Victorias tempranas y Apuestas estratégicas pasan a la ruta de acción.",
       "vista": "priorizacion"
     },
     {
       "numero": 5,
-      "nombre": "De cuenta priorizada a oportunidad comercial",
-      "proposito": "Completar el Canvas con aliado impulsor, buyer, sponsor, CTA y ruta a 90 días.",
+      "nombre": "Construir rutas de acción",
+      "proposito": "Definir en grupo, con German y Julio, las rutas de aliados y empresas: oferta, próximos pasos y acciones a 30, 60 y 90 días.",
       "vista": "canvas"
     }
   ],

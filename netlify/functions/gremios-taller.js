@@ -1,3 +1,5 @@
+// OBSOLETO: reemplazado por activacion-votos y actores aliados en GitHub Pages.
+// Conservado para revisión histórica; no participa en el embudo vigente.
 import { getStore } from "@netlify/blobs";
 
 // Gremios agregados en vivo durante el taller (los 19 del informe §3.2 viven fijos en index.html).

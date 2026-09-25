@@ -1,3 +1,5 @@
+// OBSOLETO: reemplazado por activacion-votos y actores aliados en GitHub Pages.
+// Conservado para revisión histórica; no participa en el embudo vigente.
 import { getStore } from "@netlify/blobs";
 
 const GREMIOS_IDS = new Set([

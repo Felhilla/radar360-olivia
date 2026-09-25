@@ -86,48 +86,63 @@
     return criteriosPromesa;
   }
 
+  async function activosEmbudo(){
+    var r=await nativeFetch('embudo-config.json',{cache:'no-store'});
+    if(!r.ok) throw Error('No se pudo cargar embudo-config.json');
+    return Embudo.activados(await store.list('actors'),await store.list('activacion-votos'),await r.json());
+  }
+  async function elegiblesCanvas(){
+    var cfg=await nativeFetch('canvas-config.json',{cache:'no-store'});
+    if(!cfg.ok) throw Error('No se pudo cargar canvas-config.json');
+    var c=await cfg.json(), activos=await activosEmbudo();
+    var r=await rutas['priorizacion-votos']('GET',null,new URLSearchParams('resumen=1'));
+    var resumen=await r.json();
+    return activos.filter(a=>resumen.some(r=>r.actorId===a.id && c.cuadrantesElegibles.includes(r.cuadrante.id)));
+  }
+
   // ---------- manejadores por ruta (mismo contrato que netlify/functions) ----------
   var rutas = {
+    'activacion-votos': async function(m, body){
+      if(m === 'GET') return responder(await store.list('activacion-votos'));
+      if(!['PUT','DELETE'].includes(m)) return responder({error:'method_not_allowed'},405);
+      if(!body || typeof body.actorId !== 'string' || !body.actorId.trim() || body.actorId.length > 300 || /[\x00-\x1f/\\]/.test(body.actorId)) return responder({error:'Actor no válido.'},400);
+      if(typeof body.votante !== 'string' || !body.votante.trim() || body.votante.length > 60) return responder({error:'Escribe un nombre de máximo 60 caracteres.'},400);
+      var key=body.actorId+'--'+slugVotante(body.votante);
+      if(m === 'DELETE'){await store.del('activacion-votos',key);return responder({ok:true});}
+      var actor=await store.get('actors',body.actorId), grupo=Embudo.grupo(actor);
+      if(!grupo || grupo !== body.grupo) return responder({error:'Solo se activan empresas y gremios-aliados vigentes.'},400);
+      if(![1,2].includes(body.valor)) return responder({error:'El voto debe ser Sí (2) o No (1).'},400);
+      var voto={actorId:actor.id,grupo:grupo,votante:body.votante.trim(),valor:body.valor,updatedAt:new Date().toISOString()};
+      await store.set('activacion-votos',key,voto);return responder(voto);
+    },
     'canvas': async function(m, body){
       if(m === 'GET') return responder(await store.list('canvas'));
       if(m !== 'PUT' && m !== 'DELETE') return responder({ error: 'method_not_allowed' }, 405);
-      function valido(v, max, requerido){ return typeof v === 'string' && v.length <= max && (!requerido || v.trim().length > 0); }
-      if(!body || !valido(body.id, 400, true) || /[\x00-\x1f/\\]/.test(body.id)) return responder({ error: 'Oportunidad no válida.' }, 400);
-      if(m === 'DELETE'){ await store.del('canvas', body.id); return responder({ ok: true }); }
-      if(body.matrizId !== body.id) return responder({ error: 'El id debe coincidir con matrizId.' }, 400);
-      if(!valido(body.editadoPor, 60, true)) return responder({ error: 'Escribe tu nombre (máximo 60 caracteres).' }, 400);
-      var limites = { buyer: 300, sponsor: 300, cta: 1000, ruta90: 4000 };
+      function valido(v,max){return typeof v === 'string' && v.length<=max;}
+      if(!body || !valido(body.id,400) || !body.id || /[\x00-\x1f/\\]/.test(body.id)) return responder({error:'Ficha no válida.'},400);
+      if(m === 'DELETE'){await store.del('canvas',body.id);return responder({ok:true});}
+      if(!valido(body.actorId,300) || !body.actorId) return responder({error:'Actor no válido.'},400);
+      var actor=await store.get('actors',body.actorId);
+      if(!actor) return responder({error:'El actor ya no existe.'},404);
+      var grupo=Embudo.grupo(actor);
+      if(!grupo || body.grupo!==grupo || body.id!==(grupo==='aliados'?'aliado:':'empresa:')+actor.id) return responder({error:'El actor está descartado o la ficha no corresponde a su grupo.'},400);
+      var limites={oferta:4000,queOfrece:4000,aporteOlivia:4000,acciones30:4000,acciones60:4000,acciones90:4000,buyer:300,sponsor:300,cta:1000,editadoPor:60};
+      var rec=Embudo.ficha(actor,await store.list('matriz'),[]);
       for(var campo in limites){
-        if(!valido(body[campo], limites[campo], false)) return responder({ error: 'Revisa el campo ' + campo + ' (máximo ' + limites[campo] + ' caracteres).' }, 400);
+        var valor=body[campo]===undefined?'':body[campo];
+        if(!valido(valor,limites[campo])) return responder({error:'Revisa el campo '+campo+' (máximo '+limites[campo]+' caracteres).'},400);
+        rec[campo]=valor.trim();
       }
-      if(typeof body.rutaAuto !== 'boolean') return responder({ error: 'rutaAuto debe ser booleano.' }, 400);
-      var aliado = null, a = body.aliado;
-      if(a !== null){
-        if(!a || ['actor','gremio'].indexOf(a.tipo) < 0 || !valido(a.id,400,true) || !valido(a.nombre,300,true)) return responder({ error: 'Aliado no válido.' }, 400);
-        aliado = { tipo: a.tipo, id: a.id.trim(), nombre: a.nombre.trim() };
-        if(a.tipo === 'actor'){
-          if(!a.cuadrante || !valido(a.cuadrante.id,80,true) || !valido(a.cuadrante.nombre,100,true)) return responder({ error: 'Cuadrante no válido.' }, 400);
-          aliado.cuadrante = { id: a.cuadrante.id, nombre: a.cuadrante.nombre };
-        } else {
-          if(typeof a.promedio !== 'number' || !Number.isFinite(a.promedio) || a.promedio < 1 || a.promedio > 3) return responder({ error: 'Promedio no válido.' }, 400);
-          aliado.promedio = a.promedio;
-        }
+      rec.aliado=null;
+      if(body.aliado!=null){
+        if(grupo!=='empresas' || !valido(body.aliado.id,300)) return responder({error:'Aliado no válido.'},400);
+        var candidatos=await elegiblesCanvas();
+        var aliado=candidatos.find(a=>a.id===body.aliado.id && a.grupo==='aliados');
+        if(!aliado) return responder({error:'El aliado ya no es elegible en la Actividad 4. Elige otro o deja el campo pendiente.'},400);
+        rec.aliado={id:aliado.id,nombre:aliado.nombre};
       }
-      var fila = await store.get('matriz', body.id);
-      if(!fila) return responder({ error: 'La oportunidad ya no existe en la Matriz.' }, 404);
-      if(fila.trigger !== true) return responder({ error: 'Marca Trigger → H5 en la Actividad 3 antes de guardar.' }, 400);
-      // Instantánea de la Matriz para conservar la hoja de ruta si la fila se retira después.
-      var rec = { id: fila.id, matrizId: fila.id, cliente: fila.cliente || '', sector: fila.sector || '',
-        problema: fila.necesidadCritica || '', oferta: fila.respuestaOlivia || '', aliado: aliado,
-        buyer: body.buyer.trim(), sponsor: body.sponsor.trim(), cta: body.cta.trim(),
-        ruta90: body.ruta90.trim(), rutaAuto: body.rutaAuto, editadoPor: body.editadoPor.trim(), updatedAt: new Date().toISOString() };
-      var cfgRes = await nativeFetch('canvas-config.json', { cache: 'no-store' });
-      if(!cfgRes.ok) throw new Error('No se pudo cargar canvas-config.json');
-      var cfgCanvas = await cfgRes.json();
-      var regla = aliado && cfgCanvas.rutas[aliado.tipo === 'gremio' ? 'gremio' : aliado.cuadrante.id];
-      rec.horizonte = regla ? regla.horizonte : null;
-      await store.set('canvas', rec.id, rec);
-      return responder(rec);
+      rec.updatedAt=new Date().toISOString();
+      await store.set('canvas',rec.id,rec);return responder(rec);
     },
     'actors': async function(m, body){
       if(m === 'GET') return responder(await store.list('actors'));
@@ -142,6 +157,7 @@
           nombre: body.nombre.trim(), categoria: body.categoria, sector: (body.sector || '').trim(), confianza: body.confianza || 'por_identificar',
           justificacion: (body.justificacion || '').trim(), estado: body.estado || 'por_validar', mostrarEnRadar: body.mostrarEnRadar !== false,
           origenTaller: true, createdAt: now, updatedAt: now };
+        if(a.categoria === 'aliados'){a.contacto=texto(body.contacto,600);a.cuentas=texto(body.cuentas,600);a.oferta=texto(body.oferta,600);}
         await store.set('actors', a.id, a);
         return responder(a, 201);
       }
@@ -223,6 +239,7 @@
         return responder(rec);
       }
     },
+    // OBSOLETO: voto 3/2/1 por horizonte. Conservado para revisión histórica.
     'gremios-votos': async function(m, body){
       if(m === 'GET') return responder(await store.list('gremios-votos'));
       if(!body || typeof body.gremioId !== 'string') return responder({ error: 'Gremio no válido.' }, 400);
@@ -238,6 +255,7 @@
       await store.set('gremios-votos', key, voto);
       return responder(voto);
     },
+    // OBSOLETO: los nuevos gremios-aliados se crean en actors.
     'gremios-taller': async function(m, body){
       if(m === 'GET') return responder(await store.list('gremios-taller'));
       if(!body) return responder({ error: 'El cuerpo debe ser JSON válido.' }, 400);
@@ -268,7 +286,7 @@
       if(m === 'GET'){
         var votos = await store.list('priorizacion-votos');
         if(params.get('resumen') !== '1') return responder(votos);
-        var actores = {}; (await store.list('actors')).forEach(function(a){ actores[a.id] = a; });
+        var actores = {}; (await activosEmbudo()).forEach(function(a){ actores[a.id] = a; });
         var grupos = {};
         votos.forEach(function(v){
           if(v.borrador || !ejeValido(v.impacto, 'impacto') || !ejeValido(v.esfuerzo, 'esfuerzo')) return;
@@ -292,7 +310,7 @@
       var votante = body.votante.trim(), key = body.actorId + '--' + slugVotante(votante);
       if(m === 'DELETE'){ await store.del('priorizacion-votos', key); return responder({ ok: true }); }
       var actor = await store.get('actors', body.actorId);
-      if(!actor || actor.estado === 'descartado') return responder({ error: 'El actor no existe o está descartado.' }, 400);
+      if(!actor || !(await activosEmbudo()).some(a=>a.id===actor.id)) return responder({ error: 'El actor no está activado en la Actividad 3.' }, 400);
       if(body.borrador || !ejeValido(body.impacto, 'impacto') || !ejeValido(body.esfuerzo, 'esfuerzo')) return responder({ error: 'Completa los diez criterios con enteros de 1 a 5. No se guardan borradores.' }, 400);
       var voto = { actorId: body.actorId, votante: votante, impacto: body.impacto, esfuerzo: body.esfuerzo, updatedAt: new Date().toISOString() };
       await store.set('priorizacion-votos', key, voto);

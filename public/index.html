@@ -725,6 +725,16 @@
 #view-canvas :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
 @media(max-width:600px){#view-canvas .p5-fields{grid-template-columns:1fr;}#view-canvas .p5-card{padding:12px;}}
 /* ACTIVIDAD 5: FIN CSS */
+/* Embudo: controles acotados a sus vistas y colores del tema vigente. */
+#view-matriz .a3-form{display:grid;gap:12px;max-width:650px;}
+#view-matriz .a3-form label{display:block;min-width:0;}
+#view-matriz .a3-form input,#view-matriz .a3-form textarea,#a3Nombre{width:100%;max-width:100%;box-sizing:border-box;background:var(--panel);color:var(--ink);border:1px solid var(--line);padding:10px;border-radius:6px;}
+#a3Nombre{max-width:360px;}
+#view-matriz .a3-contexto{margin:20px 0;min-width:0;max-width:100%;}
+#view-matriz .gremio-card [aria-pressed="true"]{outline:3px solid var(--accent);font-weight:700;background:var(--accent-soft);color:var(--ink);}
+#view-matriz .gremio-card [aria-pressed="true"]::before{content:'✓ ';}
+#view-matriz .table-scroll{max-width:100%;overflow-x:auto;}
+#view-matriz .gremios-grid{margin:16px 0;}
 </style>
 </head>
 <body>
@@ -770,40 +780,36 @@
 <!-- ACTIVIDAD 4: INICIO HTML -->
 <!-- ACTIVIDAD 5: INICIO HTML -->
 <section class="view" id="view-canvas">
-  <h2>De cuenta priorizada a oportunidad comercial</h2>
-  <p>Actividad 5 · Convierte cada oportunidad en una propuesta con comprador, patrocinador y próximos pasos comerciales.</p>
-  <p id="p5Reglas" hidden></p>
-  <p id="p5Estado" role="status">Abre esta actividad para cargar las oportunidades.</p>
+  <h2>Construir rutas de acción</h2>
+  <p>Actividad 5 · Trabajo grupal guiado por German y Julio. Entran las empresas y gremios-aliados activados que quedaron en Victorias tempranas o Apuestas estratégicas en la Actividad 4.</p>
+  <label class="p5-identidad">Registrado por (opcional)<input id="p5Nombre" maxlength="60" autocomplete="name"></label>
+  <p>Acuerden acciones específicas a 30, 60 y 90 días. Guarden cada ficha para incluirla en la hoja consolidada. El último guardado prevalece.</p>
+  <p id="p5Estado" role="status" aria-live="polite">Abre esta actividad para cargar las rutas.</p>
   <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
   <nav class="subviews" aria-label="Actividad 5">
-    <button data-subview="p5-canvas" class="active">Canvas por oportunidad</button>
-    <button data-subview="p5-hoja">Hoja de ruta a 90 días</button>
+    <button data-subview="p5-aliados" class="active">Ruta de acción · Aliados</button>
+    <button data-subview="p5-empresas">Ruta de acción · Empresas</button>
   </nav>
-  <div class="subview active" id="subview-p5-canvas">
-    <label class="p5-identidad">Tu nombre<input id="p5Nombre" maxlength="60" autocomplete="name" placeholder="Nombre del participante"></label>
-    <p id="p5AliadosAviso"></p>
-    <div id="p5Tarjetas"></div>
+  <div class="subview active" id="subview-p5-aliados">
+    <div id="p5Tarjetas-aliados"></div>
+    <details><summary>Hoja consolidada · aliados</summary>
+      <button type="button" class="btn secondary" id="p5CSV-aliados" disabled>Descargar hoja consolidada (CSV)</button>
+      <div id="p5Hoja-aliados"></div>
+    </details>
   </div>
-  <div class="subview" id="subview-p5-hoja">
-    <p>Todos los canvas guardados, agrupados por el horizonte de la regla aplicada al guardar. Los datos de la oportunidad reflejan la Matriz vigente; si se elimina, se usa la copia del último guardado.</p>
-    <button type="button" class="btn secondary" id="p5CSV" disabled>Descargar hoja de ruta (CSV)</button>
-    <div id="p5Hoja"></div>
+  <div class="subview" id="subview-p5-empresas">
+    <div id="p5Tarjetas-empresas"></div>
+    <details><summary>Hoja consolidada · empresas</summary>
+      <button type="button" class="btn secondary" id="p5CSV-empresas" disabled>Descargar hoja consolidada (CSV)</button>
+      <div id="p5Hoja-empresas"></div>
+    </details>
   </div>
-  <details class="tech"><summary>Esquema técnico · Canvas</summary>
-    <p>Colección <code>canvas</code> en <code>public.registros</code>. Un registro por fila de la Matriz: <code>id = matrizId</code>. GET lista; PUT reemplaza un canvas y exige trigger:true y editadoPor; DELETE recibe {id}. El último guardado prevalece.</p>
-    <pre class="schema">{ id, matrizId, cliente, sector, problema, oferta,
-  aliado: { tipo: "actor" | "gremio", id, nombre,
-    cuadrante?: { id, nombre }, promedio?: number } | null,
-  buyer, sponsor, ruta90, rutaAuto: boolean, cta,
-  horizonte: "30" | "60–90" | null,
-  editadoPor, updatedAt: "ISO 8601" }</pre>
-    <p>cliente, sector, problema y oferta son una copia de la Matriz al guardar; no se editan aquí. horizonte conserva la regla aplicada, incluso con ruta manual. Sin aliado, queda sin horizonte. Se permiten campos pendientes. Límites: nombre 60, buyer/sponsor 300, CTA 1000 y ruta 4000 caracteres. Las reglas se leen de canvas-config.json.</p>
-  </details>
+  <p id="p5Historicos"></p>
 </section>
 <!-- ACTIVIDAD 5: FIN HTML -->
 <section class="view" id="view-priorizacion">
   <h2>Priorizar actores y mercados</h2>
-  <p>Actividad 4 · Valora el impacto y el esfuerzo de relacionarte con cada actor. Puedes calificar solo el subconjunto que conoces; no necesitas completar todo el Radar.</p>
+  <p>Actividad 4 · Valora el impacto y el esfuerzo de relacionarte con cada actor. Solo entran empresas y gremios-aliados activados en la Actividad 3. Puedes calificar los que conoces; los dos cuadrantes de impacto alto pasan a la Actividad 5.</p>
   <p id="p4Provisional" class="p4-aviso" hidden><strong>Criterios provisionales</strong> · <span></span></p>
   <p id="p4Estado" role="status" aria-live="polite">Abre esta actividad para cargar las calificaciones.</p>
   <nav class="subviews" aria-label="Actividad 4">
@@ -813,7 +819,7 @@
   <div class="subview active" id="subview-p4-calificar">
     <div class="p4-filtros">
       <label class="field">Tu nombre <input id="p4Nombre" maxlength="60" autocomplete="name" aria-describedby="p4Identidad"></label>
-      <label class="field">Categoría <select id="p4Categoria"><option value="">Todas las categorías</option></select></label>
+      <label class="field">Grupo <select id="p4Categoria"><option value="">Todos los grupos</option></select></label>
       <label class="field">Buscar actor <input id="p4Buscar" type="search" placeholder="Nombre o sector"></label>
     </div>
     <p class="hint" id="p4Identidad">Usa siempre el mismo nombre para cambiar tu calificación. Los nombres y votos se incluyen en la descarga. Las respuestas sin guardar se conservan en esta pestaña mientras esté abierta.</p>
@@ -826,7 +832,7 @@
   <div class="subview" id="subview-p4-matriz">
     <h3>Matriz Impacto–Esfuerzo</h3>
     <div class="p4-filtros">
-      <label class="field">Categoría <select id="p4CategoriaMatriz"><option value="">Todas las categorías</option></select></label>
+      <label class="field">Grupo <select id="p4CategoriaMatriz"><option value="">Todos los grupos</option></select></label>
       <button class="btn secondary" id="p4CSV" disabled>Descargar resultados (CSV)</button>
     </div>
     <p id="p4Leyenda"></p>
@@ -854,8 +860,8 @@
   },
   "votos": 3
 }</pre>
-        <p><code>actorId</code>, <code>nombre</code>, <code>categoria</code>, <code>sector</code> y los campos de <code>cuadrante</code> son cadenas. Categoría: competidores, mercados, aliados o autoridades. Índices: números entre 1 y 5, redondeados a dos decimales (JSON puede omitir ceros finales). Votos: entero positivo. Cada persona pesa igual: se promedian sus índices ponderados completos; no se guardan calificaciones parciales.</p>
-        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Los actores descartados o eliminados se excluyen; los ocultos del Radar conservan su resultado para la Herramienta 5. Esta pantalla y su CSV muestran solo actores visibles del Radar y respetan el filtro de categoría.</p>
+        <p><code>actorId</code>, <code>nombre</code>, <code>categoria</code>, <code>sector</code> y los campos de <code>cuadrante</code> son cadenas. Categoría: mercados (Empresas) o aliados (Gremios-aliados). Índices: números entre 1 y 5, redondeados a dos decimales (JSON puede omitir ceros finales). Votos: entero positivo. Cada persona pesa igual: se promedian sus índices ponderados completos; no se guardan calificaciones parciales.</p>
+        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Solo se incluyen actores activados y vigentes, aunque estén ocultos del Radar. La pantalla y el CSV respetan el filtro de grupo. Victorias tempranas y Apuestas estratégicas pasan a la Actividad 5.</p>
         <p>La fuente única es <code>GET /api/priorizacion-votos?criterios=1</code>: criterios, pesos, escalas, umbral y cuadrantes. <code>GET /api/priorizacion-votos</code> devuelve votos completos. PUT reemplaza el voto identificado por actor y nombre; DELETE recibe <code>{actorId, votante}</code>. Sin autenticación, como Gremios.</p>
         <p>Nota metodológica: el Excel menciona una redistribución para «no aplica» que el documento no desarrolla. Se exigen diez respuestas de 1 a 5, sin redistribución. Si no tienes información suficiente, deja ese actor sin calificar.</p>
         <div id="p4Metodologia"></div>
@@ -962,16 +968,25 @@
 </section>
 
 <section class="view" id="view-matriz">
+  <h2>Activar empresas y gremios-aliados</h2>
+  <p>Actividad 3 · Vota qué actores debemos calificar en la Actividad 4.</p>
+  <label class="field">Tu nombre <input id="a3Nombre" maxlength="60" autocomplete="name"></label>
+  <p>Usa siempre el mismo nombre. Puedes cambiar tu voto o pulsar de nuevo la opción elegida para quitarlo.</p>
+  <p id="a3Regla"></p>
+  <p id="a3Estado" role="status" aria-live="polite">Abre la actividad para cargar los actores.</p>
+  <button type="button" class="btn secondary" id="a3Actualizar">Actualizar datos</button>
   <nav class="subviews" aria-label="Actividad 3">
-    <button data-subview="matriz-tabla" class="active">Matriz</button>
-    <button data-subview="gremios">Gremios</button>
-    <button data-subview="gremios-priorizacion">Priorización de gremios</button>
+    <button data-subview="a3-empresas" class="active">Calificación de empresas</button>
+    <button data-subview="a3-empresas-activadas">Empresas activadas</button>
+    <button data-subview="a3-aliados">Calificación de gremios-aliados</button>
+    <button data-subview="a3-aliados-activados">Gremios-aliados activados</button>
   </nav>
-  <p id="gremiosEstado" role="status" aria-live="polite" hidden></p>
-  <div class="subview active" id="subview-matriz-tabla">
+  <div class="subview active" id="subview-a3-empresas">
+    <div id="a3Cards-empresas" class="gremios-grid"></div>
+    <details class="a3-contexto"><summary>Consultar o editar el contexto de empresas · Matriz</summary>
   <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
-    <strong>Actividad 3 &middot; Identificación de oportunidades directas: </strong>
-    cliente/mercado a activar, necesidad crítica o trigger que justifica el acercamiento, y respuesta u oferta de Olivia que la resuelve — marco de la diapositiva 14. Marca "Trigger" cuando esa respuesta deba pasar como insumo directo a la Herramienta 5.
+    <strong>Contexto comercial de las empresas:</strong>
+    edita contacto, necesidad, ruta de entrada y oferta. Las cinco entidades de Salud comparten una fila de contexto. La votación Sí / No es la que activa el embudo.
   </div>
 
   <div class="toolbar">
@@ -1002,7 +1017,7 @@
     </div>
     <div class="add-actions">
       <label style="display:flex; align-items:center; gap:6px; font-size:.84rem; color:var(--ink-soft);">
-        <input type="checkbox" id="m-trigger" style="width:auto;"> marcar como trigger para la Herramienta 5
+        <input type="checkbox" id="m-trigger" style="width:auto;"> marca histórica (no activa el embudo)
       </label>
       <button class="btn" id="matrizSaveAdd">Guardar fila</button>
       <button class="btn ghost" id="matrizCancelAdd">Cancelar</button>
@@ -1014,23 +1029,37 @@
     <table class="actors">
       <thead>
         <tr>
-          <th>Cliente / mercado</th><th>Punto de contacto</th><th>Necesidad crítica</th><th>Ruta de entrada</th><th>Respuesta Olivia</th><th>Trigger &rarr; H5</th><th>Actualizado</th><th></th>
+          <th>Cliente / mercado</th><th>Punto de contacto</th><th>Necesidad crítica</th><th>Ruta de entrada</th><th>Respuesta Olivia</th><th>Marca histórica (sin efecto)</th><th>Actualizado</th><th></th>
         </tr>
       </thead>
       <tbody id="matrizTbody"></tbody>
     </table>
   </div>
 
-  <details class="tech">
-    <summary>Conexión con Herramienta 5 &middot; esquema de datos</summary>
-    <div class="tech-body">
-      <p>Este sitio guarda las filas en Netlify Blobs a través de la función <code>/api/matriz</code> (GET lista, POST agrega, PATCH edita, DELETE elimina). Cualquier persona con el link puede leer y escribir, sin invitación ni cuenta.</p>
-      <div class="schema">{ id, cliente, sector, puntoContacto, necesidadCritica, rutaEntrada, respuestaOlivia, trigger: true|false, origen, createdAt, updatedAt }</div>
-      <p>La Herramienta 5 debe leer las filas con <code>trigger === true</code> — esos son los triggers y la oferta ya identificados que alimentan el Canvas. Puede leerlas directamente con <code>GET /api/matriz</code> sobre este mismo sitio.</p>
-    </div>
-  </details>
-
+    </details>
   </div>
+  <div class="subview" id="subview-a3-empresas-activadas">
+    <button type="button" class="btn secondary" id="a3CSV-empresas" disabled>Descargar empresas activadas (CSV)</button>
+    <div id="a3Lista-empresas" class="gremios-grid"></div>
+  </div>
+  <div class="subview" id="subview-a3-aliados">
+    <details class="a3-contexto"><summary>Agregar gremio-aliado al Radar</summary>
+      <form id="a3Agregar" class="a3-form">
+        <label>Nombre<input id="a3NuevoNombre" maxlength="80" required></label>
+        <label>Contacto<textarea id="a3NuevoContacto" maxlength="600"></textarea></label>
+        <label>Cuentas objetivo<textarea id="a3NuevoCuentas" maxlength="600"></textarea></label>
+        <label>Qué ofrecer<textarea id="a3NuevoOferta" maxlength="600"></textarea></label>
+        <button type="submit" class="btn" id="a3GuardarAliado">Agregar gremio-aliado</button>
+      </form>
+    </details>
+    <div id="a3Cards-aliados" class="gremios-grid"></div>
+  </div>
+  <div class="subview" id="subview-a3-aliados-activados">
+    <button type="button" class="btn secondary" id="a3CSV-aliados" disabled>Descargar gremios-aliados activados (CSV)</button>
+    <div id="a3Lista-aliados" class="gremios-grid"></div>
+  </div>
+  <!-- OBSOLETO: navegación y controles del voto 3/2/1; conservados inertes. -->
+  <template id="gremios-obsoleto">
   <div class="subview" id="subview-gremios">
     <h2>Gremios</h2>
     <p>Califica el horizonte en el que Olivia debería activar cada gremio. Selecciona de nuevo tu opción para quitar el voto.</p>
@@ -1068,6 +1097,7 @@
     <div class="gremios-eje" aria-label="Escala de 1 a 3"><span>Largo 1</span><span>Mediano 2</span><span>Corto 3</span></div>
     <div id="gremiosGrafico" aria-label="Promedio de votos por gremio"></div>
   </div>
+  </template>
 </section>
 
 <section class="view" id="view-ideas">
@@ -1231,6 +1261,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 <dialog class="actor-dialog" id="sectorDialog" aria-labelledby="sdTitle"></dialog>
 
 <script src="config.js"></script>
+<script src="embudo.js"></script>
 <script src="api-supabase.js"></script>
 <script>
 (function(){
@@ -1401,7 +1432,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 
   // ---------------- boot ----------------
   function boot(){
-    initGremios();
+    // OBSOLETO: initGremios(); voto 3/2/1 sustituido por el embudo de activación.
     populateSelects();
     buildFilterChips();
     fetchActors(false).then(function(){
@@ -2346,6 +2377,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 ];
   var gremiosVotos = [], gremiosNombre = '', gremiosCargados = false;
   var gremiosTaller = [], gremiosTallerFirma = '', gremiosBorrarPendiente = null;
+  // OBSOLETO: bloque de votación 3/2/1 y altas gremios-taller. No se inicializa.
   function todosGremios(){ return GREMIOS_32.concat(gremiosTaller); }
   var gremiosPendientes = new Set(), gremiosVersion = 0, gremiosLeyendo = false;
   var GREMIOS_HORIZONTES = [
@@ -2880,10 +2912,95 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     });
   });
 
+  // ACTIVIDAD 3 EMBUDO: INICIO JS
+  (function iniciarActivacion(){
+    const $=id=>document.getElementById(id);
+    let actores=[],matriz=[],votos=[],config=null,cargando=false,guardando=false,iniciado=false,version=0;
+    const mensaje=t=>$('a3Estado').textContent=t;
+    const nombre=()=>$('a3Nombre').value.trim();
+    const mio=id=>votos.find(v=>v.actorId===id && Embudo.slug(v.votante)===Embudo.slug(nombre()));
+    async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo cargar.');return d;}
+    function render(){
+      if(!config)return;
+      $('a3Regla').textContent='Sí = 2 · No = 1. Se activa con promedio '+(config.inclusivo?'≥ ':'> ')+String(config.umbral).replace('.',',')+'. Umbral y comparación configurables. Sin votos no se activa.';
+      const rs=Embudo.resumen(actores,votos,config);
+      for(const grupo of ['empresas','aliados']){
+        const lista=rs.filter(a=>a.grupo===grupo).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+        const html=lista.map(a=>{
+          const c=Embudo.contexto(a,matriz,GREMIOS_32), campos=grupo==='empresas'?[['Sector',c?.sector||a.sector],['Punto de contacto',c?.puntoContacto],['Necesidad crítica',c?.necesidadCritica],['Ruta de entrada',c?.rutaEntrada],['Respuesta / oferta de Olivia',c?.respuestaOlivia]]:[['Contacto',c.contacto],['Cuentas objetivo',c.cuentas],['Qué ofrecer / contexto de la alianza',c.oferta],['Descripción',c.descripcion]];
+          return '<article class="gremio-card"><h3>'+esc(a.nombre)+'</h3>'+(!c?'<p>Contexto pendiente: no hay una fila emparejada en la Matriz.</p>':'')+'<dl>'+campos.map(([k,v])=>'<dt>'+k+'</dt><dd>'+esc(v||'Por definir')+'</dd>').join('')+'</dl><p>'+estado(a)+'</p><fieldset><legend>¿Activar este '+(grupo==='empresas'?'actor':'gremio-aliado')+'?</legend>'+[[2,'Sí'],[1,'No']].map(([valor,t])=>'<button type="button" class="btn secondary" data-activar="'+esc(a.id)+'" data-valor="'+valor+'" aria-pressed="'+(mio(a.id)?.valor===valor)+'" '+(guardando?'disabled':'')+'>'+t+'</button>').join(' ')+'</fieldset></article>';
+        }).join('')||'<p>No hay actores vigentes en este grupo.</p>';
+        const host=$('a3Cards-'+grupo);
+        if(host.innerHTML!==html){
+          const focus=host.contains(document.activeElement)?document.activeElement:null;
+          const id=focus?.dataset.activar,valor=focus?.dataset.valor;
+          host.innerHTML=html;
+          if(id)Array.from(host.querySelectorAll('[data-activar]')).find(b=>b.dataset.activar===id&&b.dataset.valor===valor)?.focus();
+        }
+        const activos=lista.filter(a=>a.activo);
+        $('a3Lista-'+grupo).innerHTML=activos.length?activos.map(a=>'<article class="gremio-card"><h3>'+esc(a.nombre)+'</h3><p>'+estado(a)+'</p></article>').join(''):'<p>Aún no hay '+(grupo==='empresas'?'empresas activadas':'gremios-aliados activados')+'. Vota en la pestaña de calificación.</p>';
+        $('a3CSV-'+grupo).disabled=!activos.length;
+      }
+    }
+    function estado(a){return 'Promedio: '+(a.promedio===null?'sin votos':a.promedio.toLocaleString('es-CO',{maximumFractionDigits:3}))+' · '+a.votos+' voto(s) · '+(a.activo?'Activado':a.votos?'No activado':'Sin votos');}
+    async function cargar(){
+      if(cargando||guardando||!$('view-matriz').classList.contains('active'))return;
+      cargando=true;const v=version;
+      try{
+        const data=await Promise.all([leer('/api/actors'),leer('/api/matriz'),leer('/api/activacion-votos'),leer('embudo-config.json')]);
+        if(v!==version)return;
+        [actores,matriz,votos,config]=data;render();mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Actualización en vivo cada '+POLL_MS/1000+' segundos.');
+      }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los últimos datos.');}
+      finally{cargando=false;}
+    }
+    async function votar(e){
+      const b=e.target.closest('[data-activar]');if(!b||guardando)return;
+      if(!nombre()){mensaje('Escribe tu nombre antes de votar.');$('a3Nombre').focus();return;}
+      const a=actores.find(a=>a.id===b.dataset.activar);if(!a)return;
+      const valor=Number(b.dataset.valor),borrar=mio(a.id)?.valor===valor;
+      guardando=true;version++;render();$('a3Nombre').disabled=true;
+      try{
+        const votante=nombre(),r=await leer('/api/activacion-votos',{method:borrar?'DELETE':'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({actorId:a.id,grupo:Embudo.grupo(a),votante,valor})});
+        votos=votos.filter(v=>!(v.actorId===a.id&&Embudo.slug(v.votante)===Embudo.slug(votante)));if(!borrar)votos.push(r);
+        mensaje(borrar?'Voto retirado.':'Voto guardado.');
+      }catch(e){mensaje(e.message);}
+      finally{guardando=false;version++;$('a3Nombre').disabled=false;render();}
+    }
+    for(const grupo of ['empresas','aliados']){
+      $('a3Cards-'+grupo).addEventListener('click',votar);
+      $('a3CSV-'+grupo).onclick=()=>{
+        const filas=[['actorId','nombre','grupo','promedio','votos','estado']];
+        Embudo.activados(actores,votos,config).filter(a=>a.grupo===grupo).forEach(a=>filas.push([a.id,a.nombre,a.grupo,a.promedio,a.votos,'Activado']));
+        descargarEmbudo(filas,'activados-'+grupo+'.csv');
+      };
+    }
+    try{$('a3Nombre').value=(localStorage.getItem('activacion-votante')||localStorage.getItem('gremios-votante')||'').slice(0,60);}catch(e){}
+    $('a3Nombre').oninput=()=>{try{localStorage.setItem('activacion-votante',$('a3Nombre').value);}catch(e){}render();};
+    $('a3Actualizar').onclick=cargar;
+    $('a3Agregar').onsubmit=async e=>{
+      e.preventDefault();if(guardando)return;
+      const payload={categoria:'aliados',nombre:$('a3NuevoNombre').value.trim(),contacto:$('a3NuevoContacto').value.trim(),cuentas:$('a3NuevoCuentas').value.trim(),oferta:$('a3NuevoOferta').value.trim()};
+      if(!payload.nombre)return;
+      if(actores.some(a=>a.categoria==='aliados'&&Embudo.normalizar(a.nombre)===Embudo.normalizar(payload.nombre))){mensaje('Ese gremio-aliado ya existe en el Radar.');return;}
+      guardando=true;version++;$('a3GuardarAliado').disabled=true;
+      try{
+        const a=await leer('/api/actors',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        actores.push(a);$('a3Agregar').reset();mensaje('Gremio-aliado agregado al Radar y disponible para activar.');
+      }catch(e){mensaje(e.message);}
+      finally{guardando=false;version++;$('a3GuardarAliado').disabled=false;render();}
+    };
+    $('view-matriz').addEventListener('vista:activar',()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();});
+  })();
+  function descargarEmbudo(filas,archivo){
+    const url=URL.createObjectURL(new Blob([Embudo.csv(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
+    a.href=url;a.download=archivo;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  // ACTIVIDAD 3 EMBUDO: FIN JS
+
   // ACTIVIDAD 4: INICIO JS
   (function(){
     const $ = id => document.getElementById(id), API4 = '/api/priorizacion-votos';
-    const categorias = {competidores:'Competidores', mercados:'Mercados', aliados:'Aliados', autoridades:'Autoridades'};
+    const categorias = {mercados:'Empresas', aliados:'Gremios-aliados'};
     let config = null, actores = [], votos = [], resumen = [], seleccionado = null;
     let cargando = false, guardando = false, version = 0, listo = false, iniciado = false;
     let orden = 'nombre', direccion = 1, firmaLista = '', firmaResultados = '', detalleId = null;
@@ -2894,7 +3011,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     const mio = id => votos.find(v => v.actorId === id && slug(v.votante) === slug(nombre()));
     const numero = n => n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
     const mensaje = t => { $('p4Estado').textContent = t; };
-    const visibles = () => actores.filter(a => a.estado !== 'descartado' && a.mostrarEnRadar !== false);
+    const visibles = () => actores.filter(a => Embudo.grupo(a));
     const filtrados = () => visibles().filter(a => (!$('p4Categoria').value || a.categoria === $('p4Categoria').value) && (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes($('p4Buscar').value.trim().toLocaleLowerCase('es'))).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
     const resultados = () => resumen.filter(r => visibles().some(a=>a.id===r.actorId) && (!$('p4CategoriaMatriz').value || r.categoria===$('p4CategoriaMatriz').value));
     async function leer(url, opciones){
@@ -2906,7 +3023,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     function renderLista(){
       const lista = filtrados(), todos = visibles();
       $('p4Avance').textContent = 'Has calificado '+todos.filter(a=>mio(a.id)).length+' de '+todos.length+' · '+lista.length+' en este filtro.';
-      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || '<p>No hay actores que coincidan.</p>';
+      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Aún no hay actores activados. Ve a la Actividad 3 y vota Sí / No para activar empresas y gremios-aliados.</p>');
       if(html !== firmaLista){ $('p4Actores').innerHTML=html; firmaLista=html; }
     }
     function renderEditor(enfocar){
@@ -2914,7 +3031,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
       if(!actor || !config){ $('p4Editor').innerHTML='<p>Selecciona un actor para calificarlo.</p>'; return; }
       const voto = pendientes.get(clave(actor.id)) || mio(actor.id) || {impacto:{},esfuerzo:{}};
       $('p4Editor').innerHTML='<h3 id="p4ActorTitulo" tabindex="-1">'+esc(actor.nombre)+'</h3><p class="hint">'+esc(categorias[actor.categoria])+' · '+esc(actor.sector||'Sin sector')+'</p>'+
-        '<p>Evalúa el valor y el costo de relacionarte con este actor, incluido su seguimiento competitivo o regulatorio. Elige una respuesta por criterio. En esfuerzo, 5 significa más esfuerzo.</p>'+
+        '<p>Evalúa el valor y el costo de relacionarte con este actor, Elige una respuesta por criterio. En esfuerzo, 5 significa más esfuerzo.</p>'+
         '<form id="p4Formulario"><div class="p4-ejes">'+['impacto','esfuerzo'].map(eje=>'<div class="p4-eje-cab eje-'+eje+'"><h4>'+(eje==='impacto'?'Impacto':'Esfuerzo')+'</h4><details><summary>Significado de la escala 1–5</summary><ol>'+Object.values(config.escala[eje]).map(s=>'<li>'+esc(s)+'</li>').join('')+'</ol></details></div>').join('')+config.impacto.map((_,k)=>['impacto','esfuerzo'].map(eje=>{const c=config[eje][k]; if(!c) return ''; return '<fieldset class="eje-'+eje+'"><legend>'+esc(c.nombre)+' · '+c.peso+' %</legend><p id="p4Guia'+c.id+'">'+esc(c.pregunta)+'</p><div class="p4-opciones">'+[1,2,3,4,5].map(n=>'<label title="'+esc(config.escala[eje][n])+'"><input type="radio" name="'+c.id+'" data-eje="'+eje+'" value="'+n+'" aria-describedby="p4Guia'+c.id+'" aria-label="'+esc(n+': '+config.escala[eje][n])+'" required '+(voto[eje][c.id]===n?'checked':'')+'><span data-n="'+n+'">'+n+'</span></label>').join('')+'</div></fieldset>';}).join('')).join('')+'</div><p id="p4Completos" class="hint"></p><div class="p4-acciones"><button class="btn" type="submit" value="guardar">'+(mio(actor.id)?'Guardar cambios':'Guardar calificación')+'</button><button class="btn" type="submit" value="siguiente">Guardar y pasar al siguiente</button><button class="btn secondary" type="button" id="p4Borrar" '+(!mio(actor.id)?'disabled':'')+'>Borrar mi calificación</button></div><div class="p4-acciones"><button class="btn ghost" type="button" id="p4Anterior">← Anterior</button><button class="btn ghost" type="button" id="p4Siguiente">Siguiente →</button></div></form>';
       $('p4Formulario').addEventListener('change',()=>{ pendientes.set(clave(seleccionado),recoger()); renderLista(); avanceFormulario(); });
       $('p4Formulario').addEventListener('submit',e=>{e.preventDefault(); guardar(false,e.submitter && e.submitter.value==='siguiente');});
@@ -3028,9 +3145,9 @@ síntesis (por horizonte): { texto, updatedAt }</div>
           $('p4Provisional').hidden=!config.provisional;$('p4Provisional').querySelector('span').textContent=config.nota;
           $('p4Metodologia').textContent=config.metodologia.adaptacion;
         }
-        const data=await Promise.all([leer('/api/actors'),leer(API4),leer(API4+'?resumen=1')]);
+        const data=await Promise.all([leer('/api/actors'),leer(API4),leer(API4+'?resumen=1'),leer('/api/activacion-votos'),leer('embudo-config.json')]);
         if(v!==version) return;
-        [actores,votos,resumen]=data;listo=true;
+        [actores,votos,resumen]=data;actores=Embudo.activados(actores,data[3],data[4]);listo=true;
         if(seleccionado&&!visibles().some(a=>a.id===seleccionado)){seleccionado=null;renderEditor(false);}
         renderLista();renderResultados();
         mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Se actualiza cada '+(POLL_MS/1000)+' segundos.');
@@ -3067,135 +3184,91 @@ síntesis (por horizonte): { texto, updatedAt }</div>
   // ACTIVIDAD 4: FIN JS
 
   // ACTIVIDAD 5: INICIO JS
-  // Funciones puras compartidas por la vista y sus pruebas locales.
-  function canvasOportunidades(filas){ return filas.filter(f => f.trigger === true); }
-  function canvasAliados(config, actores, gremios, votos){
-    // los competidores no pueden ser aliado impulsor (lista configurable en canvas-config.json)
-    const excluidas = config.categoriasExcluidas || [];
-    const lista = actores.filter(a => config.cuadrantesElegibles.includes(a.cuadrante?.id) && !excluidas.includes(a.categoria)).map(a => ({
-      tipo:'actor', id:a.actorId, nombre:a.nombre, cuadrante:a.cuadrante,
-      indiceImpacto:a.indiceImpacto, indiceEsfuerzo:a.indiceEsfuerzo, categoria:a.categoria
-    }));
-    const grupos = new Map();
-    votos.forEach(v => { if([1,2,3].includes(v.valor)){ const g=grupos.get(v.gremioId)||[]; g.push(v.valor); grupos.set(v.gremioId,g); } });
-    const vistos = new Set();
-    gremios.forEach(g => {
-      if(vistos.has(g.id)) return; vistos.add(g.id);
-      const vs=grupos.get(g.id)||[]; if(!vs.length) return;
-      const promedio=vs.reduce((s,v)=>s+v,0)/vs.length;
-      if(config.gremios.estricto ? promedio>config.gremios.umbral : promedio>=config.gremios.umbral)
-        lista.push({tipo:'gremio',id:g.id,nombre:g.nombre,promedio,votos:vs.length});
-    });
-    return lista.sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-  }
-  function canvasRegla(config, aliado){ return aliado ? config.rutas[aliado.tipo==='gremio'?'gremio':aliado.cuadrante?.id] || null : null; }
-  function canvasElegir(config, borrador, aliado){
-    const regla=canvasRegla(config,aliado);
-    return {...borrador,aliado,ruta90:borrador.rutaAuto ? (regla?.texto || '') : borrador.ruta90};
-  }
-  function canvasCSV(filas){
-    return '\uFEFF'+filas.map(f=>f.map(v=>{
-      let t=String(v ?? ''); if(/^[\s]*[=+@-]/.test(t)) t="'"+t;
-      return '"'+t.replace(/"/g,'""')+'"';
-    }).join(';')).join('\r\n');
-  }
   (function iniciarCanvas(){
     const $=id=>document.getElementById(id), drafts=new Map();
-    let config=null, matriz=[], guardados=[], aliados=[], cargando=false, guardando=false, iniciado=false, firma='', revision=0;
-    const clave=a=>a ? a.tipo+':'+a.id : '';
-    const numero=n=>Number(n).toLocaleString('es-CO',{maximumFractionDigits:2});
-    const detalle=a=>a.tipo==='actor' ? a.cuadrante.nombre+' · Impacto '+numero(a.indiceImpacto)+' · Esfuerzo '+numero(a.indiceEsfuerzo) : 'Promedio '+numero(a.promedio)+' · '+a.votos+(a.votos===1?' voto':' votos');
-    const sello=c=>c?.updatedAt ? 'Guardado por '+c.editadoPor+' a las '+new Date(c.updatedAt).toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'})+' · '+new Date(c.updatedAt).toLocaleDateString('es-CO') : 'Sin guardar';
-    async function leer(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw new Error('No se pudo cargar la Actividad 5. Intenta de nuevo.'); return r.json(); }
-    function borrador(f){
-      return drafts.get(f.id) || {...(guardados.find(c=>c.id===f.id)||{id:f.id,matrizId:f.id,aliado:null,buyer:'',sponsor:'',cta:'',ruta90:'',rutaAuto:true})};
+    let actores=[],matriz=[],guardados=[],elegibles=[],cargando=false,guardando=false,iniciado=false,version=0;
+    const mensaje=t=>$('p5Estado').textContent=t;
+    const sello=c=>c?.updatedAt?'Último guardado: '+new Date(c.updatedAt).toLocaleString('es-CO')+(c.editadoPor?' · Registrado por '+c.editadoPor:''):'Sin guardar';
+    const camposComunes=[['acciones30','Acciones a 30 días',4000],['acciones60','Acciones a 60 días',4000],['acciones90','Acciones a 90 días',4000]];
+    const camposAliados=[['aporteOlivia','Qué aporta Olivia',4000],...camposComunes];
+    const camposEmpresas=[['oferta','Oferta de Olivia',4000],['buyer','Buyer (comprador)',300],['sponsor','Sponsor (patrocinador)',300],['cta','CTA (llamado a la acción)',1000],...camposComunes];
+    async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo cargar.');return d;}
+    function dato(a){
+      const base=Embudo.ficha(a,matriz,GREMIOS_32),guardado=guardados.find(c=>c.id===base.id);
+      return {...base,...guardado,...drafts.get(base.id),nombre:base.nombre,sector:base.sector,problema:base.problema,queOfrece:base.queOfrece};
     }
-    function renderTarjetas(){
-      const oportunidades=canvasOportunidades(matriz);
-      $('p5AliadosAviso').textContent=aliados.length ? aliados.length+' aliados elegibles. Actor y Gremio son opciones distintas.' : 'Aún no hay aliados elegibles. La lista se llena con las calificaciones de impacto alto de la Actividad 4 y los votos de gremios de la Actividad 3.';
-      $('p5Tarjetas').innerHTML=oportunidades.length ? oportunidades.map(f=>{
-        const d=borrador(f), actual=guardados.find(c=>c.id===f.id);
-        const fuera=d.aliado&&!aliados.some(a=>clave(a)===clave(d.aliado));
-        const opciones=['actor','gremio'].map(tipo=>'<optgroup label="'+(tipo==='actor'?'Actor':'Gremio')+'">'+aliados.filter(a=>a.tipo===tipo).map(a=>'<option value="'+esc(clave(a))+'" '+(clave(a)===clave(d.aliado)?'selected':'')+'>'+esc(a.nombre+' · '+detalle(a))+'</option>').join('')+'</optgroup>').join('');
-        return '<article class="p5-card" data-id="'+esc(f.id)+'"><h3>'+esc(f.cliente)+'</h3><p>'+esc(f.sector||'Sector pendiente')+'</p>'+[
-          ['Problema',f.necesidadCritica],['Oferta',f.respuestaOlivia||'Pendiente: se define en la Actividad 3'],['Punto de contacto',f.puntoContacto||'Pendiente'],['Ruta de entrada',f.rutaEntrada||'Pendiente']
-        ].map(([k,v])=>'<p><strong>'+k+':</strong> '+esc(v)+'</p>').join('')+
-        '<label>Aliado impulsor<select data-field="aliado"><option value="">Sin aliado seleccionado</option>'+opciones+(fuera?'<option selected value="'+esc(clave(d.aliado))+'">'+esc(d.aliado.nombre)+' · Ya no elegible; selecciona otro aliado</option>':'')+'</select></label>'+
-        '<div class="p5-ficha">'+ficha(d.aliado)+'</div><div class="p5-fields">'+[['buyer','Buyer (comprador)',300],['sponsor','Sponsor (patrocinador)',300],['cta','CTA (llamado a la acción concreto)',1000],['ruta90','Ruta a 90 días',4000]].map(([k,label,max])=>'<label>'+label+'<textarea data-field="'+k+'" maxlength="'+max+'" rows="'+(k==='ruta90'?5:2)+'">'+esc(d[k])+'</textarea></label>').join('')+'</div><p class="p5-auto">'+(d.rutaAuto?'Ruta automática al elegir aliado.':'Ruta ajustada manualmente; se conserva al cambiar de aliado.')+'</p><button type="button" class="btn ghost" data-action="auto">Restablecer ruta automática</button> <button type="button" class="btn" data-action="guardar">Guardar canvas</button><p class="p5-sello" aria-live="polite">'+esc(sello(actual))+(drafts.has(f.id)?' · Cambios sin guardar':'')+'</p></article>';
-      }).join('') : '<p class="p5-card">Aún no hay oportunidades marcadas. Ve a Actividad 3 → Matriz → «Trigger → H5» y marca las filas que se trabajarán aquí.</p>';
+    function renderTarjetas(forzar=false){
+      const aliados=elegibles.filter(a=>a.grupo==='aliados');
+      for(const grupo of ['aliados','empresas']){
+        const host=$('p5Tarjetas-'+grupo);
+        // No sustituir un control mientras se escribe; los datos ya quedan actualizados en memoria.
+        if(!forzar&&host.contains(document.activeElement)&&!guardando)continue;
+        const lista=elegibles.filter(a=>a.grupo===grupo);
+        host.innerHTML=lista.map(a=>{
+          const d=dato(a),guardado=guardados.find(c=>c.id===d.id),vigente=!d.aliado||aliados.some(x=>x.id===d.aliado.id);
+          return '<article class="p5-card" data-id="'+esc(d.id)+'"><h3>'+esc(d.nombre)+'</h3><p>'+esc(a.cuadrante.nombre)+'</p>'+(grupo==='aliados'?'<p><strong>Qué ofrece / contexto de la alianza:</strong> '+esc(d.queOfrece||'Por definir en el contexto del actor')+'</p>':'<p><strong>Problema / contexto:</strong> '+esc(d.problema||'Pendiente de contexto en la Matriz')+'</p><label>Aliado impulsor<select data-field="aliado" '+(guardando?'disabled':'')+'><option value="">Por definir</option>'+(!vigente?'<option selected value="'+esc(d.aliado.id)+'">'+esc(d.aliado.nombre)+' — ya no elegible</option>':'')+aliados.map(x=>'<option value="'+esc(x.id)+'" '+(d.aliado?.id===x.id?'selected':'')+'>'+esc(x.nombre)+'</option>').join('')+'</select></label>'+(!aliados.length?'<p>Aún no hay aliados con resultado en los cuadrantes altos de la Actividad 4. Puedes guardar el resto de la ficha.</p>':''))+'<div class="p5-fields">'+(grupo==='aliados'?camposAliados:camposEmpresas).map(([k,label,max])=>'<label>'+label+'<textarea data-field="'+k+'" maxlength="'+max+'" rows="3" '+(guardando?'disabled':'')+'>'+esc(d[k])+'</textarea></label>').join('')+'</div><button type="button" class="btn" data-guardar="'+esc(d.id)+'" '+(guardando?'disabled':'')+'>Guardar '+(grupo==='aliados'?'ficha':'canvas')+'</button><p class="p5-sello" aria-live="polite">'+esc(sello(guardado))+(drafts.has(d.id)?' · Cambios sin guardar':'')+'</p></article>';
+        }).join('')||'<p class="p5-card">Aún no hay '+(grupo==='aliados'?'gremios-aliados':'empresas')+' elegibles. Primero actívalos en la Actividad 3 y califícalos en la Actividad 4: deben quedar en Victorias tempranas o Apuestas estratégicas.</p>';
+      }
     }
-    function ficha(a){
-      return a?.tipo==='actor' ? '<button type="button" class="btn ghost" data-action="ficha"><img alt="" src="'+esc(getLogo(a))+'">Ver ficha de '+esc(a.nombre)+'</button>' : '';
+    function filasGrupo(grupo){
+      return guardados.filter(c=>c.grupo===grupo).map(c=>({...c,vigente:elegibles.some(a=>a.id===c.actorId)}));
     }
-    function datos(c){
-      const f=matriz.find(f=>f.id===c.matrizId);
-      return {...c,cliente:f?.cliente??c.cliente,sector:f?.sector??c.sector,problema:f?.necesidadCritica??c.problema,oferta:f?.respuestaOlivia??c.oferta,retirado:!f||f.trigger!==true};
-    }
-    function horizonte(c){ return c.horizonte || canvasRegla(config,c.aliado)?.horizonte || 'Sin horizonte'; }
     function renderHoja(){
-      const grupos=new Map(); guardados.forEach(c=>{const h=horizonte(c);if(!grupos.has(h))grupos.set(h,[]);grupos.get(h).push(datos(c));});
-      $('p5CSV').disabled=!guardados.length;
-      $('p5Hoja').innerHTML=guardados.length ? [...grupos].sort(([a],[b])=>a.localeCompare(b)).map(([h,cs])=>'<h3>'+esc(h)+(h==='Sin horizonte'?'':' días')+'</h3>'+cs.map(c=>'<article class="p5-card"><h4>'+esc(c.cliente)+'</h4><p>'+esc(c.sector)+' · '+esc(c.aliado ? (c.aliado.tipo==='actor'?'Actor: ':'Gremio: ')+c.aliado.nombre : 'Sin aliado')+'</p>'+(c.retirado?'<p>Esta oportunidad ya no está marcada en la Matriz. Se conserva el canvas guardado.</p>':'')+[['Problema',c.problema],['Oferta',c.oferta||'Pendiente: se define en la Actividad 3'],['Buyer',c.buyer],['Sponsor',c.sponsor],['Ruta a 90 días',c.ruta90],['CTA',c.cta]].map(([k,v])=>'<p><strong>'+k+':</strong> '+esc(v||'Pendiente')+'</p>').join('')+'<small>'+esc(sello(c))+'</small></article>').join('')).join('') : '<p>No hay canvas guardados. Completa una oportunidad y pulsa «Guardar canvas».</p>';
+      for(const grupo of ['aliados','empresas']){
+        const lista=filasGrupo(grupo);
+        $('p5CSV-'+grupo).disabled=!lista.length;
+        $('p5Hoja-'+grupo).innerHTML=lista.map(c=>'<article class="p5-card"><h4>'+esc(c.nombre)+'</h4><p>'+ (c.vigente?'Elegible en el embudo actual.':'Fuera del embudo actual; se conserva el último guardado.')+'</p>'+(grupo==='aliados'?'<p><strong>Qué ofrece:</strong> '+esc(c.queOfrece)+'</p>':'<p><strong>Problema:</strong> '+esc(c.problema)+'</p><p><strong>Aliado impulsor:</strong> '+esc(c.aliado?.nombre||'Por definir')+'</p>')+(grupo==='aliados'?camposAliados:camposEmpresas).map(([k,t])=>'<p><strong>'+t+':</strong> '+esc(c[k]||'Pendiente')+'</p>').join('')+'<small>'+esc(sello(c))+'</small></article>').join('')||'<p>Aún no hay fichas guardadas en este grupo.</p>';
+      }
+      const antiguos=guardados.filter(c=>!c.grupo);
+      $('p5Historicos').textContent=antiguos.length?'Hay '+antiguos.length+' canvas del modelo anterior conservados en la colección. No se convierten automáticamente a actores.':'';
     }
     async function cargar(){
-      if(cargando||guardando||!$('view-canvas').classList.contains('active')) return;
-      cargando=true;
-      const version=revision;
+      if(cargando||guardando||!$('view-canvas').classList.contains('active'))return;
+      cargando=true;const v=version;
       try{
-        const [cfg,fs,cs,as,gs,vs]=await Promise.all([leer('canvas-config.json'),leer('/api/matriz'),leer('/api/canvas'),leer('/api/priorizacion-votos?resumen=1'),leer('/api/gremios-taller'),leer('/api/gremios-votos')]);
-        if(version!==revision)return;
-        config=cfg;matriz=fs;guardados=cs;aliados=canvasAliados(cfg,as,GREMIOS_32.concat(gs),vs);
-        $('p5Reglas').hidden=!cfg.provisional; $('p5Reglas').textContent='Reglas provisionales · '+cfg.nota;
-        const nueva=JSON.stringify([cfg,fs,cs,aliados]);
-        // No reconstruir campos mientras se escribe; reintentar después de salir de la tarjeta.
-        if(nueva!==firma&&!$('p5Tarjetas').contains(document.activeElement)){renderTarjetas();firma=nueva;}
-        renderHoja();$('p5Estado').textContent='Actualizado '+new Date().toLocaleTimeString('es-CO')+' · El último guardado prevalece. Los cambios sin guardar se conservan durante el sondeo.';
-      }catch(e){$('p5Estado').textContent=e.message;}finally{cargando=false;}
+        const [as,ms,cs,vs,rs,cfg,cc]=await Promise.all([leer('/api/actors'),leer('/api/matriz'),leer('/api/canvas'),leer('/api/activacion-votos'),leer('/api/priorizacion-votos?resumen=1'),leer('embudo-config.json'),leer('canvas-config.json')]);
+        if(v!==version)return;
+        actores=as;matriz=ms;guardados=cs;elegibles=Embudo.elegibles(as,vs,cfg,rs,cc);
+        renderTarjetas();renderHoja();mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Trabajo grupal · Los borradores se conservan mientras esta página esté abierta.');
+      }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los borradores y últimos datos.');}
+      finally{cargando=false;}
     }
-    function cambio(e){
-      const card=e.target.closest('[data-id]'),field=e.target.dataset.field;if(!card||!field)return;
-      const f=matriz.find(f=>f.id===card.dataset.id);if(!f)return;
-      let d=borrador(f);
-      if(field==='aliado'){
-        d=canvasElegir(config,d,aliados.find(a=>clave(a)===e.target.value)||null);
-        card.querySelector('[data-field="ruta90"]').value=d.ruta90;card.querySelector('.p5-ficha').innerHTML=ficha(d.aliado);
-      }else{d={...d,[field]:e.target.value};if(field==='ruta90')d.rutaAuto=false;}
-      drafts.set(f.id,d);card.querySelector('.p5-auto').textContent=d.rutaAuto?'Ruta automática al elegir aliado.':'Ruta ajustada manualmente; se conserva al cambiar de aliado.';
-      card.querySelector('.p5-sello').textContent=sello(guardados.find(c=>c.id===f.id))+' · Cambios sin guardar';
+    for(const grupo of ['aliados','empresas']){
+      const host=$('p5Tarjetas-'+grupo);
+      function editar(e){
+        const card=e.target.closest('[data-id]'),k=e.target.dataset.field;if(!card||!k)return;
+        const a=elegibles.find(a=>Embudo.ficha(a,[],[]).id===card.dataset.id);if(!a)return;
+        const d=dato(a);
+        if(k==='aliado'){
+          const aliado=elegibles.find(a=>a.grupo==='aliados'&&a.id===e.target.value);
+          d.aliado=aliado?{id:aliado.id,nombre:aliado.nombre}:null;
+        }else d[k]=e.target.value;
+        drafts.set(d.id,d);card.querySelector('.p5-sello').textContent=sello(guardados.find(c=>c.id===d.id))+' · Cambios sin guardar';
+      }
+      host.addEventListener('input',editar);host.addEventListener('change',editar);
+      host.addEventListener('click',async e=>{
+        const b=e.target.closest('[data-guardar]');if(!b||guardando)return;
+        const a=elegibles.find(a=>Embudo.ficha(a,[],[]).id===b.dataset.guardar);if(!a)return;
+        const d=dato(a);d.editadoPor=$('p5Nombre').value.trim();drafts.set(d.id,d);
+        guardando=true;version++;renderTarjetas();$('p5Nombre').disabled=true;mensaje('Guardando…');
+        try{
+          // Revalida la entrada justo antes de guardar, también si cambió en otro equipo.
+          const [as,vs,cfg,rs,cc]=await Promise.all([leer('/api/actors'),leer('/api/activacion-votos'),leer('embudo-config.json'),leer('/api/priorizacion-votos?resumen=1'),leer('canvas-config.json')]);
+          const ahora=Embudo.elegibles(as,vs,cfg,rs,cc);
+          if(!ahora.some(x=>x.id===a.id))throw Error('Este actor ya no es elegible. El borrador se conserva hasta que vuelva a entrar al embudo.');
+          if(d.aliado&&!ahora.some(x=>x.grupo==='aliados'&&x.id===d.aliado.id))throw Error('El aliado impulsor ya no es elegible. Elige otro o deja el campo pendiente.');
+          const rec=await leer('/api/canvas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+          guardados=guardados.filter(c=>c.id!==d.id).concat(rec);drafts.delete(d.id);mensaje('Ficha guardada. '+sello(rec));
+        }catch(e){mensaje(e.message+' Tus cambios siguen en el borrador.');}
+        finally{guardando=false;version++;$('p5Nombre').disabled=false;renderTarjetas(true);renderHoja();}
+      });
+      $('p5CSV-'+grupo).onclick=()=>{
+        const campos=grupo==='aliados'?camposAliados:camposEmpresas;
+        const filas=[['actorId','nombre','grupo','estado','sector','problema','queOfrece','aliado',...campos.map(([k])=>k),'registradoPor','ultimoGuardado']];
+        filasGrupo(grupo).forEach(c=>filas.push([c.actorId,c.nombre,c.grupo,c.vigente?'Elegible':'Fuera del embudo',c.sector,c.problema,c.queOfrece,c.aliado?.nombre||'',...campos.map(([k])=>c[k]),c.editadoPor,c.updatedAt]));
+        descargarEmbudo(filas,'ruta-de-accion-'+grupo+'.csv');
+      };
     }
-    $('p5Tarjetas').addEventListener('input',cambio);
-    $('p5Tarjetas').addEventListener('click',async e=>{
-      const b=e.target.closest('[data-action]'),card=b?.closest('[data-id]');if(!card||!config)return;
-      const f=matriz.find(f=>f.id===card.dataset.id);if(!f)return;
-      let d=borrador(f);
-      if(b.dataset.action==='ficha'){if(d.aliado?.tipo==='actor')openActorDialog(d.aliado.id);return;}
-      if(b.dataset.action==='auto'){
-        d=canvasElegir(config,{...d,rutaAuto:true},d.aliado);drafts.set(f.id,d);renderTarjetas();return;
-      }
-      if(guardando)return;
-      const nombre=$('p5Nombre').value.trim();if(!nombre){showToast('Escribe tu nombre antes de guardar.','error');$('p5Nombre').focus();return;}
-      if(d.aliado){
-        const vigente=aliados.find(a=>clave(a)===clave(d.aliado));
-        if(!vigente){showToast('El aliado ya no es elegible. Selecciona otro o deja la opción sin aliado.','error');return;}
-        d=canvasElegir(config,d,vigente);
-      }
-      const borradorEnviado=drafts.get(f.id);
-      revision++;guardando=true;b.disabled=true;
-      try{
-        const r=await fetch('/api/canvas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({...d,id:f.id,matrizId:f.id,editadoPor:nombre})});
-        const c=await r.json();if(!r.ok)throw new Error(c.error||'No se pudo guardar.');
-        guardados=guardados.filter(x=>x.id!==c.id).concat(c);
-        // Si se siguió escribiendo durante la petición, conservar ese borrador.
-        const pendiente=drafts.get(f.id);
-        if(!pendiente||JSON.stringify(pendiente)===JSON.stringify(borradorEnviado))drafts.delete(f.id);
-        firma='';renderTarjetas();renderHoja();showToast('Canvas guardado.');
-      }catch(error){showToast(error.message,'error');}finally{guardando=false;b.disabled=false;}
-    });
-    $('p5CSV').onclick=()=>{
-      const filas=[['Cliente','Sector','Problema','Oferta','Aliado','Tipo','Cuadrante / promedio','Buyer','Sponsor','Ruta90','CTA','Editado por','Fecha','Horizonte','Trigger vigente']];
-      guardados.map(datos).forEach(c=>filas.push([c.cliente,c.sector,c.problema,c.oferta,c.aliado?.nombre,c.aliado?.tipo,c.aliado?.cuadrante?.nombre??c.aliado?.promedio,c.buyer,c.sponsor,c.ruta90,c.cta,c.editadoPor,c.updatedAt,horizonte(c),c.retirado?'No':'Sí']));
-      const url=URL.createObjectURL(new Blob([canvasCSV(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='hoja_de_ruta_90_dias.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
-    };
     try{$('p5Nombre').value=(localStorage.getItem('canvas-participante')||'').slice(0,60);}catch(e){}
     $('p5Nombre').oninput=()=>{try{localStorage.setItem('canvas-participante',$('p5Nombre').value);}catch(e){}};
     $('p5Reintentar').onclick=cargar;

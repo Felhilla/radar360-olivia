@@ -1,0 +1,5 @@
+{
+  "umbral": 1.5,
+  "inclusivo": true,
+  "nota": "Umbral configurable. Sí = 2 y No = 1. Con promedio mayor o igual a 1,5 se activa: al menos la mitad de los votos son Sí. Sin votos no se activa."
+}
