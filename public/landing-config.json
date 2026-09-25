@@ -56,6 +56,22 @@
         "color": "#4D86D9",
         "icono": "img/landing/objetivos-portafolio.svg"
       }
+    ],
+    "nombre": "Ruta Colombia - Olivia",
+    "provisional": true,
+    "imagen": {
+      "src": "img/landing/portada-mapa.webp",
+      "alt": "Ilustración de Colombia en turquesa con nodos y rutas de conexión, y acentos naranja y verde."
+    },
+    "logos": [
+      {
+        "src": "img/landing/portada-olivia.jpeg",
+        "alt": "Olivia"
+      },
+      {
+        "src": "img/landing/portada-gh-studio.png",
+        "alt": "GH Studio"
+      }
     ]
   },
   "equipo": {
