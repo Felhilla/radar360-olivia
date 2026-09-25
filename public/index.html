@@ -982,7 +982,7 @@
     <button data-subview="a3-aliados-activados">Gremios-aliados activados</button>
   </nav>
   <div class="subview active" id="subview-a3-empresas">
-    <div id="a3Cards-empresas" class="gremios-grid"></div>
+    <div id="a3Cards-empresas"></div>
     <details class="a3-contexto"><summary>Consultar o editar el contexto de empresas · Matriz</summary>
   <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
     <strong>Contexto comercial de las empresas:</strong>
@@ -2926,10 +2926,15 @@ síntesis (por horizonte): { texto, updatedAt }</div>
       const rs=Embudo.resumen(actores,votos,config);
       for(const grupo of ['empresas','aliados']){
         const lista=rs.filter(a=>a.grupo===grupo).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-        const html=lista.map(a=>{
+        const ficha=a=>{
           const c=Embudo.contexto(a,matriz,GREMIOS_32), campos=grupo==='empresas'?[['Sector',c?.sector||a.sector],['Necesidad crítica',c?.necesidadCritica]]:[['Contacto',c.contacto],['Cuentas objetivo',c.cuentas],['Qué ofrecer / contexto de la alianza',c.oferta],['Descripción',c.descripcion]];
-          return '<article class="gremio-card"><h3>'+esc(a.nombre)+'</h3>'+(!c?'<p>Contexto pendiente: no hay una fila emparejada en la Matriz.</p>':'')+'<dl>'+campos.map(([k,v])=>'<dt>'+k+'</dt><dd>'+esc(v||'Por definir')+'</dd>').join('')+'</dl><p>'+estado(a)+'</p><fieldset><legend>¿Activar este '+(grupo==='empresas'?'actor':'gremio-aliado')+'?</legend>'+[[2,'Sí'],[1,'No']].map(([valor,t])=>'<button type="button" class="btn secondary" data-activar="'+esc(a.id)+'" data-valor="'+valor+'" aria-pressed="'+(mio(a.id)?.valor===valor)+'" '+(guardando?'disabled':'')+'>'+t+'</button>').join(' ')+'</fieldset></article>';
-        }).join('')||'<p>No hay actores vigentes en este grupo.</p>';
+          return '<article class="gremio-card"><h3><img src="'+esc(getLogo(a))+'" alt=""><span class="g-nombre">'+esc(a.nombre)+'</span></h3>'+(!c?'<p>Contexto pendiente: no hay una fila emparejada en la Matriz.</p>':'')+'<dl>'+campos.map(([k,v])=>'<dt>'+k+'</dt><dd>'+esc(v||'Por definir')+'</dd>').join('')+'</dl><p>'+estado(a)+'</p><fieldset><legend>¿Activar este '+(grupo==='empresas'?'actor':'gremio-aliado')+'?</legend>'+[[2,'Sí'],[1,'No']].map(([valor,t])=>'<button type="button" class="btn secondary" data-activar="'+esc(a.id)+'" data-valor="'+valor+'" aria-pressed="'+(mio(a.id)?.valor===valor)+'" '+(guardando?'disabled':'')+'>'+t+'</button>').join(' ')+'</fieldset></article>';
+        };
+        // Empresas agrupadas por sector (orden del Radar) y alfabéticas dentro de cada sector.
+        const sectorDe=a=>a.sector||'Sin sector';
+        const html=!lista.length?'<p>No hay actores vigentes en este grupo.</p>':grupo==='empresas'
+          ?sortedSectorKeys('mercados',[...new Set(lista.map(sectorDe))]).map(sec=>'<section class="sector-block"><h3 class="sector-title">'+esc(sec)+'</h3><div class="gremios-grid">'+lista.filter(a=>sectorDe(a)===sec).map(ficha).join('')+'</div></section>').join('')
+          :lista.map(ficha).join('');
         const host=$('a3Cards-'+grupo);
         if(host.innerHTML!==html){
           const focus=host.contains(document.activeElement)?document.activeElement:null;

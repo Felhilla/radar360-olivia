@@ -45,6 +45,6 @@ export function dom(context){
  context.fetch=context.window.fetch;context.localStorage={getItem(){throw Error('Bloqueado');},setItem(){throw Error('Bloqueado');}};
  context.setInterval=()=>0;context.setTimeout=fn=>fn();context.GREMIOS_32=gremios;context.POLL_MS=6000;
  context.esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- context.getLogo=()=>'';context.openActorDialog=()=>{};context.showToast=()=>{};
+ context.getLogo=()=>'';context.sortedSectorKeys=(c,k)=>k.slice().sort();context.openActorDialog=()=>{};context.showToast=()=>{};
  return element;
 }
