@@ -7,7 +7,7 @@ Implementa `Handshakes/09_Radar360_Ajustes_plan.md`. Codex hizo el código y los
 ## Archivos
 
 - **`public/index.html`**
-  - Panel «Contexto regional y sectorial» (`RADAR_CONTEXTO`). Solo aparece en Mercados y va antes de los grupos de sector.
+  - (Retirado el 25 sep por decisión de Felipe: el panel «Contexto regional y sectorial» rompía la dinámica del taller. Su contenido queda como anexo del informe en `Investigación/Anexo_Contexto_Regional_Sectorial_Informe_v1.2.docx`.)
   - `SECTOR_FICHAS` actualizado al informe v1.2, con 9 sectores.
   - `SECTOR_ORDER.mercados` = Financiero, Energía, Servicios públicos, Minero, Retail, Consumo, Industrial, Telecomunicaciones, Salud.
   - Tercer bloque en `#actorDialog`, «Necesidad y posibilidad de articulación con Olivia», solo para mercados.

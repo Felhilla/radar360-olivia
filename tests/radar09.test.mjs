@@ -18,9 +18,8 @@ test('Radar09: orden compartido, nueve fichas y cuatro frentes citados',()=>{
  assert.deepEqual(Array.from(ctx.SECTOR_ORDER.mercados),expected);
  assert.deepEqual(Array.from(ctx.sortedSectorKeys('mercados',[...expected].reverse())),expected);
  assert.deepEqual(Array.from(ctx.sortedSectorKeys('mercados',['Zulu','Minero','Otro'])),['Minero','Otro','Zulu']);
- const fichas=vm.runInContext('SECTOR_FICHAS',ctx),frentes=vm.runInContext('RADAR_CONTEXTO',ctx);
+ const fichas=vm.runInContext('SECTOR_FICHAS',ctx);
  assert.deepEqual(Object.keys(fichas),expected);
- assert.equal(frentes.length,4);
  for(const ficha of Object.values(fichas)){assert.match(ficha.fuente,/informe v1.2/i);assert(ficha.estado.length && ficha.priorizacion.length);}
  assert(!forbidden.test(content));
 });
@@ -86,12 +85,12 @@ test('Radar09: diálogo muestra tercer bloque solo para mercados, escapa HTML y 
  s.actor('a','aliados',{descripcion:'Aliado',confianza:'media',articulacion:'NO MOSTRAR'});s.context.openActorDialog('a');assert(!dlg.innerHTML.includes('NO MOSTRAR'));
  s.actor('m2','mercados',{queHace:'Hace',relevancia:'Relevante'});s.context.openActorDialog('m2');assert.match(dlg.innerHTML,/Sin información de articulación registrada/);
 });
-test('Radar09: panel visible antes de sectores, exclusivo de Mercados',()=>{
+test('Radar09: sin panel de contexto regional en el Radar (retirado; queda como anexo del informe)',()=>{
  function el(){return {innerHTML:'',textContent:'',children:[],appendChild(c){this.children.push(c);},setAttribute(){},addEventListener(){}};}
  const elements=new Map(),get=id=>{if(!elements.has(id))elements.set(id,el());return elements.get(id);};
  const ctx=vm.createContext({document:{getElementById:get,createElement:el},currentActors:()=>Object.fromEntries(patches.map(r=>[r.id,r.data])),activeCategory:'mercados',CAT_ORDER:['mercados'],CATS:{mercados:{label:'Mercados'}},GENERIC_LOGO_BY_CAT:{mercados:''},makeCard:a=>({id:a.id}),renderGapNote:()=>{},esc:s=>s,openSectorDialog(){}});
  vm.runInContext(orderCode+content+html.slice(html.indexOf('  function radarVisible'),html.indexOf('  var SECTOR_ORDER =')),ctx);
- ctx.renderRadar();const first=get('drawerBody').children[0];assert.equal(first.className,'radar-contexto');assert.match(first.innerHTML,/Reconstrucción/);assert.match(first.innerHTML,/Gremios como cliente/);
+ ctx.renderRadar();assert(!get('drawerBody').children.some(c=>c.className==='radar-contexto'));assert(!html.includes('Contexto regional y sectorial'));
  get('drawerBody').children=[];ctx.activeCategory=null;ctx.renderRadar();assert.equal(get('drawer').hidden,true);
  ctx.activeCategory='aliados';ctx.CATS.aliados={label:'Aliados'};ctx.renderRadar();assert(!get('drawerBody').children.some(c=>c.className==='radar-contexto'));
 });

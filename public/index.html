@@ -373,12 +373,6 @@
   .drawer-head h2{ font-size:1.3rem; }
   .drawer-note{ font-size:.82rem; color:var(--ink-soft); margin-bottom:10px; }
 
-  #view-radar .radar-contexto{ margin-bottom:24px; padding:18px; border:1px solid var(--line); border-radius:12px; background:var(--panel-2); color:var(--ink); }
-  #view-radar .radar-contexto h3{ margin:0 0 8px; }
-  #view-radar .radar-contexto p{ line-height:1.6; }
-  #view-radar .radar-contexto-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px; }
-  #view-radar .radar-contexto article{ padding:14px; border:1px solid var(--line); border-radius:9px; background:var(--panel); }
-  #view-radar .radar-contexto h4{ margin:0 0 8px; color:var(--accent); }
   .sector-block{ margin-bottom:24px; }
   .sector-block:last-child{ margin-bottom:0; }
   .sector-title{
@@ -1480,14 +1474,6 @@
 
     var body = document.getElementById("drawerBody");
     body.innerHTML = "";
-    if(catKeyA === "mercados"){
-      var contexto = document.createElement("section");
-      contexto.className = "radar-contexto";
-      contexto.setAttribute("aria-labelledby", "radarContextoTitle");
-      contexto.innerHTML = '<h3 id="radarContextoTitle">Contexto regional y sectorial</h3><p>' + esc(RADAR_CONTEXTO_INTRO) + '</p><div class="radar-contexto-grid">' +
-        RADAR_CONTEXTO.map(function(frente){ return '<article><h4>' + esc(frente.titulo) + '</h4><p>' + esc(frente.texto) + '</p><p class="comp-src">' + esc(frente.fuente) + '</p></article>'; }).join('') + '</div>';
-      body.appendChild(contexto);
-    }
     if(!items.length){
       var empty = document.createElement("div");
       empty.className = "empty-note";
@@ -1877,29 +1863,6 @@
   }
 
   // RADAR09: INICIO CONTENIDO
-  const RADAR_CONTEXTO_INTRO = "Antes de priorizar empresas: cuatro frentes emergentes del informe v1.2 (25 de septiembre de 2026). Sus datos coyunturales se reproducen como lectura del informe y están sin verificar de forma independiente. Las posibilidades para Olivia son hipótesis de trabajo.";
-  const RADAR_CONTEXTO = [
-  {
-    "titulo": "Reconstrucción",
-    "texto": "El informe sitúa al Fondo Milagro, las gobernaciones y administraciones municipales de los territorios afectados y las empresas de servicios públicos ante necesidades de gobernanza, trazabilidad y capacidad de ejecución. Describe 15 departamentos afectados y 16 cubiertos por la modalidad especial de Obras por Impuestos: son perímetros distintos. Para Olivia, el encaje potencial es coordinación de equipos, gestión del cambio y continuidad operativa.",
-    "fuente": "Informe v1.2, §§1.2, 2.4, 2.5 y 4.2–4.3."
-  },
-  {
-    "titulo": "Telecomunicaciones",
-    "texto": "La integración Tigo–Movistar concentra, según el informe, cerca de 41 millones de líneas frente a 42 millones de Claro. La unificación plantea arquitectura organizacional, armonización cultural y acompañamiento de equipos; Claro y ETB completan el frente de respuesta competitiva y cultura digital.",
-    "fuente": "Informe v1.2, §§2.5 y 1.4."
-  },
-  {
-    "titulo": "Salud",
-    "texto": "Keralty–Colsanitas, Sura, Compensar, Fundación Valle del Lili y las redes del Eje Cafetero aparecen ante presión de capacidad y reorganización de atención. El informe reporta entre 308 y 440 instituciones afectadas y 19 por reconstruir; Olivia podría trabajar coordinación asistencial, turnos y liderazgo clínico, previa validación de capacidad de pago.",
-    "fuente": "Informe v1.2, §§2.5 y 4.1; diferencias de corte en §1.2."
-  },
-  {
-    "titulo": "Gremios como cliente",
-    "texto": "El informe identifica 23 organizaciones con presupuesto propio y programas de formación. ACOPI, Acodres y la Cámara Colombiana de Comercio Electrónico ilustran necesidades de productividad, rediseño operativo y talento digital; Olivia podría fortalecer su capacidad interna de diseño y ejecución de programas. Fedeesmeraldas se incorpora a Minero bajo esta misma hipótesis de cliente institucional, aún sin verificar.",
-    "fuente": "Informe v1.2, §§2.5, 3.4 y 4.3; inclusión de Fedeesmeraldas por decisión del taller."
-  }
-];
   const SECTOR_FICHAS = {
   "Financiero": {
     "estado": [

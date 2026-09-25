@@ -34,9 +34,9 @@ try{
  await page.goto('http://ruta.test/#actividad-2');
  await page.waitForSelector('#boardGrid .cat-mercados');
  await page.click('#boardGrid .cat-mercados');
- await page.waitForSelector('#drawerBody .radar-contexto');
+ await page.waitForSelector('#drawerBody .sector-block');
  assert.equal(await page.$$eval('#drawerBody .sector-block',els=>els.length),9);
- assert.equal(await page.$$eval('#drawerBody .radar-contexto article',els=>els.length),4);
+ assert.equal(await page.$$eval('#drawerBody .radar-contexto',els=>els.length),0);
  for(const theme of ['light','dark']){
   await page.evaluate(t=>{document.documentElement.dataset.theme=t;},theme);
   await page.screenshot({path:'/tmp/radar09-'+theme+'.png',fullPage:true});
