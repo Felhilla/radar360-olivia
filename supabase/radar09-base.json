@@ -1,0 +1,290 @@
+{
+  "mercados-acesco-colombia-familiar": {
+    "original": "5136f933ce661b215acbfbe0adc8934ae89191fd7718ef6d23c69d4ffdd6b065",
+    "preservado": "9b1ed6102305974b7fd09ab6cd5ad0d02868b4908505de75797e1f61a1eec47e",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-addi-capital-extranjero": {
+    "original": "4aa4f007123c059bed402cb79467a18975daa5035cc7817584225f2da70c97db",
+    "preservado": "0611ce80d382f2ea8b0f05608ae7dec36caf049f811a55a2459127e72178dba5",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-almacenes-exito-grupo-calleja": {
+    "original": "058c371163838cab0668e7eb68668898760f9d0869ab5e90440161146f58aced",
+    "preservado": "9c74776d9049a368256c5f3d91a0cf94f89cc552f387f7c1a180784621654089",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Retail"
+  },
+  "mercados-alpina-bic": {
+    "original": "8adab62c02c4c47626225e7cfd113aa77eaab8474454040d5da5e5a2beae7d69",
+    "preservado": "40fc0bb0856ecca3c9ffcf03046181fb2a0645c75aa02f67a740a438769a9b9e",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Consumo"
+  },
+  "mercados-banco-de-bogota-grupo-aval": {
+    "original": "415232dcf3e595a9fbc16d807deed6e3b0202ecf24f3ad9834356bb9edeb870f",
+    "preservado": "8b2377cbbbb90d40c8fed7dd38618877bb9f662d105e3218a7c4b7002be4f284",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-banco-falabella-matriz-chilena": {
+    "original": "8e14d2282d9136d5d37acad5b517a75745d5ea83b2f7728335d755aa28b5ae2a",
+    "preservado": "5099948432f061ca02d5e5d25153a5e8d7db02b7339e42d6513df77d5f61d343",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-banco-gnb-sudameris-grupo-gilinski": {
+    "original": "415a7e0a189fedb1357a9f33d2dba328b536576d0d1a6d7819578f42cb2805ee",
+    "preservado": "4b448e7a2857307c7d244179d6ffbbb624de54fd72b2f39184121ee6c2eba4d7",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-banco-popular-grupo-aval": {
+    "original": "d8b3e31f06ecb0eb7040066d83656e45fb2c5dd047d503d8b512561e1a9e9eb9",
+    "preservado": "b6149b0c51992070847ad0c58dfc5ed3cdda6537ab25b5a35e2ff9accbda813c",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-bancolombia-grupo-cibest": {
+    "original": "bc71b75545f7326499524603ba6b859fc57ba4c3fc7f24a5e228031078657d30",
+    "preservado": "6feeace9b690f86c60c4df2402d3aafb7ae6ea7a3bcee63e64a16e2ef855bb75",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-bavaria-ab-inbev": {
+    "original": "481f6f0f726c91b6a20efbd6f04d078a6a090b57dc4d4593b300454811ca52c3",
+    "preservado": "9714c41f9f200edda967e500158fae38f1ff452f29990916b53ba3f805251b57",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Consumo"
+  },
+  "mercados-bold-cf-compania-de-financiamiento": {
+    "original": "42246582cdf8c6b095544539f146df570f7858f0b63aa35367574f4fed669d7b",
+    "preservado": "dc1581c5e2e64feaceeef799d9160009998597e224614903e46930f70e400b10",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-carvajal-grupo-caleno": {
+    "original": "b0db750ddec05f239f3e3d17ecc143d1d8da203abc828305735602d4e71f4836",
+    "preservado": "da2140c5c56ad956b5fab63bedef7b2b3f44c64f76ce5d327c2a3c204c1d1882",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-celsia-grupo-argos": {
+    "original": "77895bedc0b949ad8deb9d43825edfdd4480aec8cc90c56ec384fc8ae0813a37",
+    "preservado": "0c62ab53f216a62efc5d5c0de26562e37c31318604a28fcc192cc1e02a2e8899",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Servicios públicos"
+  },
+  "mercados-cementos-argos-grupo-argos": {
+    "original": "906bd885256359f2e4b452929514fef2f29117a80d872eada999b5f8ca1b8eb3",
+    "preservado": "dbecc456092dcfc40efc0b46a0f26490ce82b0e1c20ab621746278ee70dad5c0",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-challenger-familiar-bogota": {
+    "original": "1ccf4ef4041e0797a4ab9caf7a6e7dc8ff6d1675e6027938a774d369ea49f187",
+    "preservado": "ff433fc8c12aaa7319e367e2c00b9451f6f41380ef1e9ad2fcc9dbc6ad3584b2",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-claro-colombia-america-movil": {
+    "original": "0716a17a3c7c890c883cef7dc16a93abfa447ff30fdfd53ea00d5b3e329d807a",
+    "preservado": "cbed9c8457cff0abc85233e89c5284af908f0e5f73540e91a765285b4ab86c34",
+    "sectorOriginal": "Telecomunicaciones",
+    "sectorResultante": "Telecomunicaciones"
+  },
+  "mercados-compensar": {
+    "original": "d7133641a040d8f4e3bf6018e36475a5341c13c2507f381340fbc18fa65b4f2c",
+    "preservado": "0a93ff654da1decccdc2e1aab6adb9eda134fd85c6e666404fc28d39c1174728",
+    "sectorOriginal": "Salud",
+    "sectorResultante": "Salud"
+  },
+  "mercados-constructora-bolivar-grupo-bolivar": {
+    "original": "fc17bd937e065b5facef9a6437b3993e92e9f25a50d677de8dd124f52dde1f11",
+    "preservado": "1a847611d8ff25c8fdb79c8e594c8bec9d3070cbc0dd665aa354841d94c8c834",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-d1": {
+    "original": "0019a8e1ba648812654df160c3a03ad4e7942e57b03aa918d91306691b332144",
+    "preservado": "84e790c9ca1561dae17c39d41b8482197029531c446d9db2fd92c8c07a0bf48d",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Retail"
+  },
+  "mercados-davivienda-group-banco-davivienda-grupo-bolivar": {
+    "original": "1a2b0f2833ef39757bb9edc66eb9e9db1ae0997660b7e8347f31cbdb7c717ff3",
+    "preservado": "b8228dc0f975fb439bfe9e8bfaf7ba305b1959f8b8a5c1d358dabf0991162b3c",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-ecopetrol-nacion-88-5": {
+    "original": "47f31fc3c23e0fce138079dfb97aff43c8d726a371c3e33afe31e8f6934aa68d",
+    "preservado": "4bab5ba6a9158febaa4bf6c795b93424beea3ab3701bbafb56da901b7e6cb6ba",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Energía"
+  },
+  "mercados-fundacion-valle-del-lili": {
+    "original": "10263a30209220fa273bf91b0e8418a88e6b247e6c6e039f34b9cb669e0cfa9f",
+    "preservado": "7ed4c48ed32ad44db07bb8face7ae86208059d09d56c579cc0807e9973eb7c70",
+    "sectorOriginal": "Salud",
+    "sectorResultante": "Salud"
+  },
+  "mercados-enel-colombia-enel-americas-57-3-geb-42-5": {
+    "original": "4ee93aa50a978300706f71baa8f16cfd07d41859335475df02ab57e5ce74a87d",
+    "preservado": "e481c88ff89254acbef5c2162dccd815c5329da7f2095f35ae8128f7b3784962",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Servicios públicos"
+  },
+  "mercados-epm-municipio-de-medellin": {
+    "original": "3b000a80adafa92e47b52b20634856dbfe182b7144e0d7fe5f7bf6356d01453f",
+    "preservado": "6877ba9df10543d6e569fd5f0a720d13c80eb460d7ec6b796a9a94defd157b04",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Servicios públicos"
+  },
+  "mercados-erco-energia-medellin-capital-extranjero": {
+    "original": "457e9776fd4b46fb1388ffdc5f8ba40b419624baf8accfcb2f931a62d2a0f006",
+    "preservado": "3743d00c9a3c80be0e547acf6257b4614dc8a9d22182f9cc72ca3ec698605448",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Energía"
+  },
+  "mercados-etb-distrito-de-bogota": {
+    "original": "65ee3fa5ccb160d95fc95f2054d2f69702912116ba6a2b52eadf04bf242fd342",
+    "preservado": "b5a784298c414fce5ee2c6829b81055ce0adae110ac81acdee118509f3e5f477",
+    "sectorOriginal": "Telecomunicaciones",
+    "sectorResultante": "Telecomunicaciones"
+  },
+  "mercados-frisby-bic-pereira": {
+    "original": "c025fac74e26f623aeeb7958ae51b4058e46c9f37153e3d06caa194131c42982",
+    "preservado": "7cb52e8848eff0468786bf0c97246c80e05e318021bfd6e98789568224ff5eb7",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Retail"
+  },
+  "mercados-fundacion-santa-fe": {
+    "original": "27bbe352ef93adf29da92dd8c42a75f2c07838bd2a1b2e84e2e83c8cd6021440",
+    "preservado": "e6f10b2b05de5024dbe531cf1b14bd51aa3f6d7c6c853bbda27720657414d309",
+    "sectorOriginal": "Salud",
+    "sectorResultante": "Salud"
+  },
+  "mercados-greenyellow-colombia-filial-francesa": {
+    "original": "66e189e85d294a49200dc1f3cea86080f139850e26636675d241f1d6e5cd6fba",
+    "preservado": "b173e682cfc78e2685286329610c93c50ed962caef52c82eb3eb7313eaf85413",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Energía"
+  },
+  "mercados-grupo-energia-bogota-distrito-de-bogota": {
+    "original": "c5042e17904f6384ddb9ca5999feb543a64b5c7c39ae7548729b8b297c3b30fc",
+    "preservado": "7335fd2eb46c2643e70b4b8bc93f535714e9bcd6406aca94f9abcae299ea449a",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Energía"
+  },
+  "mercados-grupo-nutresa-gilinski-ihc": {
+    "original": "5dc7216a645e01dfe058466daa527ef82c7e5a7ed69d814c428406d04dbffcb9",
+    "preservado": "4ffc2868ab2e468b01952a5562819b76f8ef9e4ab5dbf84622d0e283fab7ce3f",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Consumo"
+  },
+  "mercados-industrias-haceb-familiar-medellin": {
+    "original": "ebc0a7d79a90b1ab8ba78b4c5865bf0493a9491e77bfbc9667009d775ed3bc3b",
+    "preservado": "2036208338ee9b1b36fe85af13b45b9ffafbac6c476bc2cfbd808d2ea77b99a9",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-isa-nacion": {
+    "original": "d1c236ae8b50487ce547667c46ed0c27582a43907a5a4c704fda143a6186f3ac",
+    "preservado": "c1ce71c494a852e4b4bad49d2ffea7d79e63b2998369809c0275be18d1fdddbc",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Energía"
+  },
+  "mercados-jeronimo-martins-colombia-ara-portugal": {
+    "original": "cd062aa9b3d4cda893d309817b6ec975cc32638ec980d6ce7c2259f05e46d2c4",
+    "preservado": "636f17fcfd2b4b4b7b018268ab9f03d46a4100a75420477c345a50f4ca40533b",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Retail"
+  },
+  "mercados-keralty-colsanitas": {
+    "original": "372eda85caee3b3beb14f73a80d01171657349565bfa4b41c631d8b5bb02e3c1",
+    "preservado": "e9015fa1eceecfd72064dcfd525dc66b8ff8bb760029c9c5a31779483ad08c2f",
+    "sectorOriginal": "Salud",
+    "sectorResultante": "Salud"
+  },
+  "mercados-lulo-bank-grupo-gilinski": {
+    "original": "c83198623509e97836aa07bb1bf3348e3d99ba405913b41606151d469a9a855d",
+    "preservado": "9b49e0702c035bb7a1a7eb6f15210a9631c00131e2a7775411e6b6931f216c39",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-mercadolibre-colombia-nasdaq": {
+    "original": "18d25ecfe628bf543cfde22973552902617df4f137f4fcd085229ab55a95ccb0",
+    "preservado": "14c527e97b4d8a1f664a6614be213bc6eb2745cf4cf365176857d3200f21164a",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Retail"
+  },
+  "mercados-organizacion-corona-holding": {
+    "original": "583f80a326c08fd7df922b34d7c0bacf29f9430299f0de509ef6d9fea6253839",
+    "preservado": "d30e37dd4f5cb10588a13d807ebca0030664858b36498a9baea4216e3f28d1e1",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-organizacion-terpel-copec-chile": {
+    "original": "392abf2edb68f422129852b20b10c6db8bdc10fed9239257d60bbe387aa08e22",
+    "preservado": "187043b3a5b7d609dd5d7c5deacfc3c0306f4e16abbb40f0e7f327c53331faac",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Retail"
+  },
+  "mercados-plastilene-familiar-soacha": {
+    "original": "be69bbace4b9adfc3a24b711f03fd500dd0dac753227456539d048f87eeba1a5",
+    "preservado": "88ffabe5988bcd3c949a22853811eb1a7603b5736bd54a9240e126e119be4646",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-productos-ramo": {
+    "original": "3324f0fce7a46112beefa0348e3f5e0c985873c2def69bf472b4fa5b5b162e53",
+    "preservado": "01ddcb4132eec37306285ceaf3f1da646b8f730a60dce8b7980f283d4b818075",
+    "sectorOriginal": "Retail",
+    "sectorResultante": "Consumo"
+  },
+  "mercados-promigas": {
+    "original": "d96c339d4d6b438888f0ba7104e31a48acc47c2c29f12ab01b9f4c915a8b8bb1",
+    "preservado": "0dee1346fbc588bf10c45c08f38a6011908cb8df70d5f803383b164b57ac1ea7",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Servicios públicos"
+  },
+  "mercados-superpolo-jv-marcopolo-fanalca": {
+    "original": "f0c5c30cdfd871c08ae42248061e05b4026422f2c02686e3207ad210fb050082",
+    "preservado": "197ae2b3642b0f195ef99ee325682fadc57e6b28187feac81fd7922b6e621436",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-sura": {
+    "original": "ad00737cab344c7102ef41e944b117edea899102c196479144c999f398b6be08",
+    "preservado": "ac19fbb6bdf32be4cff990a62d363c1320810cc592f30834ba14e30a0a440a5a",
+    "sectorOriginal": "Salud",
+    "sectorResultante": "Salud"
+  },
+  "mercados-tecnoglass-nasdaq-familia-daes": {
+    "original": "8798ef6177b3a89b7b85716ba98b85becfd5dca638224787f8cb825f0455265c",
+    "preservado": "29c73871a29e93b6539660c62f7ebc13f25fcfb5ef5841767465b75b458a4866",
+    "sectorOriginal": "Industrial",
+    "sectorResultante": "Industrial"
+  },
+  "mercados-tigo-millicom-integracion-de-movistar": {
+    "original": "3aa98d63901f20eaab20624860878ee141e9da834295ef4d92aa0b5c18527d0e",
+    "preservado": "a9170ee08d025b7cfd38bd9bc10ea556f9ecd6e93d3cb984f930e19098a9fbaf",
+    "sectorOriginal": "Telecomunicaciones",
+    "sectorResultante": "Telecomunicaciones"
+  },
+  "mercados-tuya-cibest-50-bancolombia": {
+    "original": "3eb0242b5401f31efd4ed49928224c7d310336fb2122b8420bfbada209736378",
+    "preservado": "62836f3ee4883e69c9f39363aa24b7ce73ac66a1123143ef0af13ad980466547",
+    "sectorOriginal": "Financiero",
+    "sectorResultante": "Financiero"
+  },
+  "mercados-vatia-cali": {
+    "original": "00ed0e3ba28611018453d9c1ee8c0c79d8dd6e66f5a6d27c8543acdc84483a64",
+    "preservado": "9fcb0911767aabd1adf5653a7d6629e4bbf3351db3dbc14bdc7956c3cde7cfa0",
+    "sectorOriginal": "Energía",
+    "sectorResultante": "Servicios públicos"
+  }
+}

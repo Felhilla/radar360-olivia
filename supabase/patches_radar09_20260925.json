@@ -1,0 +1,1096 @@
+[
+  {
+    "coleccion": "actors",
+    "id": "mercados-acesco-colombia-familiar",
+    "data": {
+      "id": "mercados-acesco-colombia-familiar",
+      "estado": "verificado",
+      "nombre": "Acesco Colombia (familiar)",
+      "sector": "Industrial",
+      "queHace": "Empresa familiar de tercera generación con planta en Malambo, Atlántico. Transforma acero en láminas, cubiertas y tubería para construcción.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:18.139Z",
+      "relevancia": "La productividad de planta y la profesionalización conectan con gestión del cambio y desarrollo organizacional.",
+      "justificacion": "Ubicación: Industrial, más de 180 días: interlocutor por identificar. Empresa familiar de tercera generación con planta en Malambo (Atlántico) que transforma acero en láminas, cubiertas y tubería para construcción.\nRelación con Olivia: Productividad de planta y profesionalización. Gerente de Gestión Humana y Transformación por identificar. Vía ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "La producción de acero y cubiertas de Acesco puede enfrentar mayor exigencia de coordinación ante la reconstrucción descrita en el informe. Olivia podría acompañar la profesionalización del liderazgo y el cambio en planta para articular abastecimiento, producción y entrega en Colombia."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-addi-capital-extranjero",
+    "data": {
+      "id": "mercados-addi-capital-extranjero",
+      "estado": "verificado",
+      "nombre": "Addi (capital extranjero)",
+      "sector": "Financiero",
+      "queHace": "Empresa de tecnología financiera de «compra ahora, paga después», constituida como compañía de financiamiento desde 2024 y enfocada en Colombia. Tiene unos 490 empleados y una ronda de inversión Serie D de US$86 millones en 2026.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:18.685Z",
+      "relevancia": "El crecimiento acelerado requiere estructura organizacional y liderazgo para escalar.",
+      "justificacion": "Ubicación: Financiero, 120 días: interlocutor por identificar. Fintech de «compra ahora, paga después», compañía de financiamiento desde 2024, con unos 490 empleados y una Serie D de US$86 millones en 2026, enfocada en Colombia.\nRelación con Olivia: Escalamiento, estructura y liderazgo en crecimiento acelerado; ticket medio-bajo con valor de acceso al ecosistema fintech. Chief People & Culture Officer por identificar. Vía Colombia Fintech (Barrientos).",
+      "mostrarEnRadar": true,
+      "articulacion": "El escalamiento de Addi requiere que su estructura y sus líderes crezcan al ritmo del negocio colombiano. Olivia podría trabajar claridad de roles, capacidades de liderazgo y people analytics para orientar decisiones de equipo durante la expansión."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-almacenes-exito-grupo-calleja",
+    "data": {
+      "id": "mercados-almacenes-exito-grupo-calleja",
+      "estado": "verificado",
+      "nombre": "Almacenes Éxito (Grupo Calleja)",
+      "sector": "Retail",
+      "queHace": "Mayor cadena de comercio minorista del país, controlada por Grupo Calleja (85,1 %). Invierte unos COP 292.000 millones en 2026 para reconvertir tiendas hacia Carulla y Éxito, con 19 intervenciones que registran ventas +14 % y 30 más en curso.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:19.203Z",
+      "relevancia": "La reconversión de tiendas y la reforma laboral requieren rediseñar turnos y el modelo de tienda, con gestión del cambio en la operación.",
+      "justificacion": "Ubicación: Retail y consumo, 120 días: el comprador perdió rango (RR. HH. pasó a gerencia en diciembre de 2024). Mayor retailer del país, controlado por Grupo Calleja (85,1 %); invierte unos COP 292.000 millones en 2026 para reconvertir tiendas hacia Carulla y Éxito (19 intervenciones con ventas +14 % y 30 más en curso).\nRelación con Olivia: Rediseño de turnos y modelo de tienda con fecha de ley, más la reconversión de tiendas. Entrada por presidencia o junta con la reforma laboral como argumento (Tello), nunca por la gerencia degradada, que entra después como ejecutora. Socio del 50 % de Tuya. Gremios: Fenalco, ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "La reconversión de tiendas de Éxito y los cambios laborales descritos en el informe presionan el modelo operativo en Colombia. Olivia podría acompañar el rediseño de turnos y la adopción de nuevas rutinas, vinculando liderazgo de tienda, productividad y cultura de cumplimiento."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-alpina-bic",
+    "data": {
+      "id": "mercados-alpina-bic",
+      "estado": "verificado",
+      "nombre": "Alpina (BIC)",
+      "sector": "Consumo",
+      "queHace": "Multinacional láctea colombiana, sociedad BIC, con operación en Colombia y Estados Unidos y una estructura directiva simplificada.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:19.720Z",
+      "relevancia": "Las obligaciones de reporte BIC requieren traducir el propósito en evidencia y fortalecer el gobierno del mensaje comercial, con trabajo de cultura organizacional.",
+      "justificacion": "Ubicación: Retail y consumo, 120 días: presidencia identificada (Carolina Espitia Manrique, RL), talento por reidentificar (la VP de 2020 no tiene vigencia). Multinacional láctea colombiana, sociedad BIC, con operación en Colombia y Estados Unidos.\nRelación con Olivia: Estructura directiva simplificada y obligaciones de reporte BIC: propósito con evidencia y gobierno del mensaje comercial (sanción SIC por verificar; contexto interno). Vía ANDI / Anda hacia la presidencia.",
+      "mostrarEnRadar": true,
+      "articulacion": "La estructura directiva simplificada y la condición BIC de Alpina plantean una necesidad de alinear decisiones, responsabilidades y ejecución en Colombia. Olivia podría articular cultura de cumplimiento, liderazgo y gestión del cambio con indicadores de productividad y sostenibilidad."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-banco-de-bogota-grupo-aval",
+    "data": {
+      "id": "mercados-banco-de-bogota-grupo-aval",
+      "estado": "verificado",
+      "nombre": "Banco de Bogotá (Grupo Aval)",
+      "sector": "Financiero",
+      "queHace": "Principal banco del Grupo Aval. Enfrenta una brecha entre adopción y madurez digital y la obligación de implementar finanzas abiertas bajo el Decreto 368 de 2026.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:20.235Z",
+      "relevancia": "La absorción organizacional de la tecnología requiere gestión del cambio, capacidades y rediseño de los flujos de decisión.",
+      "justificacion": "Ubicación: Financiero, 120 días: mandato claro, interlocutor sin confirmar (el nombre reportado no debe usarse). Principal banco del Grupo Aval.\nRelación con Olivia: Brecha entre adopción y madurez digital, más las finanzas abiertas obligatorias (Decreto 368 de 2026): absorción organizacional de la tecnología. Vía Asobancaria hasta identificar al titular de Producto, Estrategia Digital y Transformación.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe identifica en Banco de Bogotá una brecha entre adopción tecnológica y madurez organizacional, junto con exigencias de finanzas abiertas. Olivia podría fortalecer el gobierno de datos, los flujos de decisión y las capacidades de los equipos colombianos para convertir tecnología en mejora operativa."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-banco-falabella-matriz-chilena",
+    "data": {
+      "id": "mercados-banco-falabella-matriz-chilena",
+      "estado": "verificado",
+      "nombre": "Banco Falabella (matriz chilena)",
+      "sector": "Financiero",
+      "queHace": "Banco de matriz chilena vinculado al comercio minorista. Tras la venta del 31 % de Organización Corona en 2025, quedó bajo control total de Falabella.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:20.771Z",
+      "relevancia": "La transformación cultural ligada al negocio financiero del comercio minorista conecta con cultura y gestión del cambio.",
+      "justificacion": "Ubicación: Financiero, más de 180 días: las decisiones de marco se toman en Chile y, tras la venta del 31 % de Organización Corona en 2025, el banco queda bajo control total de Falabella.\nRelación con Olivia: Transformación cultural ligada al retail financiero; expectativa moderada. Gerente de Gestión Humana y Transformación Cultural por identificar. Vía Asobancaria.",
+      "mostrarEnRadar": true,
+      "articulacion": "Banco Falabella debe traducir los lineamientos de su matriz en prácticas consistentes para la operación colombiana. Olivia podría acompañar la adaptación cultural y el liderazgo local, sujeto a validar la autonomía de ejecución y los marcos corporativos existentes."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-banco-gnb-sudameris-grupo-gilinski",
+    "data": {
+      "id": "mercados-banco-gnb-sudameris-grupo-gilinski",
+      "estado": "verificado",
+      "nombre": "Banco GNB Sudameris (Grupo Gilinski)",
+      "sector": "Financiero",
+      "queHace": "Banco principal del Grupo Gilinski en Colombia, surgido de la fusión Sudameris–Tequendama de 2005. Tiene filiales en Perú y Paraguay y la red Servibanca, mientras el grupo reorganiza su portafolio.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:21.281Z",
+      "relevancia": "La reconfiguración del grupo plantea necesidades de eficiencia y cultura organizacional en banca tradicional.",
+      "justificacion": "Ubicación: Financiero, más de 180 días: grupo en reconfiguración de portafolio. Banco principal del Grupo Gilinski en Colombia (fusión Sudameris–Tequendama, 2005), con filiales en Perú y Paraguay y la red Servibanca.\nRelación con Olivia: Eficiencia y cultura en banca tradicional mientras el grupo reorganiza sus apuestas (Nutresa, Lulo). VP de Gestión Humana y Desarrollo por identificar. Vía Asobancaria; monitorear.",
+      "mostrarEnRadar": true,
+      "articulacion": "La reconfiguración del portafolio del grupo de GNB Sudameris plantea necesidades de alineación organizacional en Colombia. Olivia podría apoyar claridad de responsabilidades y liderazgo del cambio, una vez se precise el alcance de la transformación aplicable al banco."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-banco-popular-grupo-aval",
+    "data": {
+      "id": "mercados-banco-popular-grupo-aval",
+      "estado": "verificado",
+      "nombre": "Banco Popular (Grupo Aval)",
+      "sector": "Financiero",
+      "queHace": "Banco del Grupo Aval (93,7 %), líder en libranzas y proveedor financiero de entidades públicas. Su estrategia de transformación declara cuatro pilares, uno de ellos de personas.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:21.804Z",
+      "relevancia": "La eficiencia y la cultura organizacional son necesidades de transformación de este banco tradicional que conectan con las prácticas de Olivia.",
+      "justificacion": "Ubicación: Financiero, más de 180 días, después de Banco de Bogotá. Banco del Grupo Aval (93,7 %), líder en libranzas y proveedor financiero de entidades públicas; su estrategia de transformación declara cuatro pilares, uno de ellos de personas.\nRelación con Olivia: Eficiencia y cultura organizacional en un banco tradicional. VP de Gestión Humana y Cultura Organizacional por identificar. Vía Asobancaria.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe sitúa la eficiencia y la cultura como necesidades de Banco Popular dentro de la banca tradicional colombiana. Olivia podría conectar liderazgo, hábitos de trabajo y people analytics para evaluar la adopción de mejoras en procesos y servicio."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-bancolombia-grupo-cibest",
+    "data": {
+      "id": "mercados-bancolombia-grupo-cibest",
+      "estado": "verificado",
+      "nombre": "Bancolombia (Grupo Cibest)",
+      "sector": "Financiero",
+      "queHace": "Banco de 150 años integrado a Grupo Cibest, que opera desde mayo de 2025 como matriz de Bancolombia, Banistmo, Banco Agrícola, BAM, Nequi, Wompi, Wenia y Renting.",
+      "categoria": "mercados",
+      "confianza": "alta",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:22.293Z",
+      "relevancia": "La estructura en varios países requiere definir qué decide la matriz y qué deciden las filiales. La construcción de una cultura común entre banca tradicional y billetera digital conecta con cultura y gestión del cambio.",
+      "justificacion": "Ubicación: Financiero, 30–60 días: contacto confirmado (Enrique González Bacci, VP de Gestión de lo Humano, confianza alta; Alejandro Botero López, VP de Servicios Compartidos y Abastecimiento, puerta de proveedores) y trigger vigente: Grupo Cibest opera desde mayo de 2025 como holding de Bancolombia, Banistmo, Banco Agrícola, BAM, Nequi, Wompi, Wenia y Renting.\nRelación con Olivia: Gobernanza de la transformación en un holding multipaís (qué decide la matriz y qué las filiales) y cultura común entre un banco de 150 años y una billetera digital. Directa (Tello), con referencia Súmmum por precisar; exige registro de proveedor. Gremios: Asobancaria, ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "La estructura de Grupo Cibest requiere claridad entre las decisiones de la matriz y las de sus filiales, mientras el informe describe presión operativa por los alivios en Colombia. Olivia podría acompañar la gobernanza de la transformación y la gestión del cambio en originación y cobranza, cuidando la carga de los equipos."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-bavaria-ab-inbev",
+    "data": {
+      "id": "mercados-bavaria-ab-inbev",
+      "estado": "verificado",
+      "nombre": "Bavaria (AB InBev)",
+      "sector": "Consumo",
+      "queHace": "Empresa de AB InBev con siete cervecerías en Colombia y más de 4.100 colaboradores directos. Su marco de cultura proviene de la casa matriz.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:22.799Z",
+      "relevancia": "La ejecución local en planta y en la fuerza de ventas por turnos requiere llevar la cultura a la operación y acompañar el cambio.",
+      "justificacion": "Ubicación: Retail y consumo, más de 180 días: el marco de cultura viene de la casa matriz (AB InBev). Siete cervecerías en Colombia y más de 4.100 colaboradores directos.\nRelación con Olivia: Lo local es la ejecución en planta y en la fuerza de ventas por turnos. Eliana Voldman en el comité directivo (título de VP de People por confirmar); Juan Carlos Pérez, VP de Supply. Directa con expectativa moderada; verificar acuerdos marco. Gremio: ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "Bavaria debe ejecutar en Colombia un marco cultural corporativo con operaciones de planta y ventas por turnos. Olivia podría acompañar a los líderes locales en la adopción de cambios operativos y medir capacidades de los equipos, sujeto al alcance permitido por los estándares globales."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-bold-cf-compania-de-financiamiento",
+    "data": {
+      "id": "mercados-bold-cf-compania-de-financiamiento",
+      "estado": "verificado",
+      "nombre": "Bold CF Compañía de Financiamiento",
+      "sector": "Financiero",
+      "queHace": "Empresa de tecnología de pagos, datáfonos y servicios para más de 350.000 mipymes. Bold CF opera como compañía de financiamiento con licencia en firme desde 2023.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:23.319Z",
+      "relevancia": "La convivencia entre una compañía regulada reciente y el negocio de pagos requiere formalizar procesos y cultura organizacional.",
+      "justificacion": "Ubicación: Financiero, 120 días: interlocutor por identificar. Paytech de datáfonos y pagos para más de 350.000 mipymes; Bold CF opera como compañía de financiamiento con licencia en firme desde 2023.\nRelación con Olivia: Formalización de procesos y cultura en una compañía regulada reciente que convive con su negocio de pagos. VP de People & Organization por identificar. Vía Colombia Fintech (Barrientos).",
+      "mostrarEnRadar": true,
+      "articulacion": "La consolidación de Bold como compañía de financiamiento exige formalizar procesos y cultura en el mercado colombiano. Olivia podría articular diseño organizacional, liderazgo y gestión del cambio para que el crecimiento conserve claridad de responsabilidades y calidad de ejecución."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-carvajal-grupo-caleno",
+    "data": {
+      "id": "mercados-carvajal-grupo-caleno",
+      "estado": "verificado",
+      "nombre": "Carvajal (grupo caleño)",
+      "sector": "Industrial",
+      "queHace": "Grupo familiar caleño fundado en 1904, presente en 10 países y con más de 15.000 empleados. Opera en empaques, pulpa y papel, tecnología y servicios e inmobiliario.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:23.826Z",
+      "relevancia": "Su enfoque de experiencia de personas conecta con las prácticas de cultura y transformación organizacional de Olivia.",
+      "justificacion": "Ubicación: Industrial, 120 días: el cargo existe en el sitio corporativo, falta recuperar el nombre del titular. Grupo familiar caleño (1904), en 10 países y con más de 15.000 empleados en empaques, pulpa y papel, tecnología y servicios e inmobiliario.\nRelación con Olivia: Una compañía que llama «Experiencia de Personas» a su vicepresidencia ya adoptó el marco que Olivia vende. Directa una vez recuperado el nombre; contratar con las operativas (Pulpa y Papel, Empaques). Alternativa: ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe vincula a Carvajal con experiencia de personas y continuidad de sus operaciones en el Valle del Cauca. Olivia podría apoyar a las empresas operativas en coordinación entre equipos, liderazgo y gestión del cambio, ajustando la intervención a sus necesidades de producción."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-celsia-grupo-argos",
+    "data": {
+      "id": "mercados-celsia-grupo-argos",
+      "estado": "verificado",
+      "nombre": "Celsia (Grupo Argos)",
+      "sector": "Servicios públicos",
+      "queHace": "Empresa de energía del Grupo Argos con distribución y comercialización en Tolima y Valle, transmisión, renovables e internet. Opera en Colombia y Panamá.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:24.335Z",
+      "relevancia": "La escisión cementera y el cambio de cúpula del Grupo Argos plantean una revisión del modelo operativo de sus participadas, con necesidades de gestión del cambio.",
+      "justificacion": "Ubicación: Energía, 120 días, en secuencia después de Cementos Argos. Empresa de energía del Grupo Argos: distribución y comercialización (Tolima y Valle), transmisión, renovables e internet, en Colombia y Panamá.\nRelación con Olivia: Revisión del modelo operativo de las participadas del grupo tras la escisión cementera y el cambio de cúpula del Grupo Argos; entra por reputación de grupo una vez abierta Argos. Contacto de confianza media: Santiago Arango Trujillo, VP de Asuntos Corporativos (no confirmado que talento dependa de él). Gremios: Acolgen, Andesco.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe relaciona a Celsia con el restablecimiento de redes en el Valle del Cauca y la revisión del modelo operativo del grupo. Olivia podría fortalecer la coordinación de equipos de campo y el liderazgo del cambio para sostener continuidad del servicio y adopción de nuevas prácticas."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-cementos-argos-grupo-argos",
+    "data": {
+      "id": "mercados-cementos-argos-grupo-argos",
+      "estado": "verificado",
+      "nombre": "Cementos Argos (Grupo Argos)",
+      "sector": "Industrial",
+      "queHace": "Cementera con operación en Colombia, Centroamérica, el Caribe y Estados Unidos. El 1 de abril de 2026 anunció su separación en Argos Materials, en Estados Unidos, y Argos Latam, en 15 países, con un plazo estimado de 24 meses.",
+      "categoria": "mercados",
+      "confianza": "alta",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:24.816Z",
+      "relevancia": "La escisión exige asignar personas, procesos y sistemas a cada organización y acompañar el nacimiento de dos culturas a partir de una.",
+      "justificacion": "Ubicación: Industrial, 30–60 días: el mejor objetivo individual del mapeo. Cementera con operación en Colombia, Centroamérica, el Caribe y Estados Unidos; el 1 de abril de 2026 anunció su separación en Argos Materials (EE. UU.) y Argos Latam (15 países), con plazo de 24 meses.\nRelación con Olivia: El lado humano de la escisión: a quién pertenece cada persona, proceso y sistema; dos culturas que nacen de una. Tomás Restrepo Pérez, VP Ejecutivo y RL (confianza alta) y exVP de Talento, Cultura y Transformación, es comprador y patrocinador. Directa al más alto nivel (Tello), sin competir con la banca de inversión. Gremios: Camacol, ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "La escisión descrita para Cementos Argos exige separar responsabilidades, personas, procesos y sistemas mientras aumenta la presión de ejecución en Colombia. Olivia podría acompañar la construcción de culturas y liderazgos para las organizaciones resultantes y medir la adopción de sus nuevos modelos operativos."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-challenger-familiar-bogota",
+    "data": {
+      "id": "mercados-challenger-familiar-bogota",
+      "estado": "verificado",
+      "nombre": "Challenger (familiar, Bogotá)",
+      "sector": "Industrial",
+      "queHace": "Fabricante familiar bogotano de electrodomésticos y muebles de cocina, fundado en 1966, con más de 1.600 empleos directos.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:25.432Z",
+      "relevancia": "La profesionalización y la cultura de cumplimiento comercial conectan con gestión del cambio y cultura organizacional.",
+      "justificacion": "Ubicación: Industrial, más de 180 días: interlocutor por identificar. Fabricante familiar bogotano de electrodomésticos y muebles de cocina (1966), con más de 1.600 empleos directos y dos sanciones de la SIC.\nRelación con Olivia: Profesionalización y cultura de cumplimiento comercial. Gerente de Desarrollo Humano por identificar. Vía ANDI / ACAIRE.",
+      "mostrarEnRadar": true,
+      "articulacion": "Challenger combina manufactura familiar con exigencias de productividad y cumplimiento en Colombia, según el frente industrial del informe. Olivia podría apoyar la profesionalización de mandos, la cultura de cumplimiento y la adopción de mejoras en planta."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-claro-colombia-america-movil",
+    "data": {
+      "id": "mercados-claro-colombia-america-movil",
+      "estado": "verificado",
+      "nombre": "Claro Colombia (América Móvil)",
+      "sector": "Telecomunicaciones",
+      "queHace": "Operador de América Móvil y líder del mercado móvil colombiano, con unos 41,7 millones de líneas. Enfrenta a Tigo–Movistar como rival consolidado, con unos 38,6 millones de líneas.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:25.927Z",
+      "relevancia": "La consolidación del mercado exige una respuesta en eficiencia y experiencia, que puede requerir transformación organizacional.",
+      "justificacion": "Ubicación: Telecomunicaciones, sector emergente, más de 180 días: marco de casa matriz (América Móvil) e interlocutor por identificar. Líder del mercado móvil con unos 41,7 millones de líneas, frente a un rival de nuevo tamaño (Tigo–Movistar, unos 38,6 millones).\nRelación con Olivia: Respuesta competitiva a la consolidación: eficiencia y experiencia. Las decisiones de marco se toman en México. Monitoreo.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe plantea que Claro enfrenta una respuesta competitiva ante la integración de Tigo y Movistar en Colombia. Olivia podría acompañar la alineación de equipos comerciales y técnicos, la innovación en servicio y la adopción del modelo operativo que defina la compañía."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-compensar",
+    "data": {
+      "id": "mercados-compensar",
+      "estado": "verificado",
+      "nombre": "Compensar",
+      "sector": "Salud",
+      "queHace": "Caja de compensación con red de salud propia. En 2025 la Supersalud revocó parcialmente su EPS en varios departamentos.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T19:00:00.000Z",
+      "updatedAt": "2026-09-24T15:40:26.461Z",
+      "relevancia": "La reorganización plantea necesidades de rediseño de capacidad y del modelo de atención. Su actividad como caja también conecta con formación empresarial.",
+      "justificacion": "Ubicación: Salud, sector emergente (120 a más de 180 días): candidato a explorar. Caja de compensación con red de salud propia; en 2025 la Supersalud revocó parcialmente su EPS en varios departamentos.\nRelación con Olivia: Rediseño de capacidad y modelo de atención; como caja de compensación es además canal de formación empresarial. Regla del informe: due diligence de cobro antes de la propuesta técnica. Entrada por cajas de compensación / ACEMI; interlocutor por identificar.",
+      "mostrarEnRadar": true,
+      "articulacion": "La reorganización del sistema de salud descrita en el informe plantea a Compensar retos de capacidad y coordinación de su red colombiana. Olivia podría apoyar el rediseño de turnos y el liderazgo asistencial, condicionado a validar capacidad financiera y alcance de la intervención."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-constructora-bolivar-grupo-bolivar",
+    "data": {
+      "id": "mercados-constructora-bolivar-grupo-bolivar",
+      "estado": "verificado",
+      "nombre": "Constructora Bolívar (Grupo Bolívar)",
+      "sector": "Industrial",
+      "queHace": "Constructora de vivienda del Grupo Bolívar, con más de 200.000 familias atendidas y proyectos en más de diez ciudades y municipios.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:26.987Z",
+      "relevancia": "La productividad en construcción conecta con mejoras organizacionales y gestión del cambio, en un grupo que integra Scotiabank mediante Davivienda.",
+      "justificacion": "Ubicación: Industrial, 120 días: interlocutor por identificar. Constructora de vivienda del Grupo Bolívar, con más de 200.000 familias atendidas y proyectos en más de diez ciudades y municipios.\nRelación con Olivia: Conversación en clave de grupo mientras el Grupo Bolívar integra Scotiabank vía Davivienda; productividad en construcción. Su presidente integra la junta de Davivienda (no invocarlo sin autorización). Vía Camacol (Barrientos); Congreso 21–23 oct.",
+      "mostrarEnRadar": true,
+      "articulacion": "La vivienda y la reconstrucción descritas en el informe plantean a Constructora Bolívar una mayor exigencia de coordinación de obras y equipos en Colombia. Olivia podría articular gestión del cambio y liderazgo para fortalecer capacidad de ejecución y coordinación de la cadena de suministro."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-d1",
+    "data": {
+      "id": "mercados-d1",
+      "estado": "verificado",
+      "nombre": "D1",
+      "sector": "Retail",
+      "queHace": "Cadena de descuento del Grupo Valorem con unos 26.000 empleos y meta de 30.000 en 2026. Ha recibido más de 200 inspecciones del Ministerio del Trabajo.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:27.462Z",
+      "relevancia": "El modelo operativo de tienda, la jornada y los recargos requieren rediseño y cultura de cumplimiento laboral.",
+      "justificacion": "Ubicación: Retail y consumo, 120 días: interlocutor por identificar. Cadena de descuento del Grupo Valorem con unos 26.000 empleos y meta de 30.000 en 2026, tras más de 200 inspecciones del Ministerio del Trabajo.\nRelación con Olivia: Modelo operativo de tienda, jornada y recargos, y cultura de cumplimiento laboral. Dirección de Gestión Humana y Capacitación por identificar. Vía Fenalco (Katherine Tabares) hacia la directa.",
+      "mostrarEnRadar": true,
+      "articulacion": "El crecimiento de D1 y la presión laboral descrita en el informe exigen consistencia en el modelo de tienda en Colombia. Olivia podría acompañar el rediseño de dotación y turnos, desarrollar mandos y evaluar la adopción de una cultura de cumplimiento."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-davivienda-group-banco-davivienda-grupo-bolivar",
+    "data": {
+      "id": "mercados-davivienda-group-banco-davivienda-grupo-bolivar",
+      "estado": "verificado",
+      "nombre": "Davivienda Group / Banco Davivienda (Grupo Bolívar)",
+      "sector": "Financiero",
+      "queHace": "Grupo bancario del Grupo Bolívar que cerró en diciembre de 2025 la compra de Scotiabank en Colombia, Costa Rica y Panamá, bajo la marca DaviBank. Completa la integración en el segundo semestre de 2026, con más de 29 millones de clientes.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:27.981Z",
+      "relevancia": "La integración bancaria en varios países requiere armonizar culturas y acompañar la transformación organizacional.",
+      "justificacion": "Ubicación: Financiero, 30–60 días vía gremio y 120 días en directa. Davivienda Group (Grupo Bolívar, con Scotiabank como accionista del 20 %) cerró en diciembre de 2025 la compra de Scotiabank en Colombia, Costa Rica y Panamá (marca DaviBank) y completa la integración en el segundo semestre de 2026, con más de 29 millones de clientes.\nRelación con Olivia: Integración cultural multipaís tras la mayor integración bancaria del país. Su presidente, Javier Suárez, preside la junta de Asobancaria: entrada por contenido con Asobancaria (Jaime Rincón) y luego directa (Tello). VP de Talento por identificar; puente con Constructora Bolívar.",
+      "mostrarEnRadar": true,
+      "articulacion": "La integración de Scotiabank en Davivienda exige armonizar culturas y procesos, con presión adicional sobre la operación colombiana según el informe. Olivia podría acompañar la integración de equipos y el liderazgo del cambio, usando people analytics para detectar brechas de capacidad y adopción."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-ecopetrol-nacion-88-5",
+    "data": {
+      "id": "mercados-ecopetrol-nacion-88-5",
+      "estado": "verificado",
+      "nombre": "Ecopetrol (Nación 88,5%)",
+      "sector": "Energía",
+      "queHace": "Mayor empresa del país, con participación de la Nación del 88,5 %, dedicada a exploración, producción, transporte, refinación y petroquímica. Tiene estrategia a 2040 y atraviesa una transición de gobierno corporativo en 2026.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:28.515Z",
+      "relevancia": "La renovación de la dirección plantea un rediseño de estrategia y cultura, con necesidades de alineación organizacional y gestión del cambio.",
+      "justificacion": "Ubicación: Energía, más de 180 días: transición de gobierno corporativo (Ricardo Roa salió el 30 de julio; nueva junta y presidencia en definición). Mayor empresa del país, 88,5 % de la Nación: exploración, producción, transporte, refinación y petroquímica, con estrategia a 2040.\nRelación con Olivia: Figura entre los clientes regionales de Olivia (precisar alcance y vigencia) y en 2027 vendrá un rediseño de estrategia y cultura. Monitoreo, no propuesta, hasta que la cúpula esté en firme: presencia en la Cumbre ACP (4–6 nov) y registro de proveedor. VP de talento por reidentificar.",
+      "mostrarEnRadar": true,
+      "articulacion": "La renovación directiva descrita en el informe abre una necesidad de alinear estrategia, modelo operativo y cultura de Ecopetrol en Colombia. Olivia podría apoyar la gestión del cambio y el liderazgo de equipos, sujeto a validar el mandato organizacional y el alcance de las capacidades internas."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-fundacion-valle-del-lili",
+    "data": {
+      "id": "mercados-fundacion-valle-del-lili",
+      "estado": "verificado",
+      "nombre": "Fundación Valle del Lili",
+      "sector": "Salud",
+      "queHace": "Hospital universitario de Cali con cinco sedes, más de 800 especialistas y más de 5.000 empleados. En 2026 abrió un hospital pediátrico integral en Limonar.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T19:00:00.000Z",
+      "updatedAt": "2026-09-24T15:40:32.399Z",
+      "relevancia": "La expansión exige rediseñar capacidad y turnos de atención permanente bajo la Ley 2466, con gestión del cambio en la operación.",
+      "justificacion": "Ubicación: Salud, sector emergente (120 a más de 180 días): candidato a explorar. Hospital universitario de Cali con cinco sedes, más de 800 especialistas y más de 5.000 empleados; en 2026 abrió un hospital pediátrico integral en Limonar.\nRelación con Olivia: Expansión y rediseño de capacidad, con turnos 24/7 bajo la Ley 2466. Regla del informe: due diligence de cobro antes de la propuesta técnica. Entrada por ACHC; interlocutor por identificar.",
+      "mostrarEnRadar": true,
+      "articulacion": "El frente de salud del informe plantea presión de capacidad sobre las redes privadas del Valle del Cauca, incluida Fundación Valle del Lili. Olivia podría acompañar coordinación asistencial, liderazgo clínico y rediseño de turnos, previa validación de la necesidad concreta y la capacidad de pago."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-enel-colombia-enel-americas-57-3-geb-42-5",
+    "data": {
+      "id": "mercados-enel-colombia-enel-americas-57-3-geb-42-5",
+      "estado": "verificado",
+      "nombre": "Enel Colombia (Enel Américas 57,3% · GEB 42,5%)",
+      "sector": "Servicios públicos",
+      "queHace": "Distribuye energía en Bogotá y Cundinamarca y genera con fuentes convencionales y renovables. Sus accionistas son Enel Américas (57,3 %) y GEB (42,5 %).",
+      "categoria": "mercados",
+      "confianza": "alta",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:29.028Z",
+      "relevancia": "La integración de cuatro culturas de origen —Emgesa, Codensa, EGP y ESSA2— bajo gobierno mixto público-privado conecta con cultura y gestión del cambio.",
+      "justificacion": "Ubicación: Energía, 30–60 días: único caso del mapeo con responsable de personas (Michele Ciavarella, People and Organization Colombia y Centroamérica) y de abastecimiento (Raúl Vacca) identificados a la vez. Distribuye energía en Bogotá y Cundinamarca y genera con fuentes convencionales y renovables; accionistas Enel Américas (57,3 %) y GEB (42,5 %).\nRelación con Olivia: Integra cuatro culturas de origen (Emgesa, Codensa, EGP, ESSA2) bajo gobernanza mixta público-privada: encaje directo en cultura y gestión del cambio. Doble entrada sin mezclarlas: contenido con Ciavarella y registro de proveedor con Vacca. Referencia Súmmum por precisar y acuerdos marco globales por verificar. Gremios: Andesco, Acolgen.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe describe en Enel Colombia la convivencia de cuatro culturas de origen y necesidades de restablecimiento del servicio. Olivia podría acompañar la integración cultural y la coordinación de equipos operativos, con indicadores de adopción y liderazgo alineados con su gobernanza mixta."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-epm-municipio-de-medellin",
+    "data": {
+      "id": "mercados-epm-municipio-de-medellin",
+      "estado": "verificado",
+      "nombre": "EPM (Municipio de Medellín)",
+      "sector": "Servicios públicos",
+      "queHace": "Empresa oficial del Municipio de Medellín que presta energía, agua y gas en más de 120 municipios.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:29.543Z",
+      "relevancia": "La articulación de talento y arquitectura empresarial conecta con rediseño organizacional basado en procesos y datos.",
+      "justificacion": "Ubicación: Energía, 120 días: contacto de confianza media (María Patricia Giraldo Velásquez, VP de Talento Humano y Arquitectura Empresarial; confirmar vigencia) y régimen de empresa oficial del Municipio de Medellín, con ciclo de compra largo. Presta energía, agua y gas en más de 120 municipios.\nRelación con Olivia: Una vicepresidencia que junta talento y arquitectura empresarial es la contraparte natural de un rediseño organizacional con procesos y datos. Entrada directa previa verificación, con lenguaje de política pública (Barrientos); exige registro de proveedor. Prestataria habitual de banca multilateral: vía consorcio con GH Studio. Congreso Andesco.",
+      "mostrarEnRadar": true,
+      "articulacion": "La combinación de talento y arquitectura empresarial en EPM permite conectar necesidades de rediseño organizacional, procesos y datos en Colombia. Olivia podría articular gestión del cambio y liderazgo entre negocios de energía, agua y gas, atendiendo la continuidad de los servicios."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-erco-energia-medellin-capital-extranjero",
+    "data": {
+      "id": "mercados-erco-energia-medellin-capital-extranjero",
+      "estado": "verificado",
+      "nombre": "Erco Energía (Medellín; capital extranjero)",
+      "sector": "Energía",
+      "queHace": "Empresa de tecnología energética de Medellín nacida en EAFIT en 2012. Desarrolla parques solares, generación y comercialización de energía limpia, almacenamiento y carga de vehículos eléctricos, con ocho sociedades vehículo, presencia en siete regiones del país y operación en Texas y Panamá.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:30.073Z",
+      "relevancia": "El crecimiento exige pasar de una gestión centrada en los fundadores a una estructura organizacional que permita escalar.",
+      "justificacion": "Ubicación: Energía, más de 180 días: interlocutor por identificar y ciclo largo. Enertech de Medellín nacida en EAFIT (2012): parques solares, generación y comercialización de energía limpia, almacenamiento y carga de vehículos eléctricos, con ocho sociedades vehículo, siete regiones del país y operación en Texas y Panamá; integra la junta de SER Colombia.\nRelación con Olivia: Escalamiento: paso del modo fundador al modo organización. Lead de Gestión Humana y Cultura por identificar. Entrada vía SER Colombia (Barrientos).",
+      "mostrarEnRadar": true,
+      "articulacion": "El escalamiento de Erco y sus sociedades de proyecto exige coordinación entre equipos y claridad de responsabilidades en Colombia. Olivia podría apoyar el diseño organizacional, el desarrollo de líderes y la adopción de prácticas compartidas para acompañar el crecimiento energético."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-etb-distrito-de-bogota",
+    "data": {
+      "id": "mercados-etb-distrito-de-bogota",
+      "estado": "verificado",
+      "nombre": "ETB (Distrito de Bogotá)",
+      "sector": "Telecomunicaciones",
+      "queHace": "Empresa pública del Distrito de Bogotá que desde 2025 ejecuta un plan de transformación con cuatro frentes: disciplina financiera, optimización operativa, fortalecimiento tecnológico y recuperación cultural. Pasa de operar telecomunicaciones a ofrecer servicios tecnológicos para el sector público.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:30.566Z",
+      "relevancia": "La recuperación cultural y el cambio de modelo de negocio requieren gestión del cambio y cultura organizacional.",
+      "justificacion": "Ubicación: Telecomunicaciones, sector emergente, más de 180 días: empresa pública del Distrito sujeta al ciclo político. Desde 2025 ejecuta un plan de transformación con cuatro frentes —disciplina financiera, optimización operativa, fortalecimiento tecnológico y recuperación cultural— y migra de telco a techco para el sector público.\nRelación con Olivia: La recuperación cultural y el cambio de modelo de negocio son demanda directa de gestión del cambio y cultura. Interlocutor de talento por identificar. Vía Andesco.",
+      "mostrarEnRadar": true,
+      "articulacion": "El frente de telecomunicaciones del informe plantea a ETB necesidades de transformación y cultura digital en Colombia. Olivia podría acompañar a los equipos en la adopción de nuevos servicios tecnológicos y alinear liderazgo y capacidades con la ejecución operativa."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-frisby-bic-pereira",
+    "data": {
+      "id": "mercados-frisby-bic-pereira",
+      "estado": "verificado",
+      "nombre": "Frisby (BIC, Pereira)",
+      "sector": "Retail",
+      "queHace": "Cadena de comidas de Pereira, sociedad BIC, con unos 290 restaurantes en 61 municipios y cerca de 5.000 empleados.",
+      "categoria": "mercados",
+      "confianza": "baja",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:31.188Z",
+      "relevancia": "Su operación nocturna y dominical está especialmente expuesta a la reforma laboral. El rediseño operativo y de turnos requiere acompañamiento al cambio.",
+      "justificacion": "Ubicación: Retail y consumo, 30–60 días vía Acodres. Cadena de comidas de Pereira, sociedad BIC, con unos 290 restaurantes en 61 municipios y cerca de 5.000 empleados.\nRelación con Olivia: El caso más golpeado por la reforma laboral: una cadena que vive de noches y domingos. Programa sectorial de rediseño operativo y de turnos canalizado por Acodres con financiación SENA (Barrientos), que llega a Frisby y a toda la industria gastronómica. Contacto de RR. HH. de fuente única: no citar.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe sitúa la continuidad operativa y el rediseño de turnos como necesidades centrales de Frisby en Colombia. Olivia podría acompañar a los líderes de restaurante en cambios de dotación y rutinas de servicio, priorizando productividad y cuidado del equipo."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-fundacion-santa-fe",
+    "data": {
+      "id": "mercados-fundacion-santa-fe",
+      "estado": "verificado",
+      "nombre": "Fundación Santa Fe",
+      "sector": "Salud",
+      "queHace": "Hospital universitario privado sin ánimo de lucro de Bogotá, fundado en 1972, con divisiones de educación, investigación y salud comunitaria.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T19:00:00.000Z",
+      "updatedAt": "2026-09-24T15:40:31.858Z",
+      "relevancia": "Los traslados masivos del sistema de salud plantean necesidades de capacidad, turnos de atención permanente y liderazgo clínico.",
+      "justificacion": "Ubicación: Salud, sector emergente (120 a más de 180 días): candidato a explorar. Hospital universitario privado sin ánimo de lucro de Bogotá (1972), con divisiones de educación, investigación y salud comunitaria.\nRelación con Olivia: Prestador con espalda financiera: capacidad, turnos 24/7 y liderazgo clínico ante los traslados masivos. Regla del informe: due diligence de cobro antes de la propuesta técnica. Entrada por ACHC; interlocutor por identificar.",
+      "mostrarEnRadar": true,
+      "articulacion": "La presión de capacidad sobre prestadores privados descrita en el informe sirve como hipótesis sectorial para Fundación Santa Fe en Colombia; la necesidad particular está sin verificar. Olivia podría explorar rediseño de coordinación asistencial y desarrollo de liderazgo clínico, condicionado a validar alcance y capacidad de pago."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-greenyellow-colombia-filial-francesa",
+    "data": {
+      "id": "mercados-greenyellow-colombia-filial-francesa",
+      "estado": "verificado",
+      "nombre": "GreenYellow Colombia (filial francesa)",
+      "sector": "Energía",
+      "queHace": "Filial de la francesa GreenYellow, presente en Colombia desde 2012, dedicada a eficiencia energética, energía solar y baterías. Tiene más de 600 proyectos y doce sociedades vehículo.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:32.914Z",
+      "relevancia": "La operación distribuida plantea necesidades de estructura organizacional y gestión del cambio.",
+      "justificacion": "Ubicación: Energía, más de 180 días: las decisiones de marco se toman en Francia. Filial de la francesa GreenYellow, en Colombia desde 2012: eficiencia energética, solar y baterías, con más de 600 proyectos y doce sociedades vehículo; integra la junta de SER Colombia.\nRelación con Olivia: Gestión del cambio y estructura en una operación distribuida; expectativa moderada. Director de RR. HH. y Gestión del Cambio por identificar. Entrada vía SER Colombia / Andesco.",
+      "mostrarEnRadar": true,
+      "articulacion": "Las sociedades de proyecto de GreenYellow requieren coordinar la ejecución local con lineamientos de su matriz. Olivia podría apoyar en Colombia la claridad de roles, el liderazgo y la gestión del cambio entre proyectos, sujeto a validar la autonomía local de decisión."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-grupo-energia-bogota-distrito-de-bogota",
+    "data": {
+      "id": "mercados-grupo-energia-bogota-distrito-de-bogota",
+      "estado": "verificado",
+      "nombre": "Grupo Energía Bogotá (Distrito de Bogotá)",
+      "sector": "Energía",
+      "queHace": "Grupo del Distrito de Bogotá con transmisión eléctrica y gas en Colombia, Perú, Brasil y Guatemala, mediante TGI, Contugas, Electro Dunas y Conecta. Es dueño del 42,5 % de Enel Colombia.",
+      "categoria": "mercados",
+      "confianza": "alta",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:33.480Z",
+      "relevancia": "Transmitir cultura y estándares de gestión a participadas sin control operativo requiere trabajo de cultura y gestión del cambio.",
+      "justificacion": "Ubicación: Energía, horizonte 30–60 días del embudo: interlocutor confirmado en fuente corporativa (María Virginia Torres, VP de Talento y Gestión Administrativa, con presupuesto propio) y equipo directivo estable. Grupo del Distrito de Bogotá con transmisión eléctrica y gas en Colombia, Perú, Brasil y Guatemala (TGI, Contugas, Electro Dunas, Conecta) y dueño del 42,5 % de Enel Colombia.\nRelación con Olivia: Su reto es transmitir cultura y estándar de gestión a participadas sin control operativo: terreno de cultura y gestión del cambio. Candidato a beachhead de energía. Entrada directa (Tello), reforzada por Andesco y Naturgas; exige registro previo en su portal de proveedores.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe identifica en Grupo Energía Bogotá el reto de transmitir cultura y estándares de gestión a participadas sin control operativo. Olivia podría acompañar la alineación de liderazgo y la definición de prácticas compartidas, respetando la autonomía de las empresas del grupo y su operación colombiana."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-grupo-nutresa-gilinski-ihc",
+    "data": {
+      "id": "mercados-grupo-nutresa-gilinski-ihc",
+      "estado": "verificado",
+      "nombre": "Grupo Nutresa (Gilinski · IHC)",
+      "sector": "Consumo",
+      "queHace": "Mayor grupo de alimentos procesados del país, controlado por Gilinski e IHC. En julio de 2026 aprobó absorber Nugil y JGDB Holding; con «One Nutresa» reorganiza categorías y elimina tres estructuras regionales.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:34.065Z",
+      "relevancia": "La transformación sigue en curso tras el desmonte de su oficina de transformación al año de crearla. La reorganización requiere acompañamiento al cambio y articulación organizacional.",
+      "justificacion": "Ubicación: Retail y consumo, más de 180 días: investigación previa obligatoria y sucesor del Chief Transformation Officer por identificar. Mayor grupo de alimentos procesados del país, controlado por Gilinski e IHC; en julio de 2026 aprobó absorber Nugil y JGDB Holding.\nRelación con Olivia: «One Nutresa»: reorganiza categorías, elimina tres estructuras regionales y desmontó su oficina de transformación al año de crearla; el trabajo no está terminado. Contexto: Janeth Caicedo, VP de Cadena de Suministro. Vía ANDI mientras tanto.",
+      "mostrarEnRadar": true,
+      "articulacion": "La reorganización de categorías de One Nutresa deja necesidades de articulación entre equipos y estructuras en Colombia, según el informe. Olivia podría apoyar gobernanza de la transformación y gestión del cambio para sostener la ejecución, previa validación de la estructura responsable vigente."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-industrias-haceb-familiar-medellin",
+    "data": {
+      "id": "mercados-industrias-haceb-familiar-medellin",
+      "estado": "verificado",
+      "nombre": "Industrias Haceb (familiar, Medellín)",
+      "sector": "Industrial",
+      "queHace": "Fabricante familiar antioqueño de electrodomésticos con planta en Copacabana, unos 3.700 empleados y exportaciones a Estados Unidos, la región Andina y el Caribe.",
+      "categoria": "mercados",
+      "confianza": "baja",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:34.735Z",
+      "relevancia": "La profesionalización y la competencia con importaciones asiáticas generan una necesidad de eficiencia organizacional.",
+      "justificacion": "Ubicación: Industrial, 120 días: contacto de fuente débil (verificar). Fabricante familiar antioqueño de electrodomésticos, con planta en Copacabana, unos 3.700 empleados y exportaciones a Estados Unidos, la región Andina y el Caribe.\nRelación con Olivia: Empresa familiar en profesionalización que compite con importaciones asiáticas: eficiencia organizacional sin argumentos de moda. Vía ANDI Antioquia.",
+      "mostrarEnRadar": true,
+      "articulacion": "Haceb combina profesionalización familiar y presión competitiva de importaciones en el mercado colombiano. Olivia podría fortalecer liderazgo y capacidades de innovación, acompañando cambios en planta y coordinación comercial orientados a productividad."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-isa-nacion",
+    "data": {
+      "id": "mercados-isa-nacion",
+      "estado": "verificado",
+      "nombre": "ISA (Nación)",
+      "sector": "Energía",
+      "queHace": "Grupo de la Nación dedicado a transmisión eléctrica, concesiones viales y telecomunicaciones, con unas 50 empresas en seis países y estrategia ISA2040. En 2026 atraviesa una transición de presidencia tras la anulación de su elección.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:35.284Z",
+      "relevancia": "La transición de presidencia plantea necesidades de alineación directiva y recomposición de las relaciones organizacionales.",
+      "justificacion": "Ubicación: Energía, más de 180 días: sin presidente en firme desde que el Consejo de Estado anuló la elección (26 feb) y negó la tutela (9 sep). Grupo de la Nación en transmisión eléctrica, concesiones viales y telecomunicaciones, con unas 50 empresas en seis países y estrategia ISA2040.\nRelación con Olivia: Recomposición de confianza y alineación directiva cuando se resuelva la presidencia. Karen Medina, VP de Talento Organizacional (confianza media; contexto sensible). Monitoreo, no contacto; vía Andesco. Prestataria habitual de banca multilateral.",
+      "mostrarEnRadar": true,
+      "articulacion": "La transición de gobierno corporativo descrita en el informe plantea a ISA una necesidad de alineación directiva y continuidad organizacional. Olivia podría apoyar liderazgo y gestión del cambio en Colombia cuando exista claridad sobre el mandato de transformación."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-jeronimo-martins-colombia-ara-portugal",
+    "data": {
+      "id": "mercados-jeronimo-martins-colombia-ara-portugal",
+      "estado": "verificado",
+      "nombre": "Jerónimo Martins Colombia – Ara (Portugal)",
+      "sector": "Retail",
+      "queHace": "Cadena de descuento de la portuguesa Jerónimo Martins, con 1.708 tiendas a mitad de 2026 y un plan de unas 200 aperturas más.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:35.866Z",
+      "relevancia": "La expansión acelerada requiere adaptar el modelo de tienda y los turnos y fortalecer la cultura de cumplimiento.",
+      "justificacion": "Ubicación: Retail y consumo, más de 180 días: decisiones de la matriz portuguesa (Jerónimo Martins). Cadena de descuento con 1.708 tiendas a mitad de 2026 y un plan de unas 200 aperturas más.\nRelación con Olivia: Expansión acelerada con sanción SIC: modelo de tienda, turnos y cultura de cumplimiento. Director de RR. HH. y Cultura por identificar. Vía Fenalco.",
+      "mostrarEnRadar": true,
+      "articulacion": "Ara necesita traducir los estándares de su matriz a una red de tiendas colombiana en expansión y con trabajo por turnos. Olivia podría acompañar el desarrollo de mandos y la adopción de rutinas operativas consistentes, ajustadas al marco corporativo de la compañía."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-keralty-colsanitas",
+    "data": {
+      "id": "mercados-keralty-colsanitas",
+      "estado": "verificado",
+      "nombre": "Keralty-Colsanitas",
+      "sector": "Salud",
+      "queHace": "Grupo de salud dueño de Colsanitas, la mayor empresa de medicina prepagada del país, con clínicas propias y presencia en más de 40 ciudades.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T19:00:00.000Z",
+      "updatedAt": "2026-09-24T15:40:36.396Z",
+      "relevancia": "Los traslados masivos desde EPS intervenidas y la Ley 2466 plantean necesidades de rediseño de capacidad, modelo de atención y turnos de atención permanente.",
+      "justificacion": "Ubicación: Salud, sector emergente (120 a más de 180 días): candidato a explorar, no cuenta confirmada. Grupo de salud dueño de Colsanitas, la mayor prepagada del país, con clínicas propias y presencia en más de 40 ciudades.\nRelación con Olivia: Rediseño de capacidad, modelo de atención y turnos 24/7 ante los traslados masivos desde las EPS intervenidas y la Ley 2466. Regla del informe: due diligence de cobro antes de la propuesta técnica. Entrada por ACEMI y ACHC; interlocutor por identificar.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe incluye a Keralty–Colsanitas entre las redes privadas expuestas a cambios en la demanda asistencial en Colombia. Olivia podría acompañar rediseño de capacidad y liderazgo clínico para coordinar equipos, sujeto a validar solvencia y necesidades específicas de cada operación."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-lulo-bank-grupo-gilinski",
+    "data": {
+      "id": "mercados-lulo-bank-grupo-gilinski",
+      "estado": "verificado",
+      "nombre": "Lulo Bank (Grupo Gilinski)",
+      "sector": "Financiero",
+      "queHace": "Primer banco totalmente digital con licencia en Colombia, del Grupo Gilinski. Tiene unos 600.000 clientes e ingresó en 2026 a la banca empresarial.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:36.868Z",
+      "relevancia": "El paso de una gestión centrada en los fundadores a una organización en crecimiento requiere estructura, liderazgo y cultura para escalar.",
+      "justificacion": "Ubicación: Financiero, 120 días: interlocutor por identificar. Primer banco 100 % digital con licencia en Colombia (Grupo Gilinski), con unos 600.000 clientes y entrada en 2026 a la banca empresarial.\nRelación con Olivia: Paso del modo fundador al modo organización: estructura, liderazgo y cultura para escalar. VP de People & Culture por identificar. Institucional (Barrientos) vía Colombia Fintech; puente Gilinski hacia GNB Sudameris y Nutresa.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe caracteriza a Lulo como un banco digital que necesita pasar del modo fundador a una organización estructurada. Olivia podría acompañar en Colombia la definición de roles, el desarrollo de liderazgo y una cultura que sostenga el escalamiento."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-mercadolibre-colombia-nasdaq",
+    "data": {
+      "id": "mercados-mercadolibre-colombia-nasdaq",
+      "estado": "verificado",
+      "nombre": "MercadoLibre Colombia (Nasdaq)",
+      "sector": "Retail",
+      "queHace": "Empresa de comercio electrónico con más de 6.100 colaboradores en Colombia. Ejecuta en 2026 un plan de inversión de unos US$600 millones en logística, sedes y equipo.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:37.406Z",
+      "relevancia": "La expansión del equipo local plantea necesidades de acompañamiento al crecimiento y gestión del cambio.",
+      "justificacion": "Ubicación: Retail y consumo, 120 días: cliente regional de Olivia con interlocutor local por identificar. En Colombia tiene más de 6.100 colaboradores y ejecuta en 2026 un plan de inversión de unos US$600 millones en logística, sedes y equipo.\nRelación con Olivia: Expansión de cuenta por la ruta «cuenta Olivia», con referencia de la casa matriz, en plena expansión del equipo local. People Lead por identificar. Preside el consejo directivo de la CCCE (María Fernanda Quiñones); también en Fenalco.",
+      "mostrarEnRadar": true,
+      "articulacion": "La expansión de MercadoLibre en Colombia exige que logística, tecnología y equipos crezcan de manera coordinada. Olivia podría adaptar capacidades de gestión del cambio y liderazgo a la ejecución local, previa validación del alcance de las experiencias regionales mencionadas en el informe."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-organizacion-corona-holding",
+    "data": {
+      "id": "mercados-organizacion-corona-holding",
+      "estado": "verificado",
+      "nombre": "Organización Corona (holding)",
+      "sector": "Industrial",
+      "queHace": "Grupo multinacional con más de 140 años, plantas en Colombia, Estados Unidos, Centroamérica y México y más de 16.800 empleos directos. En 2025 vendió sus participaciones en Falabella para enfocarse en su negocio principal.",
+      "categoria": "mercados",
+      "confianza": "media",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:37.947Z",
+      "relevancia": "La manufactura intensiva en mano de obra, la automatización y la reforma laboral en planta requieren gestión del cambio en medio de una recomposición de portafolio.",
+      "justificacion": "Ubicación: Industrial, 120 días: contacto de fuente única (Carlos Espinal, VP de Gestión Humana; confirmar si es de la operativa o del holding). Multinacional con más de 140 años, plantas en Colombia, Estados Unidos, Centroamérica y México y más de 16.800 empleos directos; en 2025 vendió sus participaciones en Falabella para enfocarse en su negocio principal.\nRelación con Olivia: Manufactura intensiva en mano de obra, automatización y reforma laboral en planta, con recomposición de portafolio. Vía Camacol o ANDI hacia las sociedades operativas, no hacia el holding. También en Cecodes.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe vincula las empresas operativas de Corona con automatización, trabajo en planta y demanda de materiales para reconstrucción. Olivia podría acompañar liderazgo industrial y adopción de nuevas prácticas en Colombia, definiendo el alcance por operación."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-organizacion-terpel-copec-chile",
+    "data": {
+      "id": "mercados-organizacion-terpel-copec-chile",
+      "estado": "verificado",
+      "nombre": "Organización Terpel (Copec, Chile)",
+      "sector": "Retail",
+      "queHace": "Filial de Copec, de Chile, y mayor distribuidor de combustibles del país. Tiene más de 2.000 estaciones y operación en Ecuador, Panamá, Perú y República Dominicana.",
+      "categoria": "mercados",
+      "confianza": "alta",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:57:37.118Z",
+      "relevancia": "La absorción organizacional de lo ya digitalizado requiere gestión del cambio. Miles de personas en turnos, franquicias y terceros están expuestos a la Ley 2466.",
+      "justificacion": "Ubicación: Retail y consumo, 30–60 días: contactos de confianza alta (Nelson Yobany Pabón Caviativa, VP de Tecnología y Transformación Digital; Alejandro Barrera Castellani, VP de Operaciones y Cadena). Filial de Copec (Chile) y mayor distribuidor de combustibles del país, con más de 2.000 estaciones y operación en Ecuador, Panamá, Perú y República Dominicana.\nRelación con Olivia: Absorción organizacional de lo ya digitalizado, con miles de personas en turnos, franquicias y terceros expuestos a la Ley 2466. Directa (Tello), separando explícitamente tecnología de acompañamiento. Gremio: ACP.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe identifica en Terpel la necesidad de absorber organizacionalmente lo ya digitalizado en su red colombiana. Olivia podría acompañar la adopción de herramientas y el rediseño de rutinas entre estaciones, franquicias y terceros, con liderazgo y medición de capacidades de los equipos."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-plastilene-familiar-soacha",
+    "data": {
+      "id": "mercados-plastilene-familiar-soacha",
+      "estado": "verificado",
+      "nombre": "Plastilene (familiar, Soacha)",
+      "sector": "Industrial",
+      "queHace": "Grupo familiar de empaques flexibles y películas fundado en 1957, con sede en Soacha y siete plantas en Colombia, Ecuador y Guatemala.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:39.002Z",
+      "relevancia": "El ecodiseño de empaques y la automatización requieren acompañar el cambio en planta.",
+      "justificacion": "Ubicación: Industrial, más de 180 días: interlocutor por identificar. Grupo familiar de empaques flexibles y películas (1957), con sede en Soacha y siete plantas en Colombia, Ecuador y Guatemala.\nRelación con Olivia: Sostenibilidad (ecodiseño de empaques) y automatización, con cambio en planta. Gerente de Desarrollo Humano y Sostenibilidad por identificar. Vía Acoplásticos (Daniel Mitchell); Colombiaplast 28 sep – 2 oct.",
+      "mostrarEnRadar": true,
+      "articulacion": "La sostenibilidad y la automatización plantean a Plastilene necesidades de cambio en su operación de empaques en Colombia. Olivia podría vincular innovación, liderazgo de planta y desarrollo de capacidades para que los equipos incorporen nuevas prácticas productivas."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-productos-ramo",
+    "data": {
+      "id": "mercados-productos-ramo",
+      "estado": "verificado",
+      "nombre": "Productos Ramo",
+      "sector": "Consumo",
+      "queHace": "Fabricante bogotano de ponqués y pasabocas con más de 70 años, en tránsito de gestión familiar a gobierno corporativo.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:39.489Z",
+      "relevancia": "El cambio de control y la profesionalización de la empresa familiar plantean necesidades de transformación organizacional y productividad.",
+      "justificacion": "Ubicación: Retail y consumo, 120 días: contactos solo de agregadores comerciales (no citables). Fabricante bogotano de ponqués y pasabocas con más de 70 años, en tránsito de gestión familiar a gobierno corporativo.\nRelación con Olivia: Profesionalización de empresa familiar con cambio de control reciente y menor competencia de grandes consultoras; agenda de productividad. Vía Fenalco.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe sitúa a Productos Ramo en un proceso de profesionalización de la empresa familiar y cambio de control. Olivia podría apoyar en Colombia la claridad de responsabilidades, el liderazgo y la gestión del cambio para sostener productividad durante esa transición."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-promigas",
+    "data": {
+      "id": "mercados-promigas",
+      "estado": "verificado",
+      "nombre": "Promigas",
+      "sector": "Servicios públicos",
+      "queHace": "Grupo de 25 empresas en transporte y distribución de gas, regasificación de GNL, distribución eléctrica y generación. Atiende a más de cuatro millones de usuarios en Colombia y opera en Perú mediante Cálidda, junto con GEB.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:39.989Z",
+      "relevancia": "La estructura con múltiples filiales y el arbitraje abierto contra Perú plantean necesidades de modelo de grupo y liderazgo.",
+      "justificacion": "Ubicación: Energía, 120 días: mandato claro pero titular de talento por identificar; el acceso pasa primero por el gremio. Grupo de 25 empresas en transporte y distribución de gas, regasificación de GNL, distribución eléctrica y generación, con más de cuatro millones de usuarios en Colombia y operación en Perú (Cálidda, con GEB).\nRelación con Olivia: Grupo multifilial con arbitraje abierto contra Perú: conversación de modelo de grupo y liderazgo. Su presidente, Juan Manuel Rojas, preside por tercer año el consejo de Naturgas: entrada por Naturgas (Luz Stella Murgas) hacia la presidencia y luego directa. Gremios: Naturgas, Andesco.",
+      "mostrarEnRadar": true,
+      "articulacion": "La operación de Promigas a través de filiales plantea necesidades de coordinación y estándares de gestión compartidos en Colombia. Olivia podría articular liderazgo, cultura y gestión del cambio entre equipos de transporte y distribución de gas, respetando la autonomía de cada empresa."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-superpolo-jv-marcopolo-fanalca",
+    "data": {
+      "id": "mercados-superpolo-jv-marcopolo-fanalca",
+      "estado": "verificado",
+      "nombre": "Superpolo (JV Marcopolo–Fanalca)",
+      "sector": "Industrial",
+      "queHace": "Alianza Marcopolo–Fanalca con planta de carrocerías en Cota, más del 45 % del mercado nacional y una nueva línea de buses eléctricos y de hidrógeno.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:40.525Z",
+      "relevancia": "El cambio tecnológico de producto requiere alinear los estándares de la casa matriz con la operación local y acompañar su adopción.",
+      "justificacion": "Ubicación: Industrial, más de 180 días: interlocutor por identificar. Alianza Marcopolo (Brasil)–Fanalca con planta de carrocerías en Cota, más del 45 % del mercado nacional y nueva línea de buses eléctricos y de hidrógeno.\nRelación con Olivia: Alinear los estándares de la casa matriz con la operación local durante un cambio tecnológico de producto. Jefe de Gestión Humana y Capacitación por identificar. Vía ANDI.",
+      "mostrarEnRadar": true,
+      "articulacion": "Superpolo combina estándares de sus matrices con ejecución industrial y desarrollo de capacidades en Colombia. Olivia podría acompañar liderazgo de planta y adopción de cambios productivos, ajustando la propuesta al marco de la alianza empresarial descrita en el informe."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-sura",
+    "data": {
+      "id": "mercados-sura",
+      "estado": "verificado",
+      "nombre": "Sura",
+      "sector": "Salud",
+      "queHace": "Aseguradora y red privada cuya EPS tiene unos 5,4 millones de afiliados. Sigue autorizada en el nuevo mapa territorial de EPS de 2026.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T19:00:00.000Z",
+      "updatedAt": "2026-09-24T15:40:41.036Z",
+      "relevancia": "La absorción de parte de los traslados requiere rediseñar capacidad, modelo de atención y turnos de atención permanente bajo la Ley 2466.",
+      "justificacion": "Ubicación: Salud, sector emergente (120 a más de 180 días): candidato a explorar. Aseguradora y red privada; su EPS (unos 5,4 millones de afiliados) sigue autorizada en el nuevo mapa territorial de EPS de 2026.\nRelación con Olivia: Absorbe parte de los traslados: rediseño de capacidad, modelo de atención y turnos 24/7 bajo Ley 2466. Regla del informe: due diligence de cobro antes de la propuesta técnica. Entrada por ACEMI; interlocutor por identificar.",
+      "mostrarEnRadar": true,
+      "articulacion": "El frente de salud del informe vincula a Sura con la reorganización de capacidad de aseguradores y redes privadas en Colombia. Olivia podría acompañar coordinación de equipos y gestión del cambio en modelos de atención, sujeto a validar capacidad de pago y alcance por entidad."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-tecnoglass-nasdaq-familia-daes",
+    "data": {
+      "id": "mercados-tecnoglass-nasdaq-familia-daes",
+      "estado": "verificado",
+      "nombre": "Tecnoglass (Nasdaq; familia Daes)",
+      "sector": "Industrial",
+      "queHace": "Fabricante de vidrio y ventanería de Barranquilla que cotiza en Nasdaq. Estados Unidos representa el 95 % de sus ventas, con récord en 2026, presión arancelaria y una caída cercana al 32 % de la acción en un año.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:41.584Z",
+      "relevancia": "La presión bursátil sobre la administración puede generar una necesidad de cambio cultural, aunque el informe no confirma una demanda de acompañamiento.",
+      "justificacion": "Ubicación: Industrial, más de 180 días: interlocutor por identificar. Fabricante de vidrio y ventanería de Barranquilla (familia Daes) que cotiza en Nasdaq; Estados Unidos es el 95 % de sus ventas, con récord en 2026 pero presión arancelaria y una caída cercana al 32 % de la acción en un año.\nRelación con Olivia: La presión bursátil sobre la administración puede abrir o cerrar una conversación de cambio cultural, según cómo se plantee. VP de Operaciones o gestor de cambio por identificar. Vía ANDI / Camacol.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe relaciona a Tecnoglass con presión sobre su administración y exigencias de ejecución industrial. Olivia podría trabajar alineación de líderes y gestión del cambio en la operación colombiana, vinculando capacidades de los equipos con mejoras productivas."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-tigo-millicom-integracion-de-movistar",
+    "data": {
+      "id": "mercados-tigo-millicom-integracion-de-movistar",
+      "estado": "verificado",
+      "nombre": "Tigo (Millicom) – integración de Movistar",
+      "sector": "Telecomunicaciones",
+      "queHace": "Millicom tomó el control total de Movistar Colombia en 2026, mediante la OPA a Telefónica en febrero y la compra del 32,5 % de la Nación en abril por COP 856.000 millones. La integración incluye un plan de retiro voluntario y condiciones de la SIC.",
+      "categoria": "mercados",
+      "confianza": "alta",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:42.112Z",
+      "relevancia": "La integración requiere arquitectura organizacional, armonización de dos culturas, acompañamiento a salidas voluntarias y cumplimiento regulatorio.",
+      "justificacion": "Ubicación: Telecomunicaciones, sector emergente, 30–60 días (explorar). Millicom tomó el control total de Movistar Colombia en 2026 (OPA a Telefónica en febrero y 32,5 % de la Nación en abril por COP 856.000 millones), con plan de retiro voluntario y condiciones de la SIC: el proceso de transformación organizacional más intenso del país.\nRelación con Olivia: Arquitectura organizacional, armonización de dos culturas, acompañamiento a salidas voluntarias y cumplimiento regulatorio en los primeros 12 a 18 meses. Directa (Tello, perfil telecom y tecnología); responsable de personas por identificar; verificar proveedores de la casa matriz.",
+      "mostrarEnRadar": true,
+      "articulacion": "La integración de Tigo y Movistar descrita en el informe exige armonizar culturas y definir una arquitectura organizacional común en Colombia. Olivia podría acompañar liderazgo, integración de equipos y gestión del cambio, incluyendo el cuidado de las personas durante la reorganización."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-tuya-cibest-50-bancolombia",
+    "data": {
+      "id": "mercados-tuya-cibest-50-bancolombia",
+      "estado": "verificado",
+      "nombre": "Tuya (Cibest · 50% Bancolombia)",
+      "sector": "Financiero",
+      "queHace": "Compañía de financiamiento con participación del 50 % de Bancolombia y del 50 % de Grupo Éxito. Es el mayor emisor de tarjetas de crédito del país, con Tarjeta Éxito, Carulla y Alkosto.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:42.638Z",
+      "relevancia": "La analítica y la experiencia en crédito de consumo conectan con transformación organizacional y decisiones basadas en datos.",
+      "justificacion": "Ubicación: Financiero, 120 días: interlocutor por identificar. Compañía de financiamiento 50 % Bancolombia y 50 % Grupo Éxito; mayor emisor de tarjetas de crédito del país (Tarjeta Éxito, Carulla, Alkosto).\nRelación con Olivia: Analítica y experiencia en crédito de consumo; cross-sell natural después de Bancolombia y puente hacia Éxito. VP de Transformación, Analytics y Experiencia por identificar. Directa (Tello); gremio Asobancaria.",
+      "mostrarEnRadar": true,
+      "articulacion": "El informe relaciona a Tuya con analítica, experiencia y cartera de consumo expuesta en Colombia. Olivia podría fortalecer capacidades de los equipos y coordinación de decisiones para que los cambios en atención y gestión de cartera se traduzcan en prácticas sostenibles."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-vatia-cali",
+    "data": {
+      "id": "mercados-vatia-cali",
+      "estado": "verificado",
+      "nombre": "Vatia (Cali)",
+      "sector": "Servicios públicos",
+      "queHace": "Comercializadora y generadora de energía de Cali, fundada en 1998, con soluciones solares y de eficiencia energética. Tiene oficinas en Barranquilla, Bucaramanga, Bogotá y Antioquia.",
+      "categoria": "mercados",
+      "confianza": "por_identificar",
+      "createdAt": "2026-09-15T17:35:02.446Z",
+      "updatedAt": "2026-09-24T15:40:43.123Z",
+      "relevancia": "El crecimiento y el cambio de tipo societario requieren estructura, procesos y liderazgo para escalar.",
+      "justificacion": "Ubicación: Energía, 120 días: mandato de crecimiento, interlocutor por identificar. Comercializadora y generadora de energía de Cali (1998), con soluciones solares y de eficiencia energética y oficinas en Barranquilla, Bucaramanga, Bogotá y Antioquia; afiliada a Acolgen.\nRelación con Olivia: Empresa en crecimiento que cambió de tipo societario: estructura, procesos y liderazgo para escalar. Director de Desarrollo Organizacional por identificar. Entrada vía Andesco / Asocodis.",
+      "mostrarEnRadar": true,
+      "articulacion": "El crecimiento de Vatia y la continuidad operativa en el Valle del Cauca planteados en el informe requieren coordinación entre equipos. Olivia podría acompañar claridad de roles y liderazgo del cambio para sostener el servicio y la adopción de nuevas soluciones energéticas."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-cerrejon",
+    "data": {
+      "id": "mercados-cerrejon",
+      "nombre": "Cerrejón",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Extrae, transporta y exporta carbón desde La Guajira, Colombia.",
+      "relevancia": "Su operación integrada permite explorar gestión del cambio, cultura de seguridad y liderazgo entre equipos mineros y logísticos.",
+      "articulacion": "La coordinación entre extracción, transporte y exportación permite plantear una necesidad de prácticas compartidas en La Guajira. Olivia podría acompañar liderazgo operativo y medir adopción de cambios con people analytics; la demanda específica está sin verificar.",
+      "justificacion": "Mercado potencial minero en Colombia. Su operación integrada permite explorar gestión del cambio, cultura de seguridad y liderazgo entre equipos mineros y logísticos.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de Cerrejón",
+          "url": "https://www.cerrejon.com/es/que-hacemos"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-drummond",
+    "data": {
+      "id": "mercados-drummond",
+      "nombre": "Drummond",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Extrae, transporta y comercializa carbón con operaciones en Cesar y Magdalena, Colombia.",
+      "relevancia": "La articulación de equipos mineros y logísticos ofrece un encaje potencial con liderazgo, cultura de seguridad y gestión del cambio.",
+      "articulacion": "La conexión de actividades mineras y logísticas en Cesar y Magdalena permite explorar necesidades de coordinación de equipos. Olivia podría apoyar liderazgo y gestión del cambio en rutinas operativas, sujeto a verificar la necesidad particular.",
+      "justificacion": "Mercado potencial minero en Colombia. La articulación de equipos mineros y logísticos ofrece un encaje potencial con liderazgo, cultura de seguridad y gestión del cambio.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de Drummond",
+          "url": "https://drummondltd.com/nuestra-compania/acerca-de-nosotros/operaciones-en-colombia/"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-anglogold-ashanti-colombia",
+    "data": {
+      "id": "mercados-anglogold-ashanti-colombia",
+      "nombre": "AngloGold Ashanti (Colombia)",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Grupo minero con el proyecto Quebradona en Jericó, Antioquia; no se presenta como mina productiva. El alcance vigente de sus activos colombianos está sin verificar.",
+      "relevancia": "La gestión de proyectos permite explorar alineación del liderazgo y capacidades de cambio; la situación de los proyectos condiciona cualquier propuesta.",
+      "articulacion": "Los proyectos en Colombia permiten plantear necesidades de coordinación de equipos técnicos y claridad de responsabilidades. Olivia podría apoyar liderazgo y gestión del cambio, condicionado a verificar el alcance vigente de los proyectos y su capacidad de ejecución.",
+      "justificacion": "Mercado potencial minero en Colombia. La gestión de proyectos permite explorar alineación del liderazgo y capacidades de cambio; la situación de los proyectos condiciona cualquier propuesta.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de AngloGold Ashanti (Colombia)",
+          "url": "https://careers.anglogoldashanti.com/go/Colombia-%2528es_ES%2529/9005801/"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-mineros-sa",
+    "data": {
+      "id": "mercados-mineros-sa",
+      "nombre": "Mineros S.A.",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Grupo dedicado a la minería de oro, con actividad aluvial en Colombia.",
+      "relevancia": "La operación aluvial ofrece un ámbito potencial para cultura de seguridad, liderazgo e innovación organizacional en equipos operativos.",
+      "articulacion": "La operación aluvial colombiana permite explorar necesidades de aprendizaje y coordinación entre equipos de campo. Olivia podría acompañar liderazgo, cultura y adopción de mejoras operativas, con una necesidad específica aún sin verificar.",
+      "justificacion": "Mercado potencial minero en Colombia. La operación aluvial ofrece un ámbito potencial para cultura de seguridad, liderazgo e innovación organizacional en equipos operativos.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de Mineros S.A.",
+          "url": "https://www.mineros.com.co/es-co/operaciones/descripcion-general"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-aris-mining",
+    "data": {
+      "id": "mercados-aris-mining",
+      "nombre": "Aris Mining",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Compañía minera de oro con operaciones subterráneas en Segovia y Marmato, Colombia, y proyectos de ampliación en ambas.",
+      "relevancia": "Las ampliaciones ofrecen un encaje potencial con gestión del cambio, desarrollo de líderes y planificación de capacidades mediante people analytics.",
+      "articulacion": "Las ampliaciones de Segovia y Marmato plantean una hipótesis de necesidad de nuevas capacidades y coordinación entre equipos colombianos. Olivia podría apoyar la adopción de procesos y el desarrollo de liderazgo operativo; el alcance comercial está sin verificar.",
+      "justificacion": "Mercado potencial minero en Colombia. Las ampliaciones ofrecen un encaje potencial con gestión del cambio, desarrollo de líderes y planificación de capacidades mediante people analytics.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de Aris Mining",
+          "url": "https://www.aris-mining.com/operations-and-projects"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-fedeesmeraldas",
+    "data": {
+      "id": "mercados-fedeesmeraldas",
+      "nombre": "Fedeesmeraldas",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Federación Nacional de Esmeraldas de Colombia: gremio que agrupa productores, comercializadores y exportadores de esmeraldas. Se incluye como gremio como cliente.",
+      "relevancia": "El frente de gremios como cliente del informe permite explorar fortalecimiento de capacidades internas, liderazgo e innovación en programas sectoriales.",
+      "articulacion": "Como gremio colombiano, podría requerir fortalecer su capacidad interna para diseñar y ejecutar programas sectoriales. Olivia podría articular liderazgo, innovación y gestión del cambio para su propio equipo; la necesidad y el presupuesto están sin verificar.",
+      "justificacion": "Mercado potencial minero en Colombia. El frente de gremios como cliente del informe permite explorar fortalecimiento de capacidades internas, liderazgo e innovación en programas sectoriales.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de Fedeesmeraldas",
+          "url": "https://fedesmeraldas.org/"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar."
+    }
+  },
+  {
+    "coleccion": "actors",
+    "id": "mercados-grupo-coquecol",
+    "data": {
+      "id": "mercados-grupo-coquecol",
+      "nombre": "Grupo Coquecol",
+      "categoria": "mercados",
+      "sector": "Minero",
+      "estado": "por_validar",
+      "confianza": "media",
+      "mostrarEnRadar": true,
+      "queHace": "Grupo colombiano dedicado a la producción y comercialización de carbón y coque metalúrgico.",
+      "relevancia": "La coordinación de su cadena productiva ofrece un encaje potencial con gestión del cambio, cultura de seguridad y liderazgo operativo.",
+      "articulacion": "La producción y comercialización de carbón y coque en Colombia permite explorar necesidades de coordinación y aprendizaje operativo. Olivia podría acompañar liderazgo y adopción de mejoras entre equipos; su necesidad específica está sin verificar.",
+      "justificacion": "Mercado potencial minero en Colombia. La coordinación de su cadena productiva ofrece un encaje potencial con gestión del cambio, cultura de seguridad y liderazgo operativo.",
+      "createdAt": "2026-09-25T00:00:00.000Z",
+      "updatedAt": "2026-09-25T00:00:00.000Z",
+      "fuentes": [
+        {
+          "titulo": "Fuente oficial de Grupo Coquecol",
+          "url": "https://www.grupocoquecol.com/"
+        }
+      ],
+      "notaVerificacion": "Necesidad comercial sin verificar. Confirmada por Felipe como carbonera representativa (25 sep 2026)."
+    }
+  }
+]

@@ -1,0 +1,40 @@
+✔ Guardado independiente de las 15 preguntas, lectura y borrado en Supabase simulado (27.575667ms)
+✔ preguntaId obligatorio, conocido y correspondiente al horizonte; no escribe al rechazar (3.739792ms)
+✔ Nube: puntuación, tildes, forma más frecuente, vacías, límite y Olivia configurable (11.408792ms)
+✔ Registros antiguos sin preguntaId siguen disponibles, cuentan en la nube y se pueden borrar (1.255ms)
+✔ Sintaxis de todos los scripts incrustados y retiro completo de síntesis (2.454375ms)
+✔ Vista: respuestas por pregunta, legado, guardado, actualización sin perder borradores y borrado (4.7095ms)
+✔ Canvas de empresa: oferta editable, acciones independientes, sin nombre ni trigger, copia de contexto (26.344291ms)
+✔ Ficha de aliados: qué ofrece precargado, aporte Olivia y acciones 30/60/90 (1.6ms)
+✔ Validación nueva: actor existente, grupo/prefijo correcto, no descartados, límites y tipos (3.992875ms)
+✔ Aliado impulsor: solo aliado activado en cuadrante alto, nombre desde actor (2.791625ms)
+✔ CSV con BOM, fórmulas protegidas, comillas y saltos; GET pagina más de 1000 (2.811083ms)
+✔ Vista 5: grupo, borrador durante sondeo, guardado sin nombre, hoja y salida del embudo (24.434458ms)
+✔ Regresión: Radar, portada y landing fuera de actividades se conservan (la Actividad 1 cambió por el plan 08) (1.293417ms)
+✔ Voto Sí/No: reemplazo por slug, cambio, retiro y métodos inválidos (28.212084ms)
+✔ Promedio exacto 1,5 inclusivo, estricto configurable y sin votos (0.745ms)
+✔ Actividad 4: solo activados, incluye ocultos, excluye otras categorías y conserva contrato (15.35075ms)
+✔ Actividad 5: ambos cuadrantes altos y grupos; nunca un actor desactivado (2.824708ms)
+✔ Alta de gremio-aliado crea actor único con contexto y se puede activar/calificar (1.922875ms)
+✔ Volcado real: 48 empresas con contexto y recorrido 3 → 4 → 5 sin producción (8.796125ms)
+✔ Vista Actividad 3: vacío, voto, cambio, retiro, y carga por vista:activar (13.945417ms)
+✔ Vista Actividad 4: carga viva, filtros de grupo y salida por desactivación (4.121084ms)
+✔ Inicio, todos los accesos, anterior/siguiente, límites y arranques perezosos (7.361583ms)
+✔ Hash inicial, atrás/adelante, cambio de hash, selector móvil y enlace de landing (6.288333ms)
+✔ Contenido completo, aviso provisional y recuperación de error de configuración (5.935375ms)
+✔ Radar09: orden compartido, nueve fichas y cuatro frentes citados (13.220208ms)
+✔ Radar09: 48 registros completos preservados y siete altas mineras válidas (7.081875ms)
+✔ Radar09: Actividad 3 agrupa los datos parcheados y activa mineras sin fila en Matriz (41.503167ms)
+✔ Radar09: diálogo muestra tercer bloque solo para mercados, escapa HTML y conserva cierre (1.04275ms)
+✔ Radar09: panel visible antes de sectores, exclusivo de Mercados (1.558959ms)
+✔ Radar09: simulación no llama red (0.587917ms)
+✔ Radar09: aplicación REST explícita, prevalidación e idempotencia (red simulada) (5.000709ms)
+✔ Radar09: todos los scripts inline tienen sintaxis válida (1.661084ms)
+ℹ tests 32
+ℹ suites 0
+ℹ pass 32
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 162.205125

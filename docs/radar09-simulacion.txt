@@ -1,0 +1,58 @@
+JSON: /Users/felipehillon/Documents/Docs. GH/Proyectos/Olivia/Radar360-web/supabase/patches_radar09_20260925.json
+SIMULACIÓN — sin solicitudes de red ni escrituras.
+UPSERT actors/mercados-acesco-colombia-familiar | Acesco Colombia (familiar) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-addi-capital-extranjero | Addi (capital extranjero) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-almacenes-exito-grupo-calleja | Almacenes Éxito (Grupo Calleja) | Retail → Retail | registro completo + articulacion
+UPSERT actors/mercados-alpina-bic | Alpina (BIC) | Retail → Consumo | registro completo + articulacion
+UPSERT actors/mercados-banco-de-bogota-grupo-aval | Banco de Bogotá (Grupo Aval) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-banco-falabella-matriz-chilena | Banco Falabella (matriz chilena) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-banco-gnb-sudameris-grupo-gilinski | Banco GNB Sudameris (Grupo Gilinski) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-banco-popular-grupo-aval | Banco Popular (Grupo Aval) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-bancolombia-grupo-cibest | Bancolombia (Grupo Cibest) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-bavaria-ab-inbev | Bavaria (AB InBev) | Retail → Consumo | registro completo + articulacion
+UPSERT actors/mercados-bold-cf-compania-de-financiamiento | Bold CF Compañía de Financiamiento | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-carvajal-grupo-caleno | Carvajal (grupo caleño) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-celsia-grupo-argos | Celsia (Grupo Argos) | Energía → Servicios públicos | registro completo + articulacion
+UPSERT actors/mercados-cementos-argos-grupo-argos | Cementos Argos (Grupo Argos) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-challenger-familiar-bogota | Challenger (familiar, Bogotá) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-claro-colombia-america-movil | Claro Colombia (América Móvil) | Telecomunicaciones → Telecomunicaciones | registro completo + articulacion
+UPSERT actors/mercados-compensar | Compensar | Salud → Salud | registro completo + articulacion
+UPSERT actors/mercados-constructora-bolivar-grupo-bolivar | Constructora Bolívar (Grupo Bolívar) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-d1 | D1 | Retail → Retail | registro completo + articulacion
+UPSERT actors/mercados-davivienda-group-banco-davivienda-grupo-bolivar | Davivienda Group / Banco Davivienda (Grupo Bolívar) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-ecopetrol-nacion-88-5 | Ecopetrol (Nación 88,5%) | Energía → Energía | registro completo + articulacion
+UPSERT actors/mercados-fundacion-valle-del-lili | Fundación Valle del Lili | Salud → Salud | registro completo + articulacion
+UPSERT actors/mercados-enel-colombia-enel-americas-57-3-geb-42-5 | Enel Colombia (Enel Américas 57,3% · GEB 42,5%) | Energía → Servicios públicos | registro completo + articulacion
+UPSERT actors/mercados-epm-municipio-de-medellin | EPM (Municipio de Medellín) | Energía → Servicios públicos | registro completo + articulacion
+UPSERT actors/mercados-erco-energia-medellin-capital-extranjero | Erco Energía (Medellín; capital extranjero) | Energía → Energía | registro completo + articulacion
+UPSERT actors/mercados-etb-distrito-de-bogota | ETB (Distrito de Bogotá) | Telecomunicaciones → Telecomunicaciones | registro completo + articulacion
+UPSERT actors/mercados-frisby-bic-pereira | Frisby (BIC, Pereira) | Retail → Retail | registro completo + articulacion
+UPSERT actors/mercados-fundacion-santa-fe | Fundación Santa Fe | Salud → Salud | registro completo + articulacion
+UPSERT actors/mercados-greenyellow-colombia-filial-francesa | GreenYellow Colombia (filial francesa) | Energía → Energía | registro completo + articulacion
+UPSERT actors/mercados-grupo-energia-bogota-distrito-de-bogota | Grupo Energía Bogotá (Distrito de Bogotá) | Energía → Energía | registro completo + articulacion
+UPSERT actors/mercados-grupo-nutresa-gilinski-ihc | Grupo Nutresa (Gilinski · IHC) | Retail → Consumo | registro completo + articulacion
+UPSERT actors/mercados-industrias-haceb-familiar-medellin | Industrias Haceb (familiar, Medellín) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-isa-nacion | ISA (Nación) | Energía → Energía | registro completo + articulacion
+UPSERT actors/mercados-jeronimo-martins-colombia-ara-portugal | Jerónimo Martins Colombia – Ara (Portugal) | Retail → Retail | registro completo + articulacion
+UPSERT actors/mercados-keralty-colsanitas | Keralty-Colsanitas | Salud → Salud | registro completo + articulacion
+UPSERT actors/mercados-lulo-bank-grupo-gilinski | Lulo Bank (Grupo Gilinski) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-mercadolibre-colombia-nasdaq | MercadoLibre Colombia (Nasdaq) | Retail → Retail | registro completo + articulacion
+UPSERT actors/mercados-organizacion-corona-holding | Organización Corona (holding) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-organizacion-terpel-copec-chile | Organización Terpel (Copec, Chile) | Retail → Retail | registro completo + articulacion
+UPSERT actors/mercados-plastilene-familiar-soacha | Plastilene (familiar, Soacha) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-productos-ramo | Productos Ramo | Retail → Consumo | registro completo + articulacion
+UPSERT actors/mercados-promigas | Promigas | Energía → Servicios públicos | registro completo + articulacion
+UPSERT actors/mercados-superpolo-jv-marcopolo-fanalca | Superpolo (JV Marcopolo–Fanalca) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-sura | Sura | Salud → Salud | registro completo + articulacion
+UPSERT actors/mercados-tecnoglass-nasdaq-familia-daes | Tecnoglass (Nasdaq; familia Daes) | Industrial → Industrial | registro completo + articulacion
+UPSERT actors/mercados-tigo-millicom-integracion-de-movistar | Tigo (Millicom) – integración de Movistar | Telecomunicaciones → Telecomunicaciones | registro completo + articulacion
+UPSERT actors/mercados-tuya-cibest-50-bancolombia | Tuya (Cibest · 50% Bancolombia) | Financiero → Financiero | registro completo + articulacion
+UPSERT actors/mercados-vatia-cali | Vatia (Cali) | Energía → Servicios públicos | registro completo + articulacion
+UPSERT actors/mercados-cerrejon | Cerrejón | (nuevo) → Minero | registro completo + articulacion
+UPSERT actors/mercados-drummond | Drummond | (nuevo) → Minero | registro completo + articulacion
+UPSERT actors/mercados-anglogold-ashanti-colombia | AngloGold Ashanti (Colombia) | (nuevo) → Minero | registro completo + articulacion
+UPSERT actors/mercados-mineros-sa | Mineros S.A. | (nuevo) → Minero | registro completo + articulacion
+UPSERT actors/mercados-aris-mining | Aris Mining | (nuevo) → Minero | registro completo + articulacion
+UPSERT actors/mercados-fedeesmeraldas | Fedeesmeraldas | (nuevo) → Minero | registro completo + articulacion
+UPSERT actors/mercados-grupo-coquecol | Grupo Coquecol | (nuevo) → Minero | registro completo + articulacion
+Total: 55 upserts (48 existentes + 7 nuevos).

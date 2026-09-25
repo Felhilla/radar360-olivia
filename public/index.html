@@ -373,6 +373,12 @@
   .drawer-head h2{ font-size:1.3rem; }
   .drawer-note{ font-size:.82rem; color:var(--ink-soft); margin-bottom:10px; }
 
+  #view-radar .radar-contexto{ margin-bottom:24px; padding:18px; border:1px solid var(--line); border-radius:12px; background:var(--panel-2); color:var(--ink); }
+  #view-radar .radar-contexto h3{ margin:0 0 8px; }
+  #view-radar .radar-contexto p{ line-height:1.6; }
+  #view-radar .radar-contexto-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px; }
+  #view-radar .radar-contexto article{ padding:14px; border:1px solid var(--line); border-radius:9px; background:var(--panel); }
+  #view-radar .radar-contexto h4{ margin:0 0 8px; color:var(--accent); }
   .sector-block{ margin-bottom:24px; }
   .sector-block:last-child{ margin-bottom:0; }
   .sector-title{
@@ -740,6 +746,7 @@
 #view-matriz .gremio-card [aria-pressed="true"]::before{content:'✓ ';}
 #view-matriz .table-scroll{max-width:100%;overflow-x:auto;}
 #view-matriz .gremios-grid{margin:16px 0;}
+
 </style>
 </head>
 <body>
@@ -1466,6 +1473,14 @@
 
     var body = document.getElementById("drawerBody");
     body.innerHTML = "";
+    if(catKeyA === "mercados"){
+      var contexto = document.createElement("section");
+      contexto.className = "radar-contexto";
+      contexto.setAttribute("aria-labelledby", "radarContextoTitle");
+      contexto.innerHTML = '<h3 id="radarContextoTitle">Contexto regional y sectorial</h3><p>' + esc(RADAR_CONTEXTO_INTRO) + '</p><div class="radar-contexto-grid">' +
+        RADAR_CONTEXTO.map(function(frente){ return '<article><h4>' + esc(frente.titulo) + '</h4><p>' + esc(frente.texto) + '</p><p class="comp-src">' + esc(frente.fuente) + '</p></article>'; }).join('') + '</div>';
+      body.appendChild(contexto);
+    }
     if(!items.length){
       var empty = document.createElement("div");
       empty.className = "empty-note";
@@ -1502,7 +1517,7 @@
   }
 
   var SECTOR_ORDER = {
-    mercados: ["Financiero","Energía","Retail","Industrial","Telecomunicaciones","Salud"],
+    mercados: ["Financiero", "Energía", "Servicios públicos", "Minero", "Retail", "Consumo", "Industrial", "Telecomunicaciones", "Salud"],
     aliados: ["Prioridad máxima","Prioridad alta","Prioridad media","Prioridad baja-media","Prioridad no evaluada en el informe"],
     competidores: ["Firma global","Boutique / talento especializado","Por confirmar"],
     autoridades: ["Ministerio","Entidad adscrita"]
@@ -1582,6 +1597,13 @@
     "mercados-organizacion-terpel-copec-chile": "logos/mercados-organizacion-terpel-copec-chile.png",
     "mercados-plastilene-familiar-soacha": "logos/mercados-plastilene-familiar-soacha.jpeg",
     "mercados-promigas": "logos/mercados-promigas.jpg",
+    "mercados-cerrejon": "logos/mercados-cerrejon.png",
+    "mercados-drummond": "logos/mercados-drummond.png",
+    "mercados-anglogold-ashanti-colombia": "logos/mercados-anglogold-ashanti-colombia.jpeg",
+    "mercados-mineros-sa": "logos/mercados-mineros-sa.png",
+    "mercados-aris-mining": "logos/mercados-aris-mining.svg",
+    "mercados-fedeesmeraldas": "logos/mercados-fedeesmeraldas.png",
+    "mercados-grupo-coquecol": "logos/mercados-grupo-coquecol.png",
     "mercados-productos-ramo": "logos/mercados-productos-ramo.png",
     "mercados-superpolo-jv-marcopolo-fanalca": "logos/mercados-superpolo-jv-marcopolo-fanalca.jpg",
     "mercados-sura": "logos/mercados-sura.webp",
@@ -1847,90 +1869,133 @@
     }).join(' &middot; ');
   }
 
+  // RADAR09: INICIO CONTENIDO
+  const RADAR_CONTEXTO_INTRO = "Antes de priorizar empresas: cuatro frentes emergentes del informe v1.2 (25 de septiembre de 2026). Sus datos coyunturales se reproducen como lectura del informe y están sin verificar de forma independiente. Las posibilidades para Olivia son hipótesis de trabajo.";
+  const RADAR_CONTEXTO = [
+  {
+    "titulo": "Reconstrucción",
+    "texto": "El informe sitúa al Fondo Milagro, las gobernaciones y administraciones municipales de los territorios afectados y las empresas de servicios públicos ante necesidades de gobernanza, trazabilidad y capacidad de ejecución. Describe 15 departamentos afectados y 16 cubiertos por la modalidad especial de Obras por Impuestos: son perímetros distintos. Para Olivia, el encaje potencial es coordinación de equipos, gestión del cambio y continuidad operativa.",
+    "fuente": "Informe v1.2, §§1.2, 2.4, 2.5 y 4.2–4.3."
+  },
+  {
+    "titulo": "Telecomunicaciones",
+    "texto": "La integración Tigo–Movistar concentra, según el informe, cerca de 41 millones de líneas frente a 42 millones de Claro. La unificación plantea arquitectura organizacional, armonización cultural y acompañamiento de equipos; Claro y ETB completan el frente de respuesta competitiva y cultura digital.",
+    "fuente": "Informe v1.2, §§2.5 y 1.4."
+  },
+  {
+    "titulo": "Salud",
+    "texto": "Keralty–Colsanitas, Sura, Compensar, Fundación Valle del Lili y las redes del Eje Cafetero aparecen ante presión de capacidad y reorganización de atención. El informe reporta entre 308 y 440 instituciones afectadas y 19 por reconstruir; Olivia podría trabajar coordinación asistencial, turnos y liderazgo clínico, previa validación de capacidad de pago.",
+    "fuente": "Informe v1.2, §§2.5 y 4.1; diferencias de corte en §1.2."
+  },
+  {
+    "titulo": "Gremios como cliente",
+    "texto": "El informe identifica 23 organizaciones con presupuesto propio y programas de formación. ACOPI, Acodres y la Cámara Colombiana de Comercio Electrónico ilustran necesidades de productividad, rediseño operativo y talento digital; Olivia podría fortalecer su capacidad interna de diseño y ejecución de programas. Fedeesmeraldas se incorpora a Minero bajo esta misma hipótesis de cliente institucional, aún sin verificar.",
+    "fuente": "Informe v1.2, §§2.5, 3.4 y 4.3; inclusión de Fedeesmeraldas por decisión del taller."
+  }
+];
   const SECTOR_FICHAS = {
-    "Financiero": {
-      "estado": [
-        "Grupo Cibest opera desde el 19 de mayo de 2025 como matriz de Bancolombia y sus negocios bancarios y digitales.",
-        "Davivienda integra Scotiabank en Colombia, Costa Rica y Panamá, con cierre previsto para el segundo semestre de 2026 y activos de COP 263,7 billones.",
-        "El Decreto 368 de 2026 hace obligatorias las finanzas abiertas; Bre-B ya opera y exige capacidades para pagos interoperables.",
-        "Con la tasa de interés en 12 %, la cartera se estrecha y las juntas exigen eficiencia."
-      ],
-      "priorizacion": [
-        "Es un sector foco con alta demanda de transformación y la mayor capacidad de pago, según el informe.",
-        "Las integraciones y las nuevas estructuras de grupo requieren cultura común, liderazgo y claridad sobre las decisiones de matrices y filiales.",
-        "Las finanzas abiertas requieren gobierno de datos, rediseño de decisiones y gestión del cambio; las empresas de tecnología financiera necesitan estructura para escalar."
-      ],
-      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.1 y 1.3."
-    },
-    "Energía": {
-      "estado": [
-        "La transición energética, la automatización y la digitalización cambian el trabajo de miles de operarios y equipos de campo.",
-        "Cuatro de las siete grandes empresas están bajo control público; Enel Colombia tiene participación del Distrito a través de GEB (42,5 %).",
-        "En 2026 Ecopetrol atraviesa una renovación de gobierno corporativo e ISA sigue sin presidencia en firme tras la anulación de su elección.",
-        "Enel Colombia integra cuatro culturas de origen: Emgesa, Codensa, EGP y ESSA2."
-      ],
-      "priorizacion": [
-        "Es un sector foco de alta demanda, aunque condicionado por el gobierno corporativo y el riesgo político.",
-        "La transición de equipos de campo hacia entornos digitales exige gestión del cambio y cultura de seguridad.",
-        "Las integraciones y las participadas sin control operativo requieren cultura común, estándares de gestión y alineación del liderazgo."
-      ],
-      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §2.2."
-    },
-    "Retail": {
-      "estado": [
-        "Comercio y gastronomía están especialmente expuestos a la reforma laboral: el recargo dominical y festivo pasó a 90 % en julio de 2026 y llegará a 100 % en julio de 2027.",
-        "Éxito reconvierte tiendas hacia Carulla y Éxito: 19 intervenciones reportan ventas +14 % y hay 30 más en curso.",
-        "D1 supera 2.400 tiendas y 26.000 empleos, con meta de 30.000 en 2026, tras más de 200 inspecciones laborales.",
-        "Nutresa avanza en «One Nutresa», reorganiza categorías y cambia su estructura de transformación."
-      ],
-      "priorizacion": [
-        "Es un sector foco porque la reforma laboral impone cambios concretos en operaciones nocturnas, dominicales y por turnos.",
-        "El rediseño del modelo de tienda, los turnos y la dotación requiere gestión del cambio vinculada a la productividad.",
-        "La reconversión de tiendas y las reorganizaciones empresariales generan necesidades de cultura y liderazgo; las inspecciones refuerzan la demanda de cultura de cumplimiento."
-      ],
-      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.3 y 1.3."
-    },
-    "Industrial": {
-      "estado": [
-        "Cementos Argos anunció el 1 de abril de 2026 su separación en Argos Materials y Argos Latam, esta última en 15 países, con un plazo estimado de 24 meses.",
-        "Más del 70 % de los clientes de Argos en Colombia compra cemento por Argos ONE, un caso de adopción digital organizacional.",
-        "Las ventas de vivienda nueva crecieron 12,4 % en 2025; Camacol proyecta entre 5 % y 12 % para 2026, con iniciaciones de obra en mínimos históricos.",
-        "La industria familiar avanza en profesionalización y la manufactura enfrenta competencia importada y reforma laboral en planta."
-      ],
-      "priorizacion": [
-        "Es un sector foco y contiene el mejor objetivo individual del informe: la escisión de Cementos Argos, con una transformación de fecha definida.",
-        "Separar personas, procesos y sistemas y construir dos culturas a partir de una exige gestión del cambio y alineación del liderazgo.",
-        "La profesionalización familiar, la automatización y la baja productividad de la construcción generan demanda de transformación organizacional y cambio en planta."
-      ],
-      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.4 y 1.3."
-    },
-    "Salud": {
-      "estado": [
-        "El sistema atraviesa una reorganización forzada con ocho EPS intervenidas que reúnen más del 45 % de los afiliados.",
-        "La siniestralidad se acerca al 110 %, en un contexto de traslados masivos hacia IPS y redes privadas.",
-        "La reforma laboral afecta operaciones de atención permanente: jornada máxima de 42 horas y recargo dominical y festivo de 90 % desde julio de 2026."
-      ],
-      "priorizacion": [
-        "Es uno de los «sectores emergentes fuera del radar» (§2.5); el informe pide decidir explícitamente en el taller si se incorpora.",
-        "Las IPS, redes privadas y prestadores con respaldo financiero que absorben traslados necesitan rediseñar capacidad, modelo de atención y turnos.",
-        "Estos cambios conectan con gestión del cambio y liderazgo clínico; el informe condiciona la exploración a la capacidad de pago."
-      ],
-      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.5 y 1.3."
-    },
-    "Telecomunicaciones": {
-      "estado": [
-        "Millicom tomó el control total de Movistar Colombia en febrero de 2026 y completó en abril la compra de la participación estatal por COP 856.000 millones.",
-        "La integración Tigo–Movistar incluye retiros voluntarios y el traslado de sede al edificio de Movistar.",
-        "La operación está sujeta a condiciones de la SIC y define su arquitectura organizacional en los primeros 12 a 18 meses."
-      ],
-      "priorizacion": [
-        "Es uno de los «sectores emergentes fuera del radar» (§2.5); el informe pide decidir explícitamente en el taller si se incorpora.",
-        "El informe considera la integración Tigo–Movistar el proceso de transformación organizacional más intenso del país.",
-        "La arquitectura organizacional, la armonización de dos culturas y el acompañamiento a salidas voluntarias requieren cultura, liderazgo y gestión del cambio."
-      ],
-      "fuente": "Fuente: «Colombia como mercado para Olivia», 14 de septiembre de 2026, §§2.5 y 1.3."
-    }
-  };
+  "Financiero": {
+    "estado": [
+      "El informe describe la estructura de Grupo Cibest y la integración de Scotiabank en Davivienda bajo DaviBank como motores de reorganización.",
+      "Las finanzas abiertas, los pagos interoperables y el despliegue de alivios financieros descrito en Colombia presionan procesos, datos y capacidad operativa."
+    ],
+    "priorizacion": [
+      "La necesidad combina claridad de decisiones entre matriz y filiales, armonización cultural y absorción de cambios en originación y cobranza.",
+      "Olivia puede aportar gestión del cambio, liderazgo y people analytics para orientar capacidades y evaluar adopción."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.1, 1.4 y 1.5. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Energía": {
+    "estado": [
+      "El informe relaciona transición energética, automatización y digitalización con cambios en el trabajo de equipos de campo.",
+      "La versión v1.2 describe renovación directiva en Ecopetrol y transición de gobierno corporativo en ISA; GEB enfrenta coordinación de participadas.",
+      "Este grupo conserva petróleo, transmisión y proyectos de generación; las cuentas cuyo foco comercial es distribución y continuidad del servicio se agrupan en Servicios públicos."
+    ],
+    "priorizacion": [
+      "Alinear liderazgo, estrategia y modelo operativo y acompañar la adopción de nuevas prácticas en campo.",
+      "Para GEB, transmitir cultura y estándares a participadas sin control operativo; para proyectos renovables, desarrollar estructura y capacidades de escalamiento."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §2.2. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Servicios públicos": {
+    "estado": [
+      "El informe vincula la continuidad y el restablecimiento de redes con EPM, Enel Colombia, Celsia, Promigas y Vatia.",
+      "La agrupación responde al foco de distribución, comercialización al usuario y servicios múltiples; varias empresas también generan o transportan energía."
+    ],
+    "priorizacion": [
+      "Coordinar equipos de campo, procesos y datos para sostener el servicio y la ejecución territorial.",
+      "Olivia puede acompañar liderazgo operativo, integración cultural y gestión del cambio entre negocios y filiales; primero debe precisarse la necesidad concreta de continuidad."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.2, 1.2 y 2.5. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Minero": {
+    "estado": [
+      "Nuevo grupo de mercados con Cerrejón, Drummond, AngloGold Ashanti (Colombia), Mineros S.A., Aris Mining, Fedeesmeraldas y Grupo Coquecol.",
+      "Incluye carbón, oro, proyectos mineros y un gremio esmeraldero como cliente. Grupo Coquecol representa a las carboneras; los proyectos de AngloGold no se presentan como minas productivas."
+    ],
+    "priorizacion": [
+      "Hipótesis de trabajo: liderazgo operativo, cultura de seguridad, capacidades de innovación y gestión del cambio en equipos de campo.",
+      "El informe no caracteriza estas siete entidades: el encaje se infiere de las prácticas de Olivia y del frente de gremios como cliente. Necesidad comercial y presupuesto sin verificar."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§1.5 y 2.5; caracterización empresarial en fuentes oficiales de cada ficha. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Retail": {
+    "estado": [
+      "El informe relaciona comercio y gastronomía con cambios de turnos, dotación y modelo de atención.",
+      "Éxito reconvierte tiendas, D1 y Ara expanden sus redes, MercadoLibre crece en logística y Terpel requiere absorción organizacional de lo digitalizado; Frisby prioriza continuidad operativa."
+    ],
+    "priorizacion": [
+      "Vincular productividad con gestión del cambio en tiendas, restaurantes, estaciones y plataformas comerciales.",
+      "Desarrollar mandos y cultura de cumplimiento; atender primero continuidad y carga de los equipos cuando la operación esté afectada."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.3 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Consumo": {
+    "estado": [
+      "Agrupa los fabricantes de consumo masivo ya presentes: Alpina, Bavaria, Grupo Nutresa y Productos Ramo.",
+      "El informe describe simplificación directiva y condición BIC en Alpina, reorganización One Nutresa, profesionalización familiar en Ramo y ejecución local de estándares globales en Bavaria."
+    ],
+    "priorizacion": [
+      "Acompañar cambios de estructura, liderazgo de planta y coordinación de cadenas de suministro y ventas.",
+      "Olivia puede vincular cultura, gestión del cambio y people analytics con productividad; en multinacionales, ajustar el alcance a los marcos corporativos."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §2.3. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Industrial": {
+    "estado": [
+      "La versión v1.2 combina la escisión de Cementos Argos con presión de ejecución por la reconstrucción descrita en Colombia.",
+      "La construcción requiere coordinación de cuadrillas y suministros; el resto del grupo combina empresas familiares en profesionalización, holdings, manufactura y capital bursátil."
+    ],
+    "priorizacion": [
+      "En Argos, separar personas, procesos y sistemas y construir las culturas de las organizaciones resultantes.",
+      "Fortalecer liderazgo industrial y capacidad de ejecución, incluyendo adopción de automatización e innovación y coordinación entre empresas operativas."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.4 y 1.2. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Telecomunicaciones": {
+    "estado": [
+      "El informe presenta la integración Tigo–Movistar como una reorganización de gran escala, con unificación de marca y cerca de 41 millones de líneas frente a 42 millones de Claro.",
+      "Claro enfrenta un competidor integrado y ETB participa en el frente de transformación y servicios tecnológicos."
+    ],
+    "priorizacion": [
+      "La integración requiere arquitectura organizacional común, armonización cultural y cuidado de las personas durante la reorganización.",
+      "Olivia puede aportar liderazgo y gestión del cambio; en otras operadoras, precisar la respuesta organizacional y las capacidades digitales necesarias."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.5 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
+  },
+  "Salud": {
+    "estado": [
+      "El informe combina reorganización del sistema, traslados de usuarios y presión sobre redes privadas con daños de infraestructura en las regiones afectadas.",
+      "La versión v1.2 reporta entre 308 y 440 instituciones afectadas y 19 por reconstruir; las cifras dependen del corte y están sin verificar de forma independiente."
+    ],
+    "priorizacion": [
+      "Rediseñar capacidad asistencial, coordinación y turnos, con gestión del cambio y liderazgo clínico.",
+      "Validar capacidad de pago y alcance por entidad antes de definir una intervención; la necesidad sectorial no equivale a demanda confirmada de cada prestador."
+    ],
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.5, 1.2 y 4.1. Lectura del informe; coyuntura sin verificar de forma independiente."
+  }
+};
+  // RADAR09: FIN CONTENIDO
 
   function openSectorDialog(sector){
     if(!Object.prototype.hasOwnProperty.call(SECTOR_FICHAS, sector)) return;
@@ -1958,14 +2023,18 @@
     if(!a) return;
     var dlg = document.getElementById("actorDialog");
     var ficha = a.categoria === "competidores" ? COMPETIDOR_FICHAS[a.id] : null;
-    var hasMarketFicha = a.categoria === "mercados" && a.queHace && a.relevancia;
+    var hasMarketFicha = a.categoria === "mercados";
     var hasAliadoFicha = a.categoria === "aliados" && a.descripcion;
     var hasAutoridadFicha = a.categoria === "autoridades" && a.funciones;
     var empresas = Array.isArray(a.empresas) ? a.empresas : [];
     var body;
     if(hasMarketFicha){
-      body = '<div class="ad-label">Qué hace</div><div class="ad-just">' + esc(a.queHace) + '</div>' +
-        '<div class="ad-label">Relevancia para Olivia</div><div class="ad-just">' + esc(a.relevancia) + '</div>';
+      body = '<div class="ad-label">Qué hace</div><div class="ad-just">' + esc(a.queHace || 'Sin descripción registrada.') + '</div>' +
+        '<div class="ad-label">Relevancia para Olivia</div><div class="ad-just">' + esc(a.relevancia || 'Sin relevancia registrada.') + '</div>' +
+        '<div class="ad-label">Necesidad y posibilidad de articulación con Olivia</div><div class="ad-just">' + esc(a.articulacion || 'Sin información de articulación registrada.') + '</div>' +
+        (a.notaVerificacion ? '<p class="ad-note">' + esc(a.notaVerificacion) + '</p>' : '') +
+        '<p class="comp-src">Base: informe v1.2, sección 2 y prácticas de Olivia (§1.5). Articulación propuesta como hipótesis de trabajo.</p>' +
+        (Array.isArray(a.fuentes) ? '<div class="comp-src">' + a.fuentes.filter(function(f){ return f && /^https:\/\//.test(f.url); }).map(function(f){ return '<a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo || 'Fuente oficial') + '</a>'; }).join(' · ') + '</div>' : '');
     } else if(hasAliadoFicha){
       body = '<div class="ad-label">Qué es</div><div class="ad-just">' + esc(a.descripcion) + '</div>' +
         '<div class="ad-label">Empresas del gremio en el mapa</div>' +
@@ -2837,7 +2906,7 @@
       for(const grupo of ['empresas','aliados']){
         const lista=rs.filter(a=>a.grupo===grupo).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
         const ficha=a=>{
-          const c=Embudo.contexto(a,matriz,GREMIOS_32), campos=grupo==='empresas'?[['Sector',c?.sector||a.sector],['Necesidad crítica',c?.necesidadCritica]]:[['Contacto',c.contacto],['Cuentas objetivo',c.cuentas],['Qué ofrecer / contexto de la alianza',c.oferta],['Descripción',c.descripcion]];
+          const c=Embudo.contexto(a,matriz,GREMIOS_32), campos=grupo==='empresas'?[['Sector',a.sector||c?.sector],['Necesidad crítica',c?.necesidadCritica]]:[['Contacto',c.contacto],['Cuentas objetivo',c.cuentas],['Qué ofrecer / contexto de la alianza',c.oferta],['Descripción',c.descripcion]];
           return '<article class="gremio-card"><h3><img src="'+esc(getLogo(a))+'" alt=""><span class="g-nombre">'+esc(a.nombre)+'</span></h3>'+(!c?'<p>Contexto pendiente: no hay una fila emparejada en la Matriz.</p>':'')+'<dl>'+campos.map(([k,v])=>'<dt>'+k+'</dt><dd>'+esc(v||'Por definir')+'</dd>').join('')+'</dl><p>'+estado(a)+'</p><fieldset><legend>¿Activar este '+(grupo==='empresas'?'actor':'gremio-aliado')+'?</legend>'+[[2,'Sí'],[1,'No']].map(([valor,t])=>'<button type="button" class="btn secondary" data-activar="'+esc(a.id)+'" data-valor="'+valor+'" aria-pressed="'+(mio(a.id)?.valor===valor)+'" '+(guardando?'disabled':'')+'>'+t+'</button>').join(' ')+'</fieldset></article>';
         };
         // Empresas agrupadas por sector (orden del Radar) y alfabéticas dentro de cada sector.
