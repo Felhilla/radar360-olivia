@@ -539,9 +539,6 @@
   @media (max-width:760px){ .ficha-left{ border-right:none; } }
   .ficha-right{ padding:18px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; min-height:0; }
 
-  .ficha-guide{ margin:0 0 16px; padding-left:18px; flex:none; }
-  .ficha-guide li{ font-size:.86rem; color:var(--ink-soft); margin-bottom:6px; }
-  .ficha-guide li:last-child{ margin-bottom:0; }
 
   .ficha-add{ display:flex; gap:8px; margin-top:auto; padding-top:4px; }
   .ficha-add input{ flex:1; }
@@ -558,7 +555,16 @@
   .idea-chip .idea-del:hover{ color:var(--cf-baja); }
   .ideas-empty{ color:var(--ink-soft); font-size:.84rem; padding:6px 2px; }
 
-  .ficha-conclusion{ padding:18px; }
+  #view-ideas .ficha-left, #view-ideas .ficha-right{ min-width:0; }
+  #view-ideas .ficha-add input{ min-width:0; width:100%; }
+  #view-ideas .ficha-left label{ font-size:.9rem; margin-bottom:12px; }
+  #view-ideas .ideas-antiguas, #view-ideas .ideas-nube-contenido{ padding:18px; }
+  #view-ideas .ideas-resultado{ margin-top:16px; }
+  #view-ideas .ideas-nube{ display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px 18px; padding:20px 0; }
+  #view-ideas .ideas-nube span{ max-width:100%; overflow-wrap:anywhere; line-height:1.2; font-weight:600; color:var(--ink); }
+  #view-ideas .ideas-nube span:nth-child(3n){ color:var(--hz); }
+  #view-ideas .ideas-nube-contenido summary{ cursor:pointer; color:var(--ink-soft); }
+
 
   /* criterios por considerar (Actividad 1): franja horizontal bajo el encabezado de cada ficha */
   .criterios{ padding:14px 18px 16px; border-bottom:1px solid var(--line); }
@@ -573,7 +579,6 @@
   .criterio.atractivo{ --c:#3A9CA3; } .criterio.encaje{ --c:#4DB8AE; } .criterio.acceso{ --c:#E0922F; }
   .criterio.escalabilidad{ --c:#5A84D6; } .criterio.momento{ --c:#E0573A; }
   .ficha-conclusion textarea{ min-height:90px; margin-bottom:8px; }
-  .sintesis-saved{ font-size:.74rem; color:var(--ink-soft); }
 
   .pill{ display:inline-flex; align-items:center; gap:5px; font-size:.76rem; font-weight:600; padding:3px 9px; border-radius:999px; white-space:nowrap; }
   .pill.cat-competidores{ background:var(--cat-competidores-bg); color:var(--cat-competidores); }
@@ -1110,6 +1115,7 @@
     <button data-subview="ideas-corto" class="active">Corto plazo · 2026</button>
     <button data-subview="ideas-medio">Mediano plazo · 2027–2028</button>
     <button data-subview="ideas-largo">Largo plazo · 2030</button>
+    <button data-subview="ideas-resultados">Resultados</button>
   </nav>
 
   <div class="subview active" id="subview-ideas-corto">
@@ -1125,33 +1131,11 @@
           <div class="criterio momento"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><div><h4>Momento</h4><p>¿Existe trigger o urgencia durante los próximos 6–12 meses?</p></div></div>
         </div>
       </div>
-      <div class="ficha-body">
-        <div class="ficha-left">
-          <div class="ficha-label">Preguntas guía</div>
-          <ul class="ficha-guide">
-            <li>¿Qué espera Olivia para finales de 2026?</li>
-            <li>¿Olivia ha identificado algún mercado para este horizonte?</li>
-            <li>¿Existe un problema/necesidad claro que Olivia resuelve en ese mercado?</li>
-            <li>¿Qué aliados tiene actualmente?</li>
-          </ul>
-          <div class="ficha-add">
-            <input type="text" class="idea-input" data-hz="corto" placeholder="Escribe tu respuesta y Enter…" maxlength="200">
-            <button class="btn" data-hz-add="corto">Agregar</button>
-          </div>
-        </div>
-        <div class="ficha-right">
-          <div class="ficha-label">Respuestas obtenidas</div>
-          <div class="ficha-answers" id="ideasBody-corto"></div>
-        </div>
-      </div>
-      <div class="ficha-conclusion">
-        <div class="ficha-label">Conclusiones &middot; corto plazo</div>
-        <textarea class="sintesis-input" data-hz="corto" placeholder="Conclusión de cierre para este horizonte…"></textarea>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <button class="btn secondary" data-hz-save="corto">Guardar</button>
-          <span class="sintesis-saved" data-hz-saved="corto"></span>
-        </div>
-      </div>
+      <div id="ideasPreguntas-corto"></div>
+      <section class="ideas-antiguas" id="ideasAntiguas-corto" hidden>
+        <h4>Respuestas sin pregunta asignada</h4>
+        <div class="ficha-answers" id="ideasBody-corto-sin-pregunta"></div>
+      </section>
     </div>
   </div>
 
@@ -1168,35 +1152,11 @@
           <div class="criterio momento"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><div><h4>Momento</h4><p>¿Existe trigger o urgencia durante los próximos 6–12 meses?</p></div></div>
         </div>
       </div>
-      <div class="ficha-body">
-        <div class="ficha-left">
-          <div class="ficha-label">Preguntas guía</div>
-          <ul class="ficha-guide">
-            <li>¿Qué espera Olivia para 2028?</li>
-            <li>¿Considera que habrá mercado suficiente en este horizonte?</li>
-            <li>¿Qué problema/necesidad espera estar su oferta de servicios resolviendo en ese momento?</li>
-            <li>¿A qué mercados/clientes esperaría poder acceder?</li>
-            <li>¿Qué red de aliados le gustaría tener?</li>
-            <li>¿Cuál es el posicionamiento de marca que espera alcanzar Olivia?</li>
-          </ul>
-          <div class="ficha-add">
-            <input type="text" class="idea-input" data-hz="medio" placeholder="Escribe tu respuesta y Enter…" maxlength="200">
-            <button class="btn" data-hz-add="medio">Agregar</button>
-          </div>
-        </div>
-        <div class="ficha-right">
-          <div class="ficha-label">Respuestas obtenidas</div>
-          <div class="ficha-answers" id="ideasBody-medio"></div>
-        </div>
-      </div>
-      <div class="ficha-conclusion">
-        <div class="ficha-label">Conclusiones &middot; mediano plazo</div>
-        <textarea class="sintesis-input" data-hz="medio" placeholder="Conclusión de cierre para este horizonte…"></textarea>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <button class="btn secondary" data-hz-save="medio">Guardar</button>
-          <span class="sintesis-saved" data-hz-saved="medio"></span>
-        </div>
-      </div>
+      <div id="ideasPreguntas-medio"></div>
+      <section class="ideas-antiguas" id="ideasAntiguas-medio" hidden>
+        <h4>Respuestas sin pregunta asignada</h4>
+        <div class="ficha-answers" id="ideasBody-medio-sin-pregunta"></div>
+      </section>
     </div>
   </div>
 
@@ -1213,46 +1173,21 @@
           <div class="criterio momento"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></span><div><h4>Momento</h4><p>¿Existe trigger o urgencia durante los próximos 6–12 meses?</p></div></div>
         </div>
       </div>
-      <div class="ficha-body">
-        <div class="ficha-left">
-          <div class="ficha-label">Preguntas guía</div>
-          <ul class="ficha-guide">
-            <li>¿Cómo espera Olivia consolidar su estrategia para 2030?</li>
-            <li>¿Qué nivel de mercado espera haber capturado o consolidado?</li>
-            <li>¿A qué mercados/clientes esperaría poder acceder?</li>
-            <li>¿Qué red de aliados le gustaría tener?</li>
-            <li>¿Cuál es el posicionamiento de marca que espera alcanzar Olivia?</li>
-          </ul>
-          <div class="ficha-add">
-            <input type="text" class="idea-input" data-hz="largo" placeholder="Escribe tu respuesta y Enter…" maxlength="200">
-            <button class="btn" data-hz-add="largo">Agregar</button>
-          </div>
-        </div>
-        <div class="ficha-right">
-          <div class="ficha-label">Respuestas obtenidas</div>
-          <div class="ficha-answers" id="ideasBody-largo"></div>
-        </div>
-      </div>
-      <div class="ficha-conclusion">
-        <div class="ficha-label">Conclusiones &middot; largo plazo</div>
-        <textarea class="sintesis-input" data-hz="largo" placeholder="Conclusión de cierre para este horizonte…"></textarea>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <button class="btn secondary" data-hz-save="largo">Guardar</button>
-          <span class="sintesis-saved" data-hz-saved="largo"></span>
-        </div>
-      </div>
+      <div id="ideasPreguntas-largo"></div>
+      <section class="ideas-antiguas" id="ideasAntiguas-largo" hidden>
+        <h4>Respuestas sin pregunta asignada</h4>
+        <div class="ficha-answers" id="ideasBody-largo-sin-pregunta"></div>
+      </section>
     </div>
   </div>
 
-  <details class="tech">
-    <summary>Esquema de datos</summary>
-    <div class="tech-body">
-      <p>Cada respuesta se guarda en Netlify Blobs a través de la función <code>/api/ideas</code> (GET lista, POST agrega, DELETE elimina). Cualquier persona con el link puede leer y escribir, sin invitación ni cuenta. Las conclusiones de síntesis se guardan aparte en <code>/api/ideas-sintesis</code>.</p>
-      <div class="schema">sticker: { id, horizonte: "corto"|"medio"|"largo", texto, createdAt }
-síntesis (por horizonte): { texto, updatedAt }</div>
-      <p>No alimenta datos a ninguna otra herramienta: da el marco de objetivos del taller.</p>
-    </div>
-  </details>
+  <div class="subview" id="subview-ideas-resultados">
+    <p>Las palabras reúnen las respuestas de todas las preguntas de cada horizonte. Su tamaño indica cuántas veces aparecen.</p>
+    <section class="ficha ideas-resultado" data-hz="corto"><div class="ficha-head"><h3>Corto plazo · 2026</h3></div><div class="ideas-nube-contenido" id="ideasNube-corto"></div></section>
+    <section class="ficha ideas-resultado" data-hz="medio"><div class="ficha-head"><h3>Mediano plazo · 2027–2028</h3></div><div class="ideas-nube-contenido" id="ideasNube-medio"></div></section>
+    <section class="ficha ideas-resultado" data-hz="largo"><div class="ficha-head"><h3>Largo plazo · 2030</h3></div><div class="ideas-nube-contenido" id="ideasNube-largo"></div></section>
+  </div>
+
 </section>
 
 <footer class="credit">Ruta Colombia - Olivia &middot; GH Studio para Olivia Colombia &middot; datos del informe "Colombia como mercado para Olivia" (14 de septiembre de 2026)</footer>
@@ -1262,6 +1197,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 
 <script src="config.js"></script>
 <script src="embudo.js"></script>
+<script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
 <script>
 (function(){
@@ -1443,9 +1379,6 @@ síntesis (por horizonte): { texto, updatedAt }</div>
     });
     fetchIdeas(false).then(function(){
       setInterval(function(){ fetchIdeas(true); }, POLL_MS);
-    });
-    fetchSintesis(false).then(function(){
-      setInterval(function(){ fetchSintesis(true); }, POLL_MS);
     });
   }
 
@@ -2753,10 +2686,8 @@ síntesis (por horizonte): { texto, updatedAt }</div>
 
   // ---------------- lluvia de ideas ----------------
   var API_IDEAS = "/api/ideas";
-  var API_SINTESIS = "/api/ideas-sintesis";
   var HORIZON_ORDER = ["corto","medio","largo"];
   var ideasState = { stickers:[] };
-  var sintesisState = { corto:{texto:""}, medio:{texto:""}, largo:{texto:""} };
   var ideasBusy = false;
 
   function fetchIdeas(isPoll){
@@ -2767,7 +2698,7 @@ síntesis (por horizonte): { texto, updatedAt }</div>
       })
       .then(function(data){
         ideasState = data;
-        if(!isPoll || shouldRerenderOnPoll()) renderIdeas();
+        renderIdeas(); // Solo se actualizan listas y nubes; los campos conservan su borrador.
         return data;
       })
       .catch(function(err){
@@ -2775,28 +2706,12 @@ síntesis (por horizonte): { texto, updatedAt }</div>
       });
   }
 
-  function fetchSintesis(isPoll){
-    return fetch(API_SINTESIS, { headers:{"accept":"application/json"} })
-      .then(function(res){
-        if(!res.ok) throw new Error("http_" + res.status);
-        return res.json();
-      })
-      .then(function(data){
-        sintesisState = data;
-        if(!isPoll || shouldRerenderOnPoll()) renderSintesis();
-        return data;
-      })
-      .catch(function(err){
-        if(!isPoll) showToast("No se pudo cargar la síntesis: " + err.message + ".", "error");
-      });
-  }
-
-  function addIdea(hz, inputEl){
+  function addIdea(hz, preguntaId, inputEl){
     var texto = inputEl.value.trim();
     if(!texto || ideasBusy) return;
     ideasBusy = true;
     inputEl.disabled = true;
-    fetch(API_IDEAS, { method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({horizonte:hz, texto:texto}) })
+    return fetch(API_IDEAS, { method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify({horizonte:hz, preguntaId:preguntaId, texto:texto}) })
       .then(function(res){
         if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
         return res.json();
@@ -2827,89 +2742,84 @@ síntesis (por horizonte): { texto, updatedAt }</div>
       });
   }
 
-  function saveSintesis(hz, textareaEl, savedEl){
-    var texto = textareaEl.value.trim();
-    savedEl.textContent = "Guardando…";
-    fetch(API_SINTESIS, { method:"PUT", headers:{"content-type":"application/json"}, body: JSON.stringify({horizonte:hz, texto:texto}) })
-      .then(function(res){
-        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
-        return res.json();
-      })
-      .then(function(rec){
-        sintesisState[hz] = rec;
-        savedEl.textContent = "Guardado " + fmtTime(rec.updatedAt);
-        showToast("Conclusión guardada.", "ok");
-      })
-      .catch(function(err){
-        savedEl.textContent = "";
-        showToast("No se pudo guardar la conclusión: " + err.message + ".", "error");
-      });
+  function renderRespuestas(body, stickers){
+    body.innerHTML = "";
+    if(!stickers.length){
+      body.innerHTML = '<p class="ideas-empty">Aún no hay respuestas para esta pregunta.</p>';
+    }
+    stickers.slice().sort(function(a,b){ return (a.createdAt||"").localeCompare(b.createdAt||""); }).forEach(function(s){
+      var chip = document.createElement("div");
+      chip.className = "idea-chip";
+      var txt = document.createElement("span");
+      txt.className = "txt";
+      txt.textContent = s.texto;
+      chip.appendChild(txt);
+      var del = document.createElement("button");
+      del.className = "idea-del";
+      del.title = "Eliminar respuesta";
+      del.setAttribute("aria-label", "Eliminar respuesta: " + s.texto);
+      del.textContent = "×";
+      del.addEventListener("click", function(){ deleteIdea(s.id); });
+      chip.appendChild(del);
+      body.appendChild(chip);
+    });
+  }
+
+  function renderResultadosIdeas(){
+    HORIZON_ORDER.forEach(function(hz){
+      var respuestas = (ideasState.stickers || []).filter(function(s){ return s.horizonte === hz; });
+      var palabras = Ideas.contar(respuestas);
+      var host = document.getElementById("ideasNube-" + hz);
+      if(!palabras.length){
+        host.innerHTML = '<p class="ideas-empty">' + (respuestas.length ? 'Las respuestas aún no contienen palabras significativas para la nube.' : 'Aún no hay respuestas en este horizonte. Responde las preguntas guía para construir la nube.') + '</p>';
+        return;
+      }
+      // Filas flexibles centradas: el navegador coloca las palabras sin superposición,
+      // incluso al cambiar el ancho, la fuente o el tamaño de texto del dispositivo.
+      // Tamaño entre 1 y 3 rem según la frecuencia relativa; si todas empatan, tamaño medio.
+      var fMax = palabras[0].frecuencia, fMin = palabras[palabras.length - 1].frecuencia;
+      host.innerHTML = '<div class="ideas-nube" aria-hidden="true">' + palabras.map(function(p){
+        var tam = fMax === fMin ? 1.5 : 1 + 2 * (p.frecuencia - fMin) / (fMax - fMin);
+        return '<span style="font-size:' + tam.toFixed(2) + 'rem">' + esc(p.palabra) + '</span>';
+      }).join('') + '</div><details><summary>Palabras y frecuencias (' + palabras.length + ')</summary><ul>' + palabras.map(function(p){
+        return '<li>' + esc(p.palabra) + ': ' + p.frecuencia + '</li>';
+      }).join('') + '</ul></details>';
+    });
   }
 
   function renderIdeas(){
     HORIZON_ORDER.forEach(function(hz){
-      var body = document.getElementById("ideasBody-" + hz);
-      body.innerHTML = "";
       var stickers = (ideasState.stickers || []).filter(function(s){ return s.horizonte === hz; });
-      stickers.sort(function(a,b){ return (a.createdAt||"").localeCompare(b.createdAt||""); });
-
-      if(!stickers.length){
-        var empty = document.createElement("div");
-        empty.className = "ideas-empty";
-        empty.textContent = "Aún no hay respuestas en este horizonte.";
-        body.appendChild(empty);
-        return;
-      }
-
-      stickers.forEach(function(s){
-        var chip = document.createElement("div");
-        chip.className = "idea-chip";
-        var txt = document.createElement("span");
-        txt.className = "txt";
-        txt.textContent = s.texto;
-        chip.appendChild(txt);
-        var del = document.createElement("button");
-        del.className = "idea-del";
-        del.title = "Eliminar";
-        del.textContent = "×";
-        del.addEventListener("click", function(){ deleteIdea(s.id); });
-        chip.appendChild(del);
-        body.appendChild(chip);
+      Ideas.preguntas[hz].forEach(function(p){
+        renderRespuestas(document.getElementById("ideasBody-" + p.id), stickers.filter(function(s){ return s.preguntaId === p.id; }));
       });
+      var antiguas = stickers.filter(function(s){ return !Ideas.preguntaValida(hz, s.preguntaId); });
+      document.getElementById("ideasAntiguas-" + hz).hidden = !antiguas.length;
+      renderRespuestas(document.getElementById("ideasBody-" + hz + "-sin-pregunta"), antiguas);
     });
+    renderResultadosIdeas();
   }
 
-  function renderSintesis(){
-    HORIZON_ORDER.forEach(function(hz){
-      var ta = document.querySelector('.sintesis-input[data-hz="' + hz + '"]');
-      if(document.activeElement === ta) return; // don't yank text from under whoever is typing
-      var rec = sintesisState[hz] || { texto:"", updatedAt:null };
-      ta.value = rec.texto || "";
-      var savedEl = document.querySelector('[data-hz-saved="' + hz + '"]');
-      savedEl.textContent = rec.updatedAt ? "Guardado " + fmtTime(rec.updatedAt) : "";
-    });
-  }
-
+  HORIZON_ORDER.forEach(function(hz){
+    document.getElementById("ideasPreguntas-" + hz).innerHTML = Ideas.preguntas[hz].map(function(p){
+      return '<section class="ficha-body"><div class="ficha-left"><label for="idea-' + p.id + '">' + esc(p.texto) + '</label><div class="ficha-add"><input type="text" class="idea-input" id="idea-' + p.id + '" data-hz="' + hz + '" data-pregunta="' + p.id + '" placeholder="Escribe tu respuesta…" maxlength="200"><button class="btn" data-pregunta-add="' + p.id + '">Agregar</button></div></div><div class="ficha-right"><h4 class="ficha-label">Respuestas obtenidas</h4><div class="ficha-answers" id="ideasBody-' + p.id + '"></div></div></section>';
+    }).join('');
+  });
   document.querySelectorAll(".idea-input").forEach(function(input){
-    var hz = input.dataset.hz;
     input.addEventListener("keydown", function(e){
-      if(e.key === "Enter"){ e.preventDefault(); addIdea(hz, input); }
+      if(e.key === "Enter" && !e.isComposing){ e.preventDefault(); addIdea(input.dataset.hz, input.dataset.pregunta, input); }
     });
   });
-  document.querySelectorAll("[data-hz-add]").forEach(function(btnEl){
-    var hz = btnEl.dataset.hzAdd;
+  document.querySelectorAll("[data-pregunta-add]").forEach(function(btnEl){
     btnEl.addEventListener("click", function(){
-      var input = document.querySelector('.idea-input[data-hz="' + hz + '"]');
-      addIdea(hz, input);
+      var input = document.getElementById("idea-" + btnEl.dataset.preguntaAdd);
+      addIdea(input.dataset.hz, input.dataset.pregunta, input);
     });
   });
-  document.querySelectorAll("[data-hz-save]").forEach(function(btnEl){
-    var hz = btnEl.dataset.hzSave;
-    btnEl.addEventListener("click", function(){
-      var ta = document.querySelector('.sintesis-input[data-hz="' + hz + '"]');
-      var savedEl = document.querySelector('[data-hz-saved="' + hz + '"]');
-      saveSintesis(hz, ta, savedEl);
-    });
+  document.getElementById("view-ideas").addEventListener("vista:activar", function(){ fetchIdeas(false); });
+  document.querySelector('[data-subview="ideas-resultados"]').addEventListener("click", function(){
+    renderResultadosIdeas();
+    fetchIdeas(false);
   });
 
   // ACTIVIDAD 3 EMBUDO: INICIO JS

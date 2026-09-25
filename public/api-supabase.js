@@ -208,11 +208,12 @@
         if(!body) return responder({ error: 'invalid_json' }, 400);
         var t = typeof body.texto === 'string' ? body.texto.trim() : '';
         if(HORIZONTES.indexOf(body.horizonte) < 0) return responder({ error: 'invalid_horizonte' }, 400);
+        if(!Ideas.preguntaValida(body.horizonte, body.preguntaId)) return responder({ error: 'invalid_preguntaId' }, 400);
         if(!t) return responder({ error: 'missing_field', field: 'texto' }, 400);
         if(t.length > 200) return responder({ error: 'texto_too_long' }, 400);
         var todas = await store.list('ideas');
         if(todas.filter(function(s){ return s.horizonte === body.horizonte; }).length >= 200) return responder({ error: 'too_many_rows' }, 429);
-        var s = { id: idCorto('idea-'), horizonte: body.horizonte, texto: t, createdAt: new Date().toISOString() };
+        var s = { id: idCorto('idea-'), horizonte: body.horizonte, preguntaId: body.preguntaId, texto: t, createdAt: new Date().toISOString() };
         await store.set('ideas', s.id, s);
         return responder({ sticker: s }, 201);
       }
@@ -223,6 +224,7 @@
         return responder({ ok: true });
       }
     },
+    // OBSOLETO: síntesis manual de Actividad 1; se conserva la ruta y la colección histórica.
     'ideas-sintesis': async function(m, body){
       if(m === 'GET'){
         var out = {};

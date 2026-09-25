@@ -1,3 +1,4 @@
+// OBSOLETO: síntesis manual de Actividad 1, reemplazada por nubes locales. Se conserva el almacén histórico.
 import { getStore } from "@netlify/blobs";
 
 const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };

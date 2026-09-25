@@ -1,5 +1,7 @@
 import { getStore } from "@netlify/blobs";
 
+import Ideas from "../../public/ideas.js";
+
 const JSON_HEADERS = { "content-type": "application/json; charset=utf-8" };
 const HORIZONS = ["corto", "medio", "largo"];
 const MAX_PER_HORIZON = 200;
@@ -33,6 +35,7 @@ export default async (req) => {
     const horizonte = body.horizonte;
     const texto = typeof body.texto === "string" ? body.texto.trim() : "";
     if (!HORIZONS.includes(horizonte)) return json({ error: "invalid_horizonte" }, 400);
+    if (!Ideas.preguntaValida(horizonte, body.preguntaId)) return json({ error: "invalid_preguntaId" }, 400);
     if (!texto) return json({ error: "missing_field", field: "texto" }, 400);
     if (texto.length > MAX_LEN) return json({ error: "texto_too_long" }, 400);
 
@@ -45,6 +48,7 @@ export default async (req) => {
     const sticker = {
       id: "idea-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 6),
       horizonte: horizonte,
+      preguntaId: body.preguntaId,
       texto: texto,
       createdAt: now,
     };

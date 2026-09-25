@@ -55,9 +55,9 @@ test('Vista 5: grupo, borrador durante sondeo, guardado sin nombre, hoja y salid
  assert.equal(s.bucket('canvas').get('empresa:e').acciones60,'Piloto');assert.equal(s.bucket('canvas').get('empresa:e').editadoPor,'');assert.match($('p5Hoja-empresas').innerHTML,/Último guardado/);
  await s.activar('e',1);await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Aún no hay/);assert.match($('p5Hoja-empresas').innerHTML,/Fuera del embudo/);
 });
-test('Regresión: Actividad 1, Radar, portada y landing fuera de actividades se conservan',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260925_pre-embudo.html',import.meta.url))},()=>{
+test('Regresión: Radar, portada y landing fuera de actividades se conservan (la Actividad 1 cambió por el plan 08)',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260925_pre-embudo.html',import.meta.url))},()=>{
  const prev=read('../../Radar360-web-backups/index_20260925_pre-embudo.html');
- for(const id of ['ideas','radar','inicio']){
+ for(const id of ['radar','inicio']){
   const section=s=>s.match(new RegExp('<section class="view(?: active)?" id="view-'+id+'"[^>]*>[\\s\\S]*?</section>'))[0];assert.equal(section(html),section(prev));
  }
 
