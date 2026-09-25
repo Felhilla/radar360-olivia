@@ -1,0 +1,18 @@
+{
+  "nota": "Lista de asistentes del taller del 6 de octubre de 2026, compartida por Julio el 25 de septiembre (con la corrección de «Barry» a Luis Felipe Barrientos). Se entra si coinciden al menos 2 palabras del nombre con una sola persona, sin importar tildes ni mayúsculas. Si cambia la lista, se edita este archivo.",
+  "minimoPalabras": 2,
+  "participantes": [
+    "Angela Urbano",
+    "Diana Ramos",
+    "Ariel Jimenez",
+    "Hernan Tello",
+    "Helen Santos",
+    "Juliana Figueredo",
+    "Luis Felipe Barrientos"
+  ],
+  "administradores": [
+    "Germán Hillón",
+    "Felipe Hillón",
+    "Julio Ochoa"
+  ]
+}

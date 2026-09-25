@@ -64,6 +64,25 @@
     }
   };
 
+  // ---------- validación de actores (seguridad: solo campos editables y valores permitidos) ----------
+  var CONFIANZAS = ['alta', 'media', 'baja', 'por_identificar'];
+  var ESTADOS = ['verificado', 'por_validar', 'agregado_taller', 'descartado'];
+  var LIMITES_PARCHE = { nombre: 160, sector: 120, justificacion: 4000 };
+  function limpiarParcheActor(p){
+    if(!p || typeof p !== 'object' || Array.isArray(p)) return { error: 'invalid_patch' };
+    var out = {};
+    for(var k in p){
+      var v = p[k];
+      if(k === 'mostrarEnRadar'){ if(typeof v !== 'boolean') return { error: 'invalid_mostrarEnRadar' }; out[k] = v; }
+      else if(k === 'categoria'){ if(CATEGORIAS.indexOf(v) < 0) return { error: 'invalid_categoria' }; out[k] = v; }
+      else if(k === 'confianza'){ if(CONFIANZAS.indexOf(v) < 0) return { error: 'invalid_confianza' }; out[k] = v; }
+      else if(k === 'estado'){ if(ESTADOS.indexOf(v) < 0) return { error: 'invalid_estado' }; out[k] = v; }
+      else if(LIMITES_PARCHE[k]){ if(typeof v !== 'string' || v.length > LIMITES_PARCHE[k] || (k === 'nombre' && !v.trim())) return { error: 'invalid_' + k }; out[k] = v; }
+      else return { error: 'campo_no_editable', field: k };
+    }
+    return out;
+  }
+
   // ---------- utilidades compartidas con las funciones originales ----------
   function idCorto(prefijo){ return prefijo + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6); }
   function slugActor(s){ return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 80); }
@@ -151,6 +170,9 @@
         var faltan = ['nombre', 'categoria'].find(function(f){ return !body[f] || typeof body[f] !== 'string' || !body[f].trim(); });
         if(faltan) return responder({ error: 'missing_field', field: faltan }, 400);
         if(CATEGORIAS.indexOf(body.categoria) < 0) return responder({ error: 'invalid_categoria' }, 400);
+        if(body.confianza != null && CONFIANZAS.indexOf(body.confianza) < 0) return responder({ error: 'invalid_confianza' }, 400);
+        if(body.estado != null && ESTADOS.indexOf(body.estado) < 0) return responder({ error: 'invalid_estado' }, 400);
+        if(body.nombre.trim().length > 160 || texto(body.sector, 999).length > 120 || texto(body.justificacion, 9999).length > 4000) return responder({ error: 'too_long' }, 400);
         if(await store.count('actors') >= 2000) return responder({ error: 'too_many_actors' }, 429);
         var now = new Date().toISOString();
         var a = { id: body.categoria + '-' + slugActor(body.nombre) + '-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 6),
@@ -165,7 +187,8 @@
         if(!body || typeof body.id !== 'string') return responder({ error: 'missing_id' }, 400);
         var ex = await store.get('actors', body.id);
         if(!ex) return responder({ error: 'not_found' }, 404);
-        var patch = Object.assign({}, body.patch || {}); delete patch.id; delete patch.createdAt;
+        var patch = limpiarParcheActor(body.patch);
+        if(patch.error) return responder({ error: patch.error, field: patch.field }, 400);
         var upd = Object.assign({}, ex, patch, { updatedAt: new Date().toISOString() });
         await store.set('actors', body.id, upd);
         return responder(upd);

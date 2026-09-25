@@ -148,6 +148,24 @@
   .brand .sub{ color:var(--ink-soft); font-size:.86rem; margin-top:2px; }
   .top-right{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
 
+  /* ENTRADA: INICIO CSS */
+  body.sin-acceso > :not(#entrada):not(script){ display:none !important; }
+  .entrada{ display:none; min-height:100vh; align-items:center; justify-content:center; padding:24px 16px; }
+  body.sin-acceso .entrada{ display:flex; }
+  .entrada-caja{ width:100%; max-width:440px; background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:28px 24px; box-shadow:var(--shadow); }
+  .entrada-caja .mark{ width:48px; height:48px; border-radius:10px; overflow:hidden; border:1px solid var(--line); background:var(--logo-bg); margin-bottom:14px; }
+  .entrada-caja .mark img{ width:100%; height:100%; object-fit:contain; }
+  .entrada-caja h1{ font-size:1.6rem; margin:0 0 6px; }
+  .entrada-caja p{ color:var(--ink-soft); margin:0 0 16px; }
+  .entrada-caja label{ display:block; font-weight:600; margin-bottom:6px; }
+  .entrada-caja input{ width:100%; box-sizing:border-box; font:inherit; padding:11px 12px; border:1px solid var(--line); border-radius:9px; background:var(--panel); color:var(--ink); margin-bottom:12px; }
+  .entrada-caja .btn{ width:100%; padding:11px 16px; }
+  .entrada-msg{ min-height:1.4em; margin:12px 0 0 !important; color:var(--ink) !important; }
+  .identidad{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.84rem; color:var(--ink-soft); }
+  .identidad strong{ color:var(--ink); }
+  .identidad .btn{ padding:6px 12px; font-size:.8rem; }
+  /* ENTRADA: FIN CSS */
+
   /* LANDING: INICIO CSS */
   .ruta-nav{position:sticky;top:0;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:24px;box-shadow:var(--shadow);min-width:0;}
   .ruta-enlaces{display:grid;grid-template-columns:.6fr repeat(5,minmax(0,1fr));gap:6px;}
@@ -521,7 +539,10 @@
   table.actors tr:last-child td{ border-bottom:none; }
   table.actors tr.discarded{ opacity:.5; }
   .jt{ max-width:340px; color:var(--ink-soft); white-space:pre-line; }
-  .row-actions{ display:flex; gap:4px; flex-wrap:wrap; white-space:nowrap; }
+  /* La celda de acciones sigue siendo celda de tabla (display:flex la sacaba de la fila y desalineaba bordes y botones). */
+  td.row-actions{ vertical-align:top; }
+  td.row-actions .btn{ display:block; width:100%; margin:0 0 4px; text-align:left; white-space:nowrap; }
+  td.row-actions .btn.ghost{ padding:4px 8px; }
 
   /* ---------- ideas view: lluvia de ideas (fichas) ---------- */
   .ficha{ border:2px solid var(--hz); border-radius:14px; background:var(--panel); box-shadow:var(--shadow); overflow:hidden; }
@@ -743,7 +764,20 @@
 
 </style>
 </head>
-<body>
+<body class="sin-acceso">
+<!-- ENTRADA: INICIO HTML -->
+<main class="entrada" id="entrada" aria-labelledby="entradaTitulo">
+  <form class="entrada-caja" id="entradaForm" novalidate>
+    <div class="mark"><img src="logos/olivia.jpeg" alt="Olivia"></div>
+    <h1 id="entradaTitulo">Ruta Colombia - Olivia</h1>
+    <p>Taller estratégico &middot; 6 de octubre de 2026. Escribe tu nombre y apellido tal como aparecen en la invitación.</p>
+    <label for="entradaNombre">Nombre y apellido</label>
+    <input id="entradaNombre" maxlength="80" autocomplete="name" required>
+    <button type="submit" class="btn">Entrar</button>
+    <p class="entrada-msg" id="entradaMsg" role="status" aria-live="polite"></p>
+  </form>
+</main>
+<!-- ENTRADA: FIN HTML -->
 
 <header class="top">
   <div class="brand">
@@ -754,6 +788,11 @@
     </div>
   </div>
   <div class="top-right">
+    <span class="identidad" id="identidad" hidden>
+      <span>Ingresaste como <strong id="identidadNombre"></strong></span>
+      <button type="button" class="btn secondary" id="descargarInforme" hidden>Descargar informe (PDF)</button>
+      <button type="button" class="btn ghost" id="cambiarPersona">Cambiar de persona</button>
+    </span>
     <span class="live-dot" id="liveDot"><span class="d"></span> <span id="liveLabel">conectando…</span></span>
   </div>
 </header>
@@ -828,7 +867,7 @@
       <label class="field">Grupo <select id="p4Categoria"><option value="">Todos los grupos</option></select></label>
       <label class="field">Buscar actor <input id="p4Buscar" type="search" placeholder="Nombre o sector"></label>
     </div>
-    <p class="hint" id="p4Identidad">Usa siempre el mismo nombre para cambiar tu calificación. Los nombres y votos se incluyen en la descarga. Las respuestas sin guardar se conservan en esta pestaña mientras esté abierta.</p>
+    <p class="hint" id="p4Identidad">Tu nombre se toma de la entrada al sitio; con él puedes cambiar tu calificación. Los nombres y votos se incluyen en la descarga. Las respuestas sin guardar se conservan en esta pestaña mientras esté abierta.</p>
     <p id="p4Avance">Cargando actores…</p>
     <div class="p4-trabajo">
       <div id="p4Actores" class="p4-actores" aria-label="Actores disponibles"></div>
@@ -977,7 +1016,7 @@
   <h2>Activar empresas y gremios-aliados</h2>
   <p>Actividad 3 · Vota qué actores debemos calificar en la Actividad 4.</p>
   <label class="field">Tu nombre <input id="a3Nombre" maxlength="60" autocomplete="name"></label>
-  <p>Usa siempre el mismo nombre. Puedes cambiar tu voto o pulsar de nuevo la opción elegida para quitarlo.</p>
+  <p>Tu nombre se toma de la entrada al sitio. Puedes cambiar tu voto o pulsar de nuevo la opción elegida para quitarlo.</p>
   <p id="a3Regla"></p>
   <p id="a3Estado" role="status" aria-live="polite">Abre la actividad para cargar los actores.</p>
   <button type="button" class="btn secondary" id="a3Actualizar">Actualizar datos</button>
@@ -1191,7 +1230,7 @@
 
 </section>
 
-<footer class="credit">Ruta Colombia - Olivia &middot; GH Studio para Olivia Colombia &middot; datos del informe "Colombia como mercado para Olivia" (14 de septiembre de 2026)</footer>
+<footer class="credit">&copy; La información contenida en Ruta Colombia - Olivia es propiedad intelectual de GH Estudio y ha sido entregada para su estudio y evaluación. Las ideas, metodología y gráficos aquí contenidos no podrán ser empleados parcial o totalmente sin autorización expresa de GH Estudio. Cualquier utilización no autorizada del documento o del contenido del mismo, dará lugar a acciones legales en contra de quienes lo utilicen de manera indebida.</footer>
 <div class="toast" id="toast" hidden></div>
 <dialog class="actor-dialog" id="actorDialog" aria-labelledby="adTitle"></dialog>
 <dialog class="actor-dialog" id="sectorDialog" aria-labelledby="sdTitle"></dialog>
@@ -1200,6 +1239,60 @@
 <script src="embudo.js"></script>
 <script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
+<script src="asistentes.js"></script>
+<script src="informe.js"></script>
+<script>
+// ENTRADA: INICIO JS — filtro de entrada por lista de asistentes e informe PDF para administradores.
+// Es un filtro del lado del cliente para ordenar el taller, no un control de seguridad (docs/seguridad-revision.md).
+(function(){
+  "use strict";
+  var CLAVE = "ruta-identidad", config = null;
+  var $ = function(id){ return document.getElementById(id); };
+  function leerGuardada(){ try{ var v = JSON.parse(localStorage.getItem(CLAVE) || "null"); return v && typeof v.nombre === "string" ? v.nombre : ""; }catch(e){ return ""; } }
+  function guardar(nombre){ try{ if(nombre) localStorage.setItem(CLAVE, JSON.stringify({nombre:nombre})); else localStorage.removeItem(CLAVE); }catch(e){} }
+  function aplicar(persona){
+    window.Identidad = persona;
+    document.body.classList.toggle("sin-acceso", !persona);
+    $("identidad").hidden = !persona;
+    $("identidadNombre").textContent = persona ? persona.nombre : "";
+    $("descargarInforme").hidden = !(persona && persona.rol === "administrador");
+    document.dispatchEvent(new CustomEvent("identidad:cambio", {detail:persona}));
+    if(!persona) setTimeout(function(){ $("entradaNombre").focus(); }, 0);
+  }
+  var MENSAJES = {
+    corto:"Escribe al menos tu nombre y un apellido.",
+    ninguna:"Ese nombre no está en la lista de asistentes del taller. Revisa cómo lo escribiste o pide ayuda a los facilitadores.",
+    ambigua:"Ese nombre coincide con más de una persona de la lista. Escribe tu nombre completo."
+  };
+  $("entradaForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    if(!config){ $("entradaMsg").textContent = "Cargando la lista de asistentes… intenta de nuevo en un momento."; return; }
+    var r = Asistentes.identificar($("entradaNombre").value, config);
+    if(!r.ok){ $("entradaMsg").textContent = MENSAJES[r.motivo]; return; }
+    $("entradaMsg").textContent = ""; $("entradaNombre").value = "";
+    guardar(r.persona.nombre); aplicar(r.persona);
+  });
+  $("cambiarPersona").addEventListener("click", function(){ guardar(""); aplicar(null); });
+  $("descargarInforme").addEventListener("click", async function(){
+    var boton = this; if(!window.Identidad || window.Identidad.rol !== "administrador") return;
+    boton.disabled = true; var texto = boton.textContent; boton.textContent = "Generando informe…";
+    try{
+      if(!window.jspdf) await new Promise(function(ok, falla){ var sc = document.createElement("script"); sc.src = "vendor/jspdf.umd.min.js"; sc.onload = ok; sc.onerror = function(){ falla(new Error("No se pudo cargar el generador de PDF.")); }; document.head.appendChild(sc); });
+      var leer = async function(url){ var r = await fetch(url, {cache:"no-store"}); var d = await r.json(); if(!r.ok) throw new Error(d.error || "No se pudo leer " + url); return d; };
+      var datos = await Informe.recopilar(leer, {Embudo:Embudo, Ideas:Ideas}, window.ordenarSectoresInforme);
+      Informe.generar(datos, window.jspdf.jsPDF).save(Informe.nombreArchivo(datos.generado));
+    }catch(err){ alertaSuave("No se pudo generar el informe: " + err.message); }
+    finally{ boton.disabled = false; boton.textContent = texto; }
+  });
+  function alertaSuave(t){ var el = $("toast"); if(!el) return; el.textContent = t; el.hidden = false; setTimeout(function(){ el.hidden = true; }, 6000); }
+  fetch("asistentes-config.json", {cache:"no-store"}).then(function(r){ return r.json(); }).then(function(c){
+    config = c;
+    var guardada = leerGuardada(), r = guardada ? Asistentes.identificar(guardada, c) : null;
+    aplicar(r && r.ok ? r.persona : null);
+  }).catch(function(){ $("entradaMsg").textContent = "No se pudo cargar la lista de asistentes. Revisa la conexión y recarga la página."; });
+})();
+// ENTRADA: FIN JS
+</script>
 <script>
 (function(){
   "use strict";
@@ -1283,7 +1376,14 @@
       })
       .then(function(list){
         var next = {};
-        list.forEach(function(a){ next[a.id] = a; });
+        // Los datos pueden escribirse directo en la base (REST público): se descartan registros con forma inválida
+        // y se normalizan los valores que el sitio usa como claves o clases CSS.
+        list.forEach(function(a){
+          if(!a || typeof a.id !== "string" || typeof a.nombre !== "string" || !CATS.hasOwnProperty(a.categoria)) return;
+          if(!CONF.hasOwnProperty(a.confianza)) a.confianza = "por_identificar";
+          if(!EST.hasOwnProperty(a.estado)) a.estado = "por_validar";
+          next[a.id] = a;
+        });
         actorsById = next;
         hideConnBanner();
         setLive(true, "en vivo · " + list.length + " actores");
@@ -1374,6 +1474,8 @@
   }
 
   // ---------------- boot ----------------
+  window.ordenarSectoresInforme = sortedSectorKeys; // orden de sectores del Radar para el informe PDF
+
   function boot(){
     // OBSOLETO: initGremios(); voto 3/2/1 sustituido por el embudo de activación.
     populateSelects();
@@ -2928,8 +3030,9 @@
         descargarEmbudo(filas,'activados-'+grupo+'.csv');
       };
     }
-    try{$('a3Nombre').value=(localStorage.getItem('activacion-votante')||localStorage.getItem('gremios-votante')||'').slice(0,60);}catch(e){}
-    $('a3Nombre').oninput=()=>{try{localStorage.setItem('activacion-votante',$('a3Nombre').value);}catch(e){}render();};
+    // El nombre viene de la lista de asistentes validada en la entrada; no se edita aquí.
+    const ponerNombre=()=>{if(!window.Identidad)return;$('a3Nombre').value=window.Identidad.nombre;$('a3Nombre').readOnly=true;render();};
+    ponerNombre();document.addEventListener('identidad:cambio',ponerNombre);
     $('a3Actualizar').onclick=cargar;
     $('a3Agregar').onsubmit=async e=>{
       e.preventDefault();if(guardando)return;
@@ -3121,8 +3224,9 @@
     }
     ['p4Categoria','p4CategoriaMatriz'].forEach(id=>Object.entries(categorias).forEach(([k,n])=>{const o=document.createElement('option');o.value=k;o.textContent=n;$(id).appendChild(o);}));
     $('p4Leyenda').innerHTML=Object.entries(categorias).map(([k,n])=>'<span class="p4-leyenda"><span class="p4-color" style="background:var(--cat-'+k+')"></span>'+n+'</span>').join('');
-    try{$('p4Nombre').value=(localStorage.getItem('priorizacion-votante')||'').slice(0,60);}catch(e){}
-    $('p4Nombre').addEventListener('input',()=>{try{localStorage.setItem('priorizacion-votante',$('p4Nombre').value);}catch(e){}renderLista();renderEditor(false);});
+    // El nombre viene de la lista de asistentes validada en la entrada; no se edita aquí.
+    const ponerNombre=()=>{if(!window.Identidad)return;$('p4Nombre').value=window.Identidad.nombre;$('p4Nombre').readOnly=true;renderLista();renderEditor(false);};
+    ponerNombre();document.addEventListener('identidad:cambio',ponerNombre);
     ['p4Categoria','p4Buscar'].forEach(id=>$(id).addEventListener('input',()=>{renderLista();renderEditor(false);}));
     $('p4CategoriaMatriz').onchange=()=>{detalleId=null;$('p4Detalle').textContent='Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';renderResultados();};
     $('p4Actores').onclick=e=>{const b=e.target.closest('[data-actor]');if(b)abrir(b.dataset.actor);};

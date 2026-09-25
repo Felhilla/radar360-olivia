@@ -42,7 +42,7 @@ export function entorno(seed=[]){
 export function dom(context){
  const elements=new Map();
  const element=id=>{if(!elements.has(id))elements.set(id,{value:'',innerHTML:'',textContent:'',hidden:false,disabled:false,dataset:{},handlers:{},addEventListener(t,fn){this.handlers[t]=fn;},classList:{contains:()=>true},contains:()=>false,focus(){},querySelector:()=>element(id+'-child'),querySelectorAll:()=>[],appendChild(){},reset(){}});return elements.get(id);};
- context.document={getElementById:element,querySelector:()=>element('nav'),createElement:()=>element('new'),activeElement:null};
+ context.document={getElementById:element,querySelector:()=>element('nav'),createElement:()=>element('new'),activeElement:null,addEventListener(){}};
  context.fetch=context.window.fetch;context.localStorage={getItem(){throw Error('Bloqueado');},setItem(){throw Error('Bloqueado');}};
  context.setInterval=()=>0;context.setTimeout=fn=>fn();context.GREMIOS_32=gremios;context.POLL_MS=6000;
  context.esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
