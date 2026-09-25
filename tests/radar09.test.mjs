@@ -89,7 +89,7 @@ test('Radar09: diálogo muestra tercer bloque solo para mercados, escapa HTML y 
 test('Radar09: panel visible antes de sectores, exclusivo de Mercados',()=>{
  function el(){return {innerHTML:'',textContent:'',children:[],appendChild(c){this.children.push(c);},setAttribute(){},addEventListener(){}};}
  const elements=new Map(),get=id=>{if(!elements.has(id))elements.set(id,el());return elements.get(id);};
- const ctx=vm.createContext({document:{getElementById:get,createElement:el},currentActors:()=>Object.fromEntries(patches.map(r=>[r.id,r.data])),activeCategory:'mercados',CAT_ORDER:['mercados'],CATS:{mercados:{label:'Mercados'}},GENERIC_LOGO_BY_CAT:{mercados:''},makeCard:a=>({id:a.id}),esc:s=>s,openSectorDialog(){}});
+ const ctx=vm.createContext({document:{getElementById:get,createElement:el},currentActors:()=>Object.fromEntries(patches.map(r=>[r.id,r.data])),activeCategory:'mercados',CAT_ORDER:['mercados'],CATS:{mercados:{label:'Mercados'}},GENERIC_LOGO_BY_CAT:{mercados:''},makeCard:a=>({id:a.id}),renderGapNote:()=>{},esc:s=>s,openSectorDialog(){}});
  vm.runInContext(orderCode+content+html.slice(html.indexOf('  function radarVisible'),html.indexOf('  var SECTOR_ORDER =')),ctx);
  ctx.renderRadar();const first=get('drawerBody').children[0];assert.equal(first.className,'radar-contexto');assert.match(first.innerHTML,/Reconstrucción/);assert.match(first.innerHTML,/Gremios como cliente/);
  get('drawerBody').children=[];ctx.activeCategory=null;ctx.renderRadar();assert.equal(get('drawer').hidden,true);

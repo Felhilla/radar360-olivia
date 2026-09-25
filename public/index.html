@@ -1226,9 +1226,15 @@
     agregado_taller:{label:"Agregado en taller"}, descartado:{label:"Descartado"}
   };
 
-  var GAP_NOTE = "El informe del 14 de septiembre reporta un universo NIT-verificado de 56 empresas + 23 gremios (79 entidades). Este mapa carga 91 actores individualizados por el equipo (12 competidores, 48 mercados, 20 aliados, 11 autoridades). Sigue habiendo entidades del universo NIT-verificado sin individualizar aquí; complétalas con \"Agregar actor\" desde \"Empresas Olivia – NIT verificados.xlsx\" antes del 6 de octubre.";
-  document.getElementById("gapNoteTech").textContent = GAP_NOTE;
-  document.getElementById("radarGapNote").innerHTML = '<strong>Universo por completar: </strong>' + esc(GAP_NOTE);
+  // Nota de universo: las cifras del mapa se calculan en vivo con los actores visibles del Radar.
+  function renderGapNote(visible){
+    var n = function(cat){ return visible.filter(function(a){ return a.categoria === cat; }).length; };
+    var nota = "El informe v1.2 «Colombia como mercado para Olivia» (25 de septiembre de 2026) parte de un universo de 56 empresas y 23 gremios con NIT verificado (79 entidades). Este mapa muestra " +
+      visible.length + " actores individualizados por el equipo (" + n("competidores") + " competidores, " + n("mercados") + " mercados, " + n("aliados") + " aliados y " + n("autoridades") + " autoridades). " +
+      "Si falta alguna entidad del universo, agrégala con \"Agregar actor\" desde \"Empresas Olivia – NIT verificados.xlsx\" antes del 6 de octubre.";
+    document.getElementById("gapNoteTech").textContent = nota;
+    document.getElementById("radarGapNote").innerHTML = '<strong>Universo por completar: </strong>' + esc(nota);
+  }
 
   var actorsById = {};
   var filters = { cats:new Set(), confs:new Set(), q:"", showDiscarded:false, onlyNewId:false };
@@ -1435,6 +1441,7 @@
     var all = Object.values(currentActors());
     var visible = all.filter(radarVisible);
     document.getElementById("hubTotal").textContent = visible.length;
+    renderGapNote(visible);
 
     var grid = document.getElementById("boardGrid");
     grid.innerHTML = "";
