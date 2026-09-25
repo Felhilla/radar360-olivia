@@ -28,23 +28,33 @@
     "objetivos": [
       {
         "nombre": "Construir un universo común",
-        "descripcion": "Competidores, aliados estratégicos, mercados potenciales e instituciones / autoridades."
+        "descripcion": "Competidores, aliados estratégicos, mercados potenciales e instituciones / autoridades.",
+        "color": "#4FC9C7",
+        "icono": "img/landing/objetivos-universo.svg"
       },
       {
         "nombre": "Priorizar mercados y cuentas",
-        "descripcion": "En función del impacto y el esfuerzo de relacionamiento."
+        "descripcion": "En función del impacto y el esfuerzo de relacionamiento.",
+        "color": "#007E87",
+        "icono": "img/landing/objetivos-priorizar.svg"
       },
       {
         "nombre": "Definir para cada prioridad",
-        "descripcion": "Necesidades, compradores, aliados y ruta de entrada."
+        "descripcion": "El buyer, sponsor, trigger y ruta de entrada.",
+        "color": "#F59A23",
+        "icono": "img/landing/objetivos-prioridad.svg"
       },
       {
         "nombre": "Diseñar una estrategia de relacionamiento diferenciada",
-        "descripcion": "Victorias tempranas / Apuestas estratégicas / Mantenimiento selectivo / Racionalización."
+        "descripcion": "Victorias tempranas / Apuestas estratégicas / Mantenimiento selectivo / Racionalización.",
+        "color": "#C56C00",
+        "icono": "img/landing/objetivos-relacionamiento.svg"
       },
       {
         "nombre": "Salir con un portafolio pequeño",
-        "descripcion": "Movimientos comerciales y mercados para Olivia en el corto (2026), mediano (2028) y largo (2030) plazo."
+        "descripcion": "De movimientos comerciales que Olivia pueda ejecutar en Colombia.",
+        "color": "#4D86D9",
+        "icono": "img/landing/objetivos-portafolio.svg"
       }
     ]
   },
@@ -118,67 +128,93 @@
     ]
   },
   "propuesta": {
-    "titulo": "Propuesta de valor Olivia",
-    "descripcion": "Olivia conecta cinco líneas para mover la transformación.",
-    "detalle": "La oferta combina intervención organizacional, decisiones basadas en datos y desarrollo de capacidades.",
+    "titulo": "Olivia conecta cinco líneas para mover la transformación.",
     "practicas": [
       {
-        "nombre": "Innovación",
-        "descripcion": "Instala capacidades para explorar, priorizar y ejecutar nuevas soluciones."
-      },
-      {
-        "nombre": "Liderazgo",
-        "descripcion": "Moviliza líderes capaces de sostener el cambio."
-      },
-      {
-        "nombre": "People Analytics",
-        "descripcion": "Convierte datos de personas en decisiones organizacionales."
+        "nombre": "Cultura",
+        "descripcion": "Rediseña comportamientos, símbolos y formas de trabajar.",
+        "icono": "img/landing/propuesta-cultura.svg",
+        "color": "#48D0C9"
       },
       {
         "nombre": "Gestión del cambio",
-        "descripcion": "Acelera adopción y reduce fricciones en la transformación."
+        "descripcion": "Acelera adopción y reduce fricciones en la transformación.",
+        "icono": "img/landing/propuesta-cambio.svg",
+        "color": "#C56C00"
       },
       {
-        "nombre": "Cultura",
-        "descripcion": "Rediseña comportamientos, símbolos y formas de trabajar."
+        "nombre": "People Analytics",
+        "descripcion": "Convierte datos de personas en decisiones organizacionales.",
+        "icono": "img/landing/propuesta-people-analytics.svg",
+        "color": "#F59A23"
+      },
+      {
+        "nombre": "Innovación",
+        "descripcion": "Instala capacidades para explorar, priorizar y ejecutar nuevas soluciones.",
+        "icono": "img/landing/propuesta-innovacion.svg",
+        "color": "#009AA3"
+      },
+      {
+        "nombre": "Liderazgo",
+        "descripcion": "Moviliza líderes capaces de sostener el cambio.",
+        "icono": "img/landing/propuesta-liderazgo.svg",
+        "color": "#92D050"
       }
-    ]
+    ],
+    "etiqueta": "Propuesta de valor Olivia",
+    "descripcion": "La oferta combina intervención organizacional, decisiones basadas en datos y desarrollo de capacidades.",
+    "logo": "logos/olivia.jpeg",
+    "colorCentral": "#4D86D9"
   },
   "metodologia": {
-    "titulo": "Metodología",
+    "titulo": "METODOLOGÍA",
     "descripcion": "Seis lentes que integran engagement, priorización, acceso y conversión comercial.",
     "lentes": [
       {
-        "nombre": "Metodología Salience",
-        "descripcion": "Combina poder, legitimidad y urgencia.",
-        "pregunta": "¿Quién puede acelerar, bloquear o legitimar?"
-      },
-      {
         "nombre": "AA1000SES",
         "descripcion": "Identifica y prioriza stakeholders; define propósito, método y respuesta.",
-        "pregunta": "¿Quién merece engagement y con qué intensidad?"
+        "pregunta": "¿Quién merece engagement y con qué intensidad?",
+        "color": "#009AA3",
+        "icono": "dialogo"
+      },
+      {
+        "nombre": "Principios AA1000",
+        "descripcion": "Inclusividad, materialidad, responsiveness e impacto.",
+        "pregunta": "¿Por qué importa este actor y qué cambio buscamos?",
+        "color": "#4FC9C7",
+        "icono": "principios"
+      },
+      {
+        "nombre": "Stakeholder Salience",
+        "descripcion": "Combina poder, legitimidad y urgencia.",
+        "pregunta": "¿Quién puede acelerar, bloquear o legitimar?",
+        "color": "#F59A23",
+        "icono": "salience"
+      },
+      {
+        "nombre": "Power–Interest + Influence–Access",
+        "descripcion": "Cruza capacidad de influencia con acceso real.",
+        "pregunta": "¿Cuánto esfuerzo comercial dedicar?",
+        "color": "#F04A2A",
+        "icono": "influencia"
       },
       {
         "nombre": "Opportunity Canvas",
         "descripcion": "Convierte una relación priorizada en una hipótesis de negocio.",
-        "pregunta": "¿Qué necesidad, cliente y oferta existen?"
+        "pregunta": "¿Qué problema, buyer y oferta existen?",
+        "color": "#4D86D9",
+        "icono": "oportunidad"
       },
       {
-        "nombre": "Principios AA1000",
-        "descripcion": "Inclusividad, materialidad, capacidad de respuesta e impacto.",
-        "pregunta": "¿Por qué importa este actor y qué cambio buscamos?"
-      },
-      {
-        "nombre": "Impacto–Esfuerzo",
-        "descripcion": "Cruza el impacto y el esfuerzo de relacionamiento.",
-        "pregunta": "¿Cuánto esfuerzo comercial dedicar?"
-      },
-      {
-        "nombre": "Ruta de mercado",
+        "nombre": "Account / Route-to-Market",
         "descripcion": "Define cómo llegar a la cuenta desde Colombia.",
-        "pregunta": "¿Quién abre la puerta y cuál es el siguiente paso?"
+        "pregunta": "¿Quién abre la puerta y cuál es el siguiente paso?",
+        "color": "#007E87",
+        "icono": "ruta"
       }
-    ]
+    ],
+    "icono": "personas",
+    "color": "#009AA3"
   },
   "actividades": [
     {
@@ -211,5 +247,10 @@
       "proposito": "Completar el Canvas con aliado impulsor, buyer, sponsor, CTA y ruta a 90 días.",
       "vista": "canvas"
     }
-  ]
+  ],
+  "objetivosVisual": {
+    "titulo": "OBJETIVOS",
+    "icono": "img/landing/objetivos-diana.svg",
+    "color": "#009AA3"
+  }
 }

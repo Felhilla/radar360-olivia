@@ -184,6 +184,87 @@
     .landing-block{margin:36px 0;}
     .brand{min-width:0;}.brand>div:last-child{min-width:0;}.brand h1{overflow-wrap:anywhere;}
   }
+  /* Composiciones del taller: diapositivas 7, 11 y 8. */
+  #view-inicio .ppt-section{--ppt-card:color-mix(in srgb,var(--panel) 88%,var(--ink) 5%);color:var(--ink);}
+  .ppt-section .ppt-label{border-left:7px solid var(--diagram-color);padding-left:16px;font-size:1.65rem;font-weight:750;line-height:1.25;text-transform:uppercase;}
+  .ppt-section p{margin:0;}
+  .ppt-section h2,.ppt-section h3,.ppt-section .ppt-label{font-family:'IBM Plex Sans',system-ui,sans-serif;text-wrap:pretty;}
+  .ppt-section h3{margin:0;line-height:1.2;}
+  .ppt-section .ppt-intro{font-size:1.15rem;color:var(--ink-soft);margin:12px 0 28px;}
+  .ppt-section .ppt-heading{font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.15;margin:24px 0 12px;}
+  .ppt-diagram{position:relative;isolation:isolate;}
+  .ppt-wires{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:visible;}
+  .objective-diagram{margin-top:30px;}
+  .objective-list{list-style:none;margin:0;padding:0;display:grid;gap:24px;}
+  .objective-row{--step:7%;margin-left:var(--step);display:grid;grid-template-columns:minmax(0,1.7fr) 8% minmax(0,1fr);align-items:center;min-height:110px;}
+  .objective-row:nth-child(2),.objective-row:nth-child(4){--step:13%;}
+  .objective-row:nth-child(3){--step:19%;}
+  .objective-band{display:flex;align-items:center;position:relative;background:var(--item-color);min-height:110px;padding:16px 18px 16px 78px;margin-left:35px;}
+  .objective-band:before{content:'';position:absolute;left:-15px;top:0;bottom:0;width:16px;background:var(--item-color);clip-path:polygon(100% 0,100% 100%,0 85%,0 15%);}
+  .objective-band h3{color:white;font-size:clamp(1.1rem,1.65vw,1.55rem);font-weight:750;text-shadow:0 1px 2px #0004;}
+  .objective-icon{position:absolute;left:-40px;width:100px;height:100px;border:4px solid var(--paper);border-radius:50%;background:var(--item-color);display:grid;place-items:center;}
+  .objective-icon img{width:70%;height:70%;}
+  .objective-arrow{height:7px;background:var(--item-color);position:relative;margin-right:18px;}
+  .objective-arrow:after{content:'';position:absolute;right:-18px;top:-9px;border-left:20px solid var(--item-color);border-top:12px solid transparent;border-bottom:12px solid transparent;}
+  .objective-description{background:var(--ppt-card);border:3px solid var(--panel);box-shadow:0 0 0 1px var(--line);border-radius:16px;padding:14px 16px;text-align:center;font-size:1rem;line-height:1.35;}
+  .objective-target{position:absolute;left:0;top:40%;width:12%;aspect-ratio:1;border:5px solid var(--diagram-color);border-radius:50%;display:grid;place-items:center;background:var(--panel);}
+  .objective-target img{width:76%;}
+  .value-diagram{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr) minmax(0,1fr);grid-template-rows:auto 160px auto auto;gap:0 34px;margin-top:34px;}
+  .value-card{display:flex;align-items:stretch;border-radius:18px;background:var(--ppt-card);min-width:0;z-index:1;}
+  .value-icon{width:84px;flex:none;display:grid;place-items:center;border-radius:18px;background:var(--item-color);padding:14px;}
+  .value-icon img{width:100%;}
+  .value-copy{padding:18px 16px;}
+  .value-copy h3{font-size:1.35rem;color:color-mix(in srgb,var(--item-color) 68%,var(--ink));margin-bottom:12px;}
+  .value-copy p{font-size:1rem;line-height:1.35;}
+  .value-card:nth-of-type(1){grid-area:1/1;}
+  .value-card:nth-of-type(2){grid-area:1/3;}
+  .value-card:nth-of-type(3){grid-area:3/1;}
+  .value-card:nth-of-type(4){grid-area:3/3;}
+  .value-card:nth-of-type(5){grid-area:4/2;margin-top:24px;}
+  .value-hub{grid-area:2/2;align-self:center;border:4px solid var(--diagram-color);border-radius:32px;background:var(--logo-bg);padding:24px;min-height:150px;display:grid;place-items:center;}
+  .value-hub img{width:100%;height:120px;object-fit:cover;}
+  .method-diagram{display:grid;grid-template-columns:minmax(0,1fr) 19% minmax(0,1fr);grid-template-rows:repeat(3,minmax(210px,auto));gap:25px 0;margin-top:30px;align-items:center;}
+  .method-lens{display:flex;gap:18px;align-items:center;min-width:0;}
+  .method-lens:nth-of-type(odd){flex-direction:row-reverse;text-align:right;}
+  .method-lens:nth-of-type(1){grid-area:1/1;}
+  .method-lens:nth-of-type(2){grid-area:1/3;}
+  .method-lens:nth-of-type(3){grid-area:2/1;}
+  .method-lens:nth-of-type(4){grid-area:2/3;}
+  .method-lens:nth-of-type(5){grid-area:3/1;}
+  .method-lens:nth-of-type(6){grid-area:3/3;}
+  .method-lens:nth-of-type(1),.method-lens:nth-of-type(5){transform:translateX(5%);}
+  .method-lens:nth-of-type(2),.method-lens:nth-of-type(6){transform:translateX(-5%);}
+  .method-icon{width:112px;height:112px;flex:none;border:6px solid var(--item-color);border-radius:50%;display:grid;place-items:center;background:var(--panel);}
+  .method-icon svg{width:70%;height:70%;}
+  .method-copy{min-width:0;border-top:4px solid var(--item-color);padding-top:8px;}
+  .method-copy h3{color:color-mix(in srgb,var(--item-color) 70%,var(--ink));font-size:1.45rem;margin-bottom:12px;}
+  .method-copy p{font-size:1rem;line-height:1.4;color:var(--ink-soft);}
+  .method-copy .method-question{font-weight:750;color:var(--ink);margin-top:12px;}
+  .method-hub{grid-area:2/2;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--panel);border:12px solid var(--diagram-color);border-radius:50%;aspect-ratio:1;box-shadow:0 0 0 7px var(--paper);}
+  .method-hub svg{width:65%;height:65%;}
+  .method-hub h2{position:absolute;bottom:-20px;background:var(--diagram-color);border-radius:12px;color:white;font-size:clamp(.85rem,1.55vw,1.5rem);padding:9px 12px;margin:0;white-space:nowrap;}
+  .method-footer{background:var(--diagram-color);color:white;text-align:center;padding:14px 22px;font-size:1.2rem;font-style:italic;margin-top:28px!important;}
+  @media(max-width:1000px){
+    .value-diagram{gap:0 18px;}.value-icon{width:64px;padding:10px;}.value-copy{padding:14px 12px;}
+    .method-icon{width:78px;height:78px;}.method-lens{gap:10px;}.method-copy h3{font-size:1.15rem;}
+  }
+  @media(max-width:760px){
+    .ppt-section .ppt-label{font-size:1.35rem;}.ppt-wires{display:none;}
+    .objective-target{position:relative;top:auto;width:100px;margin:0 auto 24px;}
+    .objective-row{margin-left:0;grid-template-columns:minmax(0,1fr);gap:0;}
+    .objective-band{min-height:100px;margin-left:28px;padding-left:54px;padding-right:12px;}
+    .objective-band h3{font-size:1.15rem;}.objective-icon{width:76px;height:76px;left:-30px;}
+    .objective-arrow{height:20px;width:5px;margin:0 auto 14px;}
+    .objective-arrow:after{top:auto;bottom:-14px;left:-7px;right:auto;border-top:15px solid var(--item-color);border-bottom:0;border-left:10px solid transparent;border-right:10px solid transparent;}
+    .objective-description{text-align:left;padding:16px;}
+    .value-diagram,.method-diagram{display:flex;flex-direction:column;gap:22px;}
+    .value-hub{order:-1;width:85%;min-height:130px;}.value-card{width:100%;}.value-card:nth-of-type(5){margin:0;}
+    .value-icon{width:80px;padding:14px;}.value-copy{padding:20px 16px;}.value-copy h3{font-size:1.3rem;}
+    .method-hub{order:-1;width:170px;height:170px;margin:0 auto 24px;}.method-hub h2{font-size:1.1rem;}
+    .method-lens:nth-of-type(n){transform:none;flex-direction:column;text-align:left;width:100%;align-items:flex-start;gap:12px;}
+    .method-icon{width:88px;height:88px;}.method-copy{width:100%;}.method-copy h3{font-size:1.35rem;}
+    .method-footer{font-size:1.05rem;}
+  }
   /* LANDING: FIN CSS */
 
   nav.subviews{ display:flex; gap:2px; background:var(--panel-2); padding:3px; border-radius:9px; border:1px solid var(--line); width:fit-content; margin-bottom:18px; }
@@ -3119,15 +3200,40 @@ síntesis (por horizonte): { texto, updatedAt }</div>
       }
     }
     function desdeHash(){ activarVista((rutas.find(r=>hashRuta(r)===location.hash)||rutas[0]).vista); }
-    const cards = items => items.map(x=>'<article class="landing-card"><h3>'+esc(x.nombre)+'</h3><p>'+esc(x.descripcion)+'</p>'+(x.pregunta?'<p class="landing-question">'+esc(x.pregunta)+'</p>':'')+'</article>').join('');
+    // Los textos, colores y referencias de íconos proceden del config.
+    const itemStyle = x => '--item-color:'+esc(x.color);
+    const decorativeImage = src => '<img src="'+esc(src)+'" alt="" loading="lazy">';
+    const lineIcons = {
+      personas:'<circle cx="32" cy="22" r="7"/><circle cx="14" cy="27" r="5"/><circle cx="50" cy="27" r="5"/><path d="M21 53V42q0-10 11-10t11 10v11M5 49V41q0-8 9-8h3m30 0h3q9 0 9 8v8"/>',
+      dialogo:'<path d="M18 5h28v16H32l-9 7v-7h-5zM6 56V44q0-7 9-7m34 0q9 0 9 7v12M23 58V44q0-7 9-7t9 7v14"/><circle cx="15" cy="30" r="5"/><circle cx="32" cy="30" r="5"/><circle cx="49" cy="30" r="5"/>',
+      principios:'<path d="M10 38A24 24 0 0 1 51 14m0-9v10H41M54 29A24 24 0 0 1 14 51m0 9V50h10M21 43Q12 23 43 20q2 30-22 23l18-18"/>',
+      salience:'<circle cx="29" cy="29" r="23"/><path d="M29 11v5M11 29h5M15 15l4 4M43 15l-4 4M29 29l12-9"/><circle cx="47" cy="47" r="12"/><path d="M47 40v8m0 5v1"/>',
+      influencia:'<circle cx="13" cy="11" r="6"/><circle cx="51" cy="11" r="6"/><circle cx="32" cy="46" r="6"/><path d="M4 30v-7q9-7 18 0v7zM42 30v-7q9-7 18 0v7zM23 63v-8q9-7 18 0v8zM13 33v4h38v-4M32 37v3"/>',
+      oportunidad:'<path d="M23 47c0-10-10-12-10-25a19 19 0 0 1 38 0c0 13-10 15-10 25zM23 53h18M26 59h12M32 1v-1M6 8l5 5M1 28h7M53 13l5-5M56 28h7"/>',
+      ruta:'<path d="M6 24a10 10 0 0 1 20 0c0 10-10 22-10 22S6 34 6 24zM47 33V5l15 7-15 7"/><circle cx="16" cy="24" r="3"/><circle cx="47" cy="37" r="4"/><path stroke-dasharray="2 5" d="M20 53h18q14 0 3-10t2-10"/>'
+    };
+    const lineIcon = name => '<svg viewBox="0 0 64 68" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">'+(lineIcons[name]||lineIcons.personas)+'</svg>';
+    const wires = (paths,viewBox) => '<svg class="ppt-wires" viewBox="'+viewBox+'" preserveAspectRatio="none" aria-hidden="true" fill="none">'+paths+'</svg>';
+    function objetivosVisual(c){
+      const v=c.objetivosVisual;
+      return '<section id="landing-objetivos" class="landing-block ppt-section" style="--diagram-color:'+esc(v.color)+'" aria-labelledby="objetivos-titulo"><h2 id="objetivos-titulo" class="ppt-label">'+esc(v.titulo)+'</h2><div class="ppt-diagram objective-diagram">'+wires('<path d="M110 50 C330 180 330 420 110 550" stroke="'+esc(v.color)+'" stroke-width="4"/>','0 0 1200 600')+'<div class="objective-target">'+decorativeImage(v.icono)+'</div><ol class="objective-list">'+c.portada.objetivos.map((x,i)=>'<li class="objective-row" style="'+itemStyle(x)+'"><div class="objective-band"><span class="objective-icon">'+decorativeImage(x.icono)+'</span><h3>'+ (i+1)+'. '+esc(x.nombre)+'</h3></div><span class="objective-arrow" aria-hidden="true"></span><p class="objective-description">'+esc(x.descripcion)+'</p></li>').join('')+'</ol></div></section>';
+    }
+    function propuestaVisual(p){
+      const routes=['M290 90H445V240','M910 90H755V240','M290 400H445V240','M910 400H755V240','M600 540V240'];
+      return '<section id="landing-propuesta" class="landing-block ppt-section" style="--diagram-color:'+esc(p.colorCentral)+'" aria-labelledby="propuesta-titulo"><p class="ppt-label">'+esc(p.etiqueta)+'</p><h2 id="propuesta-titulo" class="ppt-heading">'+esc(p.titulo)+'</h2><p class="ppt-intro">'+esc(p.descripcion)+'</p><div class="ppt-diagram value-diagram">'+wires(p.practicas.map((x,i)=>'<path d="'+routes[i]+'" stroke="'+esc(x.color)+'" stroke-width="4"/>').join(''),'0 0 1200 600')+'<div class="value-hub">'+decorativeImage(p.logo)+'</div>'+p.practicas.map(x=>'<article class="value-card" style="'+itemStyle(x)+'"><div class="value-icon">'+decorativeImage(x.icono)+'</div><div class="value-copy"><h3>'+esc(x.nombre)+'</h3><p>'+esc(x.descripcion)+'</p></div></article>').join('')+'</div></section>';
+    }
+    function metodologiaVisual(m){
+      const routes=['M415 95C470 95 440 250 510 230S555 300 585 310','M785 95C730 95 760 250 690 230S645 300 615 310','M400 350C470 350 450 370 490 370H570','M800 350C730 350 750 370 710 370H630','M415 605C470 605 440 450 510 470S555 400 585 390','M785 605C730 605 760 450 690 470S645 400 615 390'];
+      return '<section id="landing-metodologia" class="landing-block ppt-section" style="--diagram-color:'+esc(m.color)+'" aria-labelledby="metodologia-titulo"><div class="ppt-diagram method-diagram">'+wires(m.lentes.map((x,i)=>'<path d="'+routes[i]+'" stroke="'+esc(x.color)+'" stroke-width="18"/>').join(''),'0 0 1200 700')+'<div class="method-hub">'+lineIcon(m.icono)+'<h2 id="metodologia-titulo">'+esc(m.titulo)+'</h2></div>'+m.lentes.map(x=>'<article class="method-lens" style="'+itemStyle(x)+'"><div class="method-icon">'+lineIcon(x.icono)+'</div><div class="method-copy"><h3>'+esc(x.nombre)+'</h3><p>'+esc(x.descripcion)+'</p><p class="method-question">'+esc(x.pregunta)+'</p></div></article>').join('')+'</div><p class="method-footer">'+esc(m.descripcion)+'</p></section>';
+    }
     function render(c){
       const p=c.portada;
       $('landingContenido').innerHTML =
         '<div class="landing-hero"><p class="mono">'+esc(p.etiqueta)+'</p><h2>'+esc(c.nombre)+'</h2><p class="landing-title">'+esc(p.titulo)+'</p><p class="landing-lema">'+esc(p.lema)+'</p><p>'+esc(p.sesion)+' · '+esc(p.descripcion)+'</p><div class="landing-grid">'+p.marco.map(x=>'<article><span class="mono">'+esc(x.numero)+'</span><h3>'+esc(x.nombre)+'</h3><p>'+esc(x.proposito)+'</p></article>').join('')+'</div></div>'+
-        '<section class="landing-block"><h2>Objetivos del taller</h2><div class="landing-grid">'+cards(p.objetivos)+'</div></section>'+
+        objetivosVisual(c)+
         '<section class="landing-block"><h2>'+esc(c.equipo.titulo)+'</h2><div class="landing-grid">'+c.equipo.personas.map(x=>'<article class="landing-card"><img class="landing-photo" src="'+esc(x.foto)+'" alt="'+esc(x.nombre)+'" width="240" height="300" loading="lazy"><h3>'+esc(x.nombre)+'</h3><p class="landing-question">'+esc(x.rol)+'</p><p>'+esc(x.bio)+'</p><h4>Áreas de expertise</h4><p>'+esc(x.areas)+'</p><h4>'+esc(x.trayectoriaTitulo)+'</h4><p>'+x.trayectoria.map(esc).join(' · ')+'</p><p><a href="mailto:'+esc(x.email)+'">'+esc(x.email)+'</a><br>'+esc(x.telefono)+'</p></article>').join('')+'</div></section>'+
-        '<section class="landing-block"><h2>'+esc(c.propuesta.titulo)+'</h2><p>'+esc(c.propuesta.descripcion)+'</p><p>'+esc(c.propuesta.detalle)+'</p><div class="landing-grid">'+cards(c.propuesta.practicas)+'</div></section>'+
-        '<section class="landing-block"><h2>'+esc(c.metodologia.titulo)+'</h2><p>'+esc(c.metodologia.descripcion)+'</p><div class="landing-grid">'+cards(c.metodologia.lentes)+'</div></section>'+
+        propuestaVisual(c.propuesta)+
+        metodologiaVisual(c.metodologia)+
         '<section class="landing-block"><h2>Las 5 actividades</h2><div class="landing-grid">'+c.actividades.map(x=>'<article class="landing-card"><p class="mono">Actividad '+x.numero+' de 5</p><h3><a href="'+hashRuta(x)+'" data-view="'+esc(x.vista)+'">'+esc(x.nombre)+'</a></h3><p>'+esc(x.proposito)+'</p></article>').join('')+'</div></section>';
       $('landingNota').textContent=c.nota;
       $('landingNota').hidden=!c.provisional;
