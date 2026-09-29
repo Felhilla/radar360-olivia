@@ -1264,10 +1264,13 @@
     ninguna:"Ese nombre no está en la lista de asistentes del taller. Revisa cómo lo escribiste o pide ayuda a los facilitadores.",
     ambigua:"Ese nombre coincide con más de una persona de la lista. Escribe tu nombre completo."
   };
-  $("entradaForm").addEventListener("submit", function(e){
+  function cargarLista(){ return fetch("asistentes-config.json", {cache:"no-store"}).then(function(r){ return r.json(); }).then(function(c){ config = c; return c; }); }
+  $("entradaForm").addEventListener("submit", async function(e){
     e.preventDefault();
     if(!config){ $("entradaMsg").textContent = "Cargando la lista de asistentes… intenta de nuevo en un momento."; return; }
-    var r = Asistentes.identificar($("entradaNombre").value, config);
+    var nombre = $("entradaNombre").value, r = Asistentes.identificar(nombre, config);
+    // Si el nombre no aparece, se vuelve a leer la lista: así una persona agregada después de abrir la página entra sin recargar.
+    if(!r.ok && r.motivo === "ninguna"){ try{ r = Asistentes.identificar(nombre, await cargarLista()); }catch(err){} }
     if(!r.ok){ $("entradaMsg").textContent = MENSAJES[r.motivo]; return; }
     $("entradaMsg").textContent = ""; $("entradaNombre").value = "";
     guardar(r.persona.nombre); aplicar(r.persona);
@@ -1285,8 +1288,7 @@
     finally{ boton.disabled = false; boton.textContent = texto; }
   });
   function alertaSuave(t){ var el = $("toast"); if(!el) return; el.textContent = t; el.hidden = false; setTimeout(function(){ el.hidden = true; }, 6000); }
-  fetch("asistentes-config.json", {cache:"no-store"}).then(function(r){ return r.json(); }).then(function(c){
-    config = c;
+  cargarLista().then(function(c){
     var guardada = leerGuardada(), r = guardada ? Asistentes.identificar(guardada, c) : null;
     aplicar(r && r.ok ? r.persona : null);
   }).catch(function(){ $("entradaMsg").textContent = "No se pudo cargar la lista de asistentes. Revisa la conexión y recarga la página."; });
