@@ -87,3 +87,16 @@ test('Vista: respuestas por pregunta, legado, guardado, actualización sin perde
  await s.context.addIdea('corto','corto-1',input);
  assert.equal(input.value,'Mi borrador');assert.equal(input.disabled,false);
 });
+
+test('Horizontes del reenfoque (HZ): Q4-2026, Q1-2027 y año 2027; sin 2028 ni 2030 en la Actividad 1 ni en el PDF',async()=>{
+ const vista=html.split('<section class="view" id="view-ideas">')[1].split('<footer class="credit">')[0];
+ assert.doesNotMatch(vista,/2028|2030|Corto plazo|Mediano plazo|Largo plazo/);
+ for(const t of ['Q4-2026','Q1-2027','Año 2027'])assert.match(vista,new RegExp(t));
+ const textos=Object.values(Ideas.preguntas).flat().map(p=>p.texto).join(' ');
+ assert.doesNotMatch(textos,/2028|2030/);
+ // Los ids de las preguntas no se renumeran.
+ assert.deepEqual(Object.values(Ideas.preguntas).flat().map(p=>p.id).filter(id=>/-1$/.test(id)),['corto-1','medio-1','largo-1']);
+ const {readFileSync}=await import('node:fs');
+ const informe=readFileSync(new URL('../public/informe.js',import.meta.url),'utf8');
+ assert.match(informe,/\['corto','Q4-2026'\],\['medio','Q1-2027'\],\['largo','Año 2027'\]/);
+});

@@ -6,7 +6,7 @@
   "corto": [
     {
       "id": "corto-1",
-      "texto": "¿Qué espera Olivia para finales de 2026?"
+      "texto": "¿Qué espera Olivia para el cierre de 2026 (Q4-2026)?"
     },
     {
       "id": "corto-2",
@@ -24,7 +24,7 @@
   "medio": [
     {
       "id": "medio-1",
-      "texto": "¿Qué espera Olivia para 2028?"
+      "texto": "¿Qué espera Olivia para el primer trimestre de 2027 (Q1-2027)?"
     },
     {
       "id": "medio-2",
@@ -50,7 +50,7 @@
   "largo": [
     {
       "id": "largo-1",
-      "texto": "¿Cómo espera Olivia consolidar su estrategia para 2030?"
+      "texto": "¿Cómo espera Olivia consolidar su estrategia a diciembre de 2027?"
     },
     {
       "id": "largo-2",

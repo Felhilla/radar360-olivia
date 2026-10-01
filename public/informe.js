@@ -2,7 +2,7 @@
    recopilar() reúne y calcula los datos reutilizando Embudo e Ideas; generar() solo dibuja. */
 (function(root){
   'use strict';
-  const HORIZONTES = [['corto','Corto plazo · 2026'],['medio','Mediano plazo · 2027–2028'],['largo','Largo plazo · 2030']];
+  const HORIZONTES = [['corto','Q4-2026'],['medio','Q1-2027'],['largo','Año 2027']];
   const CATEGORIAS = [['competidores','Competidores'],['mercados','Mercados'],['aliados','Aliados estratégicos'],['autoridades','Autoridades']];
   const DISCLAIMER = '© La información contenida en Ruta Colombia - Olivia es propiedad intelectual de GH Estudio y ha sido entregada para su estudio y evaluación. Las ideas, metodología y gráficos aquí contenidos no podrán ser empleados parcial o totalmente sin autorización expresa de GH Estudio. Cualquier utilización no autorizada del documento o del contenido del mismo, dará lugar a acciones legales en contra de quienes lo utilicen de manera indebida.';
 
