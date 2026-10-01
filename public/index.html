@@ -463,6 +463,23 @@
   .ad-label:first-child{ margin-top:0; }
   .ad-body ul{ margin:0; padding-left:18px; }
   .ad-body li{ margin-bottom:4px; }
+  .ad-contactos{padding-left:20px;}
+  .ad-contactos li{margin-bottom:12px;overflow-wrap:anywhere;}
+  .ad-contactos button{margin-left:8px;}
+  .ad-confianza{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:2px 8px;margin-top:6px;}
+  .ad-confianza-alta{color:var(--cf-alta);}
+  .ad-confianza-media{color:var(--cf-media);}
+  .ad-confianza-baja{color:var(--cf-baja);}
+  .ad-contacto-form{margin-top:12px;min-width:0;overflow-wrap:anywhere;}
+  .ad-contacto-form label{display:block;margin-top:10px;color:var(--ink);}
+  .ad-contacto-form input{display:block;width:100%;min-width:0;box-sizing:border-box;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:10px;}
+  .ad-contacto-form [data-error], .ad-contacto-form [data-contacto-error]{color:var(--cf-baja);}
+  .ad-contacto-actions{display:flex;flex-wrap:wrap;gap:8px;}
+  [data-ficha-actor]{min-width:0;overflow-wrap:anywhere;}
+  @media(max-width:480px){
+    .actor-dialog:has([data-ficha-actor]) .ad-head{flex-wrap:wrap;}
+    .actor-dialog:has([data-ficha-actor]) .ad-head > div{flex:1;min-width:0;overflow-wrap:anywhere;}
+  }
   .ad-empty{ color:var(--ink-soft); font-style:italic; }
   .ad-just{ white-space:pre-line; }
   .ad-titular{ margin-top:10px; padding:8px 12px; border-radius:10px; border-left:4px solid var(--cat-autoridades);
@@ -1237,6 +1254,7 @@
 
 <script src="config.js"></script>
 <script src="embudo.js"></script>
+<script src="ficha-actor.js"></script>
 <script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
 <script src="asistentes.js"></script>
@@ -2092,6 +2110,62 @@
     if(e.target === e.currentTarget) e.currentTarget.close();
   });
 
+  // ACTIVIDAD 2 FICHA: carga independiente del avance del taller.
+  var actoresInformePromesa;
+  function cargarActoresInforme(){
+    if(!actoresInformePromesa) actoresInformePromesa=fetch('data/actores.json',{cache:'no-store'}).then(function(r){if(!r.ok) throw Error('informe');return r.json();});
+    return actoresInformePromesa;
+  }
+  async function leerContactosRuta(ruta){
+    var r=await fetch('/api/'+ruta,{cache:'no-store'});
+    if(!r.ok) throw Error('contactos');
+    var data=await r.json();
+    if(!Array.isArray(data)) throw Error('contactos');
+    return data;
+  }
+  async function montarFichaActor(a,host){
+    try {
+      var actores=await cargarActoresInforme(), actor=actores.find(function(x){return x.id===a.id;});
+      if(!actor) return;
+      var lecturas=await Promise.allSettled([leerContactosRuta('contactos-informe'),leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id))]);
+      var sugeridos=lecturas[0].status==='fulfilled'?lecturas[0].value:[], contactos=lecturas[1].status==='fulfilled'?lecturas[1].value:[];
+      var administrador=!!(window.Identidad && window.Identidad.rol==='administrador');
+      host.innerHTML=FichaActor.htmlFicha(actor,{contactoInforme:sugeridos.find(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad,puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
+      var lista=host.querySelector('[data-contactos-lista]'), aviso=host.querySelector('[data-contactos-aviso]');
+      async function refrescar(){
+        try {contactos=await leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id));lista.innerHTML=FichaActor.htmlContactos(contactos,administrador);}
+        catch(e){aviso.textContent='No se pudo actualizar la lista de contactos. Intenta abrir la ficha de nuevo.';}
+      }
+      lista.addEventListener('click',async function(e){
+        var boton=e.target.closest('[data-quitar-contacto]');
+        if(!boton || !window.Identidad || window.Identidad.rol!=='administrador') return;
+        boton.disabled=true;
+        try {var r=await fetch('/api/contactos?id='+encodeURIComponent(boton.dataset.quitarContacto),{method:'DELETE'});if(!r.ok) throw Error('eliminar');await refrescar();}
+        catch(error){aviso.textContent='No se pudo quitar el contacto. Intenta de nuevo.';boton.disabled=false;}
+      });
+      var form=host.querySelector('form'), abrir=host.querySelector('[data-agregar-contacto]');
+      if(!form) return;
+      function plegar(){form.reset();form.hidden=true;abrir.setAttribute('aria-expanded','false');form.querySelectorAll('[data-error], [data-contacto-error]').forEach(function(el){el.textContent='';});}
+      abrir.addEventListener('click',function(){form.hidden=false;abrir.setAttribute('aria-expanded','true');form.elements.nombre.focus();});
+      form.querySelector('[data-cancelar-contacto]').addEventListener('click',plegar);
+      form.addEventListener('submit',async function(e){
+        e.preventDefault();
+        var datos={};['nombre','cargo','telefono','correo'].forEach(function(k){datos[k]=form.elements[k].value;});
+        var v=FichaActor.validarContacto(datos), error=form.querySelector('[data-contacto-error]');
+        form.querySelectorAll('[data-error]').forEach(function(el){el.textContent=v.ok?'':v.errores[el.dataset.error] || '';});
+        error.textContent='';if(!v.ok) return;
+        var guardar=form.querySelector('[type="submit"]');guardar.disabled=true;
+        try {
+          if(!window.Identidad) throw Error('identidad');
+          var r=await fetch('/api/contactos',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(Object.assign({},v.valor,{actorId:a.id,registradoPor:window.Identidad.nombre}))});
+          if(!r.ok) throw Error('guardar');
+          plegar();showToast('Contacto guardado.');await refrescar();
+        } catch(err){error.textContent='No se pudo guardar el contacto. Intenta de nuevo.';}
+        finally {guardar.disabled=false;}
+      });
+    } catch(e){host.innerHTML='<p class="ad-empty">No se pudo cargar la información del informe.</p>';}
+  }
+
   function openActorDialog(id){
     var a = currentActors()[id];
     if(!a) return;
@@ -2137,7 +2211,7 @@
         '</div>' +
         '<button type="button" class="btn ghost ad-close" data-close>Cerrar ×</button>' +
       '</div>' +
-      '<div class="ad-body">' + body +
+      '<div class="ad-body">' + ((hasMarketFicha || a.categoria === 'aliados') ? '<div data-ficha-actor></div>' : '') + body +
         (ficha ? productosHtml(ficha) + '<div class="comp-src" style="margin-top:14px;">' + fuentesHtml(ficha) + '</div>' : '') +
       '</div>';
     dlg.innerHTML = h;
@@ -2145,6 +2219,8 @@
     var img = dlg.querySelector(".ad-logo");
     img.addEventListener("error", function(){ img.src = GENERIC_LOGO_BY_CAT[a.categoria] || GENERIC_LOGO; }, {once:true});
     if(!dlg.open) dlg.showModal();
+    var host=dlg.querySelector("[data-ficha-actor]");
+    if(host && typeof FichaActor !== 'undefined') montarFichaActor(a,host);
   }
   document.getElementById("actorDialog").addEventListener("click", function(e){
     // click on the backdrop (outside the dialog box) closes it

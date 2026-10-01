@@ -120,7 +120,39 @@
   }
 
   // ---------- manejadores por ruta (mismo contrato que netlify/functions) ----------
+  function validarContacto(datos){
+    const d=datos || {}, valor={}, errores={};
+    ['nombre','cargo','telefono','correo'].forEach(k=>{valor[k]=typeof d[k]==='string'?d[k].trim():'';});
+    ['nombre','cargo'].forEach(k=>{if(valor[k].length<2 || valor[k].length>120) errores[k]='Escribe entre 2 y 120 caracteres.';});
+    if((d.telefono!=null && typeof d.telefono!=='string') || (valor.telefono && !/^[\d +()\-]{7,20}$/.test(valor.telefono))) errores.telefono='Escribe un teléfono de 7 a 20 caracteres, sin letras.';
+    if((d.correo!=null && typeof d.correo!=='string') || (valor.correo && (valor.correo.length>160 || !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(valor.correo)))) errores.correo='Escribe un correo válido de máximo 160 caracteres.';
+    return Object.keys(errores).length?{ok:false,errores}:{ok:true,valor};
+  }
   var rutas = {
+    'contactos-informe': async function(m){
+      if(m !== 'GET') return responder({error:'method_not_allowed'},405);
+      return responder(await store.list('contactos-informe'));
+    },
+    'contactos': async function(m,body,qs){
+      if(m === 'GET'){
+        var lista=await store.list('contactos'), actorId=qs.get('actorId');
+        return responder(actorId===null?lista:lista.filter(c=>c.actorId===actorId));
+      }
+      if(m === 'DELETE'){
+        var id=qs.get('id');
+        if(!id) return responder({error:'Falta el contacto.'},400);
+        await store.del('contactos',id); return responder({ok:true});
+      }
+      if(m !== 'POST') return responder({error:'method_not_allowed'},405);
+      if(!body || typeof body.actorId!=='string' || !body.actorId.trim() || body.actorId.trim().length>200 || typeof body.registradoPor!=='string' || !body.registradoPor.trim() || body.registradoPor.trim().length>80) return responder({error:'Actor y participante son obligatorios.'},400);
+      if(unescape(encodeURIComponent(JSON.stringify(body))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
+      var validacion=(window.FichaActor?window.FichaActor.validarContacto:validarContacto)(body);
+      if(!validacion.ok) return responder(validacion,400);
+      var rec=Object.assign({id:idCorto(texto(body.actorId,200)+':'),actorId:texto(body.actorId,200)},validacion.valor,{registradoPor:texto(body.registradoPor,80),createdAt:new Date().toISOString()});
+      if(unescape(encodeURIComponent(JSON.stringify(rec))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
+      if(await store.count('contactos')>=2000) return responder({error:'Límite de contactos alcanzado.'},429);
+      await store.set('contactos',rec.id,rec);return responder(rec);
+    },
     'activacion-votos': async function(m, body){
       if(m === 'GET') return responder(await store.list('activacion-votos'));
       if(!['PUT','DELETE'].includes(m)) return responder({error:'method_not_allowed'},405);

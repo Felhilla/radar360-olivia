@@ -1265,9 +1265,9 @@
     "id": "mercados-organizacion-terpel-copec-chile",
     "nombre": "Organización Terpel (Copec, Chile)",
     "tipo": "empresa",
-    "industria": "retail",
-    "subindustria": null,
-    "sector_radar": "Retail",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Energía",
     "gremios_asociados": [
       "aliados-fenalco",
       "aliados-acp"
