@@ -38,3 +38,48 @@ La hizo Claude porque Codex no estaba disponible: su cuenta devolvía un error 4
 1. **Decidir el hallazgo #2** (datos sensibles de la Matriz). Es lo único que expone información a los propios asistentes.
 2. **Hacer un respaldo** de toda la base justo antes de empezar el taller y otro al terminar (el patrón ya se usó: `Radar360-web-backups/supabase_*.json`).
 3. **Opcional:** ejecutar `supabase/propuesta_seguridad.sql`, que no afecta el uso normal del sitio.
+
+## Actualización del reenfoque · 1 de octubre de 2026
+
+### Qué cambió
+
+- **Hallazgo #2 (Matriz):** el editor de la Matriz salió de la interfaz con el ajuste B. Los datos siguen en Supabase y se pueden leer por REST con la clave pública, pero ya no aparecen en pantalla.
+- **Colecciones nuevas** (habilitadas con `supabase/agregar_reenfoque.sql`): `contactos-informe`, `contactos`, `parejas`, `tierlist`, `seleccion` y `rutas`. Tienen las mismas políticas públicas que el resto de la tabla, así que el hallazgo #1 también las cubre.
+- **Datos personales nuevos:**
+  - `contactos-informe`: 60 contactos sugeridos por el informe v1.2 (nombre, cargo y confianza). Se cargan con `supabase/sembrar-contactos-informe.mjs` desde `privado/contactos-informe.json`, que no está en el repositorio.
+  - `contactos`: contactos corporativos que registran los participantes en la ficha del actor (nombre, cargo, teléfono y correo). El formulario muestra el aviso de uso y borrado.
+  - Las dos colecciones son legibles con el enlace del sitio. Por eso se borran después del taller.
+- **`public/data/actores.json` no tiene contactos.** Una prueba (`tests/contenido.test.mjs`) lo verifica.
+
+### Procedimiento después del taller (6 de octubre)
+
+Se ejecuta desde la carpeta `Radar360-web/` con conexión a internet.
+
+1. **Respaldo completo de la base**, como en los respaldos anteriores (`Radar360-web-backups/supabase_*.json`).
+2. **Exportar y borrar los contactos del taller:**
+   ```
+   node scripts/exportar-contactos.mjs --borrar
+   ```
+   - Deja el CSV en `privado/exportaciones/contactos-taller-AAAAMMDD-HHMMSS.csv`, una carpeta que Git ignora.
+   - Solo borra si el CSV tiene el mismo número de filas que la colección y nadie agregó contactos mientras tanto.
+   - Al terminar confirma que la colección «contactos» quedó vacía.
+   - Para exportar sin borrar (por ejemplo, para revisar antes), se omite `--borrar`.
+3. **Entregar el CSV a Diego Espejo por un canal privado:** correo directo o carpeta compartida solo con él. No por chats de grupo ni enlaces públicos.
+4. **Borrar los contactos sugeridos por el informe:**
+   ```
+   node supabase/sembrar-contactos-informe.mjs --borrar
+   ```
+   Al terminar confirma que `contactos-informe` quedó vacía.
+5. **Verificar** en el editor SQL de Supabase:
+   ```sql
+   select coleccion, count(*) from public.registros
+   where coleccion in ('contactos', 'contactos-informe')
+   group by coleccion;
+   ```
+   No debe devolver filas.
+6. **Cuando Diego confirme que recibió el CSV,** borrar la copia local de `privado/exportaciones/`.
+
+### Pendiente
+
+- **`supabase/propuesta_seguridad.sql` sigue sin ejecutarse.** Es compatible con el reenfoque: solo impide borrar actores desde la web y limita cada registro a 20 KB. Todas las colecciones nuevas validan ese tope.
+- **Solución de fondo (después del taller):** Supabase Auth con roles, escrituras mediante funciones del servidor y repositorio privado.
