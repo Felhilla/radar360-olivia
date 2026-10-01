@@ -22,7 +22,7 @@
     const o=opciones || {}, c=o.contactoInforme;
     const bloque=(titulo,valor)=>'<div class="ad-label">'+esc(titulo)+'</div><div class="ad-just'+(String(valor).includes('No explícito en el informe')?' ad-empty':'')+'">'+esc(valor)+'</div>';
     const necesidad=actor.tipo==='gremio' || actor.categoria==='aliados'?({E:' (necesidad explícita del gremio)',A:' (necesidad de sus afiliadas)'}[actor.necesidad_tipo] || ''):'';
-    let h=bloque('Por qué está en el radar',actor.por_que)+bloque('Dolor actual',String(actor.dolor || '')+necesidad);
+    let h=bloque('Por qué está en el radar',actor.por_que)+bloque('Necesidad o dolor',String(actor.necesidad || actor.dolor || '')+necesidad);
     h+='<div class="ad-label">Contacto sugerido por el informe</div>';
     h+=c?'<div class="ad-just">'+esc(c.nombre==='Por identificar'?'Nombre por identificar':c.nombre)+'<div>'+esc(c.cargo)+'</div><span class="ad-confianza ad-confianza-'+(['alta','media','baja'].includes(c.confianza)?c.confianza:'pendiente')+'">'+esc(etiquetaConfianza(c.confianza))+'</span></div>':'<p class="ad-empty">El informe no sugiere contacto para este actor</p>';
     h+='<div class="ad-label">Contactos registrados en el taller</div><div data-contactos-lista>'+htmlContactos(o.contactos || [],o.puedeQuitar)+'</div><p class="ad-empty" data-contactos-aviso aria-live="polite">'+esc(o.aviso || '')+'</p>';

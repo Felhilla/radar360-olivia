@@ -64,7 +64,7 @@ test('Radar09: diálogo muestra tercer bloque solo para mercados, escapa HTML y 
  s.context.currentActors=()=>Object.fromEntries(s.bucket('actors'));
  s.context.CATS={mercados:{label:'Mercados'},aliados:{label:'Aliados'}};
  s.context.CONF={media:{label:'Media'}};
- const code=html.slice(html.indexOf('  function openActorDialog(id)'),html.indexOf('  document.getElementById("actorDialog").addEventListener("click"'));
+ const code=html.slice(html.indexOf('  function openActorDialog(id'),html.indexOf('  document.getElementById("actorDialog").addEventListener("click"'));
  vm.runInContext(code,s.context);
  s.actor('m','mercados',{queHace:'Hace',relevancia:'Relevante',articulacion:'<img src=x onerror=alert(1)>'});
  s.context.openActorDialog('m');assert.equal(dlg.open,true);

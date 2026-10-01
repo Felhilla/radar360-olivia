@@ -423,6 +423,10 @@
     letter-spacing:.04em; background:var(--accent); color:#fff; padding:1px 6px; border-radius:4px;
   }
   .actor-name{ font-size:.82rem; font-weight:600; line-height:1.28; }
+  .actor-item{ display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0; }
+  .actor-add-contact{ font:inherit; font-size:.7rem; font-weight:600; color:var(--accent-ink); background:var(--accent-soft); border:1px solid var(--accent); border-radius:999px; padding:3px 10px; cursor:pointer; white-space:nowrap; }
+  .actor-add-contact:hover{ background:var(--accent); color:#fff; }
+  .actor-add-contact:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   .actor-est{ font-size:.66rem; font-weight:600; padding:2px 10px; border-radius:999px; background:var(--panel-2); color:var(--ink-soft); border:1px solid var(--line); white-space:nowrap; }
   .empty-note{ color:var(--ink-soft); font-size:.85rem; font-style:italic; }
 
@@ -1969,7 +1973,16 @@
     var est = document.createElement("span"); est.className = "actor-est"; est.textContent = EST[a.estado].label;
     card.appendChild(est);
 
-    return card;
+    // Empresas y gremios: botón visible para registrar un contacto sin abrir antes la ficha.
+    if(a.categoria !== "mercados" && a.categoria !== "aliados") return card;
+    var item = document.createElement("div"); item.className = "actor-item";
+    item.appendChild(card);
+    var agregar = document.createElement("button");
+    agregar.type = "button"; agregar.className = "actor-add-contact"; agregar.textContent = "+ Agregar contacto";
+    agregar.setAttribute("aria-label", "Agregar contacto de " + a.nombre);
+    agregar.addEventListener("click", function(){ openActorDialog(a.id, {agregarContacto:true}); });
+    item.appendChild(agregar);
+    return item;
   }
 
   function productosHtml(ficha){
@@ -2124,7 +2137,7 @@
     if(!Array.isArray(data)) throw Error('contactos');
     return data;
   }
-  async function montarFichaActor(a,host){
+  async function montarFichaActor(a,host,opciones){
     try {
       var actores=await cargarActoresInforme(), actor=actores.find(function(x){return x.id===a.id;});
       if(!actor) return;
@@ -2164,10 +2177,12 @@
         } catch(err){error.textContent='No se pudo guardar el contacto. Intenta de nuevo.';}
         finally {guardar.disabled=false;}
       });
+      // Desde el botón «Agregar contacto» de la tarjeta: abrir el formulario y llevarlo a la vista.
+      if(opciones&&opciones.agregarContacto){abrir.click();form.scrollIntoView({block:'center'});}
     } catch(e){host.innerHTML='<p class="ad-empty">No se pudo cargar la información del informe.</p>';}
   }
 
-  function openActorDialog(id){
+  function openActorDialog(id, opciones){
     var a = currentActors()[id];
     if(!a) return;
     var dlg = document.getElementById("actorDialog");
@@ -2221,7 +2236,7 @@
     img.addEventListener("error", function(){ img.src = GENERIC_LOGO_BY_CAT[a.categoria] || GENERIC_LOGO; }, {once:true});
     if(!dlg.open) dlg.showModal();
     var host=dlg.querySelector("[data-ficha-actor]");
-    if(host && typeof FichaActor !== 'undefined') montarFichaActor(a,host);
+    if(host && typeof FichaActor !== 'undefined') montarFichaActor(a,host,opciones);
   }
   document.getElementById("actorDialog").addEventListener("click", function(e){
     // click on the backdrop (outside the dialog box) closes it
@@ -3293,7 +3308,7 @@
         Rutas.CAMPOS.map(campo).join('')+
         (d.etiqueta==='posicionamiento'?'<fieldset><legend>Aristas de posicionamiento</legend><p class="hint">Marca las que apliquen y escribe la acción de cada una.</p>'+aristas+'</fieldset>':'')+
         '<div class="p5-acciones"><button type="submit" class="btn"'+des+'>Guardar ruta</button><span class="p5-sello" aria-live="polite">'+esc(sello(guardada(actual)))+(drafts.has(actual)?' · Cambios sin guardar':'')+'</span></div></form>'+
-        '<details class="p5-ctx" open><summary>Contexto del actor</summary><div class="p5-ctx-cuerpo">'+Rutas.htmlContexto(a,{contactoInforme:sugerido,contactos:registrados})+'</div></details></div>';
+        '<details class="p5-ctx" open><summary>Contexto del actor</summary><div class="p5-ctx-cuerpo">'+Rutas.htmlContexto(a,{contactoInforme:sugerido,contactos:registrados,taller:(seleccion&&seleccion.detalles||{})[actual]})+'</div></details></div>';
     }
     function recoger(){
       const f=$('p5Form');if(!f)return null;

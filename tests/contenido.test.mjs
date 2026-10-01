@@ -250,3 +250,13 @@ const contactosPath = new URL('../privado/contactos-informe.json', import.meta.u
 test('Siembra: archivo privado válido cuando está disponible', {
   skip: !existsSync(contactosPath) && 'Contactos privados no disponibles'
 }, () => validar(JSON.parse(readFileSync(contactosPath, 'utf8')), actores));
+
+test('Contenido: necesidad en lenguaje claro y «qué hace» para los 75 actores, sin marcas de verificación', () => {
+  for (const a of actores) {
+    assert.equal(typeof a.necesidad, 'string', a.id);
+    assert(a.necesidad.trim().length >= 80, a.id + ': necesidad demasiado corta');
+    assert(a.que_hace && a.que_hace.trim(), a.id + ': falta que_hace');
+    assert(a.por_que && !/No explícito en el informe/.test(a.por_que), a.id + ': falta por_que');
+    for (const t of [a.necesidad, a.que_hace, a.por_que]) assert.doesNotMatch(t, /por validar|sin verificar/i, a.id);
+  }
+});

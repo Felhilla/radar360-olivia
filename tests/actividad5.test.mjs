@@ -103,7 +103,7 @@ test('Vista: la Actividad 5 usa la lista confirmada y la colección rutas, no el
 test('Paso automático: sin lista confirmada, pasan a la Actividad 5 los del Nivel 1 en el orden del corte (máx. 10), incluidos los sin calificar',async()=>{
  const s=entorno();
  const ids=actores.filter(a=>a.tipo==='empresa').slice(0,12).map(a=>a.id);
- assert.deepEqual((await s.req('lista-rutas')).data,{actorIds:[],origen:'vacia'});
+ assert.deepEqual((await s.req('lista-rutas')).data,{actorIds:[],origen:'vacia',detalles:{}});
  ids.forEach(id=>{s.actor(id,'mercados',{nombre:actores.find(a=>a.id===id).nombre});s.nivel1(id);});
  assert.equal((await s.req('priorizacion-votos','PUT',calificacion(ids[5],4,2))).status,200);
  await s.req('priorizacion-votos','PUT',calificacion(ids[7],5,4));
@@ -125,4 +125,13 @@ test('Paso automático: la lista confirmada por el facilitador tiene prioridad s
  assert.equal(l.origen,'confirmada');assert.deepEqual(l.actorIds,[gremio.id]);assert.equal(l.confirmadoPor,'Felipe Hillón');
  assert.equal((await s.req('rutas','PUT',completa())).status,400);
  assert.equal((await s.req('lista-rutas','PUT',{})).status,405);
+});
+
+test('Tarjeta de contexto: «Qué hace», «Por qué se priorizó» con el resultado del taller y necesidad en lenguaje claro',()=>{
+ const h=Rutas.htmlContexto(empresa,{taller:{grupos:2,cuadrante:'Victorias tempranas',posicion:1}});
+ assert.match(h,/<h4>Qué hace<\/h4>/);assert.match(h,/<h4>Por qué se priorizó<\/h4>/);
+ assert.match(h,/En el taller: Elegido en el Nivel 1 por 2 grupos · cuadrante «Victorias tempranas» en la Actividad 4 · puesto 1 del corte\./);
+ assert.ok(h.indexOf(empresa.necesidad.slice(0,40).replace(/[&<>"']/g,''))>0||h.includes('acaba de cambiar de presidente'));
+ assert.match(Rutas.htmlContexto(empresa,{taller:{grupos:1,posicion:3}}),/aún sin calificar en la Actividad 4/);
+ assert.doesNotMatch(Rutas.htmlContexto(empresa,{}),/En el taller/);
 });

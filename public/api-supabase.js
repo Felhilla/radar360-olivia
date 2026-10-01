@@ -112,15 +112,20 @@
   }
   // Lista que llega a la Actividad 5: la confirmada por el facilitador o, si no hay, la automática del corte.
   async function listaActividad5(){
-    const sel=await store.get('seleccion','vigente');
-    if(sel&&Array.isArray(sel.actorIds)&&sel.actorIds.length) return {actorIds:sel.actorIds,origen:'confirmada',confirmadoPor:sel.confirmadoPor||'',confirmadoEn:sel.confirmadoEn||''};
-    const nivel=await nivel1Vigente();
-    if(!nivel.actores.length) return {actorIds:[],origen:'vacia'};
-    const cr=await criterios(), resumen=await (await rutas['priorizacion-votos']('GET',null,new URLSearchParams('resumen=1'))).json();
-    const catalogo=(await actoresTier())||[], nombre=id=>(catalogo.find(a=>a.id===id)||{}).nombre||id;
-    const grupos=Object.fromEntries(nivel.actores.map(a=>[a.actorId,a.grupos]));
-    const ordenados=Corte.ordenar(nivel.actores.map(a=>resumen.find(r=>r.actorId===a.actorId)||{actorId:a.actorId,nombre:nombre(a.actorId),votos:0}),cr.corte,grupos);
-    return {actorIds:Corte.automatica(ordenados,cr.corte).map(r=>r.actorId),origen:'automatica'};
+    const sel=await store.get('seleccion','vigente'), nivel=await nivel1Vigente();
+    let ordenados=[], cr=null;
+    if(nivel.actores.length){
+      cr=await criterios();
+      const resumen=await (await rutas['priorizacion-votos']('GET',null,new URLSearchParams('resumen=1'))).json();
+      const catalogo=(await actoresTier())||[], nombre=id=>(catalogo.find(a=>a.id===id)||{}).nombre||id;
+      const grupos=Object.fromEntries(nivel.actores.map(a=>[a.actorId,a.grupos]));
+      ordenados=Corte.ordenar(nivel.actores.map(a=>resumen.find(r=>r.actorId===a.actorId)||{actorId:a.actorId,nombre:nombre(a.actorId),votos:0}),cr.corte,grupos);
+    }
+    // Resultado del taller por actor, para explicar «por qué se priorizó» en la Actividad 5.
+    const detalles=Object.fromEntries(ordenados.map((r,i)=>[r.actorId,{posicion:i+1,grupos:r.grupos,cuadrante:r.sinCalificar?'':(r.cuadrante&&r.cuadrante.nombre)||'',calificaciones:r.votos||0}]));
+    if(sel&&Array.isArray(sel.actorIds)&&sel.actorIds.length) return {actorIds:sel.actorIds,origen:'confirmada',confirmadoPor:sel.confirmadoPor||'',confirmadoEn:sel.confirmadoEn||'',detalles};
+    if(!ordenados.length) return {actorIds:[],origen:'vacia',detalles:{}};
+    return {actorIds:Corte.automatica(ordenados,cr.corte).map(r=>r.actorId),origen:'automatica',detalles};
   }
   async function activosEmbudo(){
     var r=await nativeFetch('embudo-config.json',{cache:'no-store'});
