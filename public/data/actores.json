@@ -7,7 +7,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad alta",
     "horizonte_informe": null,
-    "por_que": "Reúne gestión humana de todos los sectores.",
+    "por_que": "Reúne en un solo lugar a los directores de gestión humana de casi todas las empresas que le interesan a Olivia, que son justamente quienes compran sus servicios.",
     "dolor": "Absorción organizacional de la reconstrucción.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Estudio sectorial cofirmado y patrocinio selectivo.",
@@ -15,7 +15,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "ACRIP reúne a los directores de gestión humana de empresas de todos los sectores. Después del terremoto del 10 de agosto, esas empresas tienen que reorganizar equipos, turnos y prioridades para responder a la reconstrucción, y sus áreas de gestión humana buscan herramientas y casos para hacerlo bien.",
-    "que_hace": "Federación Colombiana de Gestión Humana: reúne, a través de capítulos regionales, a los directores de gestión humana de todos los sectores."
+    "que_hace": "Federación Colombiana de Gestión Humana: reúne, a través de capítulos regionales, a los directores de gestión humana de todos los sectores.",
+    "por_que_informe": "Reúne gestión humana de todos los sectores."
   },
   {
     "id": "aliados-andi",
@@ -25,7 +26,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad alta",
     "horizonte_informe": null,
-    "por_que": "Concentra cuentas de industria, consumo, banca y energía mediante seccionales y cámaras.",
+    "por_que": "Es el gremio empresarial más grande del país y conecta con muchas empresas de la lista (Nutresa, Bavaria, Alpina, Corona, Argos, Bancolombia, entre otras) a través de sus seccionales y cámaras sectoriales.",
     "dolor": "Capacidad de ejecución, formación y absorción organizacional para la reconstrucción.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Comités de gestión humana seccionales; Colombia Genera; Congreso Empresarial; proyecto SENA FCE 2027.",
@@ -50,7 +51,8 @@
     ],
     "nota_contexto": "Olivia ya es afiliada",
     "necesidad": "La ANDI es el principal gremio empresarial del país: sus más de 1.400 afiliados suman cerca de la mitad del PIB. Tras el terremoto, sus empresas necesitan capacidad para ejecutar la reconstrucción y formar a su gente, y la ANDI busca programas que las ayuden a adaptarse sin frenar su operación.",
-    "que_hace": "Asociación Nacional de Empresarios de Colombia, el principal gremio empresarial del país: más de 1.400 afiliados que suman entre 50 % y 55 % del PIB, 34 cámaras sectoriales y presencia en 13 departamentos. Presidente: Bruce Mac Master."
+    "que_hace": "Asociación Nacional de Empresarios de Colombia, el principal gremio empresarial del país: más de 1.400 afiliados que suman entre 50 % y 55 % del PIB, 34 cámaras sectoriales y presencia en 13 departamentos. Presidente: Bruce Mac Master.",
+    "por_que_informe": "Concentra cuentas de industria, consumo, banca y energía mediante seccionales y cámaras."
   },
   {
     "id": "aliados-acodres",
@@ -60,7 +62,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad alta",
     "horizonte_informe": "30-60",
-    "por_que": "Frisby e industria gastronómica; convenio marco SENA vigente.",
+    "por_que": "Es la puerta a Frisby y a toda la industria de restaurantes, y ya tiene un convenio con el SENA que podría financiar un programa sectorial con Olivia.",
     "dolor": "Rediseño de turnos y dotación ante la reforma laboral.",
     "necesidad_tipo": "E",
     "ruta_sugerida": "Programa sectorial con financiación SENA.",
@@ -74,7 +76,8 @@
       }
     ],
     "necesidad": "Acodres es el gremio de los restaurantes y la industria gastronómica. La reforma laboral (Ley 2466) encarece el trabajo nocturno y dominical, que es el corazón de este negocio, así que sus afiliados necesitan rediseñar turnos y cuántas personas tienen en cada horario. Acodres ya tiene un convenio con el SENA para financiar formación.",
-    "que_hace": "Asociación Colombiana de la Industria Gastronómica: gremio de restaurantes y establecimientos gastronómicos, con capítulos regionales (el de Bogotá Región declara más de 9.700 establecimientos). Tiene convenio marco de formación vigente y COP 23.647 millones en contratos con el SENA; su representante legal inscrito es el capítulo Santander."
+    "que_hace": "Asociación Colombiana de la Industria Gastronómica: gremio de restaurantes y establecimientos gastronómicos, con capítulos regionales (el de Bogotá Región declara más de 9.700 establecimientos). Tiene convenio marco de formación vigente y COP 23.647 millones en contratos con el SENA; su representante legal inscrito es el capítulo Santander.",
+    "por_que_informe": "Frisby e industria gastronómica; convenio marco SENA vigente."
   },
   {
     "id": "aliados-camacol",
@@ -84,7 +87,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad alta",
     "horizonte_informe": null,
-    "por_que": "Concentra Argos, Corona, Constructora Bolívar y Tecnoglass.",
+    "por_que": "Agrupa a varias empresas de la lista (Cementos Argos, Corona, Constructora Bolívar y Tecnoglass) en el sector que más va a crecer con la reconstrucción.",
     "dolor": "Capacidad de ejecución: cuadrillas, cadena de suministro y coordinación territorial.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Congreso de construcción, estudio sectorial cofirmado y conversación institucional sobre reconstrucción.",
@@ -98,7 +101,8 @@
       }
     ],
     "necesidad": "Camacol es el gremio de la construcción. Tras el terremoto hay más de 200.000 viviendas por reparar o reconstruir, y sus empresas necesitan aumentar rápido su capacidad de ejecución: organizar cuadrillas, asegurar materiales y coordinarse con las autoridades en cada territorio.",
-    "que_hace": "Cámara Colombiana de la Construcción: gremio de la cadena de valor de la construcción, con 18 regionales. Presidente: Guillermo Herrera; Katherine Bobadilla es Directora de Productividad y Sostenibilidad. Su Congreso es del 21 al 23 de octubre en Cartagena (vivienda, inteligencia artificial y sostenibilidad)."
+    "que_hace": "Cámara Colombiana de la Construcción: gremio de la cadena de valor de la construcción, con 18 regionales. Presidente: Guillermo Herrera; Katherine Bobadilla es Directora de Productividad y Sostenibilidad. Su Congreso es del 21 al 23 de octubre en Cartagena (vivienda, inteligencia artificial y sostenibilidad).",
+    "por_que_informe": "Concentra Argos, Corona, Constructora Bolívar y Tecnoglass."
   },
   {
     "id": "aliados-colombia-fintech",
@@ -108,7 +112,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad alta",
     "horizonte_informe": null,
-    "por_que": "Más de 360 afiliadas y acceso a Addi, Bold y Lulo.",
+    "por_que": "Con más de 360 afiliadas, permite llegar de una sola vez a varias fintech de la lista (Addi, Bold y Lulo Bank) con un mismo taller o programa.",
     "dolor": "Paso del modo fundador al modo organización.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Taller sectorial de bajo ticket y alto acceso.",
@@ -116,7 +120,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Colombia Fintech reúne a más de 360 empresas de tecnología financiera. Muchas crecieron muy rápido y siguen funcionando como cuando eran pequeñas, con todo concentrado en los fundadores; ahora necesitan estructura, roles claros y líderes intermedios para seguir creciendo de forma ordenada.",
-    "que_hace": "Asociación del ecosistema de innovación financiera: más de 365 empresas, 69 % de ellas fintech, con una junta 2025–2026 de 15 miembros. Presidente ejecutivo: Gabriel Santos. Organiza el Latam Fintech Market."
+    "que_hace": "Asociación del ecosistema de innovación financiera: más de 365 empresas, 69 % de ellas fintech, con una junta 2025–2026 de 15 miembros. Presidente ejecutivo: Gabriel Santos. Organiza el Latam Fintech Market.",
+    "por_que_informe": "Más de 360 afiliadas y acceso a Addi, Bold y Lulo."
   },
   {
     "id": "aliados-acoplasticos",
@@ -126,7 +131,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad baja-media",
     "horizonte_informe": null,
-    "por_que": "Puerta a Plastilene, empresa de empaques flexibles.",
+    "por_que": "Es la vía de entrada a Plastilene y al sector de empaques, con temas de sostenibilidad y talento.",
     "dolor": "Sostenibilidad y automatización en Plastilene.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Entrada gremial hacia Plastilene.",
@@ -134,7 +139,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "Acoplásticos es el gremio de la industria del plástico. Sus empresas, como Plastilene, deben adaptarse a nuevas exigencias de sostenibilidad (empaques más fáciles de reciclar) y automatizar sus plantas, lo que cambia la forma en que trabajan sus equipos.",
-    "que_hace": "Asociación Colombiana de Industrias Plásticas (1961): agrupa empresas de plásticos, reciclaje, pinturas, caucho, tintas y materiales compuestos, y tiene contratos de formación con el SENA. Presidente: Daniel Mitchell."
+    "que_hace": "Asociación Colombiana de Industrias Plásticas (1961): agrupa empresas de plásticos, reciclaje, pinturas, caucho, tintas y materiales compuestos, y tiene contratos de formación con el SENA. Presidente: Daniel Mitchell.",
+    "por_que_informe": "Puerta a Plastilene, empresa de empaques flexibles."
   },
   {
     "id": "aliados-anda",
@@ -144,7 +150,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad baja-media",
     "horizonte_informe": null,
-    "por_que": "Anunciantes y vía de entrada hacia Alpina.",
+    "por_que": "Reúne a las empresas que más invierten en publicidad y es un camino hacia la presidencia de Alpina y de otras marcas de consumo masivo.",
     "dolor": "Estructura directiva simplificada, reporte BIC y cumplimiento comercial en Alpina.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Vía gremial hacia la dirección de Alpina.",
@@ -152,7 +158,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "Anda reúne a las empresas que hacen publicidad en Colombia. Varias grandes marcas de consumo, como Alpina, han recibido sanciones de la Superintendencia de Industria y Comercio por su publicidad, así que necesitan controlar mejor lo que comunican y alinear a sus equipos comerciales con las normas.",
-    "que_hace": "Asociación Nacional de Anunciantes de Colombia (1979), afiliada a la Federación Mundial de Anunciantes: representa a las empresas anunciantes. Presidenta ejecutiva: Elizabeth Melo."
+    "que_hace": "Asociación Nacional de Anunciantes de Colombia (1979), afiliada a la Federación Mundial de Anunciantes: representa a las empresas anunciantes. Presidenta ejecutiva: Elizabeth Melo.",
+    "por_que_informe": "Anunciantes y vía de entrada hacia Alpina."
   },
   {
     "id": "aliados-asofondos",
@@ -162,7 +169,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad baja-media",
     "horizonte_informe": null,
-    "por_que": "Fondos y acceso a la mesa del Consejo Gremial Nacional.",
+    "por_que": "Su presidente es vicepresidente del Consejo Gremial Nacional, la mesa donde los grandes gremios acuerdan su posición frente al Gobierno: estar cerca abre conversaciones de alto nivel.",
     "dolor": "Agenda empresarial de reconstrucción en el Consejo Gremial Nacional.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Relación con el Consejo Gremial Nacional y presencia selectiva en el Congreso Asofondos.",
@@ -176,7 +183,8 @@
       }
     ],
     "necesidad": "Asofondos es el gremio de los fondos de pensiones y cesantías, y su presidente es vicepresidente del Consejo Gremial Nacional, donde los grandes gremios acuerdan su posición frente al Gobierno. Hoy esa mesa está concentrada en la agenda de reconstrucción y en el Plan Nacional de Desarrollo.",
-    "que_hace": "Asociación Colombiana de Administradoras de Fondos de Pensiones y de Cesantías. Su presidente, Andrés Velasco (exviceministro técnico de Hacienda y exdirector técnico del CARF), es vicepresidente del Consejo Gremial Nacional."
+    "que_hace": "Asociación Colombiana de Administradoras de Fondos de Pensiones y de Cesantías. Su presidente, Andrés Velasco (exviceministro técnico de Hacienda y exdirector técnico del CARF), es vicepresidente del Consejo Gremial Nacional.",
+    "por_que_informe": "Fondos y acceso a la mesa del Consejo Gremial Nacional."
   },
   {
     "id": "aliados-ccce-camara-colombiana-de-comercio-electronico",
@@ -186,7 +194,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad baja-media",
     "horizonte_informe": "120",
-    "por_que": "COP 10.275 millones en contratos con el SENA; puerta a MercadoLibre y retailers omnicanal.",
+    "por_que": "Es la puerta a Mercado Libre y a los comercios que venden en línea, y tiene más de COP 10.000 millones en contratos con el SENA para formación.",
     "dolor": "Formación en comercio electrónico y talento digital.",
     "necesidad_tipo": "E",
     "ruta_sugerida": "Formación con el SENA y acceso a MercadoLibre y retailers omnicanal.",
@@ -194,7 +202,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "La CCCE es el gremio del comercio electrónico, con Mercado Libre y Amazon en su dirección. Sus empresas necesitan formar personas en ventas digitales y talento tecnológico, y la Cámara tiene contratos con el SENA para financiar esa formación.",
-    "que_hace": "Cámara Colombiana de Comercio Electrónico: gremio del comercio electrónico, con Mercado Libre en la presidencia de su consejo directivo y Amazon en la vicepresidencia. Tiene contratos con el SENA para formación en comercio electrónico y talento digital. Presidenta ejecutiva: María Fernanda Quiñones."
+    "que_hace": "Cámara Colombiana de Comercio Electrónico: gremio del comercio electrónico, con Mercado Libre en la presidencia de su consejo directivo y Amazon en la vicepresidencia. Tiene contratos con el SENA para formación en comercio electrónico y talento digital. Presidenta ejecutiva: María Fernanda Quiñones.",
+    "por_que_informe": "COP 10.275 millones en contratos con el SENA; puerta a MercadoLibre y retailers omnicanal."
   },
   {
     "id": "aliados-cecodes",
@@ -204,7 +213,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad baja-media",
     "horizonte_informe": null,
-    "por_que": "Puerta a Bancolombia y Corona.",
+    "por_que": "Sirve de puente hacia Bancolombia y Corona a través de temas de sostenibilidad y talento.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": "A",
     "ruta_sugerida": "No explícito en el informe",
@@ -212,7 +221,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Cecodes reúne a empresas comprometidas con el desarrollo sostenible, en energía, minería, manufactura, construcción y finanzas. Sus afiliadas, como Bancolombia y Corona, necesitan que sus equipos incorporen la sostenibilidad en la forma de trabajar y en el desarrollo del talento.",
-    "que_hace": "Consejo Empresarial Colombiano para el Desarrollo Sostenible (1993), capítulo colombiano del World Business Council for Sustainable Development: reúne empresas de energía, minería, agroindustria, manufactura, construcción y finanzas. Contacto del informe: Edgar Solano."
+    "que_hace": "Consejo Empresarial Colombiano para el Desarrollo Sostenible (1993), capítulo colombiano del World Business Council for Sustainable Development: reúne empresas de energía, minería, agroindustria, manufactura, construcción y finanzas. Contacto del informe: Edgar Solano.",
+    "por_que_informe": "Puerta a Bancolombia y Corona."
   },
   {
     "id": "aliados-acp",
@@ -222,7 +232,7 @@
     "subindustria": "recursos_naturales",
     "sector_radar": "Prioridad media",
     "horizonte_informe": null,
-    "por_que": "Concentra Ecopetrol, Terpel y operadores.",
+    "por_que": "Reúne a Ecopetrol, Terpel y las demás petroleras; su gran cumbre de noviembre es el primer escenario público de la nueva dirección de Ecopetrol.",
     "dolor": "Nueva estrategia, modelo operativo y cultura en Ecopetrol.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Presencia en la IX Cumbre del Petróleo, Gas y Energía.",
@@ -236,7 +246,8 @@
       }
     ],
     "necesidad": "La ACP es el gremio del petróleo y el gas. Su empresa más grande, Ecopetrol, acaba de cambiar de presidente y debe definir en sus primeros cien días la estrategia, la forma de operar y la cultura que quiere tener; eso marca la agenda de todo el sector.",
-    "que_hace": "Asociación Colombiana del Petróleo y Gas: agrupa empresas públicas y privadas de exploración, producción, transporte y distribución de hidrocarburos y combustibles; su mesa directiva incluye a Drummond, Primax y SierraCol. Presidente: Frank Pearl. Organiza la IX Cumbre del Petróleo, Gas y Energía (4 al 6 de noviembre, Cartagena)."
+    "que_hace": "Asociación Colombiana del Petróleo y Gas: agrupa empresas públicas y privadas de exploración, producción, transporte y distribución de hidrocarburos y combustibles; su mesa directiva incluye a Drummond, Primax y SierraCol. Presidente: Frank Pearl. Organiza la IX Cumbre del Petróleo, Gas y Energía (4 al 6 de noviembre, Cartagena).",
+    "por_que_informe": "Concentra Ecopetrol, Terpel y operadores."
   },
   {
     "id": "aliados-acolgen",
@@ -246,7 +257,7 @@
     "subindustria": "energia",
     "sector_radar": "Prioridad media",
     "horizonte_informe": null,
-    "por_que": "Reúne EPM, Enel, Celsia y Vatia; preside el Consejo Gremial Nacional.",
+    "por_que": "Agrupa a EPM, Enel, Celsia y Vatia, y su presidenta dirige el Consejo Gremial Nacional, donde se coordina la posición del empresariado frente al Gobierno.",
     "dolor": "Posición gremial sobre el PND y agenda de reconstrucción.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Presencia sin venta; acceso al Consejo Gremial Nacional.",
@@ -254,7 +265,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "Acolgen es el gremio de las empresas que generan energía eléctrica, y su presidenta dirige en 2026 el Consejo Gremial Nacional. Desde allí los gremios definen su posición frente al Plan Nacional de Desarrollo y la agenda de reconstrucción después del terremoto.",
-    "que_hace": "Asociación Colombiana de Generadores de Energía Eléctrica. Su presidenta, Natalia Gutiérrez (exviceministra de Minas y expresidenta de la Agencia Nacional de Minería), preside en 2026 el Consejo Gremial Nacional, donde 34 gremios coordinan su posición frente al Gobierno."
+    "que_hace": "Asociación Colombiana de Generadores de Energía Eléctrica. Su presidenta, Natalia Gutiérrez (exviceministra de Minas y expresidenta de la Agencia Nacional de Minería), preside en 2026 el Consejo Gremial Nacional, donde 34 gremios coordinan su posición frente al Gobierno.",
+    "por_que_informe": "Reúne EPM, Enel, Celsia y Vatia; preside el Consejo Gremial Nacional."
   },
   {
     "id": "aliados-andeg",
@@ -264,7 +276,7 @@
     "subindustria": "energia",
     "sector_radar": "Prioridad media",
     "horizonte_informe": null,
-    "por_que": "Acceso a generadoras.",
+    "por_que": "Da presencia ante las empresas de generación térmica, una parte clave del sector energético.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Presencia, no venta.",
@@ -272,7 +284,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Andeg es el gremio de las generadoras térmicas, las plantas que garantizan que haya energía cuando faltan lluvias o sol. Su preocupación central es que el sistema eléctrico sea confiable, lo que exige equipos coordinados y preparados para responder sin fallas.",
-    "que_hace": "Asociación Nacional de Empresas Generadoras: gremio de la generación térmica, centrado en la confiabilidad del sistema y la energía firme. Presidente ejecutivo: Alejandro Castañeda."
+    "que_hace": "Asociación Nacional de Empresas Generadoras: gremio de la generación térmica, centrado en la confiabilidad del sistema y la energía firme. Presidente ejecutivo: Alejandro Castañeda.",
+    "por_que_informe": "Acceso a generadoras."
   },
   {
     "id": "aliados-cci",
@@ -282,7 +295,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad media",
     "horizonte_informe": null,
-    "por_que": "Concentra constructoras y concesionarios.",
+    "por_que": "Reúne a constructoras y concesionarios de infraestructura, el sector que lidera las obras de reconstrucción.",
     "dolor": "Reconstrucción como eje de la agenda.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Congreso de Infraestructura; decidir el abordaje ante posible competencia instalada.",
@@ -296,7 +309,8 @@
       }
     ],
     "necesidad": "La CCI es el gremio de la infraestructura: constructoras y concesionarios de vías, puentes y obras. La reconstrucción tras el terremoto (con más de 250 vías y 50 puentes afectados) se volvió el eje de su agenda y exige a sus empresas ejecutar más obras, más rápido.",
-    "que_hace": "Cámara Colombiana de la Infraestructura: gremio de constructoras, concesionarios y proveedores de infraestructura. Su Congreso Nacional es del 25 al 27 de noviembre."
+    "que_hace": "Cámara Colombiana de la Infraestructura: gremio de constructoras, concesionarios y proveedores de infraestructura. Su Congreso Nacional es del 25 al 27 de noviembre.",
+    "por_que_informe": "Concentra constructoras y concesionarios."
   },
   {
     "id": "aliados-naturgas",
@@ -306,7 +320,7 @@
     "subindustria": "servicios_publicos",
     "sector_radar": "Prioridad media",
     "horizonte_informe": null,
-    "por_que": "Puerta a Promigas y filiales.",
+    "por_que": "Es la puerta a Promigas y sus filiales: el presidente de Promigas preside también su consejo.",
     "dolor": "Coordinación de grupo y arbitraje contra Perú en Promigas.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Presencia sin venta; vía gremial hacia Promigas y luego directa.",
@@ -320,7 +334,8 @@
       }
     ],
     "necesidad": "Naturgas es el gremio de la cadena del gas natural. Su empresa más influyente, Promigas, maneja un grupo de varias filiales y un arbitraje internacional contra Perú, lo que le exige coordinar bien a sus empresas y a sus líderes.",
-    "que_hace": "Asociación Colombiana de Gas Natural: gremio de la cadena del gas, con 29 afiliadas según el informe. Presidenta: Luz Stella Murgas; su consejo lo preside Promigas por tercer año."
+    "que_hace": "Asociación Colombiana de Gas Natural: gremio de la cadena del gas, con 29 afiliadas según el informe. Presidenta: Luz Stella Murgas; su consejo lo preside Promigas por tercer año.",
+    "por_que_informe": "Puerta a Promigas y filiales."
   },
   {
     "id": "aliados-ser-colombia",
@@ -330,7 +345,7 @@
     "subindustria": "energia",
     "sector_radar": "Prioridad media",
     "horizonte_informe": null,
-    "por_que": "Puerta a renovables medianas, Erco y GreenYellow.",
+    "por_que": "Da acceso a las empresas medianas de energías renovables de la lista, como Erco y GreenYellow, que están en pleno crecimiento.",
     "dolor": "Escalamiento y decisiones de marco de sociedades vehículo.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Presencia sin venta; entrada gremial a renovables medianas.",
@@ -338,7 +353,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "SER Colombia reúne a más de 70 empresas de energías renovables, como solar y eólica. Muchas de ellas, como Erco y GreenYellow, crecen a través de varias sociedades por proyecto y dependen de decisiones de casas matrices, lo que les exige ordenar quién decide qué para poder escalar.",
-    "que_hace": "Asociación de Energías Renovables: agrupa a más de 70 empresas de energías renovables no convencionales. Su junta directiva incluye a GreenYellow, Erco, Enel y AES, y como suplentes a Promigas e ISA."
+    "que_hace": "Asociación de Energías Renovables: agrupa a más de 70 empresas de energías renovables no convencionales. Su junta directiva incluye a GreenYellow, Erco, Enel y AES, y como suplentes a Promigas e ISA.",
+    "por_que_informe": "Puerta a renovables medianas, Erco y GreenYellow."
   },
   {
     "id": "aliados-andesco",
@@ -348,7 +364,7 @@
     "subindustria": "servicios_publicos",
     "sector_radar": "Prioridad máxima",
     "horizonte_informe": null,
-    "por_que": "Mayor concentración de objetivos: EPM, ISA, GEB, Celsia, Enel, Promigas, Vatia y GreenYellow.",
+    "por_que": "Es el gremio con más empresas de la lista en un solo lugar: EPM, ISA, Grupo Energía Bogotá, Celsia, Enel, Promigas, Vatia y GreenYellow.",
     "dolor": "Continuidad operativa, cultura de seguridad y reconstrucción de redes.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Taller o estudio para la agenda 2027; programa sectorial SENA para operaciones 24/7 y reconstrucción de redes.",
@@ -367,7 +383,8 @@
       }
     ],
     "necesidad": "Andesco es el gremio de las empresas de servicios públicos: energía, gas, agua, aseo y telecomunicaciones. Tras el terremoto, sus empresas tienen que restablecer redes y mantener el servicio sin interrupciones, con turnos 24/7 y una fuerte cultura de seguridad, mientras se adaptan a la reforma laboral.",
-    "que_hace": "Asociación Nacional de Empresas de Servicios Públicos y Comunicaciones: agrupa a las empresas de energía, gas, agua, aseo y telecomunicaciones. Presidente: Camilo Sánchez Ortega; Mario Federico Pinedo es Gerente de Gestión del Conocimiento."
+    "que_hace": "Asociación Nacional de Empresas de Servicios Públicos y Comunicaciones: agrupa a las empresas de energía, gas, agua, aseo y telecomunicaciones. Presidente: Camilo Sánchez Ortega; Mario Federico Pinedo es Gerente de Gestión del Conocimiento.",
+    "por_que_informe": "Mayor concentración de objetivos: EPM, ISA, GEB, Celsia, Enel, Promigas, Vatia y GreenYellow."
   },
   {
     "id": "aliados-asobancaria",
@@ -377,7 +394,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad máxima",
     "horizonte_informe": null,
-    "por_que": "Concentra ocho cuentas bancarias del mapeo.",
+    "por_que": "Reúne a ocho bancos de la lista y permite entrar con un estudio o una charla de contenido, en vez de una propuesta comercial.",
     "dolor": "Brecha entre adopción y madurez digital; absorción organizacional del despliegue de alivios.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Estudio sectorial y sesión en el Congreso de Riesgos.",
@@ -406,7 +423,8 @@
       }
     ],
     "necesidad": "Asobancaria es el gremio de los bancos en Colombia. Sus afiliados han invertido mucho en herramientas digitales, pero sus organizaciones no siempre logran aprovecharlas: adoptan la tecnología, pero no cambian la forma de trabajar. Además, tras el terremoto del 10 de agosto los bancos están desplegando alivios financieros que exigen mucho a sus equipos.",
-    "que_hace": "Asociación Bancaria y de Entidades Financieras de Colombia (1936), el gremio único del sistema financiero. Tiene una línea de Transformación Digital e Inclusión Financiera y presentó al nuevo Gobierno una agenda de 45 propuestas. Presidente: Jonathan Malagón; su junta la preside Javier Suárez (Davivienda)."
+    "que_hace": "Asociación Bancaria y de Entidades Financieras de Colombia (1936), el gremio único del sistema financiero. Tiene una línea de Transformación Digital e Inclusión Financiera y presentó al nuevo Gobierno una agenda de 45 propuestas. Presidente: Jonathan Malagón; su junta la preside Javier Suárez (Davivienda).",
+    "por_que_informe": "Concentra ocho cuentas bancarias del mapeo."
   },
   {
     "id": "aliados-fenalco",
@@ -416,7 +434,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad máxima",
     "horizonte_informe": null,
-    "por_que": "Concentra cuentas de comercio; más de 30.000 comerciantes afectados.",
+    "por_que": "Agrupa a las grandes empresas de comercio de la lista (Éxito, D1, Ara, Terpel, Frisby, Ramo, Mercado Libre) y a más de 30.000 comerciantes afectados por el terremoto.",
     "dolor": "Recuperación empresarial y rediseño operativo ante la reforma laboral.",
     "necesidad_tipo": "A",
     "ruta_sugerida": "Gestión bilateral sin esperar nueva fecha del Congreso; proyecto de formación SENA.",
@@ -435,7 +453,8 @@
       }
     ],
     "necesidad": "Fenalco representa al comercio y los servicios, y el terremoto afectó a más de 30.000 comerciantes. Sus afiliados necesitan recuperarse y, al mismo tiempo, rediseñar su forma de operar (turnos, horarios y número de personas) para cumplir la reforma laboral sin perder productividad.",
-    "que_hace": "Federación Nacional de Comerciantes Empresarios: representa al comercio y los servicios. Presidente: Jaime Alberto Cabal; Katherine Tabares es Directora de Productividad y Competitividad y Paola Huertas, Directora de Talento Humano."
+    "que_hace": "Federación Nacional de Comerciantes Empresarios: representa al comercio y los servicios. Presidente: Jaime Alberto Cabal; Katherine Tabares es Directora de Productividad y Competitividad y Paola Huertas, Directora de Talento Humano.",
+    "por_que_informe": "Concentra cuentas de comercio; más de 30.000 comerciantes afectados."
   },
   {
     "id": "aliados-acopi",
@@ -445,7 +464,7 @@
     "subindustria": null,
     "sector_radar": "Prioridad no evaluada en el informe",
     "horizonte_informe": "120",
-    "por_que": "Mayor contratista público del bloque gremial; COP 130.145 millones, dos tercios con la Gobernación del Atlántico.",
+    "por_que": "Es el gremio que más contratos públicos ejecuta (más de COP 130.000 millones), así que Olivia podría participar como ejecutora en programas para pequeñas y medianas empresas.",
     "dolor": "Programas de productividad y continuidad para mipymes de zonas afectadas.",
     "necesidad_tipo": "E",
     "ruta_sugerida": "Programas con recursos territoriales.",
@@ -453,7 +472,8 @@
     "propuesta_gh": true,
     "eventos": [],
     "necesidad": "ACOPI es el gremio de las micro, pequeñas y medianas empresas. En las zonas afectadas por el terremoto hay cerca de 270.000 empresas expuestas, y ACOPI ejecuta programas con recursos públicos para ayudarlas a mantenerse en pie y mejorar su productividad.",
-    "que_hace": "Asociación Colombiana de las Micro, Pequeñas y Medianas Empresas (1952), con 11 seccionales. Es el mayor contratista público del bloque gremial: COP 130.145 millones en contratos, 64 % de ellos con la Gobernación del Atlántico. Presidenta nacional: Rosmery Quintero."
+    "que_hace": "Asociación Colombiana de las Micro, Pequeñas y Medianas Empresas (1952), con 11 seccionales. Es el mayor contratista público del bloque gremial: COP 130.145 millones en contratos, 64 % de ellos con la Gobernación del Atlántico. Presidenta nacional: Rosmery Quintero.",
+    "por_que_informe": "Mayor contratista público del bloque gremial; COP 130.145 millones, dos tercios con la Gobernación del Atlántico."
   },
   {
     "id": "mercados-alpina-bic",
@@ -467,7 +487,7 @@
       "aliados-anda"
     ],
     "horizonte_informe": "120",
-    "por_que": "Estructura directiva simplificada y obligaciones de reporte BIC.",
+    "por_que": "Su nueva estructura directiva y sus obligaciones como empresa BIC le exigen alinear a su gente con su propósito, un trabajo de cultura en el que Olivia es fuerte.",
     "dolor": "Reporte BIC y sanción SIC de COP 884 millones por verificar.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía ANDI / Anda hacia la dirección de la compañía.",
@@ -475,7 +495,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Alpina es una multinacional láctea colombiana que funciona como sociedad BIC, es decir, que debe reportar cómo cumple su propósito social y ambiental. Simplificó su equipo directivo y recibió una sanción de la Superintendencia de Industria y Comercio por publicidad (por verificar), así que necesita alinear decisiones, responsabilidades y comunicación comercial.",
-    "que_hace": "Multinacional láctea colombiana, sociedad BIC, con operación en Colombia y Estados Unidos y una estructura directiva simplificada."
+    "que_hace": "Multinacional láctea colombiana, sociedad BIC, con operación en Colombia y Estados Unidos y una estructura directiva simplificada.",
+    "por_que_informe": "Estructura directiva simplificada y obligaciones de reporte BIC."
   },
   {
     "id": "mercados-bavaria-ab-inbev",
@@ -489,7 +510,7 @@
       "aliados-fenalco"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Marco de cultura definido por casa matriz.",
+    "por_que": "Tiene siete cervecerías y más de 4.100 empleados en Colombia, y su reto es llevar a la operación diaria (plantas y ventas) una cultura definida en el exterior.",
     "dolor": "Ejecución local en planta y fuerza de ventas por turnos.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa con expectativa moderada; verificar acuerdos marco globales.",
@@ -497,7 +518,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Bavaria pertenece a la multinacional AB InBev, que define su cultura desde la casa matriz. El reto en Colombia es ponerla en práctica en sus siete cervecerías y en una fuerza de ventas que trabaja por turnos, donde el día a día de la operación es distinto al de las oficinas.",
-    "que_hace": "Empresa de AB InBev con siete cervecerías en Colombia y más de 4.100 colaboradores directos. Su marco de cultura proviene de la casa matriz."
+    "que_hace": "Empresa de AB InBev con siete cervecerías en Colombia y más de 4.100 colaboradores directos. Su marco de cultura proviene de la casa matriz.",
+    "por_que_informe": "Marco de cultura definido por casa matriz."
   },
   {
     "id": "mercados-grupo-nutresa-gilinski-ihc",
@@ -510,7 +532,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": ">180",
-    "por_que": "One Nutresa y reorganización de categorías.",
+    "por_que": "Está en plena reorganización y su transformación quedó a medio camino, lo que abre espacio para acompañar el cambio.",
     "dolor": "Oficina de transformación desmontada al año de crearse; trabajo de transformación inconcluso.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Investigación previa obligatoria; vía ANDI mientras tanto.",
@@ -518,7 +540,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Nutresa, el mayor grupo de alimentos procesados del país, cambió de dueños y reorganiza sus negocios bajo el plan «One Nutresa», que elimina tres estructuras regionales. Creó una oficina de transformación y la desmontó al año, así que el cambio quedó a medio camino y los equipos necesitan acompañamiento para terminarlo.",
-    "que_hace": "Mayor grupo de alimentos procesados del país, controlado por Gilinski e IHC. En 2026 aprobó absorber Nugil y JGDB Holding; con «One Nutresa» reorganiza categorías y elimina tres estructuras regionales."
+    "que_hace": "Mayor grupo de alimentos procesados del país, controlado por Gilinski e IHC. En 2026 aprobó absorber Nugil y JGDB Holding; con «One Nutresa» reorganiza categorías y elimina tres estructuras regionales.",
+    "por_que_informe": "One Nutresa y reorganización de categorías."
   },
   {
     "id": "mercados-productos-ramo",
@@ -531,7 +554,7 @@
       "aliados-fenalco"
     ],
     "horizonte_informe": "120",
-    "por_que": "Empresa familiar en profesionalización con cambio de control reciente; menor competencia de grandes consultoras.",
+    "por_que": "Es una empresa familiar que se está profesionalizando tras cambiar de dueños, y en ese segmento hay menos competencia de las grandes consultoras.",
     "dolor": "Profesionalización y productividad.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Fenalco, con agenda de productividad.",
@@ -545,7 +568,8 @@
       }
     ],
     "necesidad": "Ramo es una empresa familiar bogotana de ponqués y pasabocas con más de 70 años, que cambió de control hace poco. Está pasando de una gestión familiar a una más profesional, lo que exige definir roles, formar líderes y mejorar la productividad sin perder lo que la hizo exitosa.",
-    "que_hace": "Fabricante bogotano de ponqués y pasabocas con más de 70 años, en tránsito de gestión familiar a gobierno corporativo."
+    "que_hace": "Fabricante bogotano de ponqués y pasabocas con más de 70 años, en tránsito de gestión familiar a gobierno corporativo.",
+    "por_que_informe": "Empresa familiar en profesionalización con cambio de control reciente; menor competencia de grandes consultoras."
   },
   {
     "id": "mercados-ecopetrol-nacion-88-5",
@@ -558,7 +582,7 @@
       "aliados-acp"
     ],
     "horizonte_informe": "120",
-    "por_que": "Nueva cúpula y referencia como cliente regional de Olivia.",
+    "por_que": "Acaba de cambiar de presidente y ya figura como cliente de Olivia en la región, así que es un buen momento para conversar sobre su nueva etapa.",
     "dolor": "Definición de estrategia, modelo operativo y cultura en los primeros cien días.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Agenda de los primeros cien días y presencia en ACP; precisar alcance y vigencia de la relación regional, registrar proveedor y valorar riesgo reputacional. El horizonte vigente es 120 días; >180 días era la clasificación anterior.",
@@ -573,7 +597,8 @@
     ],
     "nota_contexto": "Olivia tiene contratos marco activos; validar horizonte",
     "necesidad": "Ecopetrol, la empresa más grande del país, acaba de cambiar de presidente. En sus primeros cien días debe definir la estrategia, la forma de operar y la cultura que quiere, y alinear a toda la organización detrás de ese rumbo.",
-    "que_hace": "Mayor empresa del país, con participación de la Nación del 88,5 %, dedicada a exploración, producción, transporte, refinación y petroquímica. Tiene estrategia a 2040 y atraviesa una transición de gobierno corporativo en 2026."
+    "que_hace": "Mayor empresa del país, con participación de la Nación del 88,5 %, dedicada a exploración, producción, transporte, refinación y petroquímica. Tiene estrategia a 2040 y atraviesa una transición de gobierno corporativo en 2026.",
+    "por_que_informe": "Nueva cúpula y referencia como cliente regional de Olivia."
   },
   {
     "id": "mercados-erco-energia-medellin-capital-extranjero",
@@ -586,7 +611,7 @@
       "aliados-ser-colombia"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Ocho sociedades vehículo.",
+    "por_que": "Crece rápido a través de ocho sociedades por proyecto y necesita una estructura que le permita escalar.",
     "dolor": "Escalamiento.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía SER Colombia.",
@@ -594,7 +619,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Erco es una empresa de energía solar de Medellín que nació en una universidad y hoy opera en siete regiones del país, Texas y Panamá, con ocho sociedades por proyecto. Creció más rápido que su estructura: necesita pasar de depender de sus fundadores a una organización que pueda escalar.",
-    "que_hace": "Empresa de tecnología energética de Medellín nacida en EAFIT en 2012. Desarrolla parques solares, generación y comercialización de energía limpia, almacenamiento y carga de vehículos eléctricos, con ocho sociedades vehículo, presencia en siete regiones del país y operación en Texas y Panamá."
+    "que_hace": "Empresa de tecnología energética de Medellín nacida en EAFIT en 2012. Desarrolla parques solares, generación y comercialización de energía limpia, almacenamiento y carga de vehículos eléctricos, con ocho sociedades vehículo, presencia en siete regiones del país y operación en Texas y Panamá.",
+    "por_que_informe": "Ocho sociedades vehículo."
   },
   {
     "id": "mercados-greenyellow-colombia-filial-francesa",
@@ -608,7 +634,7 @@
       "aliados-andesco"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Doce sociedades vehículo y decisiones de marco en Francia.",
+    "por_que": "Opera con doce sociedades por proyecto y depende de decisiones que se toman en Francia, lo que le exige ordenar quién decide qué en Colombia.",
     "dolor": "Decisiones de marco dependientes de casa matriz.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía SER Colombia / Andesco; expectativa moderada.",
@@ -616,7 +642,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "GreenYellow es la filial colombiana de una empresa francesa de eficiencia energética y energía solar, con más de 600 proyectos repartidos en doce sociedades. Las decisiones de fondo se toman en Francia, así que su reto es coordinar la operación en Colombia con los lineamientos de la casa matriz: dejar claro quién decide qué y cómo se gestionan los cambios entre proyectos.",
-    "que_hace": "Filial de la francesa GreenYellow, presente en Colombia desde 2012, dedicada a eficiencia energética, energía solar y baterías. Tiene más de 600 proyectos y doce sociedades vehículo."
+    "que_hace": "Filial de la francesa GreenYellow, presente en Colombia desde 2012, dedicada a eficiencia energética, energía solar y baterías. Tiene más de 600 proyectos y doce sociedades vehículo.",
+    "por_que_informe": "Doce sociedades vehículo y decisiones de marco en Francia."
   },
   {
     "id": "mercados-grupo-energia-bogota-distrito-de-bogota",
@@ -630,7 +657,7 @@
       "aliados-naturgas"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Equipo estable y participadas sin control operativo.",
+    "por_que": "Tiene un equipo directivo estable y el reto de transmitir su forma de trabajar a empresas que no controla del todo, incluida Enel Colombia.",
     "dolor": "Transmitir cultura y estándares de gestión a participadas de gas, transmisión y Enel.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa; registro en el portal de proveedores.",
@@ -638,7 +665,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "El Grupo Energía Bogotá, del Distrito, tiene empresas de gas y transmisión eléctrica en cuatro países y es dueño del 42,5 % de Enel Colombia. Su reto es transmitir una misma cultura y una misma forma de gestionar a empresas en las que no tiene el control del día a día.",
-    "que_hace": "Grupo del Distrito de Bogotá con transmisión eléctrica y gas en Colombia, Perú, Brasil y Guatemala, mediante TGI, Contugas, Electro Dunas y Conecta. Es dueño del 42,5 % de Enel Colombia."
+    "que_hace": "Grupo del Distrito de Bogotá con transmisión eléctrica y gas en Colombia, Perú, Brasil y Guatemala, mediante TGI, Contugas, Electro Dunas y Conecta. Es dueño del 42,5 % de Enel Colombia.",
+    "por_que_informe": "Equipo estable y participadas sin control operativo."
   },
   {
     "id": "mercados-isa-nacion",
@@ -651,7 +679,7 @@
       "aliados-andesco"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Gobierno corporativo en transición.",
+    "por_que": "Está en una transición de su dirección; conviene seguirla de cerca y conversar cuando tenga presidente en firme.",
     "dolor": "Recomposición de confianza y alineación directiva tras la anulación judicial.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Monitoreo, sin acercamiento hasta que se estabilice el gobierno corporativo; vía Andesco.",
@@ -660,7 +688,8 @@
     "eventos": [],
     "nota_contexto": "Olivia tiene contratos marco activos; validar horizonte",
     "necesidad": "ISA, el grupo de la Nación de transmisión eléctrica, vías y telecomunicaciones, quedó con su presidencia en transición porque un juez anuló la elección de su presidente. Mientras se define quién la dirige, necesita recuperar la confianza interna y alinear a su equipo directivo.",
-    "que_hace": "Grupo de la Nación dedicado a transmisión eléctrica, concesiones viales y telecomunicaciones, con unas 50 empresas en seis países y estrategia ISA2040. En 2026 atraviesa una transición de presidencia tras la anulación de su elección."
+    "que_hace": "Grupo de la Nación dedicado a transmisión eléctrica, concesiones viales y telecomunicaciones, con unas 50 empresas en seis países y estrategia ISA2040. En 2026 atraviesa una transición de presidencia tras la anulación de su elección.",
+    "por_que_informe": "Gobierno corporativo en transición."
   },
   {
     "id": "mercados-addi-capital-extranjero",
@@ -673,7 +702,7 @@
       "aliados-colombia-fintech"
     ],
     "horizonte_informe": "120",
-    "por_que": "Escalamiento regional.",
+    "por_que": "Crece rápido en la región y necesita estructura y líderes que acompañen ese crecimiento.",
     "dolor": "Estructura y liderazgo para escalar.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Colombia Fintech; ticket medio-bajo y valor de acceso múltiple.",
@@ -681,7 +710,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Addi es una empresa de «compra ahora, paga después» con unos 490 empleados que acaba de recibir una inversión de US$86 millones para crecer en la región. Necesita que su estructura y sus líderes crezcan al mismo ritmo que el negocio.",
-    "que_hace": "Empresa de tecnología financiera de «compra ahora, paga después», constituida como compañía de financiamiento desde 2024 y enfocada en Colombia. Tiene unos 490 empleados y una ronda de inversión Serie D de US$86 millones en 2026."
+    "que_hace": "Empresa de tecnología financiera de «compra ahora, paga después», constituida como compañía de financiamiento desde 2024 y enfocada en Colombia. Tiene unos 490 empleados y una ronda de inversión Serie D de US$86 millones en 2026.",
+    "por_que_informe": "Escalamiento regional."
   },
   {
     "id": "mercados-banco-falabella-matriz-chilena",
@@ -694,7 +724,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Decisiones de marco en Chile.",
+    "por_que": "Sus decisiones principales se toman en Chile, y necesita aplicarlas bien en Colombia.",
     "dolor": "Decisiones de marco condicionadas por casa matriz.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Asobancaria, con expectativa moderada.",
@@ -702,7 +732,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Banco Falabella pertenece a un grupo chileno de comercio minorista, que decide desde Chile los lineamientos principales. En 2025 Corona vendió su participación y el banco quedó bajo control total de Falabella; su reto es aplicar esos lineamientos en la operación colombiana.",
-    "que_hace": "Banco de matriz chilena vinculado al comercio minorista. Tras la venta del 31 % de Organización Corona en 2025, quedó bajo control total de Falabella."
+    "que_hace": "Banco de matriz chilena vinculado al comercio minorista. Tras la venta del 31 % de Organización Corona en 2025, quedó bajo control total de Falabella.",
+    "por_que_informe": "Decisiones de marco en Chile."
   },
   {
     "id": "mercados-banco-gnb-sudameris-grupo-gilinski",
@@ -715,7 +746,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Grupo en reconfiguración de portafolio, con Nutresa y Lulo.",
+    "por_que": "Su grupo está reorganizando sus negocios (incluye Nutresa y Lulo Bank), lo que suele exigir alinear estructura y cultura.",
     "dolor": "Reconfiguración de portafolio.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Asobancaria; monitorear.",
@@ -723,7 +754,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Banco GNB Sudameris es el banco del Grupo Gilinski, que está reorganizando sus negocios en Colombia (incluye Nutresa y Lulo Bank). Cuando un grupo cambia su portafolio, sus empresas suelen necesitar alinear su estructura, sus responsabilidades y su cultura con la nueva estrategia.",
-    "que_hace": "Banco principal del Grupo Gilinski en Colombia, surgido de la fusión Sudameris–Tequendama de 2005. Tiene filiales en Perú y Paraguay y la red Servibanca, mientras el grupo reorganiza su portafolio."
+    "que_hace": "Banco principal del Grupo Gilinski en Colombia, surgido de la fusión Sudameris–Tequendama de 2005. Tiene filiales en Perú y Paraguay y la red Servibanca, mientras el grupo reorganiza su portafolio.",
+    "por_que_informe": "Grupo en reconfiguración de portafolio, con Nutresa y Lulo."
   },
   {
     "id": "mercados-banco-popular-grupo-aval",
@@ -736,7 +768,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Banco tradicional del Grupo Aval.",
+    "por_que": "Es un banco tradicional que necesita ganar eficiencia y renovar su cultura de trabajo.",
     "dolor": "Eficiencia y cultura.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Asobancaria, después de Banco de Bogotá.",
@@ -745,7 +777,8 @@
     "eventos": [],
     "nota_contexto": "Diego lo señala como oportunidad de venta inmediata",
     "necesidad": "Banco Popular, del Grupo Aval, es líder en créditos de libranza y trabaja mucho con entidades públicas. Es un banco tradicional que necesita ser más eficiente y renovar su cultura de trabajo; su propio plan de transformación incluye un pilar dedicado a las personas.",
-    "que_hace": "Banco del Grupo Aval (93,7 %), líder en libranzas y proveedor financiero de entidades públicas. Su estrategia de transformación declara cuatro pilares, uno de ellos de personas."
+    "que_hace": "Banco del Grupo Aval (93,7 %), líder en libranzas y proveedor financiero de entidades públicas. Su estrategia de transformación declara cuatro pilares, uno de ellos de personas.",
+    "por_que_informe": "Banco tradicional del Grupo Aval."
   },
   {
     "id": "mercados-banco-de-bogota-grupo-aval",
@@ -758,7 +791,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": "120",
-    "por_que": "Finanzas abiertas y transformación digital.",
+    "por_que": "Ha invertido en tecnología pero su organización no la aprovecha del todo, y debe implementar las finanzas abiertas que exige la regulación.",
     "dolor": "Brecha entre adopción y madurez digital.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Asobancaria hasta verificar el interlocutor.",
@@ -766,7 +799,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Banco de Bogotá, el principal banco del Grupo Aval, ha invertido en tecnología, pero su organización no la aprovecha del todo. Además debe implementar las finanzas abiertas que exige un decreto de 2026, lo que obliga a cambiar procesos, datos y forma de decidir.",
-    "que_hace": "Principal banco del Grupo Aval. Enfrenta una brecha entre adopción y madurez digital y la obligación de implementar finanzas abiertas bajo el Decreto 368 de 2026."
+    "que_hace": "Principal banco del Grupo Aval. Enfrenta una brecha entre adopción y madurez digital y la obligación de implementar finanzas abiertas bajo el Decreto 368 de 2026.",
+    "por_que_informe": "Finanzas abiertas y transformación digital."
   },
   {
     "id": "mercados-bancolombia-grupo-cibest",
@@ -781,7 +815,7 @@
       "aliados-cecodes"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Holding multipaís con mandato de transformación y despliegue de alivios tras el terremoto.",
+    "por_que": "Su nuevo grupo multipaís tiene un mandato de transformación, y sus equipos atienden un gran volumen de alivios por el terremoto.",
     "dolor": "Gobernanza entre matriz y filiales; absorción organizacional de más de $5 billones en nuevas financiaciones.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa con material a medida; registro de proveedor separado de la conversación de contenido.",
@@ -789,7 +823,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Bancolombia hace parte de Grupo Cibest, que desde 2025 reúne bancos y empresas digitales en varios países (Nequi, Banistmo, Banco Agrícola, entre otros). Debe definir qué decide la matriz y qué cada filial, y al mismo tiempo sus equipos atienden más de $5 billones en créditos de alivio para afectados por el terremoto.",
-    "que_hace": "Banco de 150 años integrado a Grupo Cibest, que opera desde 2025 como matriz de Bancolombia, Banistmo, Banco Agrícola, BAM, Nequi, Wompi, Wenia y Renting."
+    "que_hace": "Banco de 150 años integrado a Grupo Cibest, que opera desde 2025 como matriz de Bancolombia, Banistmo, Banco Agrícola, BAM, Nequi, Wompi, Wenia y Renting.",
+    "por_que_informe": "Holding multipaís con mandato de transformación y despliegue de alivios tras el terremoto."
   },
   {
     "id": "mercados-bold-cf-compania-de-financiamiento",
@@ -802,7 +837,7 @@
       "aliados-colombia-fintech"
     ],
     "horizonte_informe": "120",
-    "por_que": "Compañía de financiamiento reciente.",
+    "por_que": "Pasó hace poco de startup a entidad financiera vigilada, lo que le exige formalizar procesos y cultura.",
     "dolor": "Formalización de procesos y cultura.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Colombia Fintech.",
@@ -810,7 +845,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Bold empezó como empresa de datáfonos y pagos para más de 350.000 pequeños negocios, y desde 2023 también es una compañía de financiamiento vigilada. Pasar de startup a entidad regulada exige formalizar procesos y una cultura de trabajo más ordenada.",
-    "que_hace": "Empresa de tecnología de pagos, datáfonos y servicios para más de 350.000 mipymes. Bold CF opera como compañía de financiamiento con licencia en firme desde 2023."
+    "que_hace": "Empresa de tecnología de pagos, datáfonos y servicios para más de 350.000 mipymes. Bold CF opera como compañía de financiamiento con licencia en firme desde 2023.",
+    "por_que_informe": "Compañía de financiamiento reciente."
   },
   {
     "id": "mercados-davivienda-group-banco-davivienda-grupo-bolivar",
@@ -823,7 +859,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Integración de las operaciones de Scotiabank en varios países.",
+    "por_que": "Está integrando las operaciones de Scotiabank en varios países, un reto de unir culturas y equipos.",
     "dolor": "Integración cultural multipaís con la operación de alivios encima.",
     "necesidad_tipo": null,
     "ruta_sugerida": "30–60 días por contenido en Asobancaria; 120 días por vía directa. Puente: Constructora Bolívar.",
@@ -832,7 +868,8 @@
     "eventos": [],
     "nota_contexto": "Diego indica que la integración se maneja internamente",
     "necesidad": "Davivienda compró las operaciones de Scotiabank en Colombia, Costa Rica y Panamá y debe terminar de integrarlas en el segundo semestre de 2026. Eso significa unir las culturas, los equipos y las formas de trabajar de dos bancos en varios países. Al mismo tiempo debe atender los alivios financieros para los clientes afectados por el terremoto del 10 de agosto.",
-    "que_hace": "Grupo bancario del Grupo Bolívar que cerró en 2025 la compra de Scotiabank en Colombia, Costa Rica y Panamá, bajo la marca DaviBank. Completa la integración en el segundo semestre de 2026, con más de 29 millones de clientes."
+    "que_hace": "Grupo bancario del Grupo Bolívar que cerró en 2025 la compra de Scotiabank en Colombia, Costa Rica y Panamá, bajo la marca DaviBank. Completa la integración en el segundo semestre de 2026, con más de 29 millones de clientes.",
+    "por_que_informe": "Integración de las operaciones de Scotiabank en varios países."
   },
   {
     "id": "mercados-lulo-bank-grupo-gilinski",
@@ -846,7 +883,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": "120",
-    "por_que": "Banco digital que pasa del modo fundador al modo organización.",
+    "por_que": "Es un banco digital que necesita dejar de depender de sus fundadores para seguir creciendo.",
     "dolor": "Paso del modo fundador al modo organización.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada institucional por Colombia Fintech; puente de grupo hacia GNB y Nutresa.",
@@ -854,7 +891,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Lulo Bank es el primer banco 100 % digital con licencia en Colombia, con unos 600.000 clientes, y en 2026 empezó a atender empresas. Como muchas empresas que crecen rápido, necesita dejar de depender de sus fundadores y construir una organización con roles y líderes claros.",
-    "que_hace": "Primer banco totalmente digital con licencia en Colombia, del Grupo Gilinski. Tiene unos 600.000 clientes e ingresó en 2026 a la banca empresarial."
+    "que_hace": "Primer banco totalmente digital con licencia en Colombia, del Grupo Gilinski. Tiene unos 600.000 clientes e ingresó en 2026 a la banca empresarial.",
+    "por_que_informe": "Banco digital que pasa del modo fundador al modo organización."
   },
   {
     "id": "mercados-tuya-cibest-50-bancolombia",
@@ -867,7 +905,7 @@
       "aliados-asobancaria"
     ],
     "horizonte_informe": "120",
-    "por_que": "Analítica y experiencia en crédito de consumo.",
+    "por_que": "Busca mejorar su uso de datos y la experiencia de sus clientes de crédito, en un momento en que parte de su cartera está en zonas afectadas.",
     "dolor": "Cartera expuesta en las zonas afectadas.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa, reforzada por Asobancaria.",
@@ -875,7 +913,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Tuya, de Bancolombia y Grupo Éxito, es el mayor emisor de tarjetas de crédito del país (Tarjeta Éxito, Carulla, Alkosto). Parte de su cartera está en las zonas afectadas por el terremoto, y necesita apoyarse en datos y en una mejor experiencia de cliente para gestionarla.",
-    "que_hace": "Compañía de financiamiento con participación del 50 % de Bancolombia y del 50 % de Grupo Éxito. Es el mayor emisor de tarjetas de crédito del país, con Tarjeta Éxito, Carulla y Alkosto."
+    "que_hace": "Compañía de financiamiento con participación del 50 % de Bancolombia y del 50 % de Grupo Éxito. Es el mayor emisor de tarjetas de crédito del país, con Tarjeta Éxito, Carulla y Alkosto.",
+    "por_que_informe": "Analítica y experiencia en crédito de consumo."
   },
   {
     "id": "mercados-acesco-colombia-familiar",
@@ -888,7 +927,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Acero y cubiertas como insumo directo de la reconstrucción.",
+    "por_que": "Fabrica acero y tejas, insumos directos de la reconstrucción, así que su demanda y sus exigencias van a crecer.",
     "dolor": "Profesionalización de la industria familiar.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía ANDI.",
@@ -896,7 +935,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Acesco es una empresa familiar de tercera generación que fabrica láminas, tejas y tubería de acero en Malambo, Atlántico. Sus productos son insumos directos de la reconstrucción, lo que le exige producir y entregar más, y avanzar en la profesionalización de su gestión.",
-    "que_hace": "Empresa familiar de tercera generación con planta en Malambo, Atlántico. Transforma acero en láminas, cubiertas y tubería para construcción."
+    "que_hace": "Empresa familiar de tercera generación con planta en Malambo, Atlántico. Transforma acero en láminas, cubiertas y tubería para construcción.",
+    "por_que_informe": "Acero y cubiertas como insumo directo de la reconstrucción."
   },
   {
     "id": "mercados-carvajal-grupo-caleno",
@@ -909,7 +949,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": "120",
-    "por_que": "Adopción del marco de experiencia de personas y casa matriz en Cali.",
+    "por_que": "Ya trabaja con un enfoque de «experiencia de las personas», el mismo que propone Olivia, y tiene su sede en Cali.",
     "dolor": "Continuidad operativa en zona afectada y experiencia de personas.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa una vez verificado el interlocutor; contratar con las operativas Pulpa y Papel y Empaques.",
@@ -917,7 +957,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Carvajal es un grupo familiar caleño con más de 15.000 empleados en 10 países. Ya trabaja con un enfoque de «experiencia de las personas», el mismo que propone Olivia, y su sede está en Cali, en la zona afectada por el terremoto, así que necesita asegurar la continuidad de sus operaciones.",
-    "que_hace": "Grupo familiar caleño fundado en 1904, presente en 10 países y con más de 15.000 empleados. Opera en empaques, pulpa y papel, tecnología y servicios e inmobiliario."
+    "que_hace": "Grupo familiar caleño fundado en 1904, presente en 10 países y con más de 15.000 empleados. Opera en empaques, pulpa y papel, tecnología y servicios e inmobiliario.",
+    "por_que_informe": "Adopción del marco de experiencia de personas y casa matriz en Cali."
   },
   {
     "id": "mercados-cementos-argos-grupo-argos",
@@ -931,7 +972,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Escisión entre Argos Materials y Argos Latam mientras crece la demanda de reconstrucción.",
+    "por_que": "Se está dividiendo en dos empresas mientras crece la demanda de cemento por la reconstrucción, un reto organizacional de gran tamaño.",
     "dolor": "Asignar personas, procesos y sistemas durante la escisión con crecimiento esperado del 9 %.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa al más alto nivel con material a medida; reforzar con Camacol, ANDI y Cámara del Cemento y el Concreto.",
@@ -945,7 +986,8 @@
       }
     ],
     "necesidad": "Cementos Argos se está separando en dos compañías: una en Estados Unidos y otra en 15 países de América Latina. Debe decidir a cuál pertenece cada persona, proceso y sistema, y hacerlo mientras la demanda de cemento para la reconstrucción está en máximos y espera crecer 9 %.",
-    "que_hace": "Cementera con operación en Colombia, Centroamérica, el Caribe y Estados Unidos. El en 2026 anunció su separación en Argos Materials, en Estados Unidos, y Argos Latam, en 15 países, con un plazo estimado de 24 meses."
+    "que_hace": "Cementera con operación en Colombia, Centroamérica, el Caribe y Estados Unidos. El en 2026 anunció su separación en Argos Materials, en Estados Unidos, y Argos Latam, en 15 países, con un plazo estimado de 24 meses.",
+    "por_que_informe": "Escisión entre Argos Materials y Argos Latam mientras crece la demanda de reconstrucción."
   },
   {
     "id": "mercados-challenger-familiar-bogota",
@@ -958,7 +1000,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Electrodomésticos e industria familiar en profesionalización.",
+    "por_que": "Es una industria familiar que se está profesionalizando y que debe fortalecer su cultura de cumplimiento.",
     "dolor": "Dos sanciones SIC y profesionalización.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía ANDI / ACAIRE.",
@@ -966,7 +1008,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Challenger es un fabricante familiar bogotano de electrodomésticos y muebles de cocina, con más de 1.600 empleados. Tiene dos sanciones de la Superintendencia de Industria y Comercio y está profesionalizando su gestión, lo que exige fortalecer a sus mandos y su cultura de cumplimiento.",
-    "que_hace": "Fabricante familiar bogotano de electrodomésticos y muebles de cocina, fundado en 1966, con más de 1.600 empleos directos."
+    "que_hace": "Fabricante familiar bogotano de electrodomésticos y muebles de cocina, fundado en 1966, con más de 1.600 empleos directos.",
+    "por_que_informe": "Electrodomésticos e industria familiar en profesionalización."
   },
   {
     "id": "mercados-constructora-bolivar-grupo-bolivar",
@@ -979,7 +1022,7 @@
       "aliados-camacol"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Vivienda de interés social en el plan de reconstrucción y grupo en transformación.",
+    "por_que": "La vivienda de interés social está en el centro del plan de reconstrucción, y su grupo está en plena transformación.",
     "dolor": "Capacidad de ejecución de la reconstrucción y transformación de grupo.",
     "necesidad_tipo": null,
     "ruta_sugerida": "30–60 días por vía gremial en Camacol; 120 días por vía directa. Congreso de construcción con recuperación regional en agenda.",
@@ -993,7 +1036,8 @@
       }
     ],
     "necesidad": "Constructora Bolívar construye vivienda de interés social, que está en el centro del plan de reconstrucción tras el terremoto. Necesita aumentar su capacidad de ejecución y coordinar mejor obras, equipos y proveedores, en un grupo (Bolívar) que además está integrando a Scotiabank a través de Davivienda.",
-    "que_hace": "Constructora de vivienda del Grupo Bolívar, con más de 200.000 familias atendidas y proyectos en más de diez ciudades y municipios."
+    "que_hace": "Constructora de vivienda del Grupo Bolívar, con más de 200.000 familias atendidas y proyectos en más de diez ciudades y municipios.",
+    "por_que_informe": "Vivienda de interés social en el plan de reconstrucción y grupo en transformación."
   },
   {
     "id": "mercados-industrias-haceb-familiar-medellin",
@@ -1006,7 +1050,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": "120",
-    "por_que": "Empresa familiar en profesionalización y reposición de electrodomésticos en zonas afectadas.",
+    "por_que": "Es una empresa familiar que se está profesionalizando y que podría vender más por la reposición de electrodomésticos en las zonas afectadas.",
     "dolor": "Competencia de importaciones asiáticas y profesionalización.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía ANDI Antioquia.",
@@ -1014,7 +1058,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Haceb es un fabricante familiar antioqueño de electrodomésticos con unos 3.700 empleados. Compite con importaciones asiáticas más baratas y está profesionalizando su gestión; además, la reposición de electrodomésticos en las zonas afectadas puede aumentar su demanda.",
-    "que_hace": "Fabricante familiar antioqueño de electrodomésticos con planta en Copacabana, unos 3.700 empleados y exportaciones a Estados Unidos, la región Andina y el Caribe."
+    "que_hace": "Fabricante familiar antioqueño de electrodomésticos con planta en Copacabana, unos 3.700 empleados y exportaciones a Estados Unidos, la región Andina y el Caribe.",
+    "por_que_informe": "Empresa familiar en profesionalización y reposición de electrodomésticos en zonas afectadas."
   },
   {
     "id": "mercados-organizacion-corona-holding",
@@ -1029,7 +1074,7 @@
       "aliados-cecodes"
     ],
     "horizonte_informe": "120",
-    "por_que": "Manufactura de materiales con demanda de reconstrucción al alza.",
+    "por_que": "Fabrica materiales cuya demanda sube con la reconstrucción, mientras automatiza sus plantas y se adapta a la reforma laboral.",
     "dolor": "Automatización y reforma laboral.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Camacol o ANDI hacia las sociedades operativas.",
@@ -1043,7 +1088,8 @@
       }
     ],
     "necesidad": "Corona es un grupo de más de 140 años que fabrica materiales de construcción, con más de 16.800 empleados. La reconstrucción aumenta la demanda de sus productos, mientras automatiza sus plantas y se adapta a la reforma laboral, lo que cambia la forma de trabajar de mucha gente.",
-    "que_hace": "Grupo multinacional con más de 140 años, plantas en Colombia, Estados Unidos, Centroamérica y México y más de 16.800 empleos directos. En 2025 vendió sus participaciones en Falabella para enfocarse en su negocio principal."
+    "que_hace": "Grupo multinacional con más de 140 años, plantas en Colombia, Estados Unidos, Centroamérica y México y más de 16.800 empleos directos. En 2025 vendió sus participaciones en Falabella para enfocarse en su negocio principal.",
+    "por_que_informe": "Manufactura de materiales con demanda de reconstrucción al alza."
   },
   {
     "id": "mercados-plastilene-familiar-soacha",
@@ -1056,7 +1102,7 @@
       "aliados-acoplasticos"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Empaques flexibles e industria familiar en profesionalización.",
+    "por_que": "Es una industria familiar de empaques que se está profesionalizando y debe volverse más sostenible y automatizada.",
     "dolor": "Sostenibilidad y automatización.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Acoplásticos.",
@@ -1064,7 +1110,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Plastilene es un grupo familiar de Soacha que fabrica empaques flexibles en siete plantas. Debe hacer empaques más sostenibles y automatizar su producción, y para eso sus equipos de planta tienen que aprender nuevas formas de trabajar.",
-    "que_hace": "Grupo familiar de empaques flexibles y películas fundado en 1957, con sede en Soacha y siete plantas en Colombia, Ecuador y Guatemala."
+    "que_hace": "Grupo familiar de empaques flexibles y películas fundado en 1957, con sede en Soacha y siete plantas en Colombia, Ecuador y Guatemala.",
+    "por_que_informe": "Empaques flexibles e industria familiar en profesionalización."
   },
   {
     "id": "mercados-superpolo-jv-marcopolo-fanalca",
@@ -1077,7 +1124,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Carrocerías con estándares de casa matriz.",
+    "por_que": "Lidera la fabricación de buses en el país y está produciendo buses eléctricos con estándares de sus casas matrices.",
     "dolor": "Ejecución de estándares de casa matriz.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía ANDI / ACAIRE.",
@@ -1085,7 +1132,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Superpolo fabrica carrocerías de buses en Cota y tiene más del 45 % del mercado nacional. Está lanzando buses eléctricos y de hidrógeno con estándares de sus casas matrices, lo que exige preparar a sus líderes y equipos de planta para producir algo nuevo.",
-    "que_hace": "Alianza Marcopolo–Fanalca con planta de carrocerías en Cota, más del 45 % del mercado nacional y una nueva línea de buses eléctricos y de hidrógeno."
+    "que_hace": "Alianza Marcopolo–Fanalca con planta de carrocerías en Cota, más del 45 % del mercado nacional y una nueva línea de buses eléctricos y de hidrógeno.",
+    "por_que_informe": "Carrocerías con estándares de casa matriz."
   },
   {
     "id": "mercados-tecnoglass-nasdaq-familia-daes",
@@ -1099,7 +1147,7 @@
       "aliados-camacol"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Presión bursátil sobre la administración.",
+    "por_que": "La presión de la bolsa sobre su administración puede abrir o cerrar la puerta a un trabajo de cambio, según cómo se plantee.",
     "dolor": "Presión bursátil que puede abrir o cerrar la conversación.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía ANDI / Camacol.",
@@ -1113,7 +1161,8 @@
       }
     ],
     "necesidad": "Tecnoglass fabrica vidrio y ventanas en Barranquilla y vende el 95 % en Estados Unidos. Aunque sus ventas son récord, los aranceles y una caída de cerca del 32 % de su acción en la bolsa presionan a su administración, lo que puede abrir o cerrar la puerta a un trabajo de cambio cultural.",
-    "que_hace": "Fabricante de vidrio y ventanería de Barranquilla que cotiza en Nasdaq. Estados Unidos representa el 95 % de sus ventas, con récord en 2026, presión arancelaria y una caída cercana al 32 % de la acción en un año."
+    "que_hace": "Fabricante de vidrio y ventanería de Barranquilla que cotiza en Nasdaq. Estados Unidos representa el 95 % de sus ventas, con récord en 2026, presión arancelaria y una caída cercana al 32 % de la acción en un año.",
+    "por_que_informe": "Presión bursátil sobre la administración."
   },
   {
     "id": "mercados-anglogold-ashanti-colombia",
@@ -1124,7 +1173,7 @@
     "sector_radar": "Minero",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Grupo minero con el proyecto Quebradona en Antioquia; su desarrollo exige coordinar equipos técnicos y preparar líderes para el cambio.",
+    "por_que": "Es un grupo minero internacional con un gran proyecto en Antioquia, cuyo desarrollo exige coordinar equipos técnicos y preparar líderes.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1132,7 +1181,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "AngloGold Ashanti es un grupo minero internacional con el proyecto Quebradona en Jericó, Antioquia, que aún no es una mina en producción. Desarrollar un proyecto de este tamaño exige coordinar equipos técnicos, definir responsabilidades y preparar a sus líderes para el cambio.",
-    "que_hace": "Grupo minero con el proyecto Quebradona en Jericó, Antioquia; no se presenta como mina productiva."
+    "que_hace": "Grupo minero con el proyecto Quebradona en Jericó, Antioquia; no se presenta como mina productiva.",
+    "por_que_informe": "Grupo minero con el proyecto Quebradona en Antioquia; su desarrollo exige coordinar equipos técnicos y preparar líderes para el cambio."
   },
   {
     "id": "mercados-aris-mining",
@@ -1143,7 +1193,7 @@
     "sector_radar": "Minero",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Está ampliando sus minas de oro en Segovia y Marmato, lo que exige nuevas capacidades y liderazgo operativo.",
+    "por_que": "Está ampliando sus minas de oro en Segovia y Marmato, y crecer exige nuevas capacidades en sus equipos y líderes.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1151,7 +1201,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Aris Mining explota oro en minas subterráneas de Segovia y Marmato y está ampliando ambas operaciones. Crecer exige nuevas capacidades en los equipos, mejor coordinación entre áreas y líderes operativos preparados para el cambio.",
-    "que_hace": "Compañía minera de oro con operaciones subterráneas en Segovia y Marmato, Colombia, y proyectos de ampliación en ambas."
+    "que_hace": "Compañía minera de oro con operaciones subterráneas en Segovia y Marmato, Colombia, y proyectos de ampliación en ambas.",
+    "por_que_informe": "Está ampliando sus minas de oro en Segovia y Marmato, lo que exige nuevas capacidades y liderazgo operativo."
   },
   {
     "id": "mercados-cerrejon",
@@ -1162,7 +1213,7 @@
     "sector_radar": "Minero",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Opera una cadena integrada de mina, tren y puerto en La Guajira, con necesidades de coordinación, seguridad y liderazgo.",
+    "por_que": "Su operación en La Guajira une mina, tren y puerto, que deben trabajar coordinados y con una fuerte cultura de seguridad.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1170,7 +1221,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Cerrejón extrae, transporta y exporta carbón desde La Guajira, en una operación que integra mina, tren y puerto. Mantener a esos equipos coordinados, con una cultura de seguridad sólida y prácticas compartidas, es clave para su operación.",
-    "que_hace": "Extrae, transporta y exporta carbón desde La Guajira, Colombia."
+    "que_hace": "Extrae, transporta y exporta carbón desde La Guajira, Colombia.",
+    "por_que_informe": "Opera una cadena integrada de mina, tren y puerto en La Guajira, con necesidades de coordinación, seguridad y liderazgo."
   },
   {
     "id": "mercados-drummond",
@@ -1183,7 +1235,7 @@
       "aliados-acp"
     ],
     "horizonte_informe": null,
-    "por_que": "Hace parte de la dirección de la ACP y conecta minería y logística en el Cesar y el Magdalena.",
+    "por_que": "Explota y transporta carbón en el Cesar y el Magdalena, y hace parte de la dirección del gremio del petróleo y el gas (ACP).",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1191,7 +1243,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Drummond extrae, transporta y vende carbón desde el Cesar y el Magdalena, y forma parte de la dirección de la ACP, el gremio del petróleo y el gas. Su operación conecta minas y logística, lo que exige coordinación entre equipos, liderazgo y una fuerte cultura de seguridad.",
-    "que_hace": "Extrae, transporta y comercializa carbón con operaciones en Cesar y Magdalena, Colombia."
+    "que_hace": "Extrae, transporta y comercializa carbón con operaciones en Cesar y Magdalena, Colombia.",
+    "por_que_informe": "Hace parte de la dirección de la ACP y conecta minería y logística en el Cesar y el Magdalena."
   },
   {
     "id": "mercados-fedeesmeraldas",
@@ -1202,7 +1255,7 @@
     "sector_radar": "Minero",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Gremio de las esmeraldas, incluido en el frente de «gremios como cliente» del informe.",
+    "por_que": "Es un gremio que podría contratar apoyo para fortalecer su propio equipo, dentro del frente de «gremios como clientes» del informe.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1210,7 +1263,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Fedeesmeraldas es el gremio que agrupa a productores, comerciantes y exportadores de esmeraldas. Como gremio, necesita fortalecer su propio equipo para diseñar y ejecutar programas que ayuden a su sector.",
-    "que_hace": "Federación Nacional de Esmeraldas de Colombia: gremio que agrupa productores, comercializadores y exportadores de esmeraldas. Se incluye como gremio como cliente."
+    "que_hace": "Federación Nacional de Esmeraldas de Colombia: gremio que agrupa productores, comercializadores y exportadores de esmeraldas. Se incluye como gremio como cliente.",
+    "por_que_informe": "Gremio de las esmeraldas, incluido en el frente de «gremios como cliente» del informe."
   },
   {
     "id": "mercados-grupo-coquecol",
@@ -1221,7 +1275,7 @@
     "sector_radar": "Minero",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Productor de carbón y coque cuya cadena de valor requiere coordinación, seguridad y liderazgo operativo.",
+    "por_que": "Es un productor colombiano de carbón y coque cuya operación necesita coordinación, seguridad y liderazgo.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1229,7 +1283,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Coquecol es un grupo colombiano que produce y vende carbón y coque para la industria del acero. Su cadena va de la mina a la planta y a la venta, y necesita equipos bien coordinados, con cultura de seguridad y líderes operativos que impulsen mejoras.",
-    "que_hace": "Grupo colombiano dedicado a la producción y comercialización de carbón y coque metalúrgico."
+    "que_hace": "Grupo colombiano dedicado a la producción y comercialización de carbón y coque metalúrgico.",
+    "por_que_informe": "Productor de carbón y coque cuya cadena de valor requiere coordinación, seguridad y liderazgo operativo."
   },
   {
     "id": "mercados-mineros-sa",
@@ -1240,7 +1295,7 @@
     "sector_radar": "Minero",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Grupo de minería de oro aluvial con equipos de campo donde la seguridad y el liderazgo son claves.",
+    "por_que": "Es un grupo de minería de oro con equipos de campo donde la seguridad y el liderazgo son claves.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1248,7 +1303,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Mineros S.A. es un grupo de minería de oro con operación aluvial en Colombia, es decir, que extrae oro de los ríos. Sus equipos trabajan en campo, donde la seguridad, el liderazgo y el aprendizaje continuo son claves para operar bien.",
-    "que_hace": "Grupo dedicado a la minería de oro, con actividad aluvial en Colombia."
+    "que_hace": "Grupo dedicado a la minería de oro, con actividad aluvial en Colombia.",
+    "por_que_informe": "Grupo de minería de oro aluvial con equipos de campo donde la seguridad y el liderazgo son claves."
   },
   {
     "id": "mercados-almacenes-exito-grupo-calleja",
@@ -1262,7 +1318,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": "120",
-    "por_que": "Reconversión de 30 tiendas y cambio de estructura directiva.",
+    "por_que": "Está transformando sus tiendas y debe rediseñar turnos por la reforma laboral, justo cuando cambió su equipo directivo.",
     "dolor": "Rediseño de turnos y modelo de tienda; 35 sanciones SIC por verificar.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa por el gobierno corporativo; gestión humana participa después en la ejecución.",
@@ -1276,7 +1332,8 @@
       }
     ],
     "necesidad": "Éxito, la mayor cadena de supermercados del país, cambió de dueño y está transformando 30 tiendas más hacia nuevos formatos. Al mismo tiempo, la reforma laboral le obliga a rediseñar turnos y su modelo de tienda con fechas de ley, y tiene sanciones de la Superintendencia de Industria y Comercio por revisar.",
-    "que_hace": "Mayor cadena de comercio minorista del país, controlada por Grupo Calleja (85,1 %). Invierte unos COP 292.000 millones en 2026 para reconvertir tiendas hacia Carulla y Éxito, con 19 intervenciones que registran ventas +14 % y 30 más en curso."
+    "que_hace": "Mayor cadena de comercio minorista del país, controlada por Grupo Calleja (85,1 %). Invierte unos COP 292.000 millones en 2026 para reconvertir tiendas hacia Carulla y Éxito, con 19 intervenciones que registran ventas +14 % y 30 más en curso.",
+    "por_que_informe": "Reconversión de 30 tiendas y cambio de estructura directiva."
   },
   {
     "id": "mercados-d1",
@@ -1289,7 +1346,7 @@
       "aliados-fenalco"
     ],
     "horizonte_informe": "120",
-    "por_que": "Expansión hacia 30.000 empleos e inspecciones laborales.",
+    "por_que": "Crece muy rápido y está bajo la lupa del Ministerio del Trabajo, así que necesita ordenar su operación y su cultura de cumplimiento.",
     "dolor": "Modelo operativo de tienda, jornada, recargos y cultura de cumplimiento.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Fenalco hacia la entrada directa.",
@@ -1303,7 +1360,8 @@
       }
     ],
     "necesidad": "D1 es una cadena de tiendas de descuento que crece hacia 30.000 empleados y ha recibido más de 200 inspecciones del Ministerio del Trabajo. Necesita un modelo de tienda que cumpla con la jornada y los recargos de la reforma laboral, y una cultura de cumplimiento que se viva igual en cada tienda.",
-    "que_hace": "Cadena de descuento del Grupo Valorem con unos 26.000 empleos y meta de 30.000 en 2026. Ha recibido más de 200 inspecciones del Ministerio del Trabajo."
+    "que_hace": "Cadena de descuento del Grupo Valorem con unos 26.000 empleos y meta de 30.000 en 2026. Ha recibido más de 200 inspecciones del Ministerio del Trabajo.",
+    "por_que_informe": "Expansión hacia 30.000 empleos e inspecciones laborales."
   },
   {
     "id": "mercados-frisby-bic-pereira",
@@ -1317,7 +1375,7 @@
       "aliados-fenalco"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Cadena con casa matriz en Pereira, afectada por reforma laboral y terremoto.",
+    "por_que": "Es de las empresas más afectadas por la reforma laboral y por el terremoto, y se puede llegar a ella a través de un programa del gremio de restaurantes.",
     "dolor": "Continuidad operativa y rediseño de turnos.",
     "necesidad_tipo": null,
     "ruta_sugerida": "30–60 días vía Acodres: programa sectorial con financiación SENA centrado en continuidad y turnos.",
@@ -1331,7 +1389,8 @@
       }
     ],
     "necesidad": "Frisby es una cadena de restaurantes de Pereira con unos 290 locales y cerca de 5.000 empleados. Es de las empresas más golpeadas por la reforma laboral, porque trabaja de noche y los domingos, y además su sede está en la zona afectada por el terremoto: su prioridad es mantener la operación y rediseñar turnos.",
-    "que_hace": "Cadena de comidas de Pereira, sociedad BIC, con unos 290 restaurantes en 61 municipios y cerca de 5.000 empleados."
+    "que_hace": "Cadena de comidas de Pereira, sociedad BIC, con unos 290 restaurantes en 61 municipios y cerca de 5.000 empleados.",
+    "por_que_informe": "Cadena con casa matriz en Pereira, afectada por reforma laboral y terremoto."
   },
   {
     "id": "mercados-jeronimo-martins-colombia-ara-portugal",
@@ -1345,7 +1404,7 @@
       "aliados-fenalco"
     ],
     "horizonte_informe": ">180",
-    "por_que": "Marco de cultura definido por casa matriz.",
+    "por_que": "Es una de las cadenas que más crece en el país y debe aplicar en cada tienda la cultura que define su casa matriz en Portugal.",
     "dolor": "Ejecución local por turnos del marco de cultura de casa matriz.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa con expectativa moderada; verificar acuerdos marco globales.",
@@ -1359,7 +1418,8 @@
       }
     ],
     "necesidad": "Ara es la cadena de tiendas de descuento de la portuguesa Jerónimo Martins, con más de 1.700 tiendas y unas 200 aperturas más en camino. Su cultura viene de la casa matriz, y el reto local es aplicarla en una red que crece rápido y trabaja por turnos.",
-    "que_hace": "Cadena de descuento de la portuguesa Jerónimo Martins, con 1.708 tiendas a mitad de 2026 y un plan de unas 200 aperturas más."
+    "que_hace": "Cadena de descuento de la portuguesa Jerónimo Martins, con 1.708 tiendas a mitad de 2026 y un plan de unas 200 aperturas más.",
+    "por_que_informe": "Marco de cultura definido por casa matriz."
   },
   {
     "id": "mercados-mercadolibre-colombia-nasdaq",
@@ -1373,7 +1433,7 @@
       "aliados-fenalco"
     ],
     "horizonte_informe": "120",
-    "por_que": "Mercado Libre es cliente regional de Olivia.",
+    "por_que": "Ya es cliente de Olivia en otros países, lo que facilita ampliar la relación en Colombia.",
     "dolor": "Expansión de la cuenta regional a Colombia.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Ruta «cuenta Olivia» con referencia de casa matriz.",
@@ -1381,7 +1441,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Mercado Libre tiene más de 6.100 colaboradores en Colombia y ejecuta en 2026 una inversión de unos US$600 millones en logística, sedes y equipo. Ya es cliente de Olivia en otros países, y crecer tan rápido en Colombia exige que logística, tecnología y equipos avancen coordinados.",
-    "que_hace": "Empresa de comercio electrónico con más de 6.100 colaboradores en Colombia. Ejecuta en 2026 un plan de inversión de unos US$600 millones en logística, sedes y equipo."
+    "que_hace": "Empresa de comercio electrónico con más de 6.100 colaboradores en Colombia. Ejecuta en 2026 un plan de inversión de unos US$600 millones en logística, sedes y equipo.",
+    "por_que_informe": "Mercado Libre es cliente regional de Olivia."
   },
   {
     "id": "mercados-organizacion-terpel-copec-chile",
@@ -1395,7 +1456,7 @@
       "aliados-acp"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Digitalización desplegada y red de estaciones en zona afectada.",
+    "por_que": "Ya digitalizó buena parte de su operación y necesita que su gente use bien esas herramientas, en una red con miles de personas afectadas por la reforma laboral.",
     "dolor": "Absorción organizacional de lo digitalizado; turnos, franquicias y terceros expuestos a la reforma laboral.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa, separando tecnología de acompañamiento.",
@@ -1414,7 +1475,8 @@
       }
     ],
     "necesidad": "Terpel, el mayor distribuidor de combustibles del país con más de 2.000 estaciones, ya digitalizó buena parte de su operación, pero su gente no siempre usa bien esas herramientas. Además, miles de personas en turnos, franquicias y contratistas se ven afectadas por la reforma laboral, y parte de su red está en la zona del terremoto.",
-    "que_hace": "Filial de Copec, de Chile, y mayor distribuidor de combustibles del país. Tiene más de 2.000 estaciones y operación en Ecuador, Panamá, Perú y República Dominicana."
+    "que_hace": "Filial de Copec, de Chile, y mayor distribuidor de combustibles del país. Tiene más de 2.000 estaciones y operación en Ecuador, Panamá, Perú y República Dominicana.",
+    "por_que_informe": "Digitalización desplegada y red de estaciones en zona afectada."
   },
   {
     "id": "mercados-compensar",
@@ -1425,7 +1487,7 @@
     "sector_radar": "Salud",
     "gremios_asociados": [],
     "horizonte_informe": "120",
-    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "por_que": "Hace parte de las redes privadas de salud que deben reorganizarse por los cambios del sistema y los daños del terremoto.",
     "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
@@ -1433,7 +1495,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Compensar es una caja de compensación con red de salud propia; en 2025 la Superintendencia de Salud le retiró parte de su EPS en varios departamentos. Ante el traslado masivo de pacientes, la reconstrucción de hospitales y la reforma laboral, necesita rediseñar su capacidad de atención y sus turnos.",
-    "que_hace": "Caja de compensación con red de salud propia. En 2025 la Supersalud revocó parcialmente su EPS en varios departamentos."
+    "que_hace": "Caja de compensación con red de salud propia. En 2025 la Supersalud revocó parcialmente su EPS en varios departamentos.",
+    "por_que_informe": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura."
   },
   {
     "id": "mercados-fundacion-santa-fe",
@@ -1444,7 +1507,7 @@
     "sector_radar": "Salud",
     "gremios_asociados": [],
     "horizonte_informe": null,
-    "por_que": "Prestador privado de salud expuesto al traslado masivo de pacientes desde EPS intervenidas.",
+    "por_que": "Es un hospital universitario privado de Bogotá expuesto a la llegada de más pacientes desde EPS intervenidas.",
     "dolor": "No explícito en el informe",
     "necesidad_tipo": null,
     "ruta_sugerida": "No explícito en el informe",
@@ -1452,7 +1515,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "La Fundación Santa Fe es un hospital universitario privado de Bogotá. Como otros prestadores privados, enfrenta más pacientes por el traslado masivo desde EPS intervenidas, lo que exige ajustar su capacidad, sus turnos de atención permanente y el liderazgo de sus equipos clínicos.",
-    "que_hace": "Hospital universitario privado sin ánimo de lucro de Bogotá, fundado en 1972, con divisiones de educación, investigación y salud comunitaria."
+    "que_hace": "Hospital universitario privado sin ánimo de lucro de Bogotá, fundado en 1972, con divisiones de educación, investigación y salud comunitaria.",
+    "por_que_informe": "Prestador privado de salud expuesto al traslado masivo de pacientes desde EPS intervenidas."
   },
   {
     "id": "mercados-fundacion-valle-del-lili",
@@ -1463,7 +1527,7 @@
     "sector_radar": "Salud",
     "gremios_asociados": [],
     "horizonte_informe": "120",
-    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "por_que": "Es un hospital universitario de Cali que debe reorganizarse por los cambios del sistema de salud y el terremoto.",
     "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
@@ -1471,7 +1535,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "La Fundación Valle del Lili es un hospital universitario de Cali con más de 5.000 empleados, que en 2026 abrió un hospital pediátrico. Está en la zona afectada por el terremoto y recibe más pacientes por el traslado desde EPS intervenidas, así que necesita rediseñar capacidad y turnos de atención permanente bajo la reforma laboral.",
-    "que_hace": "Hospital universitario de Cali con cinco sedes, más de 800 especialistas y más de 5.000 empleados. En 2026 abrió un hospital pediátrico integral en Limonar."
+    "que_hace": "Hospital universitario de Cali con cinco sedes, más de 800 especialistas y más de 5.000 empleados. En 2026 abrió un hospital pediátrico integral en Limonar.",
+    "por_que_informe": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura."
   },
   {
     "id": "mercados-keralty-colsanitas",
@@ -1482,7 +1547,7 @@
     "sector_radar": "Salud",
     "gremios_asociados": [],
     "horizonte_informe": "120",
-    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "por_que": "Es dueño de la mayor empresa de medicina prepagada del país y debe reorganizarse por los cambios del sistema de salud y los daños del terremoto.",
     "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
@@ -1490,7 +1555,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Keralty es dueño de Colsanitas, la mayor empresa de medicina prepagada del país, con clínicas en más de 40 ciudades. El traslado masivo de pacientes desde EPS intervenidas y la reforma laboral le exigen rediseñar su capacidad, su modelo de atención y sus turnos.",
-    "que_hace": "Grupo de salud dueño de Colsanitas, la mayor empresa de medicina prepagada del país, con clínicas propias y presencia en más de 40 ciudades."
+    "que_hace": "Grupo de salud dueño de Colsanitas, la mayor empresa de medicina prepagada del país, con clínicas propias y presencia en más de 40 ciudades.",
+    "por_que_informe": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura."
   },
   {
     "id": "mercados-sura",
@@ -1501,7 +1567,7 @@
     "sector_radar": "Salud",
     "gremios_asociados": [],
     "horizonte_informe": "120",
-    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "por_que": "Su EPS sigue autorizada y recibe pacientes de otras, así que debe reorganizar su capacidad de atención.",
     "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
@@ -1509,7 +1575,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Sura tiene una EPS con unos 5,4 millones de afiliados que sigue autorizada en el nuevo mapa de EPS de 2026, así que está recibiendo parte de los pacientes trasladados. Eso le exige rediseñar su capacidad, su modelo de atención y sus turnos de atención permanente bajo la reforma laboral.",
-    "que_hace": "Aseguradora y red privada cuya EPS tiene unos 5,4 millones de afiliados. Sigue autorizada en el nuevo mapa territorial de EPS de 2026."
+    "que_hace": "Aseguradora y red privada cuya EPS tiene unos 5,4 millones de afiliados. Sigue autorizada en el nuevo mapa territorial de EPS de 2026.",
+    "por_que_informe": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura."
   },
   {
     "id": "mercados-celsia-grupo-argos",
@@ -1524,7 +1591,7 @@
       "aliados-andi"
     ],
     "horizonte_informe": "120",
-    "por_que": "Operación en el Valle del Cauca y pertenencia al Grupo Argos.",
+    "por_que": "Opera en la zona afectada por el terremoto y su grupo está revisando cómo funcionan sus empresas, lo que abre una conversación sobre su forma de operar.",
     "dolor": "Restablecimiento de red y revisión del modelo operativo tras la escisión cementera.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Cementos Argos primero; Celsia por reputación de grupo.",
@@ -1532,7 +1599,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Celsia, empresa de energía del Grupo Argos, opera en el Valle del Cauca, una de las zonas afectadas por el terremoto, donde debe restablecer su red. Al mismo tiempo, el Grupo Argos está revisando cómo funcionan sus empresas después de separar su negocio de cemento.",
-    "que_hace": "Empresa de energía del Grupo Argos con distribución y comercialización en Tolima y Valle, transmisión, renovables e internet. Opera en Colombia y Panamá."
+    "que_hace": "Empresa de energía del Grupo Argos con distribución y comercialización en Tolima y Valle, transmisión, renovables e internet. Opera en Colombia y Panamá.",
+    "por_que_informe": "Operación en el Valle del Cauca y pertenencia al Grupo Argos."
   },
   {
     "id": "mercados-epm-municipio-de-medellin",
@@ -1546,7 +1614,7 @@
       "aliados-andesco"
     ],
     "horizonte_informe": "120",
-    "por_que": "Articulación de talento y arquitectura empresarial.",
+    "por_que": "Tiene una vicepresidencia que une talento humano y diseño de la organización, el área natural para conversar sobre rediseñar la empresa.",
     "dolor": "Rediseño organizacional con procesos y datos; ciclo de compra largo por régimen oficial.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa previa verificación, con lenguaje de política pública; registro de proveedor.",
@@ -1554,7 +1622,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "EPM, la empresa pública de Medellín, presta energía, agua y gas en más de 120 municipios. Tiene una vicepresidencia que une talento y arquitectura empresarial, lo que indica interés en rediseñar la organización a partir de procesos y datos. Por ser empresa pública, sus compras toman más tiempo.",
-    "que_hace": "Empresa oficial del Municipio de Medellín que presta energía, agua y gas en más de 120 municipios."
+    "que_hace": "Empresa oficial del Municipio de Medellín que presta energía, agua y gas en más de 120 municipios.",
+    "por_que_informe": "Articulación de talento y arquitectura empresarial."
   },
   {
     "id": "mercados-enel-colombia-enel-americas-57-3-geb-42-5",
@@ -1568,7 +1637,7 @@
       "aliados-acolgen"
     ],
     "horizonte_informe": "30-60",
-    "por_que": "Cuatro culturas de origen bajo gobernanza mixta.",
+    "por_que": "Debe unir cuatro culturas de origen en una sola empresa con dueños públicos y privados, un reto típico de cultura y gestión del cambio.",
     "dolor": "Integrar Emgesa, Codensa, EGP y ESSA2 y restablecer servicio en zona afectada.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Doble entrada: conversación de contenido y registro de proveedor por separado. Verificar acuerdos marco globales.",
@@ -1576,7 +1645,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Enel Colombia nació de unir cuatro empresas con culturas distintas (Emgesa, Codensa, EGP y ESSA2) y tiene dueños públicos y privados. Debe integrar esas culturas en una sola mientras restablece el servicio en la zona afectada por el terremoto.",
-    "que_hace": "Distribuye energía en Bogotá y Cundinamarca y genera con fuentes convencionales y renovables. Sus accionistas son Enel Américas (57,3 %) y GEB (42,5 %)."
+    "que_hace": "Distribuye energía en Bogotá y Cundinamarca y genera con fuentes convencionales y renovables. Sus accionistas son Enel Américas (57,3 %) y GEB (42,5 %).",
+    "por_que_informe": "Cuatro culturas de origen bajo gobernanza mixta."
   },
   {
     "id": "mercados-promigas",
@@ -1590,7 +1660,7 @@
       "aliados-andesco"
     ],
     "horizonte_informe": "120",
-    "por_que": "Grupo con cinco filiales de gas.",
+    "por_que": "Coordina un grupo de muchas filiales de gas, lo que exige un modelo de grupo y líderes alineados.",
     "dolor": "Coordinación de grupo y arbitraje contra Perú.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada por Naturgas y luego directa.",
@@ -1598,7 +1668,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Promigas es un grupo de 25 empresas de gas y electricidad que atiende a más de cuatro millones de usuarios y tiene un arbitraje internacional abierto contra Perú. Coordinar a tantas filiales con estándares comunes, sin quitarles autonomía, es su principal reto organizacional.",
-    "que_hace": "Grupo de 25 empresas en transporte y distribución de gas, regasificación de GNL, distribución eléctrica y generación. Atiende a más de cuatro millones de usuarios en Colombia y opera en Perú mediante Cálidda, junto con GEB."
+    "que_hace": "Grupo de 25 empresas en transporte y distribución de gas, regasificación de GNL, distribución eléctrica y generación. Atiende a más de cuatro millones de usuarios en Colombia y opera en Perú mediante Cálidda, junto con GEB.",
+    "por_que_informe": "Grupo con cinco filiales de gas."
   },
   {
     "id": "mercados-vatia-cali",
@@ -1612,7 +1683,7 @@
       "aliados-acolgen"
     ],
     "horizonte_informe": "120",
-    "por_que": "Comercializadora en crecimiento con operación en zona afectada.",
+    "por_que": "Está creciendo y opera en la zona afectada por el terremoto, así que necesita estructura para escalar sin perder continuidad.",
     "dolor": "Crecimiento y continuidad operativa en zona afectada.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Vía Andesco / Asocodis.",
@@ -1620,7 +1691,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Vatia es una comercializadora y generadora de energía de Cali que está creciendo y cambió su tipo de sociedad. Su operación está en la zona afectada por el terremoto, así que necesita estructura y procesos para seguir creciendo sin descuidar la continuidad del servicio.",
-    "que_hace": "Comercializadora y generadora de energía de Cali, fundada en 1998, con soluciones solares y de eficiencia energética. Tiene oficinas en Barranquilla, Bucaramanga, Bogotá y Antioquia."
+    "que_hace": "Comercializadora y generadora de energía de Cali, fundada en 1998, con soluciones solares y de eficiencia energética. Tiene oficinas en Barranquilla, Bucaramanga, Bogotá y Antioquia.",
+    "por_que_informe": "Comercializadora en crecimiento con operación en zona afectada."
   },
   {
     "id": "mercados-claro-colombia-america-movil",
@@ -1631,7 +1703,7 @@
     "sector_radar": "Telecomunicaciones",
     "gremios_asociados": [],
     "horizonte_informe": ">180",
-    "por_que": "Respuesta competitiva ante un rival de nuevo tamaño.",
+    "por_que": "Debe responder a un competidor de su mismo tamaño tras la unión de Tigo y Movistar.",
     "dolor": "Respuesta competitiva a la integración Tigo–Movistar.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Monitoreo; decisiones de marco condicionadas por casa matriz.",
@@ -1639,7 +1711,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Claro, de América Móvil, es el líder de la telefonía móvil en Colombia. Ahora enfrenta un rival de casi su mismo tamaño tras la unión de Tigo y Movistar, y necesita responder con más eficiencia y mejor servicio, lo que puede exigir cambios en su organización.",
-    "que_hace": "Operador de América Móvil y líder del mercado móvil colombiano, con unos 41,7 millones de líneas. Enfrenta a Tigo–Movistar como rival consolidado, con unos 38,6 millones de líneas."
+    "que_hace": "Operador de América Móvil y líder del mercado móvil colombiano, con unos 41,7 millones de líneas. Enfrenta a Tigo–Movistar como rival consolidado, con unos 38,6 millones de líneas.",
+    "por_que_informe": "Respuesta competitiva ante un rival de nuevo tamaño."
   },
   {
     "id": "mercados-etb-distrito-de-bogota",
@@ -1650,7 +1723,7 @@
     "sector_radar": "Telecomunicaciones",
     "gremios_asociados": [],
     "horizonte_informe": ">180",
-    "por_que": "Transformación del frente de telecomunicaciones y cultura digital.",
+    "por_que": "Está transformando su negocio y su cultura de trabajo para ofrecer servicios tecnológicos al sector público.",
     "dolor": "Cultura digital de servidores públicos.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Monitoreo del ciclo político.",
@@ -1658,7 +1731,8 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "ETB, la empresa de telecomunicaciones del Distrito de Bogotá, está en plena transformación: pasa de vender telefonía e internet a ofrecer servicios tecnológicos al sector público. Uno de los cuatro frentes de su plan es recuperar la cultura de trabajo de sus equipos.",
-    "que_hace": "Empresa pública del Distrito de Bogotá que desde 2025 ejecuta un plan de transformación con cuatro frentes: disciplina financiera, optimización operativa, fortalecimiento tecnológico y recuperación cultural. Pasa de operar telecomunicaciones a ofrecer servicios tecnológicos para el sector público."
+    "que_hace": "Empresa pública del Distrito de Bogotá que desde 2025 ejecuta un plan de transformación con cuatro frentes: disciplina financiera, optimización operativa, fortalecimiento tecnológico y recuperación cultural. Pasa de operar telecomunicaciones a ofrecer servicios tecnológicos para el sector público.",
+    "por_que_informe": "Transformación del frente de telecomunicaciones y cultura digital."
   },
   {
     "id": "mercados-tigo-millicom-integracion-de-movistar",
@@ -1669,7 +1743,7 @@
     "sector_radar": "Telecomunicaciones",
     "gremios_asociados": [],
     "horizonte_informe": "30-60",
-    "por_que": "Integración de Movistar con marca unificada.",
+    "por_que": "Está uniendo dos empresas (Tigo y Movistar) en una sola, con todo lo que eso implica para su estructura y su gente.",
     "dolor": "Arquitectura organizacional, armonización de dos culturas, salidas voluntarias y condiciones de la SIC.",
     "necesidad_tipo": null,
     "ruta_sugerida": "Entrada directa; verificar proveedores de casa matriz.",
@@ -1677,6 +1751,7 @@
     "propuesta_gh": false,
     "eventos": [],
     "necesidad": "Tigo compró Movistar Colombia en 2026 y las está uniendo en una sola compañía, con la marca ya unificada. Debe definir una nueva estructura, juntar dos culturas, acompañar un plan de retiro voluntario y cumplir las condiciones que le impuso la Superintendencia de Industria y Comercio.",
-    "que_hace": "Millicom tomó el control total de Movistar Colombia en 2026, mediante la OPA a Telefónica en febrero y la compra del 32,5 % de la Nación en abril por COP 856.000 millones. La integración incluye un plan de retiro voluntario y condiciones de la SIC."
+    "que_hace": "Millicom tomó el control total de Movistar Colombia en 2026, mediante la OPA a Telefónica en febrero y la compra del 32,5 % de la Nación en abril por COP 856.000 millones. La integración incluye un plan de retiro voluntario y condiciones de la SIC.",
+    "por_que_informe": "Integración de Movistar con marca unificada."
   }
 ]
