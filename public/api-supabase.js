@@ -386,6 +386,19 @@
       await store.set('gremios-taller', g.id, g);
       return responder(g, 201);
     },
+    // Actividad 5: una ruta de acción por actor de la lista confirmada en la Actividad 4. Prevalece el último guardado.
+    'rutas': async function(m,body){
+      if(m==='GET') return responder(await store.list('rutas'));
+      if(m!=='PUT') return responder({error:'Método no permitido.'},405);
+      var sel=await store.get('seleccion','vigente');
+      if(!sel||!Array.isArray(sel.actorIds)||!sel.actorIds.length) return responder({error:'Todavía no hay una lista confirmada en la Actividad 4.'},409);
+      var v=window.Rutas.validar(body,sel.actorIds);
+      if(!v.ok) return responder({error:Object.values(v.errores)[0],errores:v.errores},400);
+      if(body.editadoPor!=null&&(typeof body.editadoPor!=='string'||body.editadoPor.length>80)) return responder({error:'Nombre de quien registra no válido.'},400);
+      var rec=Object.assign({id:v.valor.actorId},v.valor,{editadoPor:texto(body.editadoPor,80),updatedAt:new Date().toISOString()});
+      if(unescape(encodeURIComponent(JSON.stringify(rec))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
+      return responder(await store.set('rutas',rec.id,rec));
+    },
     'seleccion': async function(m,body){
       if(m==='GET') return responder(await store.get('seleccion','vigente'));
       if(m==='DELETE'){await store.del('seleccion','vigente');return responder({ok:true});}

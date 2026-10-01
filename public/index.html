@@ -760,21 +760,43 @@
 /* ACTIVIDAD 5: INICIO CSS */
 #view-canvas{min-width:0;overflow-wrap:anywhere;}
 #view-canvas *, #view-canvas *::before{box-sizing:border-box;}
-#view-canvas nav.subviews{flex-wrap:wrap;max-width:100%;}
 #view-canvas button{white-space:normal;max-width:100%;}
-#view-canvas .p5-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin:16px 0;min-width:0;}
-#view-canvas .p5-card p{white-space:pre-wrap;}
-#view-canvas .p5-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0;}
 #view-canvas label{display:block;min-width:0;}
-#view-canvas input, #view-canvas textarea, #view-canvas select{display:block;width:100%;min-width:0;max-width:100%;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px;font:inherit;}
+#view-canvas input[type=text], #view-canvas textarea, #view-canvas select{display:block;width:100%;min-width:0;max-width:100%;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px;font:inherit;margin-top:4px;}
 #view-canvas textarea{resize:vertical;}
-#view-canvas .p5-identidad{max-width:360px;}
-#view-canvas #p5Reglas{padding:12px;border:2px solid var(--cf-media);border-radius:8px;background:var(--panel-2);}
-#view-canvas .p5-ficha button{display:flex;align-items:center;gap:8px;margin-top:10px;}
-#view-canvas .p5-ficha img{width:32px;height:32px;object-fit:contain;background:var(--logo-bg);}
-#view-canvas .schema{white-space:pre-wrap;overflow-wrap:anywhere;}
+#view-canvas .p5-lista{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;}
+#view-canvas .p5-lista button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);cursor:pointer;font:inherit;font-size:.85rem;text-align:left;max-width:240px;}
+#view-canvas .p5-lista button[aria-current="true"]{border:2px solid var(--accent);background:var(--accent-soft);}
+#view-canvas .p5-lista small{color:var(--ink-soft);font-size:.72rem;}
+#view-canvas .p5-editor{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:20px;align-items:start;}
+#view-canvas .p5-form{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0;}
+#view-canvas .p5-form h3{margin-top:0;}
+#view-canvas .p5-form > label, #view-canvas .p5-form > fieldset{margin-top:14px;}
+#view-canvas fieldset{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;}
+#view-canvas legend{font-weight:600;padding:0 4px;}
+#view-canvas .p5-opciones{display:flex;flex-wrap:wrap;gap:8px 18px;}
+#view-canvas .p5-opciones label, #view-canvas .p5-arista > label:first-child{display:flex;align-items:center;gap:6px;}
+#view-canvas input[type=radio], #view-canvas input[type=checkbox]{width:auto;min-width:0;margin:0;flex:0 0 auto;}
+#view-canvas .p5-arista{margin-top:8px;}
+#view-canvas .p5-error{color:var(--cf-baja);font-size:.85rem;margin:4px 0 0;}
+#view-canvas .p5-error:empty{display:none;}
+#view-canvas .p5-acciones{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px;}
+#view-canvas .p5-ctx{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:0;min-width:0;position:sticky;top:150px;}
+#view-canvas .p5-ctx summary{cursor:pointer;font-weight:700;padding:14px 16px;}
+#view-canvas .p5-ctx-cuerpo{padding:0 16px 14px;}
+#view-canvas .p5-ctx-bloque h4{margin:12px 0 4px;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);}
+#view-canvas .p5-ctx-bloque p{margin:0;white-space:pre-line;}
+#view-canvas .p5-ctx-bloque ul{margin:0;padding-left:18px;}
+#view-canvas .p5-ctx-vacio{color:var(--ink-soft);font-style:italic;}
+#view-canvas .p5-ctx-nota{color:var(--ink-soft);font-size:.85rem;}
+#view-canvas .p5-ctx-alerta{border-left:4px solid var(--cf-media);padding-left:10px;}
+#view-canvas .p5-ctx-contacto, #view-canvas .p5-ctx-contacto strong{color:var(--cf-baja);}
+#view-canvas .p5-ctx-confianza{font-size:.82rem;color:var(--ink-soft);margin-top:4px !important;}
+#view-canvas .p5-hoja{margin-top:24px;}
+#view-canvas .p5-hoja-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;}
+#view-canvas .p5-hoja-card p{margin:4px 0;white-space:pre-wrap;}
 #view-canvas :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-@media(max-width:600px){#view-canvas .p5-fields{grid-template-columns:1fr;}#view-canvas .p5-card{padding:12px;}}
+@media(max-width:800px){#view-canvas .p5-editor{grid-template-columns:1fr;}#view-canvas .p5-ctx{order:-1;position:static;}#view-canvas .p5-form{padding:12px;}#view-canvas .p5-lista button{max-width:100%;}}
 /* ACTIVIDAD 5: FIN CSS */
 /* Embudo: controles acotados a sus vistas y colores del tema vigente. */
 #view-matriz .a3-form{display:grid;gap:12px;max-width:650px;}
@@ -887,29 +909,15 @@
 <!-- ACTIVIDAD 5: INICIO HTML -->
 <section class="view" id="view-canvas">
   <h2>Construir rutas de acción</h2>
-  <p>Actividad 5 · Trabajo grupal guiado por German y Julio. Entran las empresas y gremios-aliados activados que quedaron en Victorias tempranas o Apuestas estratégicas en la Actividad 4.</p>
-  <label class="p5-identidad">Registrado por (opcional)<input id="p5Nombre" maxlength="60" autocomplete="name"></label>
-  <p>Acuerden acciones específicas a 30, 60 y 90 días. Guarden cada ficha para incluirla en la hoja consolidada. El último guardado prevalece.</p>
+  <p>Actividad 5 · Trabajo grupal guiado por German y Julio. Para cada actor de la lista confirmada en la Actividad 4 (máximo 10), definan qué aporta Olivia, quién lo lleva, si es de venta inmediata o de posicionamiento, y las acciones para Q4-2026, Q1-2027 y el año 2027.</p>
   <p id="p5Estado" role="status" aria-live="polite">Abre esta actividad para cargar las rutas.</p>
   <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
-  <nav class="subviews" aria-label="Actividad 5">
-    <button data-subview="p5-aliados" class="active">Ruta de acción · Aliados</button>
-    <button data-subview="p5-empresas">Ruta de acción · Empresas</button>
-  </nav>
-  <div class="subview active" id="subview-p5-aliados">
-    <div id="p5Tarjetas-aliados"></div>
-    <details><summary>Hoja consolidada · aliados</summary>
-      <button type="button" class="btn secondary" id="p5CSV-aliados" disabled>Descargar hoja consolidada (CSV)</button>
-      <div id="p5Hoja-aliados"></div>
-    </details>
-  </div>
-  <div class="subview" id="subview-p5-empresas">
-    <div id="p5Tarjetas-empresas"></div>
-    <details><summary>Hoja consolidada · empresas</summary>
-      <button type="button" class="btn secondary" id="p5CSV-empresas" disabled>Descargar hoja consolidada (CSV)</button>
-      <div id="p5Hoja-empresas"></div>
-    </details>
-  </div>
+  <nav id="p5Lista" class="p5-lista" aria-label="Actores de la lista confirmada"></nav>
+  <div id="p5Editor"></div>
+  <details class="p5-hoja"><summary>Hoja consolidada</summary>
+    <button type="button" class="btn secondary" id="p5CSV" disabled>Descargar hoja consolidada (CSV)</button>
+    <div id="p5Hoja"></div>
+  </details>
   <p id="p5Historicos"></p>
 </section>
 <!-- ACTIVIDAD 5: FIN HTML -->
@@ -1249,6 +1257,7 @@
 <script src="embudo.js"></script>
 <script src="tierlist.js"></script>
 <script src="corte.js"></script>
+<script src="rutas.js"></script>
 <script src="ficha-actor.js"></script>
 <script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
@@ -3244,93 +3253,116 @@
   // ACTIVIDAD 4: FIN JS
 
   // ACTIVIDAD 5: INICIO JS
-  (function iniciarCanvas(){
+  // Ruta de acción por actor de la lista confirmada en la Actividad 4 (colección "rutas"). La colección "canvas" queda como histórico.
+  (function iniciarRutas(){
     const $=id=>document.getElementById(id), drafts=new Map();
-    let actores=[],matriz=[],guardados=[],elegibles=[],cargando=false,guardando=false,iniciado=false,version=0;
+    let actoresInf=[],seleccion=null,rutas=[],sugeridos=[],contactos=[],responsables=[],actual=null,cargando=false,guardando=false,iniciado=false,version=0,errores={};
     const mensaje=t=>$('p5Estado').textContent=t;
-    const sello=c=>c?.updatedAt?'Último guardado: '+new Date(c.updatedAt).toLocaleString('es-CO')+(c.editadoPor?' · Registrado por '+c.editadoPor:''):'Sin guardar';
-    const camposComunes=[['acciones30','Acciones a 30 días',4000],['acciones60','Acciones a 60 días',4000],['acciones90','Acciones a 90 días',4000]];
-    const camposAliados=[['aporteOlivia','Qué aporta Olivia',4000],...camposComunes];
-    const camposEmpresas=[['oferta','Oferta de Olivia',4000],['buyer','Buyer (comprador)',300],['sponsor','Sponsor (patrocinador)',300],['cta','CTA (llamado a la acción)',1000],...camposComunes];
-    async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo cargar.');return d;}
-    function dato(a){
-      const base=Embudo.ficha(a,matriz,GREMIOS_32),guardado=guardados.find(c=>c.id===base.id);
-      return {...base,...guardado,...drafts.get(base.id),nombre:base.nombre,sector:base.sector,problema:base.problema,queOfrece:base.queOfrece};
+    const identidad=()=>window.Identidad?window.Identidad.nombre:'';
+    const ids=()=>seleccion&&Array.isArray(seleccion.actorIds)?seleccion.actorIds:[];
+    const actorInf=id=>actoresInf.find(a=>a.id===id);
+    const nombreDe=id=>(actorInf(id)||{}).nombre||id;
+    const guardada=id=>rutas.find(r=>r.actorId===id);
+    const sello=r=>r&&r.updatedAt?'Último guardado: '+new Date(r.updatedAt).toLocaleString('es-CO')+(r.editadoPor?' · '+r.editadoPor:''):'Sin guardar';
+    async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok){const e=Error(d&&d.error||'No se pudo cargar.');e.errores=d&&d.errores;throw e;}return d;}
+    // Datos del formulario: borrador sin guardar, si existe; si no, el último guardado.
+    function dato(id){return drafts.get(id)||Object.assign({actorId:id,etiqueta:'',responsable:'',aristas:{}},guardada(id)||{});}
+    function renderLista(){
+      const lista=ids();
+      $('p5Lista').innerHTML=lista.map((id,i)=>{
+        const r=guardada(id),estado=drafts.has(id)?'Cambios sin guardar':r?Rutas.etiquetaNombre(r.etiqueta)+' · '+(r.responsable||'sin responsable'):'Sin guardar';
+        return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'"><span>'+(i+1)+'. '+esc(nombreDe(id))+'</span><small>'+esc(estado)+'</small></button>';
+      }).join('');
     }
-    function renderTarjetas(forzar=false){
-      const aliados=elegibles.filter(a=>a.grupo==='aliados');
-      for(const grupo of ['aliados','empresas']){
-        const host=$('p5Tarjetas-'+grupo);
-        // No sustituir un control mientras se escribe; los datos ya quedan actualizados en memoria.
-        if(!forzar&&host.contains(document.activeElement)&&!guardando)continue;
-        const lista=elegibles.filter(a=>a.grupo===grupo);
-        host.innerHTML=lista.map(a=>{
-          const d=dato(a),guardado=guardados.find(c=>c.id===d.id),vigente=!d.aliado||aliados.some(x=>x.id===d.aliado.id);
-          return '<article class="p5-card" data-id="'+esc(d.id)+'"><h3>'+esc(d.nombre)+'</h3><p>'+esc(a.cuadrante.nombre)+'</p>'+(grupo==='aliados'?'<p><strong>Qué ofrece / contexto de la alianza:</strong> '+esc(d.queOfrece||'Por definir en el contexto del actor')+'</p>':'<p><strong>Problema / contexto:</strong> '+esc(d.problema||'Pendiente de contexto en la Matriz')+'</p><label>Aliado impulsor<select data-field="aliado" '+(guardando?'disabled':'')+'><option value="">Por definir</option>'+(!vigente?'<option selected value="'+esc(d.aliado.id)+'">'+esc(d.aliado.nombre)+' — ya no elegible</option>':'')+aliados.map(x=>'<option value="'+esc(x.id)+'" '+(d.aliado?.id===x.id?'selected':'')+'>'+esc(x.nombre)+'</option>').join('')+'</select></label>'+(!aliados.length?'<p>Aún no hay aliados con resultado en los cuadrantes altos de la Actividad 4. Puedes guardar el resto de la ficha.</p>':''))+'<div class="p5-fields">'+(grupo==='aliados'?camposAliados:camposEmpresas).map(([k,label,max])=>'<label>'+label+'<textarea data-field="'+k+'" maxlength="'+max+'" rows="3" '+(guardando?'disabled':'')+'>'+esc(d[k])+'</textarea></label>').join('')+'</div><button type="button" class="btn" data-guardar="'+esc(d.id)+'" '+(guardando?'disabled':'')+'>Guardar '+(grupo==='aliados'?'ficha':'canvas')+'</button><p class="p5-sello" aria-live="polite">'+esc(sello(guardado))+(drafts.has(d.id)?' · Cambios sin guardar':'')+'</p></article>';
-        }).join('')||'<p class="p5-card">Aún no hay '+(grupo==='aliados'?'gremios-aliados':'empresas')+' elegibles. Primero actívalos en la Actividad 3 y califícalos en la Actividad 4: deben quedar en Victorias tempranas o Apuestas estratégicas.</p>';
-      }
+    function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
+    function renderEditor(){
+      const host=$('p5Editor');
+      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay una lista confirmada en la Actividad 4. Cuando el facilitador la confirme, aquí aparecerán los actores (máximo 10).</p>';return;}
+      if(!ids().includes(actual))actual=ids()[0];
+      const a=actorInf(actual)||{id:actual,nombre:actual,tipo:'empresa'},d=dato(actual),des=guardando?' disabled':'';
+      const sugerido=sugeridos.find(c=>c.actor_id===actual),registrados=contactos.filter(c=>c.actorId===actual);
+      const otro=!!d.responsable&&d.responsable!=='__otro'&&!responsables.includes(d.responsable),pideOtro=otro||d.responsable==='__otro';
+      const opciones='<option value="">Elige un responsable</option>'+responsables.map(n=>'<option'+(d.responsable===n?' selected':'')+'>'+esc(n)+'</option>').join('')+'<option value="__otro"'+(pideOtro?' selected':'')+'>Otra persona…</option>';
+      const aristas=Rutas.ARISTAS.map(([k,t])=>{const x=(d.aristas||{})[k]||{};return '<div class="p5-arista"><label><input type="checkbox" data-arista="'+k+'"'+(x.activa?' checked':'')+des+'> '+esc(t)+'</label>'+(x.activa?'<label>Acción para «'+esc(t)+'»<textarea data-arista-accion="'+k+'" rows="2" maxlength="1000"'+des+'>'+esc(x.accion||'')+'</textarea></label>'+campoError('arista-'+k):'')+'</div>';}).join('');
+      const campo=([k,t,max])=>k==='indicador'
+        ?'<label>'+esc(t)+'<input type="text" data-campo="'+k+'" maxlength="'+max+'" placeholder="'+esc(Rutas.PLACEHOLDER_INDICADOR[d.etiqueta||''])+'" value="'+esc(d[k]||'')+'"'+des+'></label>'+campoError(k)
+        :'<label>'+esc(t)+'<textarea data-campo="'+k+'" rows="3" maxlength="'+max+'"'+des+'>'+esc(d[k]||'')+'</textarea></label>'+campoError(k);
+      host.innerHTML='<div class="p5-editor"><form class="p5-form" id="p5Form" novalidate><h3>'+esc(a.nombre)+'</h3>'+
+        '<fieldset><legend>Etiqueta (obligatoria)</legend><div class="p5-opciones">'+Rutas.ETIQUETAS.map(([k,t])=>'<label><input type="radio" name="p5Etiqueta" value="'+k+'"'+(d.etiqueta===k?' checked':'')+des+'> '+esc(t)+'</label>').join('')+'</div>'+campoError('etiqueta')+'</fieldset>'+
+        '<label>Responsable<select id="p5Responsable"'+des+'>'+opciones+'</select></label>'+(pideOtro?'<label>Nombre del responsable<input type="text" id="p5ResponsableOtro" maxlength="120" value="'+esc(otro?d.responsable:'')+'"'+des+'></label>':'')+campoError('responsable')+
+        Rutas.CAMPOS.map(campo).join('')+
+        (d.etiqueta==='posicionamiento'?'<fieldset><legend>Aristas de posicionamiento</legend><p class="hint">Marca las que apliquen y escribe la acción de cada una.</p>'+aristas+'</fieldset>':'')+
+        '<div class="p5-acciones"><button type="submit" class="btn"'+des+'>Guardar ruta</button><span class="p5-sello" aria-live="polite">'+esc(sello(guardada(actual)))+(drafts.has(actual)?' · Cambios sin guardar':'')+'</span></div></form>'+
+        '<details class="p5-ctx" open><summary>Contexto del actor</summary><div class="p5-ctx-cuerpo">'+Rutas.htmlContexto(a,{contactoInforme:sugerido,contactos:registrados})+'</div></details></div>';
     }
-    function filasGrupo(grupo){
-      return guardados.filter(c=>c.grupo===grupo).map(c=>({...c,vigente:elegibles.some(a=>a.id===c.actorId)}));
+    function recoger(){
+      const f=$('p5Form');if(!f)return null;
+      const d={actorId:actual,etiqueta:(f.querySelector('[name=p5Etiqueta]:checked')||{}).value||'',aristas:{}};
+      const sel=$('p5Responsable').value;
+      d.responsable=sel==='__otro'?(($('p5ResponsableOtro')&&$('p5ResponsableOtro').value)||'__otro'):sel;
+      f.querySelectorAll('[data-campo]').forEach(el=>{d[el.dataset.campo]=el.value;});
+      f.querySelectorAll('[data-arista]').forEach(el=>{if(el.checked){const t=f.querySelector('[data-arista-accion="'+el.dataset.arista+'"]');d.aristas[el.dataset.arista]={activa:true,accion:t?t.value:''};}});
+      return d;
     }
     function renderHoja(){
-      for(const grupo of ['aliados','empresas']){
-        const lista=filasGrupo(grupo);
-        $('p5CSV-'+grupo).disabled=!lista.length;
-        $('p5Hoja-'+grupo).innerHTML=lista.map(c=>'<article class="p5-card"><h4>'+esc(c.nombre)+'</h4><p>'+ (c.vigente?'Elegible en el embudo actual.':'Fuera del embudo actual; se conserva el último guardado.')+'</p>'+(grupo==='aliados'?'<p><strong>Qué ofrece:</strong> '+esc(c.queOfrece)+'</p>':'<p><strong>Problema:</strong> '+esc(c.problema)+'</p><p><strong>Aliado impulsor:</strong> '+esc(c.aliado?.nombre||'Por definir')+'</p>')+(grupo==='aliados'?camposAliados:camposEmpresas).map(([k,t])=>'<p><strong>'+t+':</strong> '+esc(c[k]||'Pendiente')+'</p>').join('')+'<small>'+esc(sello(c))+'</small></article>').join('')||'<p>Aún no hay fichas guardadas en este grupo.</p>';
-      }
-      const antiguos=guardados.filter(c=>!c.grupo);
-      $('p5Historicos').textContent=antiguos.length?'Hay '+antiguos.length+' canvas del modelo anterior conservados en la colección. No se convierten automáticamente a actores.':'';
+      const lista=ids(),nombres=Object.fromEntries(lista.map(id=>[id,nombreDe(id)]));
+      $('p5CSV').disabled=!lista.length;
+      $('p5Hoja').innerHTML=lista.map((id,i)=>{
+        const r=guardada(id);
+        if(!r)return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+'</h4><p>Sin ruta guardada.</p></article>';
+        const ar=Object.entries(r.aristas||{}).filter(([,x])=>x&&x.activa);
+        return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+' · '+esc(Rutas.etiquetaNombre(r.etiqueta))+'</h4><p><strong>Responsable:</strong> '+esc(r.responsable)+'</p>'+Rutas.CAMPOS.map(([k,t])=>'<p><strong>'+esc(t)+':</strong> '+esc(r[k]||'Pendiente')+'</p>').join('')+(ar.length?'<p><strong>Aristas:</strong> '+ar.map(([k,x])=>esc(Rutas.aristaNombre(k))+(x.accion?' — '+esc(x.accion):'')).join(' · ')+'</p>':'')+'<small>'+esc(sello(r))+'</small></article>';
+      }).join('')||'<p>Aún no hay lista confirmada.</p>';
+      const otros=rutas.filter(r=>!lista.includes(r.actorId));
+      $('p5Historicos').textContent=otros.length?'Hay '+otros.length+' ruta(s) guardada(s) de actores que ya no están en la lista confirmada; se conservan en la base pero no se muestran.':'';
+    }
+    function render(forzar){
+      renderLista();renderHoja();
+      // No reemplazar el formulario mientras alguien escribe en él.
+      if(forzar||!$('p5Editor').contains(document.activeElement))renderEditor();
     }
     async function cargar(){
       if(cargando||guardando||!$('view-canvas').classList.contains('active'))return;
       cargando=true;const v=version;
       try{
-        const [as,ms,cs,vs,rs,cfg,cc]=await Promise.all([leer('/api/actors'),leer('/api/matriz'),leer('/api/canvas'),leer('/api/activacion-votos'),leer('/api/priorizacion-votos?resumen=1'),leer('embudo-config.json'),leer('canvas-config.json')]);
+        const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('data/actores.json'),leer('/api/seleccion'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
         if(v!==version)return;
-        actores=as;matriz=ms;guardados=cs;elegibles=Embudo.elegibles(as,vs,cfg,rs,cc);
-        renderTarjetas();renderHoja();mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Trabajo grupal · Los borradores se conservan mientras esta página esté abierta.');
-      }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los borradores y últimos datos.');}
+        actoresInf=inf;seleccion=sel;rutas=rs;sugeridos=sg;contactos=cs;
+        responsables=cfg?[...(cfg.participantes||[]),...(cfg.administradores||[])]:responsables;
+        render(false);
+        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+(seleccion?' · Lista confirmada por '+(seleccion.confirmadoPor||'el facilitador'):'')+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
+      }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los cambios sin guardar.');}
       finally{cargando=false;}
     }
-    for(const grupo of ['aliados','empresas']){
-      const host=$('p5Tarjetas-'+grupo);
-      function editar(e){
-        const card=e.target.closest('[data-id]'),k=e.target.dataset.field;if(!card||!k)return;
-        const a=elegibles.find(a=>Embudo.ficha(a,[],[]).id===card.dataset.id);if(!a)return;
-        const d=dato(a);
-        if(k==='aliado'){
-          const aliado=elegibles.find(a=>a.grupo==='aliados'&&a.id===e.target.value);
-          d.aliado=aliado?{id:aliado.id,nombre:aliado.nombre}:null;
-        }else d[k]=e.target.value;
-        drafts.set(d.id,d);card.querySelector('.p5-sello').textContent=sello(guardados.find(c=>c.id===d.id))+' · Cambios sin guardar';
-      }
-      host.addEventListener('input',editar);host.addEventListener('change',editar);
-      host.addEventListener('click',async e=>{
-        const b=e.target.closest('[data-guardar]');if(!b||guardando)return;
-        const a=elegibles.find(a=>Embudo.ficha(a,[],[]).id===b.dataset.guardar);if(!a)return;
-        const d=dato(a);d.editadoPor=$('p5Nombre').value.trim();drafts.set(d.id,d);
-        guardando=true;version++;renderTarjetas();$('p5Nombre').disabled=true;mensaje('Guardando…');
-        try{
-          // Revalida la entrada justo antes de guardar, también si cambió en otro equipo.
-          const [as,vs,cfg,rs,cc]=await Promise.all([leer('/api/actors'),leer('/api/activacion-votos'),leer('embudo-config.json'),leer('/api/priorizacion-votos?resumen=1'),leer('canvas-config.json')]);
-          const ahora=Embudo.elegibles(as,vs,cfg,rs,cc);
-          if(!ahora.some(x=>x.id===a.id))throw Error('Este actor ya no es elegible. El borrador se conserva hasta que vuelva a entrar al embudo.');
-          if(d.aliado&&!ahora.some(x=>x.grupo==='aliados'&&x.id===d.aliado.id))throw Error('El aliado impulsor ya no es elegible. Elige otro o deja el campo pendiente.');
-          const rec=await leer('/api/canvas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
-          guardados=guardados.filter(c=>c.id!==d.id).concat(rec);drafts.delete(d.id);mensaje('Ficha guardada. '+sello(rec));
-        }catch(e){mensaje(e.message+' Tus cambios siguen en el borrador.');}
-        finally{guardando=false;version++;$('p5Nombre').disabled=false;renderTarjetas(true);renderHoja();}
-      });
-      $('p5CSV-'+grupo).onclick=()=>{
-        const campos=grupo==='aliados'?camposAliados:camposEmpresas;
-        const filas=[['actorId','nombre','grupo','estado','sector','problema','queOfrece','aliado',...campos.map(([k])=>k),'registradoPor','ultimoGuardado']];
-        filasGrupo(grupo).forEach(c=>filas.push([c.actorId,c.nombre,c.grupo,c.vigente?'Elegible':'Fuera del embudo',c.sector,c.problema,c.queOfrece,c.aliado?.nombre||'',...campos.map(([k])=>c[k]),c.editadoPor,c.updatedAt]));
-        descargarEmbudo(filas,'ruta-de-accion-'+grupo+'.csv');
-      };
+    async function guardar(){
+      const d=recoger();if(!d||guardando)return;
+      drafts.set(actual,d);
+      const v=Rutas.validar(Object.assign({},d,{responsable:d.responsable==='__otro'?'':d.responsable}),ids());
+      if(!v.ok){errores=v.errores;renderEditor();mensaje('Revisa los campos marcados. Tus cambios siguen en el formulario.');return;}
+      errores={};guardando=true;version++;renderEditor();mensaje('Guardando…');
+      try{
+        const rec=await leer('/api/rutas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},v.valor,{editadoPor:identidad()}))});
+        rutas=rutas.filter(r=>r.actorId!==rec.actorId).concat(rec);drafts.delete(rec.actorId);mensaje('Ruta guardada. '+sello(rec));
+      }catch(e){errores=e.errores||{};mensaje(e.message+' Tus cambios siguen en el formulario.');}
+      finally{guardando=false;version++;render(true);}
     }
-    try{$('p5Nombre').value=(localStorage.getItem('canvas-participante')||'').slice(0,60);}catch(e){}
-    $('p5Nombre').oninput=()=>{try{localStorage.setItem('canvas-participante',$('p5Nombre').value);}catch(e){}};
+    $('p5Lista').addEventListener('click',e=>{
+      const b=e.target.closest('[data-p5-actor]');if(!b||guardando)return;
+      // Los borradores ya se guardan en memoria con cada cambio (eventos input/change).
+      actual=b.dataset.p5Actor;errores={};render(true);
+    });
+    $('p5Editor').addEventListener('input',()=>{const d=recoger();if(!d)return;drafts.set(actual,d);const s=$('p5Editor').querySelector('.p5-sello');if(s)s.textContent=sello(guardada(actual))+' · Cambios sin guardar';});
+    // Cambios que muestran u ocultan partes del formulario: etiqueta, aristas y «Otra persona».
+    $('p5Editor').addEventListener('change',e=>{
+      if(!e.target.matches('[name=p5Etiqueta],[data-arista],#p5Responsable'))return;
+      const d=recoger();if(!d)return;
+      if(e.target.id==='p5Responsable'&&e.target.value==='__otro')d.responsable='__otro';
+      drafts.set(actual,d);renderEditor();renderLista();
+      const foco=e.target.id?$(e.target.id):$('p5Editor').querySelector(e.target.dataset.arista?'[data-arista-accion="'+e.target.dataset.arista+'"]':'[name=p5Etiqueta]:checked');
+      if(foco)foco.focus();
+    });
+    $('p5Editor').addEventListener('submit',e=>{e.preventDefault();guardar();});
+    $('p5CSV').onclick=()=>{const lista=ids();descargarEmbudo(Rutas.filasHoja(lista,rutas,Object.fromEntries(lista.map(id=>[id,nombreDe(id)]))),'rutas-de-accion.csv');};
     $('p5Reintentar').onclick=cargar;
     $('view-canvas').addEventListener('vista:activar',()=>setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0));
   })();

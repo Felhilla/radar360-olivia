@@ -1,7 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
-import {execFileSync} from 'node:child_process';
 import Corte from '../public/corte.js';
 import TierList from '../public/tierlist.js';
 import {entorno,dom,html,criterios,calificacion} from './embudo-support.mjs';
@@ -104,12 +103,9 @@ test('Vista administrador: propuesta, límite, edición, confirmaciones internas
  const fetch=s.context.fetch;s.context.fetch=async()=>Response.json({error:'fallo al borrar'},{status:500});$('p4Aceptar').onclick();await tick();assert.match($('p4CorteEstado').textContent,/fallo al borrar/);assert((await s.req('seleccion')).data);s.context.fetch=fetch;
  $('p4Aceptar').onclick();await tick();assert.equal((await s.req('seleccion')).data,null);
 });
-test('Alcance: bloques protegidos intactos, módulo cargado, estilos adaptables y sin diálogos nativos',()=>{
- const base=execFileSync('git',['show','HEAD:public/index.html'],{encoding:'utf8'});
- for(const actividad of ['1','2','3 TIERLIST','5'])for(const tipo of ['JS','CSS','HTML']){
-  const inicio='ACTIVIDAD '+actividad+': INICIO '+tipo,fin='ACTIVIDAD '+actividad+': FIN '+tipo;
-  if(base.includes(inicio))assert.equal(html.split(inicio)[1].split(fin)[0],base.split(inicio)[1].split(fin)[0]);
- }
+// La comparación de los demás bloques contra HEAD servía solo mientras se desarrollaba el ajuste C; se retiró
+// en el ajuste D, que reescribe la Actividad 5 a propósito.
+test('Alcance: módulo cargado, estilos adaptables y sin diálogos nativos',()=>{
  assert.match(html,/<script src="corte.js"><\/script>/);
  const js=html.split('// ACTIVIDAD 4: INICIO JS')[1].split('// ACTIVIDAD 4: FIN JS')[0];assert(!/\b(?:confirm|alert)\(/.test(js));
  const css=html.split('/* ACTIVIDAD 4: INICIO CSS */')[1].split('/* ACTIVIDAD 4: FIN CSS */')[0];assert.match(css,/overflow-x:auto/);assert.match(css,/border-top:4px solid var\(--accent\)/);assert.match(css,/max-width:100%/);

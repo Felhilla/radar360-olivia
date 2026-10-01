@@ -43,18 +43,8 @@ test('CSV con BOM, fórmulas protegidas, comillas y saltos; GET pagina más de 1
  assert(csv.startsWith('\ufeff'));assert(csv.includes('"\'=1+1"'));assert(csv.includes('"\' +CMD"'));assert(csv.includes('"\'@SUM"'));assert(csv.includes('"\'-2"'));assert(csv.includes('"""texto"""'));assert(csv.includes('"Línea\n2"'));
  const s=base();for(let i=0;i<1002;i++)s.bucket('canvas').set(String(i),{id:String(i)});assert.equal((await s.req('canvas')).data.length,1002);
 });
-test('Vista 5: grupo, borrador durante sondeo, guardado sin nombre, hoja y salida del embudo',async()=>{
- const s=base(),$=dom(s.context);vm.runInContext(html.split('// ACTIVIDAD 5: INICIO JS')[1].split('// ACTIVIDAD 5: FIN JS')[0],s.context);
- await $('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));assert.match($('p5Tarjetas-empresas').innerHTML,/Aún no hay/);
- for(const id of ['e','g']){await s.activar(id);s.nivel1(id);await s.req('priorizacion-votos','PUT',calificacion(id));}
- await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Empresa/);assert.match($('p5Tarjetas-aliados').innerHTML,/Red de contactos/);
- const card={dataset:{id:'empresa:e'},querySelector:()=>$('sello')};
- for(const [field,value] of [['oferta','Oferta editada'],['acciones30','Reunión'],['acciones60','Piloto'],['acciones90','Evaluar']])$('p5Tarjetas-empresas').handlers.input({target:{dataset:{field},value,closest:()=>card}});
- await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Oferta editada/);
- await $('p5Tarjetas-empresas').handlers.click({target:{closest:()=>({dataset:{guardar:'empresa:e'}})}});
- assert.equal(s.bucket('canvas').get('empresa:e').acciones60,'Piloto');assert.equal(s.bucket('canvas').get('empresa:e').editadoPor,'');assert.match($('p5Hoja-empresas').innerHTML,/Último guardado/);
- await s.activar('e',1);await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Aún no hay/);assert.match($('p5Hoja-empresas').innerHTML,/Fuera del embudo/);
-});
+// La vista de la Actividad 5 basada en «canvas» se retiró en el reenfoque (ajuste D): ahora usa la colección «rutas»
+// y se prueba en tests/actividad5.test.mjs. La ruta /api/canvas se conserva como histórico y sus pruebas siguen arriba.
 test('Regresión: Radar, portada y landing fuera de actividades se conservan (la Actividad 1 cambió por el plan 08)',{skip:!existsSync(new URL('../../Radar360-web-backups/index_20260925_pre-embudo.html',import.meta.url))},()=>{
  const prev=read('../../Radar360-web-backups/index_20260925_pre-embudo.html');
  for(const id of ['radar','inicio']){
