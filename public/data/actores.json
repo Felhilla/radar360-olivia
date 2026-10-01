@@ -1,0 +1,1532 @@
+[
+  {
+    "id": "aliados-acrip",
+    "nombre": "ACRIP",
+    "tipo": "gremio",
+    "industria": "gremios_publico",
+    "subindustria": null,
+    "sector_radar": "Prioridad alta",
+    "horizonte_informe": null,
+    "por_que": "Reúne gestión humana de todos los sectores.",
+    "dolor": "Absorción organizacional de la reconstrucción.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Estudio sectorial cofirmado y patrocinio selectivo.",
+    "tema_charla": "Absorción organizacional de la reconstrucción",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "aliados-andi",
+    "nombre": "ANDI",
+    "tipo": "gremio",
+    "industria": "gremios_publico",
+    "subindustria": null,
+    "sector_radar": "Prioridad alta",
+    "horizonte_informe": null,
+    "por_que": "Concentra cuentas de industria, consumo, banca y energía mediante seccionales y cámaras.",
+    "dolor": "Capacidad de ejecución, formación y absorción organizacional para la reconstrucción.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Comités de gestión humana seccionales; Colombia Genera; Congreso Empresarial; proyecto SENA FCE 2027.",
+    "tema_charla": "Rediseño operativo, continuidad y reconstrucción",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Colombia Genera",
+        "fecha": "2027-T1",
+        "fecha_texto": "1T 2027"
+      },
+      {
+        "nombre": "Congreso Empresarial Colombiano ANDI",
+        "fecha": "2027-08",
+        "fecha_texto": "agosto"
+      },
+      {
+        "nombre": "Convocatoria SENA FCE 2027",
+        "fecha": "2027-T1",
+        "fecha_texto": "1T 2027"
+      }
+    ],
+    "nota_contexto": "Olivia ya es afiliada"
+  },
+  {
+    "id": "aliados-acodres",
+    "nombre": "Acodres",
+    "tipo": "gremio",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Prioridad alta",
+    "horizonte_informe": "30-60",
+    "por_que": "Frisby e industria gastronómica; convenio marco SENA vigente.",
+    "dolor": "Rediseño de turnos y dotación ante la reforma laboral.",
+    "necesidad_tipo": "E",
+    "ruta_sugerida": "Programa sectorial con financiación SENA.",
+    "tema_charla": "Rediseño de turnos y dotación en gastronomía",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Convocatoria SENA FCE 2027",
+        "fecha": "2027-T1",
+        "fecha_texto": "1T 2027"
+      }
+    ]
+  },
+  {
+    "id": "aliados-camacol",
+    "nombre": "Camacol",
+    "tipo": "gremio",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Prioridad alta",
+    "horizonte_informe": null,
+    "por_que": "Concentra Argos, Corona, Constructora Bolívar y Tecnoglass.",
+    "dolor": "Capacidad de ejecución: cuadrillas, cadena de suministro y coordinación territorial.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Congreso de construcción, estudio sectorial cofirmado y conversación institucional sobre reconstrucción.",
+    "tema_charla": "Capacidad de ejecución de la reconstrucción",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Congreso Colombiano de la Construcción",
+        "fecha": "2026-10-21",
+        "fecha_texto": "21–23 oct"
+      }
+    ]
+  },
+  {
+    "id": "aliados-colombia-fintech",
+    "nombre": "Colombia Fintech",
+    "tipo": "gremio",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Prioridad alta",
+    "horizonte_informe": null,
+    "por_que": "Más de 360 afiliadas y acceso a Addi, Bold y Lulo.",
+    "dolor": "Paso del modo fundador al modo organización.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Taller sectorial de bajo ticket y alto acceso.",
+    "tema_charla": "del modo fundador al modo organización",
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "aliados-acoplasticos",
+    "nombre": "Acoplásticos",
+    "tipo": "gremio",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Prioridad baja-media",
+    "horizonte_informe": null,
+    "por_que": "Puerta a Plastilene, empresa de empaques flexibles.",
+    "dolor": "Sostenibilidad y automatización en Plastilene.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Entrada gremial hacia Plastilene.",
+    "tema_charla": "Sostenibilidad y automatización en empaques flexibles",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "aliados-anda",
+    "nombre": "Anda",
+    "tipo": "gremio",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Prioridad baja-media",
+    "horizonte_informe": null,
+    "por_que": "Anunciantes y vía de entrada hacia Alpina.",
+    "dolor": "Estructura directiva simplificada, reporte BIC y cumplimiento comercial en Alpina.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Vía gremial hacia la dirección de Alpina.",
+    "tema_charla": "Reporte BIC y cultura de cumplimiento comercial",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "aliados-asofondos",
+    "nombre": "Asofondos",
+    "tipo": "gremio",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Prioridad baja-media",
+    "horizonte_informe": null,
+    "por_que": "Fondos y acceso a la mesa del Consejo Gremial Nacional.",
+    "dolor": "Agenda empresarial de reconstrucción en el Consejo Gremial Nacional.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Relación con el Consejo Gremial Nacional y presencia selectiva en el Congreso Asofondos.",
+    "tema_charla": "Reconstrucción y capacidad de absorción organizacional",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Congreso Asofondos",
+        "fecha": "2027-T2",
+        "fecha_texto": "2T 2027"
+      }
+    ]
+  },
+  {
+    "id": "aliados-ccce-camara-colombiana-de-comercio-electronico",
+    "nombre": "CCCE (Cámara Colombiana de Comercio Electrónico)",
+    "tipo": "gremio",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Prioridad baja-media",
+    "horizonte_informe": "120",
+    "por_que": "COP 10.275 millones en contratos con el SENA; puerta a MercadoLibre y retailers omnicanal.",
+    "dolor": "Formación en comercio electrónico y talento digital.",
+    "necesidad_tipo": "E",
+    "ruta_sugerida": "Formación con el SENA y acceso a MercadoLibre y retailers omnicanal.",
+    "tema_charla": "Comercio electrónico y talento digital",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "aliados-cecodes",
+    "nombre": "Cecodes",
+    "tipo": "gremio",
+    "industria": "gremios_publico",
+    "subindustria": null,
+    "sector_radar": "Prioridad baja-media",
+    "horizonte_informe": null,
+    "por_que": "Puerta a Bancolombia y Corona.",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": "No explícito en el informe",
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "aliados-acp",
+    "nombre": "ACP",
+    "tipo": "gremio",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Prioridad media",
+    "horizonte_informe": null,
+    "por_que": "Concentra Ecopetrol, Terpel y operadores.",
+    "dolor": "Nueva estrategia, modelo operativo y cultura en Ecopetrol.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Presencia en la IX Cumbre del Petróleo, Gas y Energía.",
+    "tema_charla": "Modelo operativo y cultura en los primeros cien días",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "IX Cumbre del Petróleo, Gas y Energía",
+        "fecha": "2026-11-04",
+        "fecha_texto": "4–6 nov"
+      }
+    ]
+  },
+  {
+    "id": "aliados-acolgen",
+    "nombre": "Acolgen",
+    "tipo": "gremio",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Prioridad media",
+    "horizonte_informe": null,
+    "por_que": "Reúne EPM, Enel, Celsia y Vatia; preside el Consejo Gremial Nacional.",
+    "dolor": "Posición gremial sobre el PND y agenda de reconstrucción.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Presencia sin venta; acceso al Consejo Gremial Nacional.",
+    "tema_charla": "Capacidad de ejecución y reconstrucción en la agenda del PND",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "aliados-andeg",
+    "nombre": "Andeg",
+    "tipo": "gremio",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Prioridad media",
+    "horizonte_informe": null,
+    "por_que": "Acceso a generadoras.",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Presencia, no venta.",
+    "tema_charla": "No explícito en el informe",
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "aliados-cci",
+    "nombre": "CCI",
+    "tipo": "gremio",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Prioridad media",
+    "horizonte_informe": null,
+    "por_que": "Concentra constructoras y concesionarios.",
+    "dolor": "Reconstrucción como eje de la agenda.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Congreso de Infraestructura; decidir el abordaje ante posible competencia instalada.",
+    "tema_charla": "Capacidad de ejecución de la reconstrucción",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "XXIII Congreso Nacional de la Infraestructura",
+        "fecha": "2026-11-25",
+        "fecha_texto": "25–27 nov"
+      }
+    ]
+  },
+  {
+    "id": "aliados-naturgas",
+    "nombre": "Naturgas",
+    "tipo": "gremio",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Prioridad media",
+    "horizonte_informe": null,
+    "por_que": "Puerta a Promigas y filiales.",
+    "dolor": "Coordinación de grupo y arbitraje contra Perú en Promigas.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Presencia sin venta; vía gremial hacia Promigas y luego directa.",
+    "tema_charla": "Coordinación y liderazgo en grupos de gas",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Congreso Naturgas",
+        "fecha": "2027-04",
+        "fecha_texto": "abril"
+      }
+    ]
+  },
+  {
+    "id": "aliados-ser-colombia",
+    "nombre": "SER Colombia",
+    "tipo": "gremio",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Prioridad media",
+    "horizonte_informe": null,
+    "por_que": "Puerta a renovables medianas, Erco y GreenYellow.",
+    "dolor": "Escalamiento y decisiones de marco de sociedades vehículo.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Presencia sin venta; entrada gremial a renovables medianas.",
+    "tema_charla": "Escalamiento organizacional en renovables",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "aliados-andesco",
+    "nombre": "Andesco",
+    "tipo": "gremio",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Prioridad máxima",
+    "horizonte_informe": null,
+    "por_que": "Mayor concentración de objetivos: EPM, ISA, GEB, Celsia, Enel, Promigas, Vatia y GreenYellow.",
+    "dolor": "Continuidad operativa, cultura de seguridad y reconstrucción de redes.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Taller o estudio para la agenda 2027; programa sectorial SENA para operaciones 24/7 y reconstrucción de redes.",
+    "tema_charla": "Continuidad operativa, cultura de seguridad y reconstrucción de redes",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Congreso Andesco 2027",
+        "fecha": "2027-T3",
+        "fecha_texto": "3T 2027"
+      },
+      {
+        "nombre": "Convocatoria SENA FCE 2027",
+        "fecha": "2027-T1",
+        "fecha_texto": "1T 2027"
+      }
+    ]
+  },
+  {
+    "id": "aliados-asobancaria",
+    "nombre": "Asobancaria",
+    "tipo": "gremio",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Prioridad máxima",
+    "horizonte_informe": null,
+    "por_que": "Concentra ocho cuentas bancarias del mapeo.",
+    "dolor": "Brecha entre adopción y madurez digital; absorción organizacional del despliegue de alivios.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Estudio sectorial y sesión en el Congreso de Riesgos.",
+    "tema_charla": "Madurez digital y absorción organizacional de los alivios",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "24.º Congreso de Riesgos",
+        "fecha": "2026-10-22",
+        "fecha_texto": "22–23 oct"
+      },
+      {
+        "nombre": "24.º Congreso de Derecho Financiero",
+        "fecha": "2026-11-12",
+        "fecha_texto": "12–13 nov"
+      },
+      {
+        "nombre": "19.º SAFE",
+        "fecha": "2026-11-25",
+        "fecha_texto": "25–27 nov"
+      },
+      {
+        "nombre": "Convención Bancaria",
+        "fecha": "2027-06",
+        "fecha_texto": "junio"
+      }
+    ]
+  },
+  {
+    "id": "aliados-fenalco",
+    "nombre": "Fenalco",
+    "tipo": "gremio",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Prioridad máxima",
+    "horizonte_informe": null,
+    "por_que": "Concentra cuentas de comercio; más de 30.000 comerciantes afectados.",
+    "dolor": "Recuperación empresarial y rediseño operativo ante la reforma laboral.",
+    "necesidad_tipo": "A",
+    "ruta_sugerida": "Gestión bilateral sin esperar nueva fecha del Congreso; proyecto de formación SENA.",
+    "tema_charla": "Continuidad operativa y rediseño de turnos en comercio",
+    "propuesta_gh": true,
+    "eventos": [
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      },
+      {
+        "nombre": "Convocatoria SENA FCE 2027",
+        "fecha": "2027-T1",
+        "fecha_texto": "1T 2027"
+      }
+    ]
+  },
+  {
+    "id": "aliados-acopi",
+    "nombre": "ACOPI",
+    "tipo": "gremio",
+    "industria": "gremios_publico",
+    "subindustria": null,
+    "sector_radar": "Prioridad no evaluada en el informe",
+    "horizonte_informe": "120",
+    "por_que": "Mayor contratista público del bloque gremial; COP 130.145 millones, dos tercios con la Gobernación del Atlántico.",
+    "dolor": "Programas de productividad y continuidad para mipymes de zonas afectadas.",
+    "necesidad_tipo": "E",
+    "ruta_sugerida": "Programas con recursos territoriales.",
+    "tema_charla": "Productividad y continuidad operativa de mipymes",
+    "propuesta_gh": true,
+    "eventos": []
+  },
+  {
+    "id": "mercados-alpina-bic",
+    "nombre": "Alpina (BIC)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Consumo",
+    "gremios_asociados": [
+      "aliados-andi",
+      "aliados-anda"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Estructura directiva simplificada y obligaciones de reporte BIC.",
+    "dolor": "Reporte BIC y sanción SIC de COP 884 millones por verificar.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía ANDI / Anda hacia la dirección de la compañía.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-bavaria-ab-inbev",
+    "nombre": "Bavaria (AB InBev)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Consumo",
+    "gremios_asociados": [
+      "aliados-andi",
+      "aliados-fenalco"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Marco de cultura definido por casa matriz.",
+    "dolor": "Ejecución local en planta y fuerza de ventas por turnos.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa con expectativa moderada; verificar acuerdos marco globales.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-grupo-nutresa-gilinski-ihc",
+    "nombre": "Grupo Nutresa (Gilinski · IHC)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Consumo",
+    "gremios_asociados": [
+      "aliados-andi"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "One Nutresa y reorganización de categorías.",
+    "dolor": "Oficina de transformación desmontada al año de crearse; trabajo de transformación inconcluso.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Investigación previa obligatoria; vía ANDI mientras tanto.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-productos-ramo",
+    "nombre": "Productos Ramo",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Consumo",
+    "gremios_asociados": [
+      "aliados-fenalco"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Empresa familiar en profesionalización con cambio de control reciente; menor competencia de grandes consultoras.",
+    "dolor": "Profesionalización y productividad.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Fenalco, con agenda de productividad.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      }
+    ]
+  },
+  {
+    "id": "mercados-ecopetrol-nacion-88-5",
+    "nombre": "Ecopetrol (Nación 88,5%)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Energía",
+    "gremios_asociados": [
+      "aliados-acp"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Nueva cúpula y referencia como cliente regional de Olivia.",
+    "dolor": "Definición de estrategia, modelo operativo y cultura en los primeros cien días.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Agenda de los primeros cien días y presencia en ACP; precisar alcance y vigencia de la relación regional, registrar proveedor y valorar riesgo reputacional. El horizonte vigente es 120 días; >180 días era la clasificación anterior.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "IX Cumbre del Petróleo, Gas y Energía",
+        "fecha": "2026-11-04",
+        "fecha_texto": "4–6 nov"
+      }
+    ],
+    "nota_contexto": "Olivia tiene contratos marco activos; validar horizonte"
+  },
+  {
+    "id": "mercados-erco-energia-medellin-capital-extranjero",
+    "nombre": "Erco Energía (Medellín; capital extranjero)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Energía",
+    "gremios_asociados": [
+      "aliados-ser-colombia"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Ocho sociedades vehículo.",
+    "dolor": "Escalamiento.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía SER Colombia.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-greenyellow-colombia-filial-francesa",
+    "nombre": "GreenYellow Colombia (filial francesa)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Energía",
+    "gremios_asociados": [
+      "aliados-ser-colombia",
+      "aliados-andesco"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Doce sociedades vehículo y decisiones de marco en Francia.",
+    "dolor": "Decisiones de marco dependientes de casa matriz.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía SER Colombia / Andesco; expectativa moderada.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-grupo-energia-bogota-distrito-de-bogota",
+    "nombre": "Grupo Energía Bogotá (Distrito de Bogotá)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Energía",
+    "gremios_asociados": [
+      "aliados-andesco",
+      "aliados-naturgas"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Equipo estable y participadas sin control operativo.",
+    "dolor": "Transmitir cultura y estándares de gestión a participadas de gas, transmisión y Enel.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa; registro en el portal de proveedores.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-isa-nacion",
+    "nombre": "ISA (Nación)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "energia",
+    "sector_radar": "Energía",
+    "gremios_asociados": [
+      "aliados-andesco"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Gobierno corporativo en transición.",
+    "dolor": "Recomposición de confianza y alineación directiva tras la anulación judicial.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Monitoreo, sin acercamiento hasta que se estabilice el gobierno corporativo; vía Andesco.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [],
+    "nota_contexto": "Olivia tiene contratos marco activos; validar horizonte"
+  },
+  {
+    "id": "mercados-addi-capital-extranjero",
+    "nombre": "Addi (capital extranjero)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-colombia-fintech"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Escalamiento regional.",
+    "dolor": "Estructura y liderazgo para escalar.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Colombia Fintech; ticket medio-bajo y valor de acceso múltiple.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-banco-falabella-matriz-chilena",
+    "nombre": "Banco Falabella (matriz chilena)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Decisiones de marco en Chile.",
+    "dolor": "Decisiones de marco condicionadas por casa matriz.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Asobancaria, con expectativa moderada.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-banco-gnb-sudameris-grupo-gilinski",
+    "nombre": "Banco GNB Sudameris (Grupo Gilinski)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Grupo en reconfiguración de portafolio, con Nutresa y Lulo.",
+    "dolor": "Reconfiguración de portafolio.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Asobancaria; monitorear.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-banco-popular-grupo-aval",
+    "nombre": "Banco Popular (Grupo Aval)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Banco tradicional del Grupo Aval.",
+    "dolor": "Eficiencia y cultura.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Asobancaria, después de Banco de Bogotá.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [],
+    "nota_contexto": "Diego lo señala como oportunidad de venta inmediata"
+  },
+  {
+    "id": "mercados-banco-de-bogota-grupo-aval",
+    "nombre": "Banco de Bogotá (Grupo Aval)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Finanzas abiertas y transformación digital.",
+    "dolor": "Brecha entre adopción y madurez digital.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Asobancaria hasta verificar el interlocutor.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-bancolombia-grupo-cibest",
+    "nombre": "Bancolombia (Grupo Cibest)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria",
+      "aliados-andi",
+      "aliados-cecodes"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Holding multipaís con mandato de transformación y despliegue de alivios tras el terremoto.",
+    "dolor": "Gobernanza entre matriz y filiales; absorción organizacional de más de $5 billones en nuevas financiaciones.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa con material a medida; registro de proveedor separado de la conversación de contenido.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-bold-cf-compania-de-financiamiento",
+    "nombre": "Bold CF Compañía de Financiamiento",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-colombia-fintech"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Compañía de financiamiento reciente.",
+    "dolor": "Formalización de procesos y cultura.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Colombia Fintech.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-davivienda-group-banco-davivienda-grupo-bolivar",
+    "nombre": "Davivienda Group / Banco Davivienda (Grupo Bolívar)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Integración de las operaciones de Scotiabank en varios países.",
+    "dolor": "Integración cultural multipaís con la operación de alivios encima.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "30–60 días por contenido en Asobancaria; 120 días por vía directa. Puente: Constructora Bolívar.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [],
+    "nota_contexto": "Diego indica que la integración se maneja internamente"
+  },
+  {
+    "id": "mercados-lulo-bank-grupo-gilinski",
+    "nombre": "Lulo Bank (Grupo Gilinski)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-colombia-fintech",
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Banco digital que pasa del modo fundador al modo organización.",
+    "dolor": "Paso del modo fundador al modo organización.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada institucional por Colombia Fintech; puente de grupo hacia GNB y Nutresa.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-tuya-cibest-50-bancolombia",
+    "nombre": "Tuya (Cibest · 50% Bancolombia)",
+    "tipo": "empresa",
+    "industria": "financiero",
+    "subindustria": null,
+    "sector_radar": "Financiero",
+    "gremios_asociados": [
+      "aliados-asobancaria"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Analítica y experiencia en crédito de consumo.",
+    "dolor": "Cartera expuesta en las zonas afectadas.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa, reforzada por Asobancaria.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-acesco-colombia-familiar",
+    "nombre": "Acesco Colombia (familiar)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-andi"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Acero y cubiertas como insumo directo de la reconstrucción.",
+    "dolor": "Profesionalización de la industria familiar.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía ANDI.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-carvajal-grupo-caleno",
+    "nombre": "Carvajal (grupo caleño)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-andi"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Adopción del marco de experiencia de personas y casa matriz en Cali.",
+    "dolor": "Continuidad operativa en zona afectada y experiencia de personas.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa una vez verificado el interlocutor; contratar con las operativas Pulpa y Papel y Empaques.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-cementos-argos-grupo-argos",
+    "nombre": "Cementos Argos (Grupo Argos)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-camacol",
+      "aliados-andi"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Escisión entre Argos Materials y Argos Latam mientras crece la demanda de reconstrucción.",
+    "dolor": "Asignar personas, procesos y sistemas durante la escisión con crecimiento esperado del 9 %.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa al más alto nivel con material a medida; reforzar con Camacol, ANDI y Cámara del Cemento y el Concreto.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Colombiano de la Construcción",
+        "fecha": "2026-10-21",
+        "fecha_texto": "21–23 oct"
+      }
+    ]
+  },
+  {
+    "id": "mercados-challenger-familiar-bogota",
+    "nombre": "Challenger (familiar, Bogotá)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-andi"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Electrodomésticos e industria familiar en profesionalización.",
+    "dolor": "Dos sanciones SIC y profesionalización.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía ANDI / ACAIRE.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-constructora-bolivar-grupo-bolivar",
+    "nombre": "Constructora Bolívar (Grupo Bolívar)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-camacol"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Vivienda de interés social en el plan de reconstrucción y grupo en transformación.",
+    "dolor": "Capacidad de ejecución de la reconstrucción y transformación de grupo.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "30–60 días por vía gremial en Camacol; 120 días por vía directa. Congreso de construcción con recuperación regional en agenda.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Colombiano de la Construcción",
+        "fecha": "2026-10-21",
+        "fecha_texto": "21–23 oct"
+      }
+    ]
+  },
+  {
+    "id": "mercados-industrias-haceb-familiar-medellin",
+    "nombre": "Industrias Haceb (familiar, Medellín)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-andi"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Empresa familiar en profesionalización y reposición de electrodomésticos en zonas afectadas.",
+    "dolor": "Competencia de importaciones asiáticas y profesionalización.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía ANDI Antioquia.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-organizacion-corona-holding",
+    "nombre": "Organización Corona (holding)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-camacol",
+      "aliados-andi",
+      "aliados-cecodes"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Manufactura de materiales con demanda de reconstrucción al alza.",
+    "dolor": "Automatización y reforma laboral.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Camacol o ANDI hacia las sociedades operativas.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Colombiano de la Construcción",
+        "fecha": "2026-10-21",
+        "fecha_texto": "21–23 oct"
+      }
+    ]
+  },
+  {
+    "id": "mercados-plastilene-familiar-soacha",
+    "nombre": "Plastilene (familiar, Soacha)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-acoplasticos"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Empaques flexibles e industria familiar en profesionalización.",
+    "dolor": "Sostenibilidad y automatización.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Acoplásticos.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-superpolo-jv-marcopolo-fanalca",
+    "nombre": "Superpolo (JV Marcopolo–Fanalca)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-andi"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Carrocerías con estándares de casa matriz.",
+    "dolor": "Ejecución de estándares de casa matriz.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía ANDI / ACAIRE.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-tecnoglass-nasdaq-familia-daes",
+    "nombre": "Tecnoglass (Nasdaq; familia Daes)",
+    "tipo": "empresa",
+    "industria": "industrial",
+    "subindustria": null,
+    "sector_radar": "Industrial",
+    "gremios_asociados": [
+      "aliados-andi",
+      "aliados-camacol"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Presión bursátil sobre la administración.",
+    "dolor": "Presión bursátil que puede abrir o cerrar la conversación.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía ANDI / Camacol.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Colombiano de la Construcción",
+        "fecha": "2026-10-21",
+        "fecha_texto": "21–23 oct"
+      }
+    ]
+  },
+  {
+    "id": "mercados-anglogold-ashanti-colombia",
+    "nombre": "AngloGold Ashanti (Colombia)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-aris-mining",
+    "nombre": "Aris Mining",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-cerrejon",
+    "nombre": "Cerrejón",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-drummond",
+    "nombre": "Drummond",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [
+      "aliados-acp"
+    ],
+    "horizonte_informe": null,
+    "por_que": "Participa en la mesa directiva de ACP.",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-fedeesmeraldas",
+    "nombre": "Fedeesmeraldas",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-grupo-coquecol",
+    "nombre": "Grupo Coquecol",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-mineros-sa",
+    "nombre": "Mineros S.A.",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "recursos_naturales",
+    "sector_radar": "Minero",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-almacenes-exito-grupo-calleja",
+    "nombre": "Almacenes Éxito (Grupo Calleja)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Retail",
+    "gremios_asociados": [
+      "aliados-fenalco",
+      "aliados-andi"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Reconversión de 30 tiendas y cambio de estructura directiva.",
+    "dolor": "Rediseño de turnos y modelo de tienda; 35 sanciones SIC por verificar.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa por el gobierno corporativo; gestión humana participa después en la ejecución.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      }
+    ]
+  },
+  {
+    "id": "mercados-d1",
+    "nombre": "D1",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Retail",
+    "gremios_asociados": [
+      "aliados-fenalco"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Expansión hacia 30.000 empleos e inspecciones laborales.",
+    "dolor": "Modelo operativo de tienda, jornada, recargos y cultura de cumplimiento.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Fenalco hacia la entrada directa.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      }
+    ]
+  },
+  {
+    "id": "mercados-frisby-bic-pereira",
+    "nombre": "Frisby (BIC, Pereira)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Retail",
+    "gremios_asociados": [
+      "aliados-acodres",
+      "aliados-fenalco"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Cadena con casa matriz en Pereira, afectada por reforma laboral y terremoto.",
+    "dolor": "Continuidad operativa y rediseño de turnos.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "30–60 días vía Acodres: programa sectorial con financiación SENA centrado en continuidad y turnos.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      }
+    ]
+  },
+  {
+    "id": "mercados-jeronimo-martins-colombia-ara-portugal",
+    "nombre": "Jerónimo Martins Colombia – Ara (Portugal)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Retail",
+    "gremios_asociados": [
+      "aliados-andi",
+      "aliados-fenalco"
+    ],
+    "horizonte_informe": ">180",
+    "por_que": "Marco de cultura definido por casa matriz.",
+    "dolor": "Ejecución local por turnos del marco de cultura de casa matriz.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa con expectativa moderada; verificar acuerdos marco globales.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      }
+    ]
+  },
+  {
+    "id": "mercados-mercadolibre-colombia-nasdaq",
+    "nombre": "MercadoLibre Colombia (Nasdaq)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Retail",
+    "gremios_asociados": [
+      "aliados-ccce-camara-colombiana-de-comercio-electronico",
+      "aliados-fenalco"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Mercado Libre es cliente regional de Olivia.",
+    "dolor": "Expansión de la cuenta regional a Colombia.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Ruta «cuenta Olivia» con referencia de casa matriz.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-organizacion-terpel-copec-chile",
+    "nombre": "Organización Terpel (Copec, Chile)",
+    "tipo": "empresa",
+    "industria": "retail",
+    "subindustria": null,
+    "sector_radar": "Retail",
+    "gremios_asociados": [
+      "aliados-fenalco",
+      "aliados-acp"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Digitalización desplegada y red de estaciones en zona afectada.",
+    "dolor": "Absorción organizacional de lo digitalizado; turnos, franquicias y terceros expuestos a la reforma laboral.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa, separando tecnología de acompañamiento.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": [
+      {
+        "nombre": "IX Cumbre del Petróleo, Gas y Energía",
+        "fecha": "2026-11-04",
+        "fecha_texto": "4–6 nov"
+      },
+      {
+        "nombre": "Congreso Nacional de Comerciantes",
+        "fecha": null,
+        "fecha_texto": "Por definir"
+      }
+    ]
+  },
+  {
+    "id": "mercados-compensar",
+    "nombre": "Compensar",
+    "tipo": "empresa",
+    "industria": "salud",
+    "subindustria": null,
+    "sector_radar": "Salud",
+    "gremios_asociados": [],
+    "horizonte_informe": "120",
+    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-fundacion-santa-fe",
+    "nombre": "Fundación Santa Fe",
+    "tipo": "empresa",
+    "industria": "salud",
+    "subindustria": null,
+    "sector_radar": "Salud",
+    "gremios_asociados": [],
+    "horizonte_informe": null,
+    "por_que": "No explícito en el informe",
+    "dolor": "No explícito en el informe",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "No explícito en el informe",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-fundacion-valle-del-lili",
+    "nombre": "Fundación Valle del Lili",
+    "tipo": "empresa",
+    "industria": "salud",
+    "subindustria": null,
+    "sector_radar": "Salud",
+    "gremios_asociados": [],
+    "horizonte_informe": "120",
+    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-keralty-colsanitas",
+    "nombre": "Keralty-Colsanitas",
+    "tipo": "empresa",
+    "industria": "salud",
+    "subindustria": null,
+    "sector_radar": "Salud",
+    "gremios_asociados": [],
+    "horizonte_informe": "120",
+    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-sura",
+    "nombre": "Sura",
+    "tipo": "empresa",
+    "industria": "salud",
+    "subindustria": null,
+    "sector_radar": "Salud",
+    "gremios_asociados": [],
+    "horizonte_informe": "120",
+    "por_que": "Redes hospitalarias y aseguradores privados ante reorganización del sistema y daños en infraestructura.",
+    "dolor": "Rediseño de capacidad y modelo de atención ante traslados masivos, reconstrucción y reforma laboral.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada por ACEMI, ACHC y cajas de compensación; verificar posibilidad de cobro antes de la propuesta técnica.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-celsia-grupo-argos",
+    "nombre": "Celsia (Grupo Argos)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Servicios públicos",
+    "gremios_asociados": [
+      "aliados-acolgen",
+      "aliados-andesco",
+      "aliados-andi"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Operación en el Valle del Cauca y pertenencia al Grupo Argos.",
+    "dolor": "Restablecimiento de red y revisión del modelo operativo tras la escisión cementera.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Cementos Argos primero; Celsia por reputación de grupo.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-epm-municipio-de-medellin",
+    "nombre": "EPM (Municipio de Medellín)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Servicios públicos",
+    "gremios_asociados": [
+      "aliados-acolgen",
+      "aliados-andesco"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Articulación de talento y arquitectura empresarial.",
+    "dolor": "Rediseño organizacional con procesos y datos; ciclo de compra largo por régimen oficial.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa previa verificación, con lenguaje de política pública; registro de proveedor.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-enel-colombia-enel-americas-57-3-geb-42-5",
+    "nombre": "Enel Colombia (Enel Américas 57,3% · GEB 42,5%)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Servicios públicos",
+    "gremios_asociados": [
+      "aliados-andesco",
+      "aliados-acolgen"
+    ],
+    "horizonte_informe": "30-60",
+    "por_que": "Cuatro culturas de origen bajo gobernanza mixta.",
+    "dolor": "Integrar Emgesa, Codensa, EGP y ESSA2 y restablecer servicio en zona afectada.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Doble entrada: conversación de contenido y registro de proveedor por separado. Verificar acuerdos marco globales.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-promigas",
+    "nombre": "Promigas",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Servicios públicos",
+    "gremios_asociados": [
+      "aliados-naturgas",
+      "aliados-andesco"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Grupo con cinco filiales de gas.",
+    "dolor": "Coordinación de grupo y arbitraje contra Perú.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada por Naturgas y luego directa.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-vatia-cali",
+    "nombre": "Vatia (Cali)",
+    "tipo": "empresa",
+    "industria": "energia",
+    "subindustria": "servicios_publicos",
+    "sector_radar": "Servicios públicos",
+    "gremios_asociados": [
+      "aliados-andesco",
+      "aliados-acolgen"
+    ],
+    "horizonte_informe": "120",
+    "por_que": "Comercializadora en crecimiento con operación en zona afectada.",
+    "dolor": "Crecimiento y continuidad operativa en zona afectada.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Vía Andesco / Asocodis.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-claro-colombia-america-movil",
+    "nombre": "Claro Colombia (América Móvil)",
+    "tipo": "empresa",
+    "industria": "telecom",
+    "subindustria": null,
+    "sector_radar": "Telecomunicaciones",
+    "gremios_asociados": [],
+    "horizonte_informe": ">180",
+    "por_que": "Respuesta competitiva ante un rival de nuevo tamaño.",
+    "dolor": "Respuesta competitiva a la integración Tigo–Movistar.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Monitoreo; decisiones de marco condicionadas por casa matriz.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-etb-distrito-de-bogota",
+    "nombre": "ETB (Distrito de Bogotá)",
+    "tipo": "empresa",
+    "industria": "telecom",
+    "subindustria": null,
+    "sector_radar": "Telecomunicaciones",
+    "gremios_asociados": [],
+    "horizonte_informe": ">180",
+    "por_que": "Transformación del frente de telecomunicaciones y cultura digital.",
+    "dolor": "Cultura digital de servidores públicos.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Monitoreo del ciclo político.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  },
+  {
+    "id": "mercados-tigo-millicom-integracion-de-movistar",
+    "nombre": "Tigo (Millicom) – integración de Movistar",
+    "tipo": "empresa",
+    "industria": "telecom",
+    "subindustria": null,
+    "sector_radar": "Telecomunicaciones",
+    "gremios_asociados": [],
+    "horizonte_informe": "30-60",
+    "por_que": "Integración de Movistar con marca unificada.",
+    "dolor": "Arquitectura organizacional, armonización de dos culturas, salidas voluntarias y condiciones de la SIC.",
+    "necesidad_tipo": null,
+    "ruta_sugerida": "Entrada directa; verificar proveedores de casa matriz.",
+    "tema_charla": null,
+    "propuesta_gh": false,
+    "eventos": []
+  }
+]

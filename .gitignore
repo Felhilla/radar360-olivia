@@ -3,3 +3,6 @@
 node_modules/
 .DS_Store
 *.log
+
+# Datos privados del reenfoque (informe, contactos, exportaciones): nunca al repositorio
+privado/
