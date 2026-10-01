@@ -254,7 +254,7 @@
     {
       "numero": 4,
       "nombre": "Priorizar actores y mercados",
-      "proposito": "Calificar el impacto y esfuerzo de los actores activados. Victorias tempranas y Apuestas estratégicas pasan a la ruta de acción.",
+      "proposito": "Calificar el impacto y esfuerzo de los actores del Nivel 1 y confirmar una lista de máximo 10 para la Actividad 5.",
       "vista": "priorizacion"
     },
     {

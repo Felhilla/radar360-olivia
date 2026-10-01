@@ -117,5 +117,15 @@
     "adaptacion": "Se conservan todos los pesos. I1 e I5 se orientan al negocio de Olivia; E4 mide coordinación y ejecución, no riesgo ESG. Relación incluye seguimiento competitivo y regulatorio, no presupone una alianza comercial.",
     "noAplica": "El Excel remite a una redistribución de pesos ausente del documento. No se implementa: se exigen diez enteros de 1 a 5; si falta información, puede dejarse el actor sin calificar.",
     "calculo": "Promedio de los índices ponderados individuales. Clasificación antes del redondeo, alto si índice >= umbral. Se redondean únicamente los índices publicados a dos decimales."
+  },
+  "corte": {
+    "maximo": 10,
+    "ordenCuadrantes": [
+      "victorias-tempranas",
+      "apuestas-estrategicas",
+      "mantenimiento-selectivo",
+      "racionalizacion"
+    ],
+    "nota": "Orden para el corte: primero por cuadrante en este orden; dentro de cada cuadrante, mayor índice de impacto; si empatan, menor índice de esfuerzo; si siguen empatados, más grupos que lo eligieron; luego nombre."
   }
 }

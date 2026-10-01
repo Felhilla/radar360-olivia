@@ -748,6 +748,14 @@
   #view-priorizacion .p4-actores{ max-height:230px; }
   #view-priorizacion #p4Editor{ padding:12px; }
 }
+#subview-p4-corte{min-width:0;max-width:100%;}
+#subview-p4-corte .p4-tabla{max-width:100%;overflow-x:auto;}
+#subview-p4-corte .p4-linea-corte td{border-top:4px solid var(--accent);font-weight:700;white-space:normal;}
+#subview-p4-corte .p4-ficha{display:flex;align-items:center;gap:8px;min-width:180px;width:100%;box-sizing:border-box;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px;text-align:left;font:inherit;font-size:.9rem;}
+#subview-p4-corte .p4-ficha img{width:32px;height:32px;object-fit:contain;flex-shrink:0;}
+#p4Borrador li{padding:8px 0;overflow-wrap:anywhere;}
+#p4Borrador button{margin:4px;}
+#p4Confirmada,#p4Confirmacion{overflow-wrap:anywhere;padding:12px;border:1px solid var(--line);border-radius:8px;margin-bottom:12px;}
 /* ACTIVIDAD 4: FIN CSS */
 /* ACTIVIDAD 5: INICIO CSS */
 #view-canvas{min-width:0;overflow-wrap:anywhere;}
@@ -907,12 +915,13 @@
 <!-- ACTIVIDAD 5: FIN HTML -->
 <section class="view" id="view-priorizacion">
   <h2>Priorizar actores y mercados</h2>
-  <p>Actividad 4 · Valora el impacto y el esfuerzo de relacionarte con cada actor. Solo entran empresas y gremios-aliados activados en la Actividad 3. Puedes calificar los que conoces; los dos cuadrantes de impacto alto pasan a la Actividad 5.</p>
+  <p>Actividad 4 · Califica el impacto y el esfuerzo de los actores del Nivel 1 de la Actividad 3. Al final se confirma una lista de máximo 10 actores para la Actividad 5.</p>
   <p id="p4Provisional" class="p4-aviso" hidden><strong>Criterios provisionales</strong> · <span></span></p>
   <p id="p4Estado" role="status" aria-live="polite">Abre esta actividad para cargar las calificaciones.</p>
   <nav class="subviews" aria-label="Actividad 4">
     <button data-subview="p4-calificar" class="active">Calificar</button>
     <button data-subview="p4-matriz">Matriz Impacto–Esfuerzo</button>
+    <button data-subview="p4-corte">Corte final</button>
   </nav>
   <div class="subview active" id="subview-p4-calificar">
     <div class="p4-filtros">
@@ -959,12 +968,35 @@
   "votos": 3
 }</pre>
         <p><code>actorId</code>, <code>nombre</code>, <code>categoria</code>, <code>sector</code> y los campos de <code>cuadrante</code> son cadenas. Categoría: mercados (Empresas) o aliados (Gremios-aliados). Índices: números entre 1 y 5, redondeados a dos decimales (JSON puede omitir ceros finales). Votos: entero positivo. Cada persona pesa igual: se promedian sus índices ponderados completos; no se guardan calificaciones parciales.</p>
-        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Solo se incluyen actores activados y vigentes, aunque estén ocultos del Radar. La pantalla y el CSV respetan el filtro de grupo. Victorias tempranas y Apuestas estratégicas pasan a la Actividad 5.</p>
+        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Solo se incluyen actores del Nivel 1 del sorteo vigente, aunque estén ocultos del Radar. La matriz y su CSV respetan el filtro de grupo. En Corte final se confirma la lista de máximo 10 actores para la Actividad 5.</p>
         <p>La fuente única es <code>GET /api/priorizacion-votos?criterios=1</code>: criterios, pesos, escalas, umbral y cuadrantes. <code>GET /api/priorizacion-votos</code> devuelve votos completos. PUT reemplaza el voto identificado por actor y nombre; DELETE recibe <code>{actorId, votante}</code>. Sin autenticación, como Gremios.</p>
         <p>Nota metodológica: el Excel menciona una redistribución para «no aplica» que el documento no desarrolla. Se exigen diez respuestas de 1 a 5, sin redistribución. Si no tienes información suficiente, deja ese actor sin calificar.</p>
         <div id="p4Metodologia"></div>
       </div>
     </details>
+  </div>
+  <div class="subview" id="subview-p4-corte">
+    <h3>Corte final</h3>
+    <div id="p4Confirmada"></div>
+    <p id="p4CorteNota"></p>
+    <p id="p4CorteEstado" role="status" aria-live="polite"></p>
+    <div id="p4CorteAdmin" hidden>
+      <button type="button" class="btn" id="p4Proponer">Proponer los 10 primeros</button>
+      <h4>Borrador de la lista</h4>
+      <ol id="p4Borrador"></ol>
+      <p id="p4Validacion"></p>
+      <button type="button" class="btn" id="p4Confirmar">Confirmar lista</button>
+      <button type="button" class="btn secondary" id="p4QuitarConfirmacion">Quitar confirmación</button>
+      <div id="p4Confirmacion" hidden>
+        <p id="p4ConfirmacionTexto"></p>
+        <button type="button" class="btn" id="p4Aceptar">Confirmar cambio</button>
+        <button type="button" class="btn secondary" id="p4Cancelar">Cancelar</button>
+      </div>
+    </div>
+    <button type="button" class="btn secondary" id="p4CorteCSV">Descargar corte (CSV)</button>
+    <div class="p4-tabla" tabindex="0" role="region" aria-label="Tabla de corte desplazable">
+      <table class="actors"><caption>Orden para el corte final</caption><thead><tr><th>Posición</th><th>Actor</th><th>Cuadrante</th><th>Índice de impacto</th><th>Índice de esfuerzo</th><th>Calificaciones</th><th>Grupos que lo eligieron</th><th>En la lista confirmada</th><th id="p4AccionesTitulo" hidden>Borrador</th></tr></thead><tbody id="p4CorteFilas"></tbody></table>
+    </div>
   </div>
 </section>
 <!-- ACTIVIDAD 4: FIN HTML -->
@@ -1216,6 +1248,7 @@
 <script src="config.js"></script>
 <script src="embudo.js"></script>
 <script src="tierlist.js"></script>
+<script src="corte.js"></script>
 <script src="ficha-actor.js"></script>
 <script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
@@ -2954,6 +2987,7 @@
     const $ = id => document.getElementById(id), API4 = '/api/priorizacion-votos';
     const categorias = {mercados:'Empresas', aliados:'Gremios-aliados'};
     let config = null, actores = [], votos = [], resumen = [], seleccionado = null;
+    let gruposPorActor = {}, confirmada = null, borrador = [], accionPendiente = null, guardandoCorte = false;
     let cargando = false, guardando = false, version = 0, listo = false, iniciado = false;
     let orden = 'nombre', direccion = 1, firmaLista = '', firmaResultados = '', detalleId = null;
     const pendientes = new Map();
@@ -2963,7 +2997,7 @@
     const mio = id => votos.find(v => v.actorId === id && slug(v.votante) === slug(nombre()));
     const numero = n => n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
     const mensaje = t => { $('p4Estado').textContent = t; };
-    const visibles = () => actores.filter(a => Embudo.grupo(a));
+    const visibles = () => actores;
     const filtrados = () => visibles().filter(a => (!$('p4Categoria').value || a.categoria === $('p4Categoria').value) && (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes($('p4Buscar').value.trim().toLocaleLowerCase('es'))).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
     const resultados = () => resumen.filter(r => visibles().some(a=>a.id===r.actorId) && (!$('p4CategoriaMatriz').value || r.categoria===$('p4CategoriaMatriz').value));
     async function leer(url, opciones){
@@ -2974,8 +3008,9 @@
     }
     function renderLista(){
       const lista = filtrados(), todos = visibles();
+      $('p4Editor').hidden=!todos.length;
       $('p4Avance').textContent = 'Has calificado '+todos.filter(a=>mio(a.id)).length+' de '+todos.length+' · '+lista.length+' en este filtro.';
-      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Aún no hay actores activados. Ve a la Actividad 3 y vota Sí / No para activar empresas y gremios-aliados.</p>');
+      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+' grupos · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores en el Nivel 1 de la Actividad 3.</p>');
       if(html !== firmaLista){ $('p4Actores').innerHTML=html; firmaLista=html; }
     }
     function renderEditor(enfocar){
@@ -3089,7 +3124,7 @@
       if(detalleId) mostrarDetalle(detalleId);
     }
     async function cargar(){
-      if(cargando||guardando||!$('view-priorizacion').classList.contains('active')) return;
+      if(cargando||guardando||guardandoCorte||!$('view-priorizacion').classList.contains('active')) return;
       cargando=true; const v=version;
       try{
         if(!config){
@@ -3097,15 +3132,87 @@
           $('p4Provisional').hidden=!config.provisional;$('p4Provisional').querySelector('span').textContent=config.nota;
           $('p4Metodologia').textContent=config.metodologia.adaptacion;
         }
-        const data=await Promise.all([leer('/api/actors'),leer(API4),leer(API4+'?resumen=1'),leer('/api/activacion-votos'),leer('embudo-config.json')]);
+        const sorteo=await leer('/api/parejas');
+        const data=await Promise.all([leer('/api/actors'),leer(API4),leer(API4+'?resumen=1'),sorteo?leer('/api/tierlist?sorteo='+encodeURIComponent(sorteo.id)):Promise.resolve([]),leer('/api/seleccion')]);
         if(v!==version) return;
-        [actores,votos,resumen]=data;actores=Embudo.activados(actores,data[3],data[4]);listo=true;
+        [actores,votos,resumen]=data;
+        gruposPorActor=Object.fromEntries(TierList.nivel1(sorteo,data[3]).map(a=>[a.actorId,a.grupos]));
+        actores=actores.filter(a=>Object.hasOwn(gruposPorActor,a.id));confirmada=data[4];listo=true;
         if(seleccionado&&!visibles().some(a=>a.id===seleccionado)){seleccionado=null;renderEditor(false);}
-        renderLista();renderResultados();
-        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Se actualiza cada '+(POLL_MS/1000)+' segundos.');
+        renderLista();renderResultados();renderCorte();
+        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Se actualiza cada 10 segundos.');
       }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan tus respuestas y los últimos resultados. Se reintentará automáticamente.');}
       finally{cargando=false;}
     }
+    const adminCorte=()=>window.Identidad?.rol==='administrador';
+    function ordenCorte(){
+      return Corte.ordenar(actores.map(a=>resumen.find(r=>r.actorId===a.id)||{actorId:a.id,nombre:a.nombre,votos:0}),config.corte,gruposPorActor);
+    }
+    const avisoCorte=t=>{$('p4CorteEstado').textContent=t;};
+    function renderCorte(){
+      $('p4CorteAdmin').hidden=!adminCorte()||!listo;$('p4AccionesTitulo').hidden=!adminCorte();
+      if(!config)return;
+      const ordenados=ordenCorte(),max=config.corte.maximo,ids=confirmada?.actorIds||[];
+      const nombreActor=id=>actores.find(a=>a.id===id)?.nombre||id;
+      $('p4CorteNota').textContent=config.corte.nota;
+      $('p4Confirmada').hidden=!confirmada;
+      $('p4Confirmada').innerHTML=confirmada?'<h4>Lista confirmada para la Actividad 5</h4><p>'+esc(confirmada.confirmadoPor)+' · '+esc(new Date(confirmada.confirmadoEn).toLocaleString('es-CO'))+'</p><ol>'+ids.map(id=>'<li>'+esc(nombreActor(id))+'</li>').join('')+'</ol>':'';
+      const validacion=Corte.validarSeleccion(borrador,actores,config.corte);
+      $('p4Validacion').textContent=validacion.motivo||borrador.length+' de '+max+' actores';
+      $('p4Confirmar').disabled=!validacion.ok||guardandoCorte;
+      $('p4Proponer').disabled=guardandoCorte;
+      $('p4QuitarConfirmacion').disabled=!confirmada||guardandoCorte;
+      $('p4Aceptar').disabled=guardandoCorte;$('p4Cancelar').disabled=guardandoCorte;
+      $('p4Borrador').innerHTML=borrador.map((id,i)=>'<li>'+esc(nombreActor(id))+' '+['Subir','Bajar','Quitar'].map((texto,k)=>'<button type="button" class="btn secondary" data-corte="'+texto+'" data-id="'+esc(id)+'" '+(guardandoCorte||(k===0&&i===0)||(k===1&&i===borrador.length-1)?'disabled':'')+'>'+texto+'</button>').join('')+'</li>').join('');
+      const linea='<tr class="p4-linea-corte"><td colspan="'+(adminCorte()?9:8)+'">Corte: máximo '+max+' actores pasan a la Actividad 5</td></tr>';
+      $('p4CorteFilas').innerHTML=ordenados.map((r,i)=>{
+        const actor=actores.find(a=>a.id===r.actorId),lleno=borrador.length>=max;
+        const agregar=borrador.includes(r.actorId)?'En el borrador':'<button type="button" class="btn secondary" data-corte="Agregar" data-id="'+esc(r.actorId)+'" '+(lleno||guardandoCorte?'disabled':'')+' '+(lleno?'title="La lista admite máximo 10 actores"':'')+'>Agregar</button>'+(lleno?'<small>La lista admite máximo 10 actores</small>':'');
+        return '<tr><td>'+(i+1)+'</td><td><button type="button" class="p4-ficha" data-ficha="'+esc(r.actorId)+'"><img src="'+esc(getLogo(actor))+'" alt="">'+esc(r.nombre)+'</button></td><td>'+esc(r.sinCalificar?'Sin calificar':r.cuadrante.nombre)+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceImpacto))+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceEsfuerzo))+'</td><td>'+r.votos+'</td><td>'+r.grupos+'</td><td>'+(ids.includes(r.actorId)?'Sí':'No')+'</td>'+(adminCorte()?'<td>'+agregar+'</td>':'')+'</tr>'+(i+1===max?linea:'');
+      }).join('')+(ordenados.length<max?linea:'');
+    }
+    function editarCorte(e){
+      const ficha=e.target.closest('[data-ficha]');
+      if(ficha){window.abrirFichaActor?.(ficha.dataset.ficha);return;}
+      const b=e.target.closest('[data-corte]');
+      if(!b||!adminCorte()||guardandoCorte||b.disabled)return;
+      const id=b.dataset.id,i=borrador.indexOf(id),accion=b.dataset.corte;
+      if(accion==='Agregar'&&i<0&&borrador.length<config.corte.maximo)borrador.push(id);
+      if(accion==='Quitar'&&i>=0)borrador.splice(i,1);
+      const j=i+(accion==='Subir'?-1:1);
+      if(['Subir','Bajar'].includes(accion)&&i>=0&&j>=0&&j<borrador.length)[borrador[i],borrador[j]]=[borrador[j],borrador[i]];
+      accionPendiente=null;$('p4Confirmacion').hidden=true;renderCorte();
+    }
+    async function guardarCorte(accion){
+      if(!adminCorte()||guardandoCorte)return;
+      if(accion==='PUT'){
+        const v=Corte.validarSeleccion(borrador,actores,config.corte);
+        if(!v.ok){avisoCorte(v.motivo);return;}
+      }
+      guardandoCorte=true;version++;renderCorte();
+      try{
+        const data=await leer('/api/seleccion',{method:accion,headers:{'content-type':'application/json'},...(accion==='PUT'?{body:JSON.stringify({actorIds:borrador,confirmadoPor:window.Identidad.nombre})}:{})});
+        confirmada=accion==='DELETE'?null:data;accionPendiente=null;$('p4Confirmacion').hidden=true;
+        avisoCorte(accion==='DELETE'?'Confirmación retirada.':'Lista confirmada.');
+      }catch(e){avisoCorte(e.message);}
+      finally{guardandoCorte=false;version++;renderCorte();}
+    }
+    function pedirCambio(accion){
+      if(!adminCorte()||guardandoCorte)return;
+      if(!confirmada&&accion==='PUT'){guardarCorte(accion);return;}
+      accionPendiente=accion;$('p4ConfirmacionTexto').textContent=accion==='DELETE'?'¿Quitar la confirmación de la lista?':'¿Reemplazar la lista confirmada por este borrador?';$('p4Confirmacion').hidden=false;
+    }
+    $('p4CorteFilas').onclick=editarCorte;$('p4Borrador').onclick=editarCorte;
+    $('p4Proponer').onclick=()=>{if(!adminCorte()||guardandoCorte||!config)return;borrador=Corte.propuesta(ordenCorte(),config.corte).map(r=>r.actorId);accionPendiente=null;$('p4Confirmacion').hidden=true;renderCorte();};
+    $('p4Confirmar').onclick=()=>pedirCambio('PUT');$('p4QuitarConfirmacion').onclick=()=>pedirCambio('DELETE');
+    $('p4Aceptar').onclick=()=>{if(accionPendiente)guardarCorte(accionPendiente);};
+    $('p4Cancelar').onclick=()=>{accionPendiente=null;$('p4Confirmacion').hidden=true;};
+    $('p4CorteCSV').onclick=()=>{
+      if(!config)return;
+      const filas=[['Posición','Actor','Cuadrante','Índice de impacto','Índice de esfuerzo','Calificaciones','Grupos que lo eligieron','En la lista confirmada'],...ordenCorte().map((r,i)=>[i+1,r.nombre,r.sinCalificar?'Sin calificar':r.cuadrante.nombre,r.sinCalificar?'':r.indiceImpacto,r.sinCalificar?'':r.indiceEsfuerzo,r.votos,r.grupos,confirmada?.actorIds.includes(r.actorId)?'Sí':'No'])];
+      const url=URL.createObjectURL(new Blob([Embudo.csv(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
+      a.href=url;a.download='corte_final.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    };
     function descargar(){
       const datos=resultados(), filas=[['tipo','actorId','nombre','categoria','sector','indiceImpacto','indiceEsfuerzo','cuadranteId','cuadrante','votos','votante','eje','criterioId','criterio','pesoPorcentaje','valor','updatedAt']];
       datos.forEach(r=>{
@@ -3120,7 +3227,7 @@
     ['p4Categoria','p4CategoriaMatriz'].forEach(id=>Object.entries(categorias).forEach(([k,n])=>{const o=document.createElement('option');o.value=k;o.textContent=n;$(id).appendChild(o);}));
     $('p4Leyenda').innerHTML=Object.entries(categorias).map(([k,n])=>'<span class="p4-leyenda"><span class="p4-color" style="background:var(--cat-'+k+')"></span>'+n+'</span>').join('');
     // El nombre viene de la lista de asistentes validada en la entrada; no se edita aquí.
-    const ponerNombre=()=>{if(!window.Identidad)return;$('p4Nombre').value=window.Identidad.nombre;$('p4Nombre').readOnly=true;renderLista();renderEditor(false);};
+    const ponerNombre=()=>{if(!window.Identidad)return;$('p4Nombre').value=window.Identidad.nombre;$('p4Nombre').readOnly=true;renderLista();renderEditor(false);renderCorte();};
     ponerNombre();document.addEventListener('identidad:cambio',ponerNombre);
     ['p4Categoria','p4Buscar'].forEach(id=>$(id).addEventListener('input',()=>{renderLista();renderEditor(false);}));
     $('p4CategoriaMatriz').onchange=()=>{detalleId=null;$('p4Detalle').textContent='Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';renderResultados();};
@@ -3131,7 +3238,7 @@
     $('p4CSV').onclick=descargar;
     $('view-priorizacion').addEventListener('vista:activar',()=>{
       // La navegación central emite el evento después de activar la vista.
-      setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0);
+      setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,10000);}cargar();},0);
     });
   })();
   // ACTIVIDAD 4: FIN JS

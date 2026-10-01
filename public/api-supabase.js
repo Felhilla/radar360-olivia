@@ -105,6 +105,11 @@
     return criteriosPromesa;
   }
 
+  async function nivel1Vigente(){
+    const sorteo=await store.get('parejas','vigente');
+    const actores=TierList.nivel1(sorteo,await store.list('tierlist'));
+    return {sorteoId:sorteo?.id||null,actores};
+  }
   async function activosEmbudo(){
     var r=await nativeFetch('embudo-config.json',{cache:'no-store'});
     if(!r.ok) throw Error('No se pudo cargar embudo-config.json');
@@ -381,6 +386,17 @@
       await store.set('gremios-taller', g.id, g);
       return responder(g, 201);
     },
+    'seleccion': async function(m,body){
+      if(m==='GET') return responder(await store.get('seleccion','vigente'));
+      if(m==='DELETE'){await store.del('seleccion','vigente');return responder({ok:true});}
+      if(m!=='PUT') return responder({error:'Método no permitido.'},405);
+      const nivel=await nivel1Vigente(),cr=await criterios();
+      const validacion=Corte.validarSeleccion(body?.actorIds,nivel.actores,cr.corte);
+      if(!validacion.ok) return responder({error:validacion.motivo},400);
+      if(typeof body.confirmadoPor!=='string'||!body.confirmadoPor.trim()||body.confirmadoPor.length>80)
+        return responder({error:'Escribe quién confirma la lista (1–80 caracteres).'},400);
+      return responder(await store.set('seleccion','vigente',{actorIds:body.actorIds,confirmadoPor:body.confirmadoPor.trim(),confirmadoEn:new Date().toISOString(),sorteoId:nivel.sorteoId}));
+    },
     'priorizacion-votos': async function(m, body, params){
       var cr = await criterios();
       if(m === 'GET' && params.get('criterios') === '1') return responder(cr);
@@ -391,7 +407,8 @@
       if(m === 'GET'){
         var votos = await store.list('priorizacion-votos');
         if(params.get('resumen') !== '1') return responder(votos);
-        var actores = {}; (await activosEmbudo()).forEach(function(a){ actores[a.id] = a; });
+        var nivel = new Set((await nivel1Vigente()).actores.map(a=>a.actorId));
+        var actores = {}; (await store.list('actors')).filter(a=>nivel.has(a.id)).forEach(function(a){ actores[a.id] = a; });
         var grupos = {};
         votos.forEach(function(v){
           if(v.borrador || !ejeValido(v.impacto, 'impacto') || !ejeValido(v.esfuerzo, 'esfuerzo')) return;
@@ -399,7 +416,7 @@
         });
         var res = [];
         Object.keys(grupos).forEach(function(id){
-          var a = actores[id]; if(!a || a.estado === 'descartado') return;
+          var a = actores[id]; if(!a) return;
           var vs = grupos[id];
           // suma en centésimas enteras, igual que la función original, para no perder el 3,0 exacto por coma flotante
           var prom = function(eje){ return vs.reduce(function(s, v){ return s + cr[eje].reduce(function(n, c){ return n + v[eje][c.id] * c.peso; }, 0); }, 0) / (100 * vs.length); };
@@ -415,7 +432,7 @@
       var votante = body.votante.trim(), key = body.actorId + '--' + slugVotante(votante);
       if(m === 'DELETE'){ await store.del('priorizacion-votos', key); return responder({ ok: true }); }
       var actor = await store.get('actors', body.actorId);
-      if(!actor || !(await activosEmbudo()).some(a=>a.id===actor.id)) return responder({ error: 'El actor no está activado en la Actividad 3.' }, 400);
+      if(!actor || !(await nivel1Vigente()).actores.some(a=>a.actorId===actor.id)) return responder({ error: 'El actor no está en el Nivel 1 de la Actividad 3.' }, 400);
       if(body.borrador || !ejeValido(body.impacto, 'impacto') || !ejeValido(body.esfuerzo, 'esfuerzo')) return responder({ error: 'Completa los diez criterios con enteros de 1 a 5. No se guardan borradores.' }, 400);
       var voto = { actorId: body.actorId, votante: votante, impacto: body.impacto, esfuerzo: body.esfuerzo, updatedAt: new Date().toISOString() };
       await store.set('priorizacion-votos', key, voto);

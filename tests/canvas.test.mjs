@@ -34,7 +34,7 @@ test('Validación nueva: actor existente, grupo/prefijo correcto, no descartados
 test('Aliado impulsor: solo aliado activado en cuadrante alto, nombre desde actor',async()=>{
  const s=base(),b={...s.body(),aliado:{id:'g',nombre:'Falso'}};
  assert.equal((await s.req('canvas','PUT',b)).status,400);
- await s.activar('g');await s.req('priorizacion-votos','PUT',calificacion('g',4,4));
+ await s.activar('g');s.nivel1('g');await s.req('priorizacion-votos','PUT',calificacion('g',4,4));
  let r=await s.req('canvas','PUT',b);assert.equal(r.status,200);assert.equal(r.data.aliado.nombre,'g');
  await s.req('priorizacion-votos','PUT',calificacion('g',2,2));assert.equal((await s.req('canvas','PUT',b)).status,400);
 });
@@ -46,7 +46,7 @@ test('CSV con BOM, fórmulas protegidas, comillas y saltos; GET pagina más de 1
 test('Vista 5: grupo, borrador durante sondeo, guardado sin nombre, hoja y salida del embudo',async()=>{
  const s=base(),$=dom(s.context);vm.runInContext(html.split('// ACTIVIDAD 5: INICIO JS')[1].split('// ACTIVIDAD 5: FIN JS')[0],s.context);
  await $('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));assert.match($('p5Tarjetas-empresas').innerHTML,/Aún no hay/);
- for(const id of ['e','g']){await s.activar(id);await s.req('priorizacion-votos','PUT',calificacion(id));}
+ for(const id of ['e','g']){await s.activar(id);s.nivel1(id);await s.req('priorizacion-votos','PUT',calificacion(id));}
  await $('p5Reintentar').onclick();assert.match($('p5Tarjetas-empresas').innerHTML,/Empresa/);assert.match($('p5Tarjetas-aliados').innerHTML,/Red de contactos/);
  const card={dataset:{id:'empresa:e'},querySelector:()=>$('sello')};
  for(const [field,value] of [['oferta','Oferta editada'],['acciones30','Reunión'],['acciones60','Piloto'],['acciones90','Evaluar']])$('p5Tarjetas-empresas').handlers.input({target:{dataset:{field},value,closest:()=>card}});

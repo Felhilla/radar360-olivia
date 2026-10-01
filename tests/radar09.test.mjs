@@ -56,7 +56,7 @@ test('Radar09: embudo histórico activa mineras sin fila en Matriz',async()=>{
  const s=entorno(base);for(const r of patches)s.bucket('actors').set(r.id,structuredClone(r.data));
  for(const {id} of patches.filter(r=>r.data.sector==='Minero')){
   assert.equal((await s.activar(id)).status,200);
-  assert.equal((await s.req('priorizacion-votos','PUT',calificacion(id))).status,200);
+  s.nivel1(id);assert.equal((await s.req('priorizacion-votos','PUT',calificacion(id))).status,200);
  }
 });
 test('Radar09: diálogo muestra tercer bloque solo para mercados, escapa HTML y conserva cierre',()=>{

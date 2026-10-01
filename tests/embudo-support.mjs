@@ -5,6 +5,7 @@ import assert from 'node:assert/strict';
 import Embudo from '../public/embudo.js';
 import Ideas from '../public/ideas.js';
 import TierList from '../public/tierlist.js';
+import Corte from '../public/corte.js';
 export {Embudo};
 export const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
 export const html=read('../public/index.html');
@@ -18,7 +19,7 @@ export function entorno(seed=[]){
  const db=new Map(),calls=[];
  const bucket=c=>{if(!db.has(c))db.set(c,new Map());return db.get(c);};
  seed.forEach(r=>bucket(r.coleccion).set(r.id,structuredClone(r.data)));
- const context=vm.createContext({TierList,Ideas,Embudo,Response,URL,URLSearchParams,console,location:{href:'https://local.invalid/'},window:{TierList,RADAR_CONFIG:{supabaseUrl:'https://supabase.invalid',supabaseAnonKey:'mock-only'},fetch:async(url,init={})=>{
+ const context=vm.createContext({Corte,TierList,Ideas,Embudo,Response,URL,URLSearchParams,console,location:{href:'https://local.invalid/'},window:{TierList,RADAR_CONFIG:{supabaseUrl:'https://supabase.invalid',supabaseAnonKey:'mock-only'},fetch:async(url,init={})=>{
   calls.push([url,init]);
   if(url==='data/actores.json')return Response.json(JSON.parse(read('../public/data/actores.json')));
   if(url==='asistentes-config.json')return Response.json(JSON.parse(read('../public/asistentes-config.json')));
@@ -40,7 +41,15 @@ export function entorno(seed=[]){
  }
  const actor=(id,categoria='mercados',extra={})=>{const a={id,nombre:id,categoria,estado:'verificado',...extra};bucket('actors').set(id,a);return a;};
  const activar=(id,valor=2,votante='Ana')=>req('activacion-votos','PUT',{actorId:id,grupo:Embudo.grupo(bucket('actors').get(id)),votante,valor});
- return {bucket,calls,req,context,actor,activar};
+ // Colocaciones explícitas; no se mezclan con el voto Sí/No histórico.
+ const nivel1=(id,nivel=1)=>{
+  const sorteo=bucket('parejas').get('vigente')||{id:'actual',grupos:[]};
+  const grupoId='grupo-'+id;
+  if(!sorteo.grupos.some(g=>g.id===grupoId))sorteo.grupos.push({id:grupoId});
+  bucket('parejas').set('vigente',sorteo);
+  bucket('tierlist').set(id,{actorId:id,sorteoId:sorteo.id,grupoId,nivel});
+ };
+ return {bucket,calls,req,context,actor,activar,nivel1};
 }
 export function dom(context){
  const elements=new Map();
