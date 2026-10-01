@@ -66,7 +66,7 @@ test('Vista: respuestas por pregunta, legado, guardado, actualización sin perde
   document:{getElementById:element,querySelector:element,querySelectorAll:()=>[],createElement:()=>({children:[],setAttribute(){},addEventListener(t,f){this[t]=f;},appendChild(e){this.children.push(e);}})},
   fetch:s.context.window.fetch,esc:s=>String(s).replaceAll('<','&lt;'),showToast:()=>{}
  });
- vm.runInContext(html.split('// ---------------- lluvia de ideas ----------------')[1].split('// ACTIVIDAD 3 EMBUDO: INICIO JS')[0],s.context);
+ vm.runInContext(html.split('// ---------------- lluvia de ideas ----------------')[1].split('// ACTIVIDAD 3 TIERLIST: INICIO JS')[0],s.context);
  await element('view-ideas').handlers['vista:activar']();
  await new Promise(r=>setImmediate(r));
  assert.equal(element('ideasAntiguas-corto').hidden,false);

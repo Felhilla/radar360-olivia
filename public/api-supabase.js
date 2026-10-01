@@ -128,7 +128,55 @@
     if((d.correo!=null && typeof d.correo!=='string') || (valor.correo && (valor.correo.length>160 || !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(valor.correo)))) errores.correo='Escribe un correo válido de máximo 160 caracteres.';
     return Object.keys(errores).length?{ok:false,errores}:{ok:true,valor};
   }
+  // Catálogo compartido: se intenta cargar una sola vez por sesión.
+  var actoresTierPromesa;
+  function actoresTier(){
+    if(!actoresTierPromesa) actoresTierPromesa=nativeFetch('data/actores.json',{cache:'no-store'})
+      .then(r=>{if(!r.ok)throw Error('catálogo');return r.json();}).then(a=>Array.isArray(a)?a:null).catch(()=>null);
+    return actoresTierPromesa;
+  }
+  function sorteoValido(s){
+    const ids=window.TierList.INDUSTRIAS.map(i=>i.id), nombres=new Set(), grupos=new Set(), cubiertas=new Set();
+    if(!s||typeof s.id!=='string'||!s.id.trim()||typeof s.createdAt!=='string'||!Number.isFinite(Date.parse(s.createdAt))||!Array.isArray(s.grupos)||!s.grupos.length) return false;
+    if(s.iniciado!==undefined&&typeof s.iniciado!=='boolean') return false;
+    for(const g of s.grupos){
+      if(!g||typeof g.id!=='string'||!g.id.startsWith(s.id+'-g')||grupos.has(g.id)||!Array.isArray(g.integrantes)||!g.integrantes.length||g.integrantes.length>3||!Array.isArray(g.industrias)||!g.industrias.length||new Set(g.industrias).size!==g.industrias.length) return false;
+      grupos.add(g.id);
+      for(const n of g.integrantes){if(typeof n!=='string'||!n.trim())return false;const key=n.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(nombres.has(key))return false;nombres.add(key);}
+      for(const i of g.industrias){if(!ids.includes(i))return false;cubiertas.add(i);}
+    }
+    return cubiertas.size===ids.length;
+  }
   var rutas = {
+    'parejas': async function(m,body){
+      if(!['GET','PUT','PATCH'].includes(m))return responder({error:'method_not_allowed'},405);
+      const vigente=await store.get('parejas','vigente');
+      if(m==='GET')return responder(vigente);
+      if(m==='PATCH'){
+        if(!vigente||!body||body.iniciado!==true)return responder({error:'Sorteo no válido.'},400);
+        return responder(await store.set('parejas','vigente',Object.assign({},vigente,{iniciado:true})));
+      }
+      if(!sorteoValido(body))return responder({error:'Sorteo no válido.'},400);
+      if(vigente?.iniciado&&body.forzar!==true)return responder({error:'La actividad ya empezó'},409);
+      const rec={id:body.id,grupos:body.grupos,createdAt:body.createdAt,iniciado:body.iniciado===true};
+      return responder(await store.set('parejas','vigente',rec));
+    },
+    'tierlist': async function(m,body,qs){
+      if(m==='GET'){const filas=await store.list('tierlist'),id=qs.get('sorteo');return responder(id===null?filas:filas.filter(f=>f.sorteoId===id));}
+      if(m!=='PUT')return responder({error:'method_not_allowed'},405);
+      if(!body||!['sorteoId','grupoId','actorId','editadoPor'].every(k=>typeof body[k]==='string'&&body[k].trim()&&body[k].length<=300)||![null,1,2,3,4].includes(body.nivel))return responder({error:'Colocación no válida.'},400);
+      const vigente=await store.get('parejas','vigente'),grupo=vigente?.grupos.find(g=>g.id===body.grupoId);
+      if(!grupo||body.sorteoId!==vigente.id)return responder({error:'El grupo no pertenece al sorteo vigente.'},400);
+      const actores=await actoresTier();
+      if(actores&&!window.TierList.actoresDelGrupo(grupo,actores).some(a=>a.id===body.actorId))return responder({error:'El actor no pertenece a este grupo.'},400);
+      const id=body.grupoId+':'+body.actorId;
+      if(body.nivel===null){await store.del('tierlist',id);return responder({ok:true});}
+      const filas=(await store.list('tierlist')).filter(f=>f.sorteoId===body.sorteoId&&f.grupoId===body.grupoId);
+      const regla=window.TierList.puedeMover(filas,body.actorId,body.nivel);
+      if(!regla.ok)return responder({error:regla.motivo},409);
+      const rec={id,sorteoId:body.sorteoId,grupoId:body.grupoId,actorId:body.actorId,nivel:body.nivel,editadoPor:body.editadoPor.trim(),updatedAt:new Date().toISOString()};
+      return responder(await store.set('tierlist',id,rec));
+    },
     'contactos-informe': async function(m){
       if(m !== 'GET') return responder({error:'method_not_allowed'},405);
       return responder(await store.list('contactos-informe'));

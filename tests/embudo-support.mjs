@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import assert from 'node:assert/strict';
 import Embudo from '../public/embudo.js';
 import Ideas from '../public/ideas.js';
+import TierList from '../public/tierlist.js';
 export {Embudo};
 export const read=p=>readFileSync(new URL(p,import.meta.url),'utf8');
 export const html=read('../public/index.html');
@@ -17,8 +18,10 @@ export function entorno(seed=[]){
  const db=new Map(),calls=[];
  const bucket=c=>{if(!db.has(c))db.set(c,new Map());return db.get(c);};
  seed.forEach(r=>bucket(r.coleccion).set(r.id,structuredClone(r.data)));
- const context=vm.createContext({Ideas,Embudo,Response,URL,URLSearchParams,console,location:{href:'https://local.invalid/'},window:{RADAR_CONFIG:{supabaseUrl:'https://supabase.invalid',supabaseAnonKey:'mock-only'},fetch:async(url,init={})=>{
+ const context=vm.createContext({TierList,Ideas,Embudo,Response,URL,URLSearchParams,console,location:{href:'https://local.invalid/'},window:{TierList,RADAR_CONFIG:{supabaseUrl:'https://supabase.invalid',supabaseAnonKey:'mock-only'},fetch:async(url,init={})=>{
   calls.push([url,init]);
+  if(url==='data/actores.json')return Response.json(JSON.parse(read('../public/data/actores.json')));
+  if(url==='asistentes-config.json')return Response.json(JSON.parse(read('../public/asistentes-config.json')));
   if(url==='canvas-config.json')return Response.json(canvasConfig);
   if(url==='embudo-config.json')return Response.json(config);
   if(url==='priorizacion-criterios.json')return Response.json(criterios);

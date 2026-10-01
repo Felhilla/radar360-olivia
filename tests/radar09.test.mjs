@@ -52,18 +52,8 @@ test('Radar09: 48 registros completos preservados y siete altas mineras válidas
   const bad=structuredClone(patches);delete bad[0].data[key];assert.throws(()=>validarParches(bad,base));
  }
 });
-test('Radar09: Actividad 3 agrupa los datos parcheados y activa mineras sin fila en Matriz',async()=>{
+test('Radar09: embudo histórico activa mineras sin fila en Matriz',async()=>{
  const s=entorno(base);for(const r of patches)s.bucket('actors').set(r.id,structuredClone(r.data));
- const $=dom(s.context);vm.runInContext(orderCode,s.context);
- vm.runInContext(html.split('// ACTIVIDAD 3 EMBUDO: INICIO JS')[1].split('// ACTIVIDAD 3 EMBUDO: FIN JS')[0],s.context);
- await $('view-matriz').handlers['vista:activar']();await new Promise(r=>setImmediate(r));
- const output=$('a3Cards-empresas').innerHTML;
- const sectors=[...output.matchAll(/class="sector-title">([^<]+)</g)].map(m=>m[1]);assert.deepEqual(sectors,expected);
- for(const {data:a} of patches){
-  const section=output.split('<h3 class="sector-title">'+a.sector+'</h3>')[1].split('</section>')[0];
-  assert(section.includes(a.nombre),a.id);
- }
- assert.match(output,/<dt>Sector<\/dt><dd>Servicios públicos<\/dd>/);
  for(const {id} of patches.filter(r=>r.data.sector==='Minero')){
   assert.equal((await s.activar(id)).status,200);
   assert.equal((await s.req('priorizacion-votos','PUT',calificacion(id))).status,200);

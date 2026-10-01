@@ -779,6 +779,42 @@
 #view-matriz .table-scroll{max-width:100%;overflow-x:auto;}
 #view-matriz .gremios-grid{margin:16px 0;}
 
+/* ACTIVIDAD 3 TIERLIST: INICIO CSS */
+#view-matriz .tl-presentes{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;}
+#view-matriz .tl-presentes input{width:auto;}
+#view-matriz fieldset{min-width:0;border:1px solid var(--line);margin-bottom:12px;}
+#view-matriz select{max-width:100%;background:var(--panel);color:var(--ink);}
+#view-matriz{--tl-nivel-1:#E51900;--tl-nivel-2:#FF971C;--tl-nivel-3:#EDD300;--tl-nivel-4:#00B2B9;--tl-tinta:#1C1A15;}
+#view-matriz .tl-tablero{display:flex;flex-direction:column;gap:10px;min-width:0;margin:18px 0;}
+#view-matriz .tl-fila{display:grid;grid-template-columns:88px minmax(0,1fr);min-width:0;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+#view-matriz .tl-etiqueta{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8px 4px;color:var(--tl-tinta);background:var(--tl-color);}
+#view-matriz .tl-etiqueta h3{font-size:1.25rem;margin:0;}
+#view-matriz .tl-etiqueta small{font-size:.75rem;margin-top:6px;}
+#view-matriz [data-tl-nivel="1"]{--tl-color:var(--tl-nivel-1);}
+#view-matriz [data-tl-nivel="1"] .tl-etiqueta{color:white;}
+#view-matriz [data-tl-nivel="2"]{--tl-color:var(--tl-nivel-2);}
+#view-matriz [data-tl-nivel="3"]{--tl-color:var(--tl-nivel-3);}
+#view-matriz [data-tl-nivel="4"]{--tl-color:var(--tl-nivel-4);}
+#view-matriz .tl-franja{display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;min-width:0;min-height:112px;padding:8px;}
+#view-matriz .tl-bandeja{min-width:0;padding:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:8px;}
+#view-matriz .tl-bandeja h3{margin:0 0 8px;}
+#view-matriz .tl-franja h4,#view-matriz .tl-franja h5{flex-basis:100%;margin:8px 0 0;font-size:.85rem;overflow-wrap:anywhere;}
+#view-matriz .tl-card{box-sizing:border-box;flex:0 1 168px;width:168px;max-width:100%;min-width:0;padding:6px;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow-wrap:anywhere;}
+#view-matriz .tl-ficha strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-width:0;}
+#view-matriz .tl-ficha{display:flex;align-items:center;gap:6px;width:100%;min-width:0;text-align:left;border:0;background:transparent;color:var(--ink);padding:0;cursor:pointer;font:inherit;font-size:.82rem;overflow-wrap:anywhere;}
+#view-matriz .tl-ficha img{width:24px;height:24px;object-fit:contain;flex-shrink:0;background:var(--logo-bg);border-radius:4px;}
+#view-matriz .tl-card small{display:block;color:var(--ink-soft);font-size:.68rem;margin:2px 0 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#view-matriz .tl-gremio{font-weight:700;}
+#view-matriz .tl-mover{display:flex;flex-wrap:nowrap;gap:3px;}
+#view-matriz .tl-mover button{flex:1 1 0;min-width:0;min-height:24px;padding:2px 0;border:1px solid var(--line);border-radius:4px;background:var(--panel-2);color:var(--ink);cursor:pointer;font-size:.75rem;}
+#view-matriz .tl-mover button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);}
+#view-matriz button:disabled{opacity:.55;cursor:default;}
+#view-matriz button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+#view-matriz #tlLimite{flex-basis:100%;margin:0;font-size:.8rem;color:var(--ink);}
+#view-matriz #tlLimite:empty{display:none;}
+#view-matriz #tlConfirmacion{padding:12px;border:1px solid var(--accent);margin:12px 0;}
+@media(max-width:700px){#view-matriz .tl-fila{grid-template-columns:56px minmax(0,1fr);}#view-matriz .tl-etiqueta h3{font-size:1rem;}#view-matriz .tl-mover button{min-height:32px;}#view-matriz .tl-card{flex:1 1 100%;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:6px;align-items:center;}#view-matriz .tl-card small{grid-column:1;grid-row:2;margin:0;}#view-matriz .tl-mover{grid-column:2;grid-row:1 / span 2;}#view-matriz .tl-mover button{flex:0 0 28px;}}
+/* ACTIVIDAD 3 TIERLIST: FIN CSS */
 </style>
 </head>
 <body class="sin-acceso">
@@ -1030,96 +1066,21 @@
 </section>
 
 <section class="view" id="view-matriz">
-  <h2>Activar empresas y gremios-aliados</h2>
-  <p>Actividad 3 · Vota qué actores debemos calificar en la Actividad 4.</p>
-  <label class="field">Tu nombre <input id="a3Nombre" maxlength="60" autocomplete="name"></label>
-  <p>Tu nombre se toma de la entrada al sitio. Puedes cambiar tu voto o pulsar de nuevo la opción elegida para quitarlo.</p>
-  <p id="a3Regla"></p>
-  <p id="a3Estado" role="status" aria-live="polite">Abre la actividad para cargar los actores.</p>
-  <button type="button" class="btn secondary" id="a3Actualizar">Actualizar datos</button>
-  <nav class="subviews" aria-label="Actividad 3">
-    <button data-subview="a3-empresas" class="active">Calificación de empresas</button>
-    <button data-subview="a3-empresas-activadas">Empresas activadas</button>
-    <button data-subview="a3-aliados">Calificación de gremios-aliados</button>
-    <button data-subview="a3-aliados-activados">Gremios-aliados activados</button>
-  </nav>
-  <div class="subview active" id="subview-a3-empresas">
-    <div id="a3Cards-empresas"></div>
-    <details class="a3-contexto"><summary>Consultar o editar el contexto de empresas · Matriz</summary>
-  <div class="gap-note" style="margin-top:0; margin-bottom:16px;">
-    <strong>Contexto comercial de las empresas:</strong>
-    edita contacto, necesidad, ruta de entrada y oferta. Las cinco entidades de Salud comparten una fila de contexto. La votación Sí / No es la que activa el embudo.
+  <h2>Tier list de actores</h2>
+  <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. Solo los del Nivel 1 pasan a la Actividad 4.</p>
+  <p id="tlEstado" role="status" aria-live="polite"></p>
+  <div id="tlAdmin" hidden>
+    <fieldset><legend>Participantes presentes</legend><div id="tlPresentes" class="tl-presentes"></div></fieldset>
+    <button type="button" class="btn" id="tlSortear" disabled>Sortear parejas</button>
+    <button type="button" class="btn" id="tlIniciar" disabled>Iniciar actividad</button>
+    <div id="tlConfirmacion" hidden><p>¿Reemplazar el sorteo vigente por nuevas parejas?</p><button type="button" class="btn" id="tlReemplazar">Reemplazar sorteo</button> <button type="button" class="btn secondary" id="tlCancelar">Cancelar</button></div>
+    <div id="tlResultado"></div>
+    <label>Ver grupo <select id="tlGrupo"></select></label>
   </div>
-
-  <div class="toolbar">
-    <input type="search" id="matrizSearch" placeholder="Buscar por cliente o necesidad…">
-    <button class="btn secondary" id="matrizDownloadBtn">Descargar respaldo (JSON)</button>
-    <button class="btn" id="matrizOpenAdd">+ Agregar fila</button>
-  </div>
-
-  <div class="add-panel" id="matrizAddPanel">
-    <div class="add-grid">
-      <label class="field">Cliente / mercado
-        <input type="text" id="m-cliente" list="radarActorsList" autocomplete="off" placeholder="Cuenta, grupo o mercado a activar">
-        <span class="hint" style="font-weight:400;">Sugiere los actores validados del Radar 360°; también puedes escribir uno nuevo.</span>
-      </label>
-      <datalist id="radarActorsList"></datalist>
-      <label class="field full">Punto de contacto
-        <textarea id="m-contacto" placeholder="Nombre y cargo del interlocutor, si se conoce"></textarea>
-      </label>
-      <label class="field full">Necesidad crítica
-        <textarea id="m-necesidad" placeholder="¿Qué tensión, trigger o necesidad justifica el acercamiento ahora?"></textarea>
-      </label>
-      <label class="field full">Ruta de entrada
-        <textarea id="m-ruta" placeholder="Comprador, patrocinador, vía de entrada y gremio"></textarea>
-      </label>
-      <label class="field full">Respuesta Olivia
-        <textarea id="m-respuesta" placeholder="¿Qué servicio puede resolverla y qué experiencia demostrable tenemos?"></textarea>
-      </label>
-    </div>
-    <div class="add-actions">
-      <label style="display:flex; align-items:center; gap:6px; font-size:.84rem; color:var(--ink-soft);">
-        <input type="checkbox" id="m-trigger" style="width:auto;"> marca histórica (no activa el embudo)
-      </label>
-      <button class="btn" id="matrizSaveAdd">Guardar fila</button>
-      <button class="btn ghost" id="matrizCancelAdd">Cancelar</button>
-      <span class="hint" id="matrizAddHint"></span>
-    </div>
-  </div>
-
-  <div class="table-scroll">
-    <table class="actors">
-      <thead>
-        <tr>
-          <th>Cliente / mercado</th><th>Punto de contacto</th><th>Necesidad crítica</th><th>Ruta de entrada</th><th>Respuesta Olivia</th><th>Marca histórica (sin efecto)</th><th>Actualizado</th><th></th>
-        </tr>
-      </thead>
-      <tbody id="matrizTbody"></tbody>
-    </table>
-  </div>
-
-    </details>
-  </div>
-  <div class="subview" id="subview-a3-empresas-activadas">
-    <button type="button" class="btn secondary" id="a3CSV-empresas" disabled>Descargar empresas activadas (CSV)</button>
-    <div id="a3Lista-empresas" class="gremios-grid"></div>
-  </div>
-  <div class="subview" id="subview-a3-aliados">
-    <details class="a3-contexto"><summary>Agregar gremio-aliado al Radar</summary>
-      <form id="a3Agregar" class="a3-form">
-        <label>Nombre<input id="a3NuevoNombre" maxlength="80" required></label>
-        <label>Contacto<textarea id="a3NuevoContacto" maxlength="600"></textarea></label>
-        <label>Cuentas objetivo<textarea id="a3NuevoCuentas" maxlength="600"></textarea></label>
-        <label>Qué ofrecer<textarea id="a3NuevoOferta" maxlength="600"></textarea></label>
-        <button type="submit" class="btn" id="a3GuardarAliado">Agregar gremio-aliado</button>
-      </form>
-    </details>
-    <div id="a3Cards-aliados" class="gremios-grid"></div>
-  </div>
-  <div class="subview" id="subview-a3-aliados-activados">
-    <button type="button" class="btn secondary" id="a3CSV-aliados" disabled>Descargar gremios-aliados activados (CSV)</button>
-    <div id="a3Lista-aliados" class="gremios-grid"></div>
-  </div>
+  <div id="tlMiGrupo"></div>
+  <div id="tlTablero" class="tl-tablero"></div>
+  <h3>Nivel 1 de todos los grupos</h3>
+  <div id="tlResumen"></div>
   <!-- OBSOLETO: navegación y controles del voto 3/2/1; conservados inertes. -->
   <template id="gremios-obsoleto">
   <div class="subview" id="subview-gremios">
@@ -1254,6 +1215,7 @@
 
 <script src="config.js"></script>
 <script src="embudo.js"></script>
+<script src="tierlist.js"></script>
 <script src="ficha-actor.js"></script>
 <script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
@@ -1427,7 +1389,7 @@
     // avoid yanking the UI from under someone mid-typing or mid-edit
     var ae = document.activeElement;
     if(editingId) return false;
-    if(matrizEditingId) return false;
+    if(typeof matrizEditingId !== "undefined" && matrizEditingId) return false;
     if(ae && (ae.tagName === "INPUT" || ae.tagName === "TEXTAREA" || ae.tagName === "SELECT")) return false;
     if(document.hidden) return false;
     return true;
@@ -1502,9 +1464,6 @@
     buildFilterChips();
     fetchActors(false).then(function(){
       setInterval(function(){ fetchActors(true); }, POLL_MS);
-    });
-    fetchMatriz(false).then(function(){
-      setInterval(function(){ fetchMatriz(true); }, POLL_MS);
     });
     fetchIdeas(false).then(function(){
       setInterval(function(){ fetchIdeas(true); }, POLL_MS);
@@ -2227,6 +2186,8 @@
     if(e.target === e.currentTarget) e.currentTarget.close();
   });
 
+  window.abrirFichaActor = openActorDialog;
+
   function renderCompetidores(){
     var grid = document.getElementById("compGrid");
     grid.innerHTML = "";
@@ -2260,6 +2221,7 @@
   // Ajuste 1: la Matriz sugiere actores validados del Radar, sin crear filas automáticamente
   function renderActorSuggestions(){
     var dl = document.getElementById("radarActorsList");
+    if(!dl) return;
     var list = Object.values(currentActors()).filter(function(a){
       return radarVisible(a) && (a.estado === "verificado" || a.estado === "agregado_taller");
     });
@@ -2692,6 +2654,7 @@
   }
   function initGremios(){
     var nombre = document.getElementById('gremiosNombre');
+    if(!nombre) return; // El formulario histórico está en un template inerte.
     try { gremiosNombre = (localStorage.getItem('gremios-votante') || '').slice(0,60); } catch(e){}
     nombre.value = gremiosNombre;
     nombre.addEventListener('input',function(){
@@ -2713,195 +2676,7 @@
     cargarGremios(); setInterval(cargarGremios,POLL_MS);
   }
 
-  // ---------------- matriz cliente-necesidad-respuesta ----------------
-  var API_MATRIZ = "/api/matriz";
-  var matrizById = {};
-  var matrizEditingId = null;
-  var matrizFilters = { q:"" };
-
-  function currentMatrizRows(){ return matrizById; }
-
-  function fetchMatriz(isPoll){
-    return fetch(API_MATRIZ, { headers: { "accept": "application/json" } })
-      .then(function(res){
-        if(!res.ok) throw new Error("http_" + res.status);
-        return res.json();
-      })
-      .then(function(list){
-        var next = {};
-        list.forEach(function(r){ next[r.id] = r; });
-        matrizById = next;
-        if(!isPoll || shouldRerenderOnPoll()) renderMatrizTable();
-        return list;
-      })
-      .catch(function(err){
-        if(!isPoll) showToast("No se pudo cargar la matriz: " + err.message + ".", "error");
-      });
-  }
-
-  function addMatrizRow(){
-    var cliente = document.getElementById("m-cliente").value.trim();
-    var necesidad = document.getElementById("m-necesidad").value.trim();
-    if(!cliente){ document.getElementById("matrizAddHint").textContent = "Escribe un cliente o mercado."; return; }
-    if(!necesidad){ document.getElementById("matrizAddHint").textContent = "Escribe la necesidad crítica."; return; }
-    var respuesta = document.getElementById("m-respuesta").value.trim();
-    var trigger = document.getElementById("m-trigger").checked;
-    var payload = { cliente:cliente, necesidadCritica:necesidad, respuestaOlivia:respuesta, trigger:trigger,
-      puntoContacto:document.getElementById("m-contacto").value.trim(), rutaEntrada:document.getElementById("m-ruta").value.trim() };
-    var saveBtn = document.getElementById("matrizSaveAdd");
-    saveBtn.disabled = true;
-    document.getElementById("matrizAddHint").textContent = "Guardando…";
-    fetch(API_MATRIZ, { method:"POST", headers:{"content-type":"application/json"}, body: JSON.stringify(payload) })
-      .then(function(res){
-        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
-        return res.json();
-      })
-      .then(function(){
-        saveBtn.disabled = false;
-        document.getElementById("m-cliente").value = "";
-        document.getElementById("m-necesidad").value = "";
-        document.getElementById("m-respuesta").value = "";
-        document.getElementById("m-contacto").value = "";
-        document.getElementById("m-ruta").value = "";
-        document.getElementById("m-trigger").checked = false;
-        document.getElementById("matrizAddHint").textContent = "";
-        document.getElementById("matrizAddPanel").classList.remove("open");
-        showToast("\"" + cliente + "\" se agregó a la matriz.", "ok");
-        return fetchMatriz(false);
-      })
-      .catch(function(err){
-        saveBtn.disabled = false;
-        document.getElementById("matrizAddHint").textContent = "";
-        showToast("No se pudo guardar: " + err.message + ". Inténtalo de nuevo.", "error");
-      });
-  }
-
-  function patchMatrizRow(id, patch){
-    return fetch(API_MATRIZ, { method:"PATCH", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id, patch:patch}) })
-      .then(function(res){
-        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
-        return res.json();
-      })
-      .then(function(){ return fetchMatriz(false); })
-      .catch(function(err){
-        showToast("No se pudo guardar el cambio: " + err.message + ".", "error");
-        renderMatrizTable();
-      });
-  }
-
-  function deleteMatrizRow(id){
-    return fetch(API_MATRIZ, { method:"DELETE", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id}) })
-      .then(function(res){
-        if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
-        return res.json();
-      })
-      .then(function(){ return fetchMatriz(false); })
-      .catch(function(err){
-        showToast("No se pudo eliminar la fila: " + err.message + ".", "error");
-      });
-  }
-
-  function matrizTriggerCell(r){
-    var t = document.createElement("td");
-    var id = "trigger-" + r.id;
-    var wrap = document.createElement("div"); wrap.className = "radar-cell";
-    var label = document.createElement("label"); label.className = "switch"; label.htmlFor = id;
-    var input = document.createElement("input");
-    input.type = "checkbox"; input.id = id; input.checked = r.trigger === true;
-    input.addEventListener("change", function(){ patchMatrizRow(r.id, {trigger: input.checked}); });
-    label.appendChild(input);
-    label.appendChild(Object.assign(document.createElement("span"), {className:"track"}));
-    label.appendChild(Object.assign(document.createElement("span"), {className:"thumb"}));
-    wrap.appendChild(label);
-    var lbl = document.createElement("span"); lbl.className = "lbl";
-    lbl.textContent = r.trigger === true ? "Sí" : "No";
-    wrap.appendChild(lbl);
-    t.appendChild(wrap);
-    return t;
-  }
-
-  function saveMatrizEdit(id, tr){
-    var patch = {
-      cliente: tr.querySelector(".me-cliente").value.trim(),
-      necesidadCritica: tr.querySelector(".me-necesidad").value.trim(),
-      respuestaOlivia: tr.querySelector(".me-respuesta").value.trim(),
-      puntoContacto: tr.querySelector(".me-contacto").value.trim(),
-      rutaEntrada: tr.querySelector(".me-ruta").value.trim()
-    };
-    if(!patch.cliente || !patch.necesidadCritica) return;
-    matrizEditingId = null;
-    patchMatrizRow(id, patch);
-  }
-
-  function renderMatrizTable(){
-    var tbody = document.getElementById("matrizTbody");
-    tbody.innerHTML = "";
-    var list = Object.values(currentMatrizRows());
-
-    if(matrizFilters.q){
-      list = list.filter(function(r){
-        var hay = (r.cliente+" "+(r.sector||"")+" "+(r.puntoContacto||"")+" "+(r.necesidadCritica||"")+" "+(r.rutaEntrada||"")+" "+(r.respuestaOlivia||"")).toLowerCase();
-        return hay.indexOf(matrizFilters.q) !== -1;
-      });
-    }
-    list.sort(function(a,b){ return (a.createdAt||"").localeCompare(b.createdAt||""); });
-
-    list.forEach(function(r){
-      var tr = document.createElement("tr");
-
-      if(matrizEditingId === r.id){
-        tr.appendChild(td('<input type="text" class="me-cliente" list="radarActorsList" autocomplete="off" value="'+esc(r.cliente)+'">'));
-        tr.appendChild(td('<textarea class="me-contacto">'+esc(r.puntoContacto||"")+'</textarea>'));
-        tr.appendChild(td('<textarea class="me-necesidad">'+esc(r.necesidadCritica||"")+'</textarea>'));
-        tr.appendChild(td('<textarea class="me-ruta">'+esc(r.rutaEntrada||"")+'</textarea>'));
-        tr.appendChild(td('<textarea class="me-respuesta">'+esc(r.respuestaOlivia||"")+'</textarea>'));
-        tr.appendChild(matrizTriggerCell(r));
-        tr.appendChild(td('<span class="mono" style="font-size:.76rem;">'+fmtTime(r.updatedAt)+'</span>'));
-        var tdA = document.createElement("td"); tdA.className="row-actions";
-        tdA.appendChild(btn("Guardar", function(){ saveMatrizEdit(r.id, tr); }));
-        tdA.appendChild(btn("Cancelar", function(){ matrizEditingId=null; renderMatrizTable(); }, "ghost"));
-        tr.appendChild(tdA);
-      } else {
-        tr.appendChild(td('<strong>'+esc(r.cliente)+'</strong>'+(r.sector ? '<div class="hint" style="margin-top:2px;">'+esc(r.sector)+'</div>' : '')));
-        tr.appendChild(td('<span class="jt">'+esc(r.puntoContacto||"")+'</span>'));
-        tr.appendChild(td('<span class="jt">'+esc(r.necesidadCritica||"")+'</span>'));
-        tr.appendChild(td('<span class="jt">'+esc(r.rutaEntrada||"")+'</span>'));
-        tr.appendChild(td(r.respuestaOlivia ? '<span class="jt">'+esc(r.respuestaOlivia)+'</span>' : '<span class="ad-empty" style="font-size:.8rem;">Por construir en el taller</span>'));
-        tr.appendChild(matrizTriggerCell(r));
-        tr.appendChild(td('<span class="mono" style="font-size:.76rem; color:var(--ink-soft);">'+fmtTime(r.updatedAt)+'</span>'));
-        var tdA2 = document.createElement("td"); tdA2.className="row-actions";
-        tdA2.appendChild(btn("Editar", function(){ matrizEditingId=r.id; renderMatrizTable(); }, "ghost"));
-        tdA2.appendChild(btn("Eliminar", function(){ deleteMatrizRow(r.id); }, "ghost"));
-        tr.appendChild(tdA2);
-      }
-      tbody.appendChild(tr);
-    });
-
-    if(!list.length){
-      var tr0 = document.createElement("tr");
-      var td0 = document.createElement("td"); td0.colSpan = 8; td0.style.color="var(--ink-soft)"; td0.style.padding="18px 12px";
-      td0.textContent = "Sin filas todavía. Agrega la primera con \"+ Agregar fila\".";
-      tr0.appendChild(td0); tbody.appendChild(tr0);
-    }
-  }
-
-  document.getElementById("matrizSearch").addEventListener("input", function(e){
-    matrizFilters.q = e.target.value.trim().toLowerCase(); renderMatrizTable();
-  });
-  document.getElementById("matrizOpenAdd").addEventListener("click", function(){
-    document.getElementById("matrizAddPanel").classList.toggle("open");
-  });
-  document.getElementById("matrizCancelAdd").addEventListener("click", function(){
-    document.getElementById("matrizAddPanel").classList.remove("open");
-  });
-  document.getElementById("matrizSaveAdd").addEventListener("click", addMatrizRow);
-  document.getElementById("matrizDownloadBtn").addEventListener("click", function(){
-    var data = JSON.stringify(Object.values(currentMatrizRows()), null, 2);
-    var blob = new Blob([data], {type:"application/json"});
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement("a"); a.href = url; a.download = "matriz_cliente_necesidad_respuesta.json";
-    document.body.appendChild(a); a.click(); a.remove();
-  });
+  // Editor de Matriz retirado; las actividades 4 y 5 conservan sus lecturas por API.
 
   // ---------------- lluvia de ideas ----------------
   var API_IDEAS = "/api/ideas";
@@ -3041,96 +2816,138 @@
     fetchIdeas(false);
   });
 
-  // ACTIVIDAD 3 EMBUDO: INICIO JS
-  (function iniciarActivacion(){
-    const $=id=>document.getElementById(id);
-    let actores=[],matriz=[],votos=[],config=null,cargando=false,guardando=false,iniciado=false,version=0;
-    const mensaje=t=>$('a3Estado').textContent=t;
-    const nombre=()=>$('a3Nombre').value.trim();
-    const mio=id=>votos.find(v=>v.actorId===id && Embudo.slug(v.votante)===Embudo.slug(nombre()));
-    async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok)throw Error(d.error||'No se pudo cargar.');return d;}
+  // ACTIVIDAD 3 TIERLIST: INICIO JS
+  (function(){
+    const $=id=>document.getElementById(id), view=$('view-matriz');
+    let sorteo=null, actores=[], filas=[], participantes=null, seleccionado='', ocupado=false, cargando=false, timer=null, revision=0;
+    const admin=()=>window.Identidad?.rol==='administrador';
+    const identidad=()=>window.Identidad?.nombre||'';
+    const industria=id=>TierList.INDUSTRIAS.find(i=>i.id===id)?.nombre||id;
+    const subnombre=id=>({energia:'Energía',servicios_publicos:'Servicios públicos',recursos_naturales:'Recursos naturales'}[id]||'');
+    const abreviada=a=>subnombre(a.subindustria)||({financiero:'Financiero',retail:'Retail y consumo',industrial:'Industrial',telecom:'Telecom',salud:'Salud',gremios_publico:'Gremios y sector público'}[a.industria]||industria(a.industria));
+    const grupo=()=>admin()?(sorteo?.grupos.find(g=>g.id===seleccionado)||sorteo?.grupos[0]):TierList.grupoDe(sorteo,identidad());
+    const aviso=t=>{$('tlEstado').textContent=t;};
+    async function api(url,method,body){
+      const r=await fetch(url,{cache:'no-store',...(method?{method,headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{})});
+      const data=await r.json();if(!r.ok){const e=Error(data.error||'Error');e.status=r.status;throw e;}return data;
+    }
+    function controles(){
+      const presentes=$('tlPresentes').querySelectorAll('input:checked').length;
+      $('tlSortear').disabled=ocupado||cargando||presentes<2||!!sorteo?.iniciado;
+      $('tlSortear').textContent=sorteo?.iniciado?'La actividad ya empezó':'Sortear parejas';
+      $('tlIniciar').disabled=ocupado||cargando||!sorteo||!!sorteo.iniciado;
+      $('tlReemplazar').disabled=ocupado;
+      $('tlGrupo').disabled=ocupado;
+    }
+    function tarjeta(a,nivel){
+      const des=(!sorteo.iniciado||ocupado)?' disabled':'';
+      return '<article class="tl-card" data-tl-actor="'+esc(a.id)+'" draggable="'+(!des)+'"><button type="button" class="tl-ficha" data-tl-ficha="'+esc(a.id)+'" aria-label="Abrir ficha de '+esc(a.nombre)+'"><img src="'+esc(getLogo({id:a.id,categoria:a.tipo==='gremio'?'aliados':'mercados'}))+'" alt=""><strong>'+esc(a.nombre)+'</strong></button><small>'+(a.tipo==='gremio'?'<span class="tl-gremio">Gremio</span> · ':'')+esc(abreviada(a))+'</small><div class="tl-mover">'+[1,2,3,4].map(n=>'<button type="button" data-tl-mover="'+esc(a.id)+'" data-nivel="'+n+'" aria-label="Mover '+esc(a.nombre)+' al Nivel '+n+'" aria-pressed="'+(nivel===n)+'"'+des+'>'+n+'</button>').join('')+(nivel?'<button type="button" data-tl-mover="'+esc(a.id)+'" data-nivel="0" aria-label="Quitar nivel de '+esc(a.nombre)+'" title="Quitar nivel"'+des+'>×</button>':'')+'</div></article>';
+    }
     function render(){
-      if(!config)return;
-      $('a3Regla').textContent='Sí = 2 · No = 1. Se activa con promedio '+(config.inclusivo?'≥ ':'> ')+String(config.umbral).replace('.',',')+'. Umbral y comparación configurables. Sin votos no se activa.';
-      const rs=Embudo.resumen(actores,votos,config);
-      for(const grupo of ['empresas','aliados']){
-        const lista=rs.filter(a=>a.grupo===grupo).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
-        const ficha=a=>{
-          const c=Embudo.contexto(a,matriz,GREMIOS_32), campos=grupo==='empresas'?[['Sector',a.sector||c?.sector],['Necesidad crítica',c?.necesidadCritica]]:[['Contacto',c.contacto],['Cuentas objetivo',c.cuentas],['Qué ofrecer / contexto de la alianza',c.oferta],['Descripción',c.descripcion]];
-          return '<article class="gremio-card"><h3><img src="'+esc(getLogo(a))+'" alt=""><span class="g-nombre">'+esc(a.nombre)+'</span></h3>'+(!c?'<p>Contexto pendiente: no hay una fila emparejada en la Matriz.</p>':'')+'<dl>'+campos.map(([k,v])=>'<dt>'+k+'</dt><dd>'+esc(v||'Por definir')+'</dd>').join('')+'</dl><p>'+estado(a)+'</p><fieldset><legend>¿Activar este '+(grupo==='empresas'?'actor':'gremio-aliado')+'?</legend>'+[[2,'Sí'],[1,'No']].map(([valor,t])=>'<button type="button" class="btn secondary" data-activar="'+esc(a.id)+'" data-valor="'+valor+'" aria-pressed="'+(mio(a.id)?.valor===valor)+'" '+(guardando?'disabled':'')+'>'+t+'</button>').join(' ')+'</fieldset></article>';
-        };
-        // Empresas agrupadas por sector (orden del Radar) y alfabéticas dentro de cada sector.
-        const sectorDe=a=>a.sector||'Sin sector';
-        const html=!lista.length?'<p>No hay actores vigentes en este grupo.</p>':grupo==='empresas'
-          ?sortedSectorKeys('mercados',[...new Set(lista.map(sectorDe))]).map(sec=>'<section class="sector-block"><h3 class="sector-title">'+esc(sec)+'</h3><div class="gremios-grid">'+lista.filter(a=>sectorDe(a)===sec).map(ficha).join('')+'</div></section>').join('')
-          :lista.map(ficha).join('');
-        const host=$('a3Cards-'+grupo);
-        if(host.innerHTML!==html){
-          const focus=host.contains(document.activeElement)?document.activeElement:null;
-          const id=focus?.dataset.activar,valor=focus?.dataset.valor;
-          host.innerHTML=html;
-          if(id)Array.from(host.querySelectorAll('[data-activar]')).find(b=>b.dataset.activar===id&&b.dataset.valor===valor)?.focus();
+      $('tlAdmin').hidden=!admin();
+      if(admin()){
+        $('tlResultado').innerHTML=(sorteo?.grupos||[]).map(g=>'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong> · '+g.industrias.map(i=>esc(industria(i))).join(' · ')+' · '+TierList.actoresDelGrupo(g,actores).length+' actores</p>').join('');
+        const g=grupo();seleccionado=g?.id||'';
+        $('tlGrupo').innerHTML=(sorteo?.grupos||[]).map(g=>'<option value="'+esc(g.id)+'" '+(g.id===seleccionado?'selected':'')+'>'+g.integrantes.map(esc).join(' + ')+'</option>').join('');
+      }
+      controles();
+      const g=grupo();
+      $('tlMiGrupo').innerHTML=!sorteo?'<p>Espera a que el facilitador sortee las parejas.</p>':!g?'<p>No estás en ningún grupo del sorteo. Avísale al facilitador.</p>':'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong><br>'+g.industrias.map(i=>esc(industria(i))).join(' · ')+'</p>'+(!sorteo.iniciado?'<p>El facilitador todavía no inicia la actividad</p>':'');
+      if(!g)$('tlTablero').innerHTML='';
+      else{
+        const lista=TierList.actoresDelGrupo(g,actores), colocaciones=filas.filter(f=>f.grupoId===g.id), nivelDe=a=>colocaciones.find(f=>f.actorId===a.id)?.nivel||0;
+        $('tlTablero').innerHTML=[1,2,3,4,0].map(n=>{
+          let anterior='',subAnterior='';
+          const cards=lista.filter(a=>nivelDe(a)===n).map(a=>{
+            let heading='';
+            if(n===0){
+              if(anterior!==a.industria){heading='<h4>'+esc(industria(a.industria))+'</h4>';anterior=a.industria;subAnterior='';}
+              if(a.industria==='energia'&&a.subindustria&&subAnterior!==a.subindustria){heading+='<h5>'+esc(subnombre(a.subindustria))+'</h5>';subAnterior=a.subindustria;}
+            }
+            return heading+tarjeta(a,n);
+          }).join('');
+          const titulo=n?'Nivel '+n:'Sin clasificar';
+          return '<section class="'+(n?'tl-fila':'tl-bandeja')+'" data-tl-nivel="'+n+'" aria-label="'+titulo+'">'+(n?'<div class="tl-etiqueta"><h3>'+titulo+'</h3>'+(n===1?'<small>'+lista.filter(a=>nivelDe(a)===1).length+' de 3</small>':'')+'</div>':'<h3>'+titulo+'</h3>')+'<div class="tl-franja">'+(n===1?'<p id="tlLimite" role="status" aria-live="polite">'+(Date.now()<tlLimiteHasta?esc(tlLimiteMsg):'')+'</p>':'')+cards+'</div></section>';
+        }).join('');
+      }
+      const elegidos=TierList.nivel1(sorteo,filas);
+      $('tlResumen').innerHTML=elegidos.length?'<ul>'+elegidos.map(e=>'<li>'+esc(actores.find(a=>a.id===e.actorId)?.nombre||e.actorId)+' · '+e.grupos.length+' '+(e.grupos.length===1?'grupo':'grupos')+'</li>').join('')+'</ul>':'<p>Aún no hay actores en Nivel 1.</p>';
+    }
+    async function cargar(){
+      if(cargando||ocupado||!view.classList.contains('active'))return;
+      cargando=true;const version=revision;
+      try{
+        if(!actores.length)actores=await api('data/actores.json');
+        if(admin()&&!participantes){
+          participantes=(await api('asistentes-config.json')).participantes;
+          $('tlPresentes').innerHTML=participantes.map(n=>'<label><input type="checkbox" value="'+esc(n)+'"> '+esc(n)+'</label>').join('');
         }
-        const activos=lista.filter(a=>a.activo);
-        $('a3Lista-'+grupo).innerHTML=activos.length?activos.map(a=>'<article class="gremio-card"><h3>'+esc(a.nombre)+'</h3><p>'+estado(a)+'</p></article>').join(''):'<p>Aún no hay '+(grupo==='empresas'?'empresas activadas':'gremios-aliados activados')+'. Vota en la pestaña de calificación.</p>';
-        $('a3CSV-'+grupo).disabled=!activos.length;
+        const nuevo=await api('/api/parejas'), nuevas=nuevo?await api('/api/tierlist?sorteo='+encodeURIComponent(nuevo.id)):[];
+        if(version!==revision||ocupado)return;
+        sorteo=nuevo;filas=nuevas;render();aviso('');
+      }catch(e){if(version===revision)aviso('No se pudieron cargar los datos. Se intentará de nuevo.');}
+      finally{cargando=false;controles();}
+    }
+    async function guardarSorteo(iniciar){
+      if(!admin()||ocupado)return;
+      const presentes=Array.from($('tlPresentes').querySelectorAll('input:checked'),i=>i.value);
+      if(!iniciar&&(presentes.length<2||sorteo?.iniciado))return;
+      ocupado=true;revision++;controles();
+      try{
+        const nuevo=await api('/api/parejas',iniciar?'PATCH':'PUT',iniciar?{iniciado:true}:TierList.sortear(presentes,actores));
+        if(nuevo.id!==sorteo?.id)filas=[];
+        sorteo=nuevo;$('tlConfirmacion').hidden=true;aviso(iniciar?'Actividad iniciada.':'Parejas sorteadas.');
+      }catch(e){aviso(e.status===409?'La actividad ya empezó':'No se pudo guardar el sorteo. Intenta de nuevo.');}
+      finally{ocupado=false;render();}
+    }
+    // El aviso del límite sobrevive a los refrescos periódicos durante unos segundos.
+    var tlLimiteMsg='',tlLimiteHasta=0;
+    function avisoLimite(t){tlLimiteMsg=t;tlLimiteHasta=Date.now()+6000;if($('tlLimite'))$('tlLimite').textContent=t;}
+    async function mover(actorId,nivel){
+      const g=grupo();if(ocupado||!sorteo?.iniciado||!g||!identidad()||!TierList.actoresDelGrupo(g,actores).some(a=>a.id===actorId))return;
+      const regla=TierList.puedeMover(filas.filter(f=>f.grupoId===g.id),actorId,nivel);
+      if(!regla.ok){avisoLimite(regla.motivo);return;}
+      const anteriores=filas.slice(), body={sorteoId:sorteo.id,grupoId:g.id,actorId,nivel,editadoPor:identidad()};
+      ocupado=true;revision++;filas=filas.filter(f=>!(f.grupoId===g.id&&f.actorId===actorId));if(nivel!==null)filas.push(body);render();aviso('Guardando cambio…');
+      let rechazo='';
+      try{await api('/api/tierlist','PUT',body);aviso('Cambio guardado.');}
+      catch(e){filas=anteriores;rechazo=e.status===409?e.message:'';aviso('No se pudo guardar el cambio. Intenta de nuevo.');}
+      finally{
+        ocupado=false;render();if(rechazo)avisoLimite(rechazo);
+        const boton=Array.from($('tlTablero').querySelectorAll('[data-tl-mover]')).find(b=>b.dataset.tlMover===actorId&&Number(b.dataset.nivel)===(nivel||0));
+        if(boton)boton.focus();
       }
     }
-    function estado(a){return 'Promedio: '+(a.promedio===null?'sin votos':a.promedio.toLocaleString('es-CO',{maximumFractionDigits:3}))+' · '+a.votos+' voto(s) · '+(a.activo?'Activado':a.votos?'No activado':'Sin votos');}
-    async function cargar(){
-      if(cargando||guardando||!$('view-matriz').classList.contains('active'))return;
-      cargando=true;const v=version;
-      try{
-        const data=await Promise.all([leer('/api/actors'),leer('/api/matriz'),leer('/api/activacion-votos'),leer('embudo-config.json')]);
-        if(v!==version)return;
-        [actores,matriz,votos,config]=data;render();mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Actualización en vivo cada '+POLL_MS/1000+' segundos.');
-      }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los últimos datos.');}
-      finally{cargando=false;}
+    $('tlPresentes').addEventListener('change',controles);
+    $('tlSortear').addEventListener('click',()=>{if(sorteo)$('tlConfirmacion').hidden=false;else guardarSorteo(false);});
+    $('tlCancelar').addEventListener('click',()=>{$('tlConfirmacion').hidden=true;});
+    $('tlReemplazar').addEventListener('click',()=>guardarSorteo(false));
+    $('tlIniciar').addEventListener('click',()=>guardarSorteo(true));
+    $('tlGrupo').addEventListener('change',e=>{seleccionado=e.target.value;render();});
+    $('tlTablero').addEventListener('click',e=>{
+      const ficha=e.target.closest('[data-tl-ficha]');if(ficha){window.abrirFichaActor(ficha.dataset.tlFicha);return;}
+      const b=e.target.closest('[data-tl-mover]');if(b)mover(b.dataset.tlMover,Number(b.dataset.nivel)||null);
+    });
+    $('tlTablero').addEventListener('dragstart',e=>{
+      const card=e.target.closest('[data-tl-actor]');if(!card||ocupado||!sorteo?.iniciado){e.preventDefault();return;}
+      e.dataTransfer.setData('text/plain',card.dataset.tlActor);e.dataTransfer.effectAllowed='move';
+    });
+    $('tlTablero').addEventListener('dragover',e=>{if(sorteo?.iniciado&&!ocupado&&e.target.closest('[data-tl-nivel]'))e.preventDefault();});
+    $('tlTablero').addEventListener('drop',e=>{const col=e.target.closest('[data-tl-nivel]');if(col){e.preventDefault();mover(e.dataTransfer.getData('text/plain'),Number(col.dataset.tlNivel)||null);}});
+    function sincronizar(){
+      if(view.classList.contains('active')){if(timer===null)timer=setInterval(cargar,5000);cargar();}
+      else{if(timer!==null)clearInterval(timer);timer=null;revision++;}
     }
-    async function votar(e){
-      const b=e.target.closest('[data-activar]');if(!b||guardando)return;
-      if(!nombre()){mensaje('Escribe tu nombre antes de votar.');$('a3Nombre').focus();return;}
-      const a=actores.find(a=>a.id===b.dataset.activar);if(!a)return;
-      const valor=Number(b.dataset.valor),borrar=mio(a.id)?.valor===valor;
-      guardando=true;version++;render();$('a3Nombre').disabled=true;
-      try{
-        const votante=nombre(),r=await leer('/api/activacion-votos',{method:borrar?'DELETE':'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({actorId:a.id,grupo:Embudo.grupo(a),votante,valor})});
-        votos=votos.filter(v=>!(v.actorId===a.id&&Embudo.slug(v.votante)===Embudo.slug(votante)));if(!borrar)votos.push(r);
-        mensaje(borrar?'Voto retirado.':'Voto guardado.');
-      }catch(e){mensaje(e.message);}
-      finally{guardando=false;version++;$('a3Nombre').disabled=false;render();}
-    }
-    for(const grupo of ['empresas','aliados']){
-      $('a3Cards-'+grupo).addEventListener('click',votar);
-      $('a3CSV-'+grupo).onclick=()=>{
-        const filas=[['actorId','nombre','grupo','promedio','votos','estado']];
-        Embudo.activados(actores,votos,config).filter(a=>a.grupo===grupo).forEach(a=>filas.push([a.id,a.nombre,a.grupo,a.promedio,a.votos,'Activado']));
-        descargarEmbudo(filas,'activados-'+grupo+'.csv');
-      };
-    }
-    // El nombre viene de la lista de asistentes validada en la entrada; no se edita aquí.
-    const ponerNombre=()=>{if(!window.Identidad)return;$('a3Nombre').value=window.Identidad.nombre;$('a3Nombre').readOnly=true;render();};
-    ponerNombre();document.addEventListener('identidad:cambio',ponerNombre);
-    $('a3Actualizar').onclick=cargar;
-    $('a3Agregar').onsubmit=async e=>{
-      e.preventDefault();if(guardando)return;
-      const payload={categoria:'aliados',nombre:$('a3NuevoNombre').value.trim(),contacto:$('a3NuevoContacto').value.trim(),cuentas:$('a3NuevoCuentas').value.trim(),oferta:$('a3NuevoOferta').value.trim()};
-      if(!payload.nombre)return;
-      if(actores.some(a=>a.categoria==='aliados'&&Embudo.normalizar(a.nombre)===Embudo.normalizar(payload.nombre))){mensaje('Ese gremio-aliado ya existe en el Radar.');return;}
-      guardando=true;version++;$('a3GuardarAliado').disabled=true;
-      try{
-        const a=await leer('/api/actors',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-        actores.push(a);$('a3Agregar').reset();mensaje('Gremio-aliado agregado al Radar y disponible para activar.');
-      }catch(e){mensaje(e.message);}
-      finally{guardando=false;version++;$('a3GuardarAliado').disabled=false;render();}
-    };
-    $('view-matriz').addEventListener('vista:activar',()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();});
+    view.addEventListener('vista:activar',sincronizar);
+    // La navegación existente cambia la clase; el observador detiene el reloj al salir.
+    new MutationObserver(sincronizar).observe(view,{attributes:true,attributeFilter:['class']});
   })();
+  // Exportación compartida: la Actividad 5 todavía la utiliza.
   function descargarEmbudo(filas,archivo){
     const url=URL.createObjectURL(new Blob([Embudo.csv(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
     a.href=url;a.download=archivo;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
-  // ACTIVIDAD 3 EMBUDO: FIN JS
+  // ACTIVIDAD 3 TIERLIST: FIN JS
 
   // ACTIVIDAD 4: INICIO JS
   (function(){
@@ -3505,7 +3322,7 @@
       $('landingEstado').textContent='Cargando la presentación…';
       $('landingReintentar').hidden=true;
       try{
-        const response=await fetch('landing-config.json');
+        const response=await fetch('landing-config.json',{cache:'no-store'});
         if(!response.ok) throw Error('HTTP '+response.status);
         const c=await response.json();
         render(c); $('landingEstado').textContent='';

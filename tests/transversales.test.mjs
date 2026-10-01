@@ -31,8 +31,8 @@ test('Transversales: disclaimer definitivo en el pie y celda de acciones como ce
  assert(!/\.row-actions\{[^}]*display:flex/.test(html.replace(/\s/g,'')));
  assert.match(html,/<body class="sin-acceso">/);
 });
-test('Transversales: Actividades 3 y 4 toman el nombre validado y no se edita',async()=>{
- for(const [inicio,fin,campo,vista] of [['// ACTIVIDAD 3 EMBUDO: INICIO JS','// ACTIVIDAD 3 EMBUDO: FIN JS','a3Nombre','view-matriz'],['// ACTIVIDAD 4: INICIO JS','// ACTIVIDAD 4: FIN JS','p4Nombre','view-priorizacion']]){
+test('Transversales: Actividad 4 toma el nombre validado y no se edita',async()=>{
+ for(const [inicio,fin,campo,vista] of [['// ACTIVIDAD 4: INICIO JS','// ACTIVIDAD 4: FIN JS','p4Nombre','view-priorizacion']]){
   const s=entorno();s.actor('e');const $=dom(s.context);s.context.window.Identidad={nombre:'Diana Ramos',rol:'participante'};
   vm.runInContext(html.split(inicio)[1].split(fin)[0],s.context);
   await $(vista).handlers['vista:activar']();await new Promise(r=>setImmediate(r));

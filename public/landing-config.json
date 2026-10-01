@@ -247,8 +247,8 @@
     },
     {
       "numero": 3,
-      "nombre": "Activar empresas y gremios-aliados",
-      "proposito": "Votar Sí o No para activar empresas y gremios-aliados con un umbral de promedio configurable.",
+      "nombre": "Tier list de actores",
+      "proposito": "Ordenar en parejas sorteadas los actores de cada industria en cuatro niveles y seleccionar hasta tres para la Actividad 4.",
       "vista": "matriz"
     },
     {

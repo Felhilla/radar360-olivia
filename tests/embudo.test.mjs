@@ -70,15 +70,11 @@ test('Volcado real: 48 empresas con contexto y recorrido 3 → 4 → 5 sin produ
  for(const id of ids){await s.activar(id);await s.req('priorizacion-votos','PUT',calificacion(id));const ficha=Embudo.ficha(as.find(a=>a.id===id),ms,gremios);const r=await s.req('canvas','PUT',{...ficha,acciones30:'Reunión',acciones60:'Piloto',acciones90:'Evaluar'});assert.equal(r.status,200);}
  assert.equal(s.bucket('canvas').size,2);
 });
-test('Vista Actividad 3: vacío, voto, cambio, retiro, y carga por vista:activar',async()=>{
- const s=entorno();s.actor('e');const $=dom(s.context);
- vm.runInContext(html.split('// ACTIVIDAD 3 EMBUDO: INICIO JS')[1].split('// ACTIVIDAD 3 EMBUDO: FIN JS')[0],s.context);
- await $('view-matriz').handlers['vista:activar']();await new Promise(r=>setImmediate(r));
- assert.match($('a3Lista-empresas').innerHTML,/Aún no hay/);$('a3Nombre').value='Ana';
- const votar=v=>$('a3Cards-empresas').handlers.click({target:{closest:()=>({dataset:{activar:'e',valor:String(v)}})}});
- await votar(2);assert.equal(s.bucket('activacion-votos').get('e--ana').valor,2);assert.match($('a3Lista-empresas').innerHTML,/Activado/);
- await votar(1);assert.equal(s.bucket('activacion-votos').get('e--ana').valor,1);assert.match($('a3Lista-empresas').innerHTML,/Aún no hay/);
- await votar(1);assert.equal(s.bucket('activacion-votos').size,0);
+test('Embudo histórico: CSV de activados sigue disponible para consumidores existentes',()=>{
+ const actores=[{id:'e',nombre:'Empresa',categoria:'mercados'}];
+ const activados=Embudo.activados(actores,[{actorId:'e',grupo:'empresas',votante:'Ana',valor:2}],config);
+ assert.equal(activados.length,1);
+ assert.match(Embudo.csv(activados.map(a=>[a.nombre])),/Empresa/);
 });
 test('Vista Actividad 4: carga viva, filtros de grupo y salida por desactivación',async()=>{
  const s=entorno();s.actor('e','mercados',{nombre:'Empresa visible'});s.actor('g','aliados',{nombre:'Aliado visible'});s.actor('x','competidores');
