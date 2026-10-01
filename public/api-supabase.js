@@ -110,6 +110,18 @@
     const actores=TierList.nivel1(sorteo,await store.list('tierlist'));
     return {sorteoId:sorteo?.id||null,actores};
   }
+  // Lista que llega a la Actividad 5: la confirmada por el facilitador o, si no hay, la automática del corte.
+  async function listaActividad5(){
+    const sel=await store.get('seleccion','vigente');
+    if(sel&&Array.isArray(sel.actorIds)&&sel.actorIds.length) return {actorIds:sel.actorIds,origen:'confirmada',confirmadoPor:sel.confirmadoPor||'',confirmadoEn:sel.confirmadoEn||''};
+    const nivel=await nivel1Vigente();
+    if(!nivel.actores.length) return {actorIds:[],origen:'vacia'};
+    const cr=await criterios(), resumen=await (await rutas['priorizacion-votos']('GET',null,new URLSearchParams('resumen=1'))).json();
+    const catalogo=(await actoresTier())||[], nombre=id=>(catalogo.find(a=>a.id===id)||{}).nombre||id;
+    const grupos=Object.fromEntries(nivel.actores.map(a=>[a.actorId,a.grupos]));
+    const ordenados=Corte.ordenar(nivel.actores.map(a=>resumen.find(r=>r.actorId===a.actorId)||{actorId:a.actorId,nombre:nombre(a.actorId),votos:0}),cr.corte,grupos);
+    return {actorIds:Corte.automatica(ordenados,cr.corte).map(r=>r.actorId),origen:'automatica'};
+  }
   async function activosEmbudo(){
     var r=await nativeFetch('embudo-config.json',{cache:'no-store'});
     if(!r.ok) throw Error('No se pudo cargar embudo-config.json');
@@ -387,12 +399,16 @@
       return responder(g, 201);
     },
     // Actividad 5: una ruta de acción por actor de la lista confirmada en la Actividad 4. Prevalece el último guardado.
+    'lista-rutas': async function(m){
+      if(m!=='GET') return responder({error:'Método no permitido.'},405);
+      return responder(await listaActividad5());
+    },
     'rutas': async function(m,body){
       if(m==='GET') return responder(await store.list('rutas'));
       if(m!=='PUT') return responder({error:'Método no permitido.'},405);
-      var sel=await store.get('seleccion','vigente');
-      if(!sel||!Array.isArray(sel.actorIds)||!sel.actorIds.length) return responder({error:'Todavía no hay una lista confirmada en la Actividad 4.'},409);
-      var v=window.Rutas.validar(body,sel.actorIds);
+      var lista=await listaActividad5();
+      if(!lista.actorIds.length) return responder({error:'Todavía no hay actores en el Nivel 1 de la Actividad 3.'},409);
+      var v=window.Rutas.validar(body,lista.actorIds);
       if(!v.ok) return responder({error:Object.values(v.errores)[0],errores:v.errores},400);
       if(body.editadoPor!=null&&(typeof body.editadoPor!=='string'||body.editadoPor.length>80)) return responder({error:'Nombre de quien registra no válido.'},400);
       var rec=Object.assign({id:v.valor.actorId},v.valor,{editadoPor:texto(body.editadoPor,80),updatedAt:new Date().toISOString()});

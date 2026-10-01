@@ -3163,7 +3163,7 @@
       if(!config)return;
       const ordenados=ordenCorte(),max=config.corte.maximo,ids=confirmada?.actorIds||[];
       const nombreActor=id=>actores.find(a=>a.id===id)?.nombre||id;
-      $('p4CorteNota').textContent=config.corte.nota;
+      $('p4CorteNota').textContent=config.corte.nota+' Si el facilitador no confirma una lista, pasan automáticamente a la Actividad 5 los '+config.corte.maximo+' primeros de esta tabla, incluidos los que aún no tienen calificación.';
       $('p4Confirmada').hidden=!confirmada;
       $('p4Confirmada').innerHTML=confirmada?'<h4>Lista confirmada para la Actividad 5</h4><p>'+esc(confirmada.confirmadoPor)+' · '+esc(new Date(confirmada.confirmadoEn).toLocaleString('es-CO'))+'</p><ol>'+ids.map(id=>'<li>'+esc(nombreActor(id))+'</li>').join('')+'</ol>':'';
       const validacion=Corte.validarSeleccion(borrador,actores,config.corte);
@@ -3277,7 +3277,7 @@
     function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
     function renderEditor(){
       const host=$('p5Editor');
-      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay una lista confirmada en la Actividad 4. Cuando el facilitador la confirme, aquí aparecerán los actores (máximo 10).</p>';return;}
+      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay actores en el Nivel 1 de la Actividad 3. En cuanto los grupos ubiquen actores en el Nivel 1, pasan aquí automáticamente (máximo 10, en el orden del corte de la Actividad 4).</p>';return;}
       if(!ids().includes(actual))actual=ids()[0];
       const a=actorInf(actual)||{id:actual,nombre:actual,tipo:'empresa'},d=dato(actual),des=guardando?' disabled':'';
       const sugerido=sugeridos.find(c=>c.actor_id===actual),registrados=contactos.filter(c=>c.actorId===actual);
@@ -3325,12 +3325,12 @@
       if(cargando||guardando||!$('view-canvas').classList.contains('active'))return;
       cargando=true;const v=version;
       try{
-        const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('data/actores.json'),leer('/api/seleccion'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
+        const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('data/actores.json'),leer('/api/lista-rutas'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
         if(v!==version)return;
         actoresInf=inf;seleccion=sel;rutas=rs;sugeridos=sg;contactos=cs;
         responsables=cfg?[...(cfg.participantes||[]),...(cfg.administradores||[])]:responsables;
         render(false);
-        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+(seleccion?' · Lista confirmada por '+(seleccion.confirmadoPor||'el facilitador'):'')+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
+        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+(seleccion&&seleccion.origen==='confirmada'?' · Lista confirmada por '+(seleccion.confirmadoPor||'el facilitador'):seleccion&&seleccion.origen==='automatica'?' · Lista automática: los primeros '+ids().length+' del corte de la Actividad 4':'')+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
       }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los cambios sin guardar.');}
       finally{cargando=false;}
     }

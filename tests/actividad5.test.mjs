@@ -2,7 +2,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import Rutas from '../public/rutas.js';
-import {entorno,html,read} from './embudo-support.mjs';
+import {entorno,html,read,calificacion} from './embudo-support.mjs';
 
 const actores=JSON.parse(read('../public/data/actores.json'));
 const empresa=actores.find(a=>a.id==='mercados-ecopetrol-nacion-88-5');
@@ -56,7 +56,7 @@ test('Tarjeta de contexto: contacto de entrada en rojo con confianza, gremio con
  assert.doesNotMatch(Rutas.htmlContexto(empresa,{}),/Tema de charla/);
 });
 
-test('Ruta /api/rutas: sin lista confirmada responde 409; guarda, actualiza y lee',async()=>{
+test('Ruta /api/rutas: sin actores en Nivel 1 responde 409; guarda, actualiza y lee',async()=>{
  const vacio=entorno();
  assert.equal((await vacio.req('rutas','PUT',completa())).status,409);
  const s=conSeleccion();
@@ -94,8 +94,35 @@ test('Hoja consolidada: filas en el orden confirmado, con aristas y vacíos',()=
 
 test('Vista: la Actividad 5 usa la lista confirmada y la colección rutas, no el embudo viejo',()=>{
  const js=html.split('// ACTIVIDAD 5: INICIO JS')[1].split('// ACTIVIDAD 5: FIN JS')[0];
- assert.match(js,/\/api\/seleccion/);assert.match(js,/\/api\/rutas/);
+ assert.match(js,/\/api\/lista-rutas/);assert.match(js,/\/api\/rutas/);
  assert.doesNotMatch(js,/activacion-votos|Embudo\.elegibles|\/api\/canvas/);
  assert.match(html,/<script src="rutas\.js"><\/script>\s*<script src="ideas\.js"|<script src="rutas\.js"><\/script>/);
  assert.ok(html.indexOf('rutas.js')<html.indexOf('api-supabase.js'));
+});
+
+test('Paso automático: sin lista confirmada, pasan a la Actividad 5 los del Nivel 1 en el orden del corte (máx. 10), incluidos los sin calificar',async()=>{
+ const s=entorno();
+ const ids=actores.filter(a=>a.tipo==='empresa').slice(0,12).map(a=>a.id);
+ assert.deepEqual((await s.req('lista-rutas')).data,{actorIds:[],origen:'vacia'});
+ ids.forEach(id=>{s.actor(id,'mercados',{nombre:actores.find(a=>a.id===id).nombre});s.nivel1(id);});
+ assert.equal((await s.req('priorizacion-votos','PUT',calificacion(ids[5],4,2))).status,200);
+ await s.req('priorizacion-votos','PUT',calificacion(ids[7],5,4));
+ const l=(await s.req('lista-rutas')).data;
+ assert.equal(l.origen,'automatica');assert.equal(l.actorIds.length,10);
+ assert.deepEqual(l.actorIds.slice(0,2),[ids[5],ids[7]]);
+ // Se puede guardar la ruta de un actor de la lista automática aunque no esté calificado.
+ const sinCalificar=l.actorIds[2];
+ assert.equal((await s.req('rutas','PUT',completa({actorId:sinCalificar}))).status,200);
+ // Un actor del Nivel 1 que quedó fuera del máximo no se acepta.
+ const fuera=ids.find(id=>!l.actorIds.includes(id));
+ assert.equal((await s.req('rutas','PUT',completa({actorId:fuera}))).status,400);
+});
+
+test('Paso automático: la lista confirmada por el facilitador tiene prioridad sobre la automática',async()=>{
+ const s=conSeleccion([gremio.id]);
+ s.nivel1(empresa.id);
+ const l=(await s.req('lista-rutas')).data;
+ assert.equal(l.origen,'confirmada');assert.deepEqual(l.actorIds,[gremio.id]);assert.equal(l.confirmadoPor,'Felipe Hillón');
+ assert.equal((await s.req('rutas','PUT',completa())).status,400);
+ assert.equal((await s.req('lista-rutas','PUT',{})).status,405);
 });
