@@ -12,7 +12,7 @@ const Informe=require('../public/informe.js');
 const asistentes=JSON.parse(read('../public/asistentes-config.json'));
 
 test('Transversales: lista de asistentes completa y sin ambigüedades',()=>{
- assert.equal(asistentes.participantes.length,8);assert.deepEqual(asistentes.administradores,['Germán Hillón','Felipe Hillón','Julio Ochoa']);
+ assert.equal(asistentes.participantes.length,11);assert.deepEqual(asistentes.administradores,['Germán Hillón','Felipe Hillón','Julio Ochoa']);
  assert.deepEqual(Asistentes.ambiguedades(asistentes),[]);
 });
 test('Transversales: coincidencia de 2 palabras sin tildes ni mayúsculas',()=>{

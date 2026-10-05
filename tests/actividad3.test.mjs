@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import TierList from '../public/tierlist.js';
 import {entorno,dom,html,read} from './embudo-support.mjs';
@@ -136,7 +137,7 @@ test('Vista: arrastrar a fila y bandeja, sondeo del compañero y grupo administr
 test('Vista administrador: presentes desmarcados, confirmación interna, inicio y selección',async()=>{
  const s=entorno(),v=vista(s,{nombre:'Felipe Hillón',rol:'administrador'}),{$}=v;await v.cargar();
  assert.equal($('tlAdmin').hidden,false);assert.equal($('tlSortear').disabled,true);
- assert.equal(($('tlPresentes').innerHTML.match(/type="checkbox"/g)||[]).length,8);assert(!$('tlPresentes').innerHTML.includes('checked'));
+ assert.equal(($('tlPresentes').innerHTML.match(/type="checkbox"/g)||[]).length,JSON.parse(readFileSync(new URL("../public/asistentes-config.json",import.meta.url),"utf8")).participantes.length);assert(!$('tlPresentes').innerHTML.includes('checked'));
  $('tlPresentes').querySelectorAll=()=>[{value:'Ana'},{value:'Luis'},{value:'Pedro'},{value:'Julia'}];
  $('tlPresentes').handlers.change();assert.equal($('tlSortear').disabled,false);
  $('tlSortear').handlers.click();await tick();const primero=(await s.req('parejas')).data;
