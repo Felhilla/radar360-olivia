@@ -63,7 +63,7 @@ test('Hash inicial, atrás/adelante, cambio de hash, selector móvil y enlace de
  const direct=await setup('#actividad-5');direct.check('canvas');assert.equal(direct.counts.canvas,1);
 });
 test('Contenido completo, aviso provisional y recuperación de error de configuración',async()=>{
- const s=await setup();assert.equal(s.get('landingNota').hidden,false);assert.equal(s.get('landingNota').textContent,config.nota);
+ const s=await setup();assert.equal(s.get('landingNota').hidden,!config.provisional);assert.equal(s.get('landingNota').textContent,config.nota);
  for(const p of config.equipo.personas)assert(s.get('landingContenido').innerHTML.includes(p.bio));
  assert.equal(config.metodologia.lentes.length,6);assert.equal(config.propuesta.practicas.length,5);
  const f=await setup('',true);assert.equal(f.get('landingReintentar').hidden,false);await f.retry();f.check('inicio');

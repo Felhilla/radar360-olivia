@@ -1,6 +1,6 @@
 {
   "nombre": "Ruta Colombia - Olivia",
-  "provisional": true,
+  "provisional": false,
   "nota": "Textos por confirmar con Felipe",
   "portada": {
     "etiqueta": "TALLER ESTRATÉGICO",
@@ -260,7 +260,7 @@
     {
       "numero": 5,
       "nombre": "Construir rutas de acción",
-      "proposito": "Definir en grupo, con German y Julio, las rutas de aliados y empresas: oferta, próximos pasos y acciones a 30, 60 y 90 días.",
+      "proposito": "Definir en grupo, con Germán y Julio, las rutas de aliados y empresas: oferta, próximos pasos y acciones a 30, 60 y 90 días.",
       "vista": "canvas"
     }
   ],

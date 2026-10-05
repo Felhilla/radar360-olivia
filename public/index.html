@@ -913,7 +913,7 @@
 <!-- ACTIVIDAD 5: INICIO HTML -->
 <section class="view" id="view-canvas">
   <h2>Construir rutas de acción</h2>
-  <p>Actividad 5 · Trabajo grupal guiado por German y Julio. Para cada actor de la lista confirmada en la Actividad 4 (máximo 10), definan qué aporta Olivia, quién lo lleva, si es de venta inmediata o de posicionamiento, y las acciones para Q4-2026, Q1-2027 y el año 2027.</p>
+  <p>Actividad 5 · Trabajo grupal guiado por Germán y Julio. Para cada actor de la lista confirmada en la Actividad 4 (máximo 10), definan qué aporta Olivia, quién lo lleva, si es de venta inmediata o de posicionamiento, y las acciones para Q4-2026, Q1-2027 y el año 2027.</p>
   <p id="p5Estado" role="status" aria-live="polite">Abre esta actividad para cargar las rutas.</p>
   <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
   <nav id="p5Lista" class="p5-lista" aria-label="Actores de la lista confirmada"></nav>
@@ -3112,7 +3112,7 @@
       const lista = filtrados(), todos = visibles();
       $('p4Editor').hidden=!todos.length;
       $('p4Avance').textContent = 'Has calificado '+todos.filter(a=>mio(a.id)).length+' de '+todos.length+' · '+lista.length+' en este filtro.';
-      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+' grupos · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores en el Nivel 1 de la Actividad 3.</p>');
+      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+(gruposPorActor[a.id].length===1?' grupo':' grupos')+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores en el Nivel 1 de la Actividad 3.</p>');
       if(html !== firmaLista){ $('p4Actores').innerHTML=html; firmaLista=html; }
     }
     function renderEditor(enfocar){
