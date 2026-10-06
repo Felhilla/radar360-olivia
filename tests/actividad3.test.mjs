@@ -118,10 +118,10 @@ test('Vista: espera, sin grupo, inicio, identidad fija, movimientos, reversión,
  s.context.window.Identidad.nombre='Fuera';await v.cargar();assert.match($('tlMiGrupo').innerHTML,/No estás en ningún grupo/);
  assert.equal(v.intervalos.size,1);v.salir();assert.equal(v.intervalos.size,0);
 });
-test('Vista: arrastrar a fila y bandeja, sondeo del compañero y grupo administrador editable',async()=>{
+test('Vista: arrastrar a fila y bandeja y sondeo del compañero',async()=>{
  const s=entorno(),sorteo=sortear(8);sorteo.iniciado=true;await s.req('parejas','PUT',sorteo);
- const v=vista(s,{nombre:'Felipe Hillón',rol:'administrador'}),{$}=v;await v.cargar();
- const g=sorteo.grupos[0],a=TierList.actoresDelGrupo(g,actores)[0];let transferido;
+ const g=sorteo.grupos[0],a=TierList.actoresDelGrupo(g,actores)[0];
+ const v=vista(s,{nombre:g.integrantes[0],rol:'participante'}),{$}=v;await v.cargar();let transferido;
  $('tlTablero').handlers.dragstart({target:{closest:()=>({dataset:{tlActor:a.id}})},dataTransfer:{setData:(tipo,id)=>{assert.equal(tipo,'text/plain');transferido=id;}}});
  assert.equal(transferido,a.id);
  for(const nivel of [2,0]){
@@ -129,10 +129,29 @@ test('Vista: arrastrar a fila y bandeja, sondeo del compañero y grupo administr
   $('tlTablero').handlers.drop({target:{closest:()=>({dataset:{tlNivel:String(nivel)}})},preventDefault(){prevenido=true;},dataTransfer:{getData:()=>transferido}});await tick();
   assert(prevenido);assert.equal(s.bucket('tierlist').get(g.id+':'+a.id)?.nivel,nivel||undefined);
  }
- await s.req('tierlist','PUT',{sorteoId:sorteo.id,grupoId:g.id,actorId:a.id,nivel:1,editadoPor:g.integrantes[0]});
+ await s.req('tierlist','PUT',{sorteoId:sorteo.id,grupoId:g.id,actorId:a.id,nivel:1,editadoPor:g.integrantes[1]});
  await v.intervalos.get(1)();
  assert.match($('tlResumen').innerHTML,new RegExp(a.nombre.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
  assert.match($('tlTablero').innerHTML,/<small>1 de 3<\/small>/);
+});
+test('Facilitador: ve los grupos sin modificarlos y su tablero de ejemplo no llega a la base ni al Nivel 1',async()=>{
+ const s=entorno(),sorteo=sortear(8);sorteo.iniciado=true;await s.req('parejas','PUT',sorteo);
+ const v=vista(s,{nombre:'Felipe Hillón',rol:'administrador'}),{$}=v;await v.cargar();
+ const g=sorteo.grupos[0],a=TierList.actoresDelGrupo(g,actores)[0];
+ // Tablero de un grupo: solo lectura, y la ruta rechaza el cambio aunque llegue.
+ assert.match($('tlTablero').innerHTML,/disabled/);assert.match($('tlMiGrupo').innerHTML,/solo lectura/);
+ await v.mover(a.id,1);assert.equal(s.bucket('tierlist').size,0);
+ assert.equal((await s.req('tierlist','PUT',{sorteoId:sorteo.id,grupoId:g.id,actorId:a.id,nivel:1,editadoPor:'Felipe Hillón'})).status,403);
+ // Tablero de ejemplo: editable, etiquetado y fuera de la base.
+ assert.match($('tlGrupo').innerHTML,/Ejemplo · Ad. Facilitador/);
+ $('tlGrupo').handlers.change({target:{value:'ejemplo-facilitador'}});
+ assert.match($('tlMiGrupo').innerHTML,/Ad\. Facilitador/);assert.doesNotMatch($('tlTablero').innerHTML,/disabled/);
+ await v.mover(a.id,1);
+ assert.equal(s.bucket('tierlist').size,0);
+ const filas=(await s.req('tierlist?sorteo='+sorteo.id)).data;
+ assert.equal(filas.length,1);assert.equal(filas[0].facilitador,true);assert.equal(filas[0].grupoId,'ejemplo-facilitador');
+ assert.equal(TierList.nivel1(sorteo,filas).length,0);
+ assert.match($('tlTablero').innerHTML,/<small>1 de 3<\/small>/);assert.match($('tlResumen').innerHTML,/Aún no hay actores en Nivel 1/);
 });
 test('Vista administrador: presentes desmarcados, confirmación interna, inicio y selección',async()=>{
  const s=entorno(),v=vista(s,{nombre:'Felipe Hillón',rol:'administrador'}),{$}=v;await v.cargar();

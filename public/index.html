@@ -161,6 +161,10 @@
   .entrada-caja input{ width:100%; box-sizing:border-box; font:inherit; padding:11px 12px; border:1px solid var(--line); border-radius:9px; background:var(--panel); color:var(--ink); margin-bottom:12px; }
   .entrada-caja .btn{ width:100%; padding:11px 16px; }
   .entrada-msg{ min-height:1.4em; margin:12px 0 0 !important; color:var(--ink) !important; }
+  /* Ejemplos de facilitador: se ven resaltados y no cuentan en los resultados del taller. */
+  .ad-facilitador{ display:inline-block; margin:0 4px; padding:1px 8px; border-radius:999px; background:#FF971C; color:#13293D; font-size:.72rem; font-weight:700; line-height:1.5; letter-spacing:.02em; white-space:nowrap; vertical-align:middle; }
+  .es-ejemplo{ outline:2px dashed #FF971C; outline-offset:2px; background:#FFF6EA !important; }
+  .nota-ejemplo{ margin:8px 0; padding:8px 12px; border-left:4px solid #FF971C; background:#FFF6EA; font-size:.88rem; color:#13293D; }
   .identidad{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.84rem; color:var(--ink-soft); }
   .identidad strong{ color:var(--ink); }
   .identidad .btn{ padding:6px 12px; font-size:.8rem; }
@@ -857,7 +861,7 @@
   <form class="entrada-caja" id="entradaForm" novalidate>
     <div class="mark"><img src="logos/olivia.jpeg" alt="Olivia"></div>
     <h1 id="entradaTitulo">Ruta Colombia - Olivia</h1>
-    <p>Taller estratégico &middot; 6 de octubre de 2026. Escribe tu nombre y apellido tal como aparecen en la invitación.</p>
+    <p>Taller estratégico &middot; 7 de octubre de 2026. Escribe tu nombre y apellido tal como aparecen en la invitación.</p>
     <label for="entradaNombre">Nombre y apellido</label>
     <input id="entradaNombre" maxlength="80" autocomplete="name" required>
     <button type="submit" class="btn">Entrar</button>
@@ -871,12 +875,12 @@
     <div class="mark"><img src="logos/olivia.jpeg" alt="Olivia"></div>
     <div>
       <h1>Ruta Colombia - Olivia</h1>
-      <div class="sub">Taller estratégico &middot; 6 de octubre de 2026</div>
+      <div class="sub">Taller estratégico &middot; 7 de octubre de 2026</div>
     </div>
   </div>
   <div class="top-right">
     <span class="identidad" id="identidad" hidden>
-      <span>Ingresaste como <strong id="identidadNombre"></strong></span>
+      <span>Ingresaste como <strong id="identidadNombre"></strong><span class="ad-facilitador" id="identidadFacilitador" hidden>Ad. Facilitador</span></span>
       <button type="button" class="btn secondary" id="descargarInforme" hidden>Descargar informe (PDF)</button>
       <button type="button" class="btn ghost" id="cambiarPersona">Cambiar de persona</button>
     </span>
@@ -928,6 +932,7 @@
 <section class="view" id="view-priorizacion">
   <h2>Priorizar actores y mercados</h2>
   <p>Actividad 4 · Califica el impacto y el esfuerzo de los actores del Nivel 1 de la Actividad 3. Al final se confirma una lista de máximo 10 actores para la Actividad 5.</p>
+  <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: tus calificaciones son ejemplos. Se ven solo en esta pantalla y no cuentan en la matriz, el corte ni la base del taller.</p>
   <p id="p4Provisional" class="p4-aviso" hidden><strong>Criterios provisionales</strong> · <span></span></p>
   <p id="p4Estado" role="status" aria-live="polite">Abre esta actividad para cargar las calificaciones.</p>
   <nav class="subviews" aria-label="Actividad 4">
@@ -1113,6 +1118,7 @@
   <h2>Tier list de actores</h2>
   <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. Solo los del Nivel 1 pasan a la Actividad 4.</p>
   <p id="tlEstado" role="status" aria-live="polite"></p>
+  <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: ves los tableros de los grupos sin modificarlos. Para mostrar un ejemplo elige «Ejemplo · Ad. Facilitador» en «Ver grupo»; ese tablero se ve solo en esta pantalla y no cuenta para el Nivel 1.</p>
   <div id="tlAdmin" hidden>
     <fieldset><legend>Participantes presentes</legend><div id="tlPresentes" class="tl-presentes"></div></fieldset>
     <button type="button" class="btn" id="tlSortear" disabled>Sortear parejas</button>
@@ -1172,6 +1178,7 @@
     <strong>Actividad 1 &middot; Alinear el juego (8:00–8:15): </strong>
     "¿Cuál es el objetivo que busca Olivia en Q4-2026, Q1-2027 y el año 2027 en materia de acceso a mercado y consolidación en Colombia?" Se llena una ficha por horizonte, empezando por Q4-2026.
   </div>
+  <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: tus respuestas son ejemplos. Se ven solo en esta pantalla, resaltadas, y no entran a los resultados ni a la base del taller.</p>
 
   <nav class="subviews">
     <button data-subview="ideas-corto" class="active">Q4-2026</button>
@@ -1268,6 +1275,8 @@
 <script src="asistentes.js"></script>
 <script src="informe.js"></script>
 <script>
+// Etiqueta de los ejemplos que registra un facilitador (viven solo en su navegador; ver api-supabase.js).
+window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" title="Ejemplo del facilitador: no se guarda en la base del taller ni cuenta en los resultados">Ad. Facilitador</span>'; };
 // ENTRADA: INICIO JS — filtro de entrada por lista de asistentes e informe PDF para administradores.
 // Es un filtro del lado del cliente para ordenar el taller, no un control de seguridad (docs/seguridad-revision.md).
 (function(){
@@ -1281,7 +1290,9 @@
     document.body.classList.toggle("sin-acceso", !persona);
     $("identidad").hidden = !persona;
     $("identidadNombre").textContent = persona ? persona.nombre : "";
+    $("identidadFacilitador").hidden = !(persona && persona.rol === "administrador");
     $("descargarInforme").hidden = !(persona && persona.rol === "administrador");
+    document.querySelectorAll("[data-solo-facilitador]").forEach(function(el){ el.hidden = !(persona && persona.rol === "administrador"); });
     document.dispatchEvent(new CustomEvent("identidad:cambio", {detail:persona}));
     if(!persona) setTimeout(function(){ $("entradaNombre").focus(); }, 0);
   }
@@ -1346,7 +1357,7 @@
     var n = function(cat){ return visible.filter(function(a){ return a.categoria === cat; }).length; };
     var nota = "El informe v1.2 «Colombia como mercado para Olivia» (25 de septiembre de 2026) parte de un universo de 56 empresas y 23 gremios con NIT verificado (79 entidades). Este mapa muestra " +
       visible.length + " actores individualizados por el equipo (" + n("competidores") + " competidores, " + n("mercados") + " mercados, " + n("aliados") + " aliados y " + n("autoridades") + " autoridades). " +
-      "Si falta alguna entidad del universo, agrégala con \"Agregar actor\" desde \"Empresas Olivia – NIT verificados.xlsx\" antes del 6 de octubre.";
+      "Si falta alguna entidad del universo, agrégala con \"Agregar actor\" desde \"Empresas Olivia – NIT verificados.xlsx\" antes del 7 de octubre.";
     document.getElementById("gapNoteTech").textContent = nota;
     document.getElementById("radarGapNote").innerHTML = '<strong>Universo por completar: </strong>' + esc(nota);
   }
@@ -2237,6 +2248,7 @@
       });
       var form=host.querySelector('form'), abrir=host.querySelector('[data-agregar-contacto]');
       if(!form) return;
+      if(administrador) form.insertAdjacentHTML('afterbegin','<p class="nota-ejemplo">'+window.etiquetaFacilitador()+' Como facilitador, el contacto que agregues es un ejemplo: solo se ve en esta pantalla y no se registra en la base del taller.</p>');
       function plegar(){form.reset();form.hidden=true;abrir.setAttribute('aria-expanded','false');form.querySelectorAll('[data-error], [data-contacto-error]').forEach(function(el){el.textContent='';});}
       abrir.addEventListener('click',function(){form.hidden=false;abrir.setAttribute('aria-expanded','true');form.elements.nombre.focus();});
       form.querySelector('[data-cancelar-contacto]').addEventListener('click',plegar);
@@ -2251,7 +2263,7 @@
           if(!window.Identidad) throw Error('identidad');
           var r=await fetch('/api/contactos',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(Object.assign({},v.valor,{actorId:a.id,registradoPor:window.Identidad.nombre}))});
           if(!r.ok) throw Error('guardar');
-          plegar();showToast('Contacto guardado.');await refrescar();
+          plegar();showToast(administrador?'Ejemplo guardado solo en esta pantalla.':'Contacto guardado.');await refrescar();
         } catch(err){error.textContent='No se pudo guardar el contacto. Intenta de nuevo.';}
         finally {guardar.disabled=false;}
       });
@@ -2878,11 +2890,12 @@
     }
     stickers.slice().sort(function(a,b){ return (a.createdAt||"").localeCompare(b.createdAt||""); }).forEach(function(s){
       var chip = document.createElement("div");
-      chip.className = "idea-chip";
+      chip.className = "idea-chip" + (s.facilitador ? " es-ejemplo" : "");
       var txt = document.createElement("span");
       txt.className = "txt";
       txt.textContent = s.texto;
       chip.appendChild(txt);
+      if(s.facilitador) chip.insertAdjacentHTML("beforeend", window.etiquetaFacilitador());
       var del = document.createElement("button");
       del.className = "idea-del";
       del.title = "Eliminar respuesta";
@@ -2896,7 +2909,8 @@
 
   function renderResultadosIdeas(){
     HORIZON_ORDER.forEach(function(hz){
-      var respuestas = (ideasState.stickers || []).filter(function(s){ return s.horizonte === hz; });
+      // Los ejemplos del facilitador no entran a los resultados.
+      var respuestas = (ideasState.stickers || []).filter(function(s){ return s.horizonte === hz && !s.facilitador; });
       var palabras = Ideas.contar(respuestas);
       var host = document.getElementById("ideasNube-" + hz);
       if(!palabras.length){
@@ -2960,7 +2974,13 @@
     const industria=id=>TierList.INDUSTRIAS.find(i=>i.id===id)?.nombre||id;
     const subnombre=id=>({energia:'Energía',servicios_publicos:'Servicios públicos',recursos_naturales:'Recursos naturales'}[id]||'');
     const abreviada=a=>subnombre(a.subindustria)||({financiero:'Financiero',retail:'Retail y consumo',industrial:'Industrial',telecom:'Telecom',salud:'Salud',gremios_publico:'Gremios y sector público'}[a.industria]||industria(a.industria));
-    const grupo=()=>admin()?(sorteo?.grupos.find(g=>g.id===seleccionado)||sorteo?.grupos[0]):TierList.grupoDe(sorteo,identidad());
+    // Tablero de ejemplo del facilitador: todas las industrias; vive solo en su navegador y no cuenta para el Nivel 1.
+    const EJEMPLO={id:'ejemplo-facilitador',integrantes:['Ejemplo · Ad. Facilitador'],industrias:TierList.INDUSTRIAS.map(i=>i.id)};
+    const esEjemplo=g=>!!g&&g.id===EJEMPLO.id;
+    const etiqueta=()=>window.etiquetaFacilitador?window.etiquetaFacilitador():'<span class="ad-facilitador">Ad. Facilitador</span>';
+    const grupo=()=>admin()?(seleccionado===EJEMPLO.id||!sorteo?EJEMPLO:(sorteo.grupos.find(g=>g.id===seleccionado)||sorteo.grupos[0])):TierList.grupoDe(sorteo,identidad());
+    // Un participante mueve en su grupo cuando la actividad empezó; el facilitador solo mueve en su tablero de ejemplo.
+    const editable=g=>esEjemplo(g)?admin():!!sorteo?.iniciado&&!admin();
     const aviso=t=>{$('tlEstado').textContent=t;};
     async function api(url,method,body){
       const r=await fetch(url,{cache:'no-store',...(method?{method,headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{})});
@@ -2975,7 +2995,7 @@
       $('tlGrupo').disabled=ocupado;
     }
     function tarjeta(a,nivel){
-      const des=(!sorteo.iniciado||ocupado)?' disabled':'';
+      const des=(!editable(grupo())||ocupado)?' disabled':'';
       return '<article class="tl-card" data-tl-actor="'+esc(a.id)+'" draggable="'+(!des)+'"><button type="button" class="tl-ficha" data-tl-ficha="'+esc(a.id)+'" aria-label="Abrir ficha de '+esc(a.nombre)+'"><img src="'+esc(getLogo({id:a.id,categoria:a.tipo==='gremio'?'aliados':'mercados'}))+'" alt=""><strong>'+esc(a.nombre)+'</strong></button><small>'+(a.tipo==='gremio'?'<span class="tl-gremio">Gremio</span> · ':'')+esc(abreviada(a))+'</small><div class="tl-mover">'+[1,2,3,4].map(n=>'<button type="button" data-tl-mover="'+esc(a.id)+'" data-nivel="'+n+'" aria-label="Mover '+esc(a.nombre)+' al Nivel '+n+'" aria-pressed="'+(nivel===n)+'"'+des+'>'+n+'</button>').join('')+(nivel?'<button type="button" data-tl-mover="'+esc(a.id)+'" data-nivel="0" aria-label="Quitar nivel de '+esc(a.nombre)+'" title="Quitar nivel"'+des+'>×</button>':'')+'</div></article>';
     }
     function render(){
@@ -2983,11 +3003,12 @@
       if(admin()){
         $('tlResultado').innerHTML=(sorteo?.grupos||[]).map(g=>'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong> · '+g.industrias.map(i=>esc(industria(i))).join(' · ')+' · '+TierList.actoresDelGrupo(g,actores).length+' actores</p>').join('');
         const g=grupo();seleccionado=g?.id||'';
-        $('tlGrupo').innerHTML=(sorteo?.grupos||[]).map(g=>'<option value="'+esc(g.id)+'" '+(g.id===seleccionado?'selected':'')+'>'+g.integrantes.map(esc).join(' + ')+'</option>').join('');
+        $('tlGrupo').innerHTML=[EJEMPLO,...(sorteo?.grupos||[])].map(g=>'<option value="'+esc(g.id)+'" '+(g.id===seleccionado?'selected':'')+'>'+g.integrantes.map(esc).join(' + ')+'</option>').join('');
       }
       controles();
       const g=grupo();
-      $('tlMiGrupo').innerHTML=!sorteo?'<p>Espera a que el facilitador sortee las parejas.</p>':!g?'<p>No estás en ningún grupo del sorteo. Avísale al facilitador.</p>':'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong><br>'+g.industrias.map(i=>esc(industria(i))).join(' · ')+'</p>'+(!sorteo.iniciado?'<p>El facilitador todavía no inicia la actividad</p>':'');
+      $('tlMiGrupo').innerHTML=esEjemplo(g)?'<p class="nota-ejemplo"><strong>Tablero de ejemplo</strong> '+etiqueta()+'<br>Todas las industrias. Se ve solo en esta pantalla y no cuenta para el Nivel 1 ni la Actividad 4.</p>':!sorteo?'<p>Espera a que el facilitador sortee las parejas.</p>':!g?'<p>No estás en ningún grupo del sorteo. Avísale al facilitador.</p>':'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong><br>'+g.industrias.map(i=>esc(industria(i))).join(' · ')+'</p>'+(!sorteo.iniciado?'<p>El facilitador todavía no inicia la actividad</p>':'')+(admin()?'<p class="hint">Vista de solo lectura: los facilitadores no modifican los tableros de los grupos.</p>':'');
+      const tb=$('tlTablero');tb.className=String(tb.className||'').replace(/\s*es-ejemplo/g,'')+(esEjemplo(g)?' es-ejemplo':'');
       if(!g)$('tlTablero').innerHTML='';
       else{
         const lista=TierList.actoresDelGrupo(g,actores), colocaciones=filas.filter(f=>f.grupoId===g.id), nivelDe=a=>colocaciones.find(f=>f.actorId===a.id)?.nivel||0;
@@ -3017,7 +3038,7 @@
           participantes=(await api('asistentes-config.json')).participantes;
           $('tlPresentes').innerHTML=participantes.map(n=>'<label><input type="checkbox" value="'+esc(n)+'"> '+esc(n)+'</label>').join('');
         }
-        const nuevo=await api('/api/parejas'), nuevas=nuevo?await api('/api/tierlist?sorteo='+encodeURIComponent(nuevo.id)):[];
+        const nuevo=await api('/api/parejas'), nuevas=nuevo||admin()?await api('/api/tierlist?sorteo='+encodeURIComponent(nuevo?.id||'sin-sorteo')):[];
         if(version!==revision||ocupado)return;
         sorteo=nuevo;filas=nuevas;render();aviso('');
       }catch(e){if(version===revision)aviso('No se pudieron cargar los datos. Se intentará de nuevo.');}
@@ -3039,10 +3060,10 @@
     var tlLimiteMsg='',tlLimiteHasta=0;
     function avisoLimite(t){tlLimiteMsg=t;tlLimiteHasta=Date.now()+6000;if($('tlLimite'))$('tlLimite').textContent=t;}
     async function mover(actorId,nivel){
-      const g=grupo();if(ocupado||!sorteo?.iniciado||!g||!identidad()||!TierList.actoresDelGrupo(g,actores).some(a=>a.id===actorId))return;
+      const g=grupo();if(ocupado||!g||!editable(g)||!identidad()||!TierList.actoresDelGrupo(g,actores).some(a=>a.id===actorId))return;
       const regla=TierList.puedeMover(filas.filter(f=>f.grupoId===g.id),actorId,nivel);
       if(!regla.ok){avisoLimite(regla.motivo);return;}
-      const anteriores=filas.slice(), body={sorteoId:sorteo.id,grupoId:g.id,actorId,nivel,editadoPor:identidad()};
+      const anteriores=filas.slice(), body={sorteoId:sorteo?.id||'sin-sorteo',grupoId:g.id,actorId,nivel,editadoPor:identidad()};
       ocupado=true;revision++;filas=filas.filter(f=>!(f.grupoId===g.id&&f.actorId===actorId));if(nivel!==null)filas.push(body);render();aviso('Guardando cambio…');
       let rechazo='';
       try{await api('/api/tierlist','PUT',body);aviso('Cambio guardado.');}
@@ -3064,10 +3085,10 @@
       const b=e.target.closest('[data-tl-mover]');if(b)mover(b.dataset.tlMover,Number(b.dataset.nivel)||null);
     });
     $('tlTablero').addEventListener('dragstart',e=>{
-      const card=e.target.closest('[data-tl-actor]');if(!card||ocupado||!sorteo?.iniciado){e.preventDefault();return;}
+      const card=e.target.closest('[data-tl-actor]');if(!card||ocupado||!editable(grupo())){e.preventDefault();return;}
       e.dataTransfer.setData('text/plain',card.dataset.tlActor);e.dataTransfer.effectAllowed='move';
     });
-    $('tlTablero').addEventListener('dragover',e=>{if(sorteo?.iniciado&&!ocupado&&e.target.closest('[data-tl-nivel]'))e.preventDefault();});
+    $('tlTablero').addEventListener('dragover',e=>{if(editable(grupo())&&!ocupado&&e.target.closest('[data-tl-nivel]'))e.preventDefault();});
     $('tlTablero').addEventListener('drop',e=>{const col=e.target.closest('[data-tl-nivel]');if(col){e.preventDefault();mover(e.dataTransfer.getData('text/plain'),Number(col.dataset.tlNivel)||null);}});
     function sincronizar(){
       if(view.classList.contains('active')){if(timer===null)timer=setInterval(cargar,5000);cargar();}
@@ -3320,7 +3341,7 @@
       datos.forEach(r=>{
         const base=[r.actorId,r.nombre,r.categoria,r.sector,r.indiceImpacto,r.indiceEsfuerzo,r.cuadrante.id,r.cuadrante.nombre,r.votos];
         filas.push(['resumen',...base,'','','','','','','']);
-        votos.filter(v=>v.actorId===r.actorId&&!v.borrador).forEach(v=>['impacto','esfuerzo'].forEach(eje=>config[eje].forEach(c=>filas.push(['detalle',...base,v.votante,eje,c.id,c.nombre,c.peso,v[eje][c.id],v.updatedAt]))));
+        votos.filter(v=>v.actorId===r.actorId&&!v.borrador&&!v.facilitador).forEach(v=>['impacto','esfuerzo'].forEach(eje=>config[eje].forEach(c=>filas.push(['detalle',...base,v.votante,eje,c.id,c.nombre,c.peso,v[eje][c.id],v.updatedAt]))));
       });
       const celda=x=>{let s=String(x==null?'':x);if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
       const url=URL.createObjectURL(new Blob(['\ufeff'+filas.map(f=>f.map(celda).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}));
@@ -3349,13 +3370,16 @@
   // Ruta de acción por actor de la lista confirmada en la Actividad 4 (colección "rutas"). La colección "canvas" queda como histórico.
   (function iniciarRutas(){
     const $=id=>document.getElementById(id), drafts=new Map();
-    let actoresInf=[],seleccion=null,rutas=[],sugeridos=[],contactos=[],responsables=[],actual=null,cargando=false,guardando=false,iniciado=false,version=0,errores={};
+    let actoresInf=[],seleccion=null,rutas=[],sugeridos=[],contactos=[],responsables=[],facilitadores=[],actual=null,cargando=false,guardando=false,iniciado=false,version=0,errores={};
     const mensaje=t=>$('p5Estado').textContent=t;
     const identidad=()=>window.Identidad?window.Identidad.nombre:'';
     const ids=()=>seleccion&&Array.isArray(seleccion.actorIds)?seleccion.actorIds:[];
     const actorInf=id=>actoresInf.find(a=>a.id===id);
     const nombreDe=id=>(actorInf(id)||{}).nombre||id;
-    const guardada=id=>rutas.find(r=>r.actorId===id);
+    const esAdmin=()=>window.Identidad?.rol==='administrador';
+    // En la pantalla del facilitador se muestra primero su ejemplo; la hoja y el CSV usan solo la ruta del grupo.
+    const deGrupo=id=>rutas.find(r=>r.actorId===id&&!r.facilitador);
+    const guardada=id=>rutas.find(r=>r.actorId===id&&r.facilitador)||deGrupo(id);
     const sello=r=>r&&r.updatedAt?'Último guardado: '+new Date(r.updatedAt).toLocaleString('es-CO')+(r.editadoPor?' · '+r.editadoPor:''):'Sin guardar';
     async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok){const e=Error(d&&d.error||'No se pudo cargar.');e.errores=d&&d.errores;throw e;}return d;}
     // Datos del formulario: borrador sin guardar, si existe; si no, el último guardado.
@@ -3364,7 +3388,7 @@
       const lista=ids();
       $('p5Lista').innerHTML=lista.map((id,i)=>{
         const r=guardada(id),estado=drafts.has(id)?'Cambios sin guardar':r?Rutas.etiquetaNombre(r.etiqueta)+' · '+(r.responsable||'sin responsable'):'Sin guardar';
-        return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'"><span>'+(i+1)+'. '+esc(nombreDe(id))+'</span><small>'+esc(estado)+'</small></button>';
+        return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'"'+(r&&r.facilitador&&!drafts.has(id)?' class="es-ejemplo"':'')+'><span>'+(i+1)+'. '+esc(nombreDe(id))+'</span><small>'+esc(estado)+(r&&r.facilitador&&!drafts.has(id)?' '+window.etiquetaFacilitador():'')+'</small></button>';
       }).join('');
     }
     function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
@@ -3380,7 +3404,7 @@
       const campo=([k,t,max])=>k==='indicador'
         ?'<label>'+esc(t)+'<input type="text" data-campo="'+k+'" maxlength="'+max+'" placeholder="'+esc(Rutas.PLACEHOLDER_INDICADOR[d.etiqueta||''])+'" value="'+esc(d[k]||'')+'"'+des+'></label>'+campoError(k)
         :'<label>'+esc(t)+'<textarea data-campo="'+k+'" rows="3" maxlength="'+max+'"'+des+'>'+esc(d[k]||'')+'</textarea></label>'+campoError(k);
-      host.innerHTML='<div class="p5-editor"><form class="p5-form" id="p5Form" novalidate><h3>'+esc(a.nombre)+'</h3>'+
+      host.innerHTML='<div class="p5-editor"><form class="p5-form'+(esAdmin()?' es-ejemplo':'')+'" id="p5Form" novalidate><h3>'+esc(a.nombre)+(esAdmin()?' '+window.etiquetaFacilitador():'')+'</h3>'+(esAdmin()?'<p class="nota-ejemplo">Estás como facilitador: lo que guardes aquí es un ejemplo. Solo se ve en esta pantalla y no se registra en la base del taller ni en la hoja consolidada.</p>':'')+
         '<fieldset><legend>Etiqueta (obligatoria)</legend><div class="p5-opciones">'+Rutas.ETIQUETAS.map(([k,t])=>'<label><input type="radio" name="p5Etiqueta" value="'+k+'"'+(d.etiqueta===k?' checked':'')+des+'> '+esc(t)+'</label>').join('')+'</div>'+campoError('etiqueta')+'</fieldset>'+
         '<label>Responsable<select id="p5Responsable"'+des+'>'+opciones+'</select></label>'+(pideOtro?'<label>Nombre del responsable<input type="text" id="p5ResponsableOtro" maxlength="120" value="'+esc(otro?d.responsable:'')+'"'+des+'></label>':'')+campoError('responsable')+
         Rutas.CAMPOS.map(campo).join('')+
@@ -3401,12 +3425,12 @@
       const lista=ids(),nombres=Object.fromEntries(lista.map(id=>[id,nombreDe(id)]));
       $('p5CSV').disabled=!lista.length;
       $('p5Hoja').innerHTML=lista.map((id,i)=>{
-        const r=guardada(id);
+        const r=deGrupo(id);
         if(!r)return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+'</h4><p>Sin ruta guardada.</p></article>';
         const ar=Object.entries(r.aristas||{}).filter(([,x])=>x&&x.activa);
         return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+' · '+esc(Rutas.etiquetaNombre(r.etiqueta))+'</h4><p><strong>Responsable:</strong> '+esc(r.responsable)+'</p>'+Rutas.CAMPOS.map(([k,t])=>'<p><strong>'+esc(t)+':</strong> '+esc(r[k]||'Pendiente')+'</p>').join('')+(ar.length?'<p><strong>Aristas:</strong> '+ar.map(([k,x])=>esc(Rutas.aristaNombre(k))+(x.accion?' — '+esc(x.accion):'')).join(' · ')+'</p>':'')+'<small>'+esc(sello(r))+'</small></article>';
       }).join('')||'<p>Aún no hay lista confirmada.</p>';
-      const otros=rutas.filter(r=>!lista.includes(r.actorId));
+      const otros=rutas.filter(r=>!r.facilitador&&!lista.includes(r.actorId));
       $('p5Historicos').textContent=otros.length?'Hay '+otros.length+' ruta(s) guardada(s) de actores que ya no están en la lista confirmada; se conservan en la base pero no se muestran.':'';
     }
     function render(forzar){
@@ -3421,7 +3445,7 @@
         const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('data/actores.json'),leer('/api/lista-rutas'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
         if(v!==version)return;
         actoresInf=inf;seleccion=sel;rutas=rs;sugeridos=sg;contactos=cs;
-        responsables=cfg?[...(cfg.participantes||[]),...(cfg.administradores||[])]:responsables;
+        responsables=cfg?[...(cfg.participantes||[])]:responsables;facilitadores=cfg?[...(cfg.administradores||[])]:facilitadores; // Los facilitadores no son elegibles como responsables.
         render(false);
         mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+(seleccion&&seleccion.origen==='confirmada'?' · Lista confirmada por '+(seleccion.confirmadoPor||'el facilitador'):seleccion&&seleccion.origen==='automatica'?' · Lista automática: los primeros '+ids().length+' del corte de la Actividad 4':'')+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
       }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los cambios sin guardar.');}
@@ -3430,12 +3454,12 @@
     async function guardar(){
       const d=recoger();if(!d||guardando)return;
       drafts.set(actual,d);
-      const v=Rutas.validar(Object.assign({},d,{responsable:d.responsable==='__otro'?'':d.responsable}),ids());
+      const v=Rutas.validar(Object.assign({},d,{responsable:d.responsable==='__otro'?'':d.responsable}),ids(),{facilitadores});
       if(!v.ok){errores=v.errores;renderEditor();mensaje('Revisa los campos marcados. Tus cambios siguen en el formulario.');return;}
       errores={};guardando=true;version++;renderEditor();mensaje('Guardando…');
       try{
         const rec=await leer('/api/rutas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},v.valor,{editadoPor:identidad()}))});
-        rutas=rutas.filter(r=>r.actorId!==rec.actorId).concat(rec);drafts.delete(rec.actorId);mensaje('Ruta guardada. '+sello(rec));
+        rutas=rutas.filter(r=>!(r.actorId===rec.actorId&&!!r.facilitador===!!rec.facilitador)).concat(rec);drafts.delete(rec.actorId);mensaje((rec.facilitador?'Ejemplo guardado solo en esta pantalla (Ad. Facilitador). ':'Ruta guardada. ')+sello(rec));
       }catch(e){errores=e.errores||{};mensaje(e.message+' Tus cambios siguen en el formulario.');}
       finally{guardando=false;version++;render(true);}
     }

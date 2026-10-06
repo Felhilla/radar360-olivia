@@ -15,7 +15,7 @@
     ]);
     const orden = ordenarSectores || ((c, s) => s.slice().sort((a,b) => a.localeCompare(b,'es')));
     const vigentes = actores.filter(a => a.estado !== 'descartado');
-    const respuestas = (ideas && ideas.stickers) || [];
+    const respuestas = ((ideas && ideas.stickers) || []).filter(r => !r.facilitador); // los ejemplos del facilitador no van al informe
     const a1 = HORIZONTES.map(([id, titulo]) => ({id, titulo, respuestas:respuestas.filter(r => r.horizonte === id).length, palabras:Ideas.contar(respuestas.filter(r => r.horizonte === id), {maxPalabras:25})}));
     const a2 = CATEGORIAS.map(([id, titulo]) => {
       const lista = vigentes.filter(a => a.categoria === id);
@@ -63,7 +63,7 @@
     // Portada
     y = 190; texto('Ruta Colombia - Olivia', {tam:30, negrita:true, color:ACENTO, despues:6});
     texto('Informe de resultados del taller estratégico', {tam:15, despues:4});
-    texto('Taller del 6 de octubre de 2026 · Generado el '+fecha, {tam:10.5, color:SUAVE, despues:24});
+    texto('Taller del 7 de octubre de 2026 · Generado el '+fecha, {tam:10.5, color:SUAVE, despues:24});
     texto('Contenido: 1. Alinear el juego · 2. Radar 360° · 3. Activar empresas y gremios-aliados · 4. Priorizar actores y mercados · 5. Construir rutas de acción. Datos en vivo al momento de generar el informe.', {tam:10.5, despues:0});
     y = H - 170; texto(DISCLAIMER, {tam:8.5, color:SUAVE});
 

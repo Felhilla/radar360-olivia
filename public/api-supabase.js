@@ -64,6 +64,25 @@
     }
   };
 
+  // ---------- ejemplos de facilitador ----------
+  // Lo que registra un administrador (Julio, Germán, Felipe) es un ejemplo para mostrar en pantalla: se guarda solo en
+  // su navegador (localStorage), lleva facilitador:true y nunca llega a Supabase. Por eso no entra al Nivel 1, al corte,
+  // a la Actividad 5, a los CSV ni al informe, que se calculan con los datos de la base.
+  var EJEMPLO_GRUPO = 'ejemplo-facilitador';
+  var CLAVE_EJEMPLOS = 'ruta-ejemplos-facilitador';
+  var ejemplosMemoria = {};
+  function esFacilitador(){ return !!(window.Identidad && window.Identidad.rol === 'administrador'); }
+  function leerEjemplos(){ try { var v = JSON.parse(localStorage.getItem(CLAVE_EJEMPLOS)); return v && typeof v === 'object' ? v : ejemplosMemoria; } catch(e){ return ejemplosMemoria; } }
+  function escribirEjemplos(todo){ ejemplosMemoria = todo; try { localStorage.setItem(CLAVE_EJEMPLOS, JSON.stringify(todo)); } catch(e){} }
+  var ejemplos = {
+    list: function(col){ var c = leerEjemplos()[col] || {}; return Object.keys(c).sort().map(function(id){ return c[id]; }); },
+    get: function(col, id){ var c = leerEjemplos()[col] || {}; return c[id] || null; },
+    set: function(col, id, data){ var todo = leerEjemplos(); var rec = Object.assign({}, data, { facilitador: true }); (todo[col] = todo[col] || {})[id] = rec; escribirEjemplos(todo); return rec; },
+    del: function(col, id){ var todo = leerEjemplos(); if(todo[col]) delete todo[col][id]; escribirEjemplos(todo); }
+  };
+  // Lista para mostrar: la base más, solo en la pantalla del facilitador, sus ejemplos.
+  async function conEjemplos(col, filas){ return esFacilitador() ? filas.concat(ejemplos.list(col)) : filas; }
+
   // ---------- validación de actores (seguridad: solo campos editables y valores permitidos) ----------
   var CONFIANZAS = ['alta', 'media', 'baja', 'por_identificar'];
   var ESTADOS = ['verificado', 'por_validar', 'agregado_taller', 'descartado'];
@@ -99,6 +118,11 @@
   var HORIZONTES = ['corto', 'medio', 'largo'];
   var CATEGORIAS = ['competidores', 'mercados', 'aliados', 'autoridades'];
 
+  var asistentesPromesa = null;
+  function asistentes(){
+    if(!asistentesPromesa) asistentesPromesa = nativeFetch('asistentes-config.json', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : {}; }).catch(function(){ asistentesPromesa = null; return {}; });
+    return asistentesPromesa;
+  }
   var criteriosPromesa = null;
   function criterios(){
     if(!criteriosPromesa) criteriosPromesa = nativeFetch('priorizacion-criterios.json', { cache: 'no-store' }).then(function(r){ return r.json(); });
@@ -184,9 +208,20 @@
       return responder(await store.set('parejas','vigente',rec));
     },
     'tierlist': async function(m,body,qs){
-      if(m==='GET'){const filas=await store.list('tierlist'),id=qs.get('sorteo');return responder(id===null?filas:filas.filter(f=>f.sorteoId===id));}
+      if(m==='GET'){const filas=await store.list('tierlist'),id=qs.get('sorteo');return responder((id===null?filas:filas.filter(f=>f.sorteoId===id)).concat(esFacilitador()?ejemplos.list('tierlist'):[]));}
       if(m!=='PUT')return responder({error:'method_not_allowed'},405);
       if(!body||!['sorteoId','grupoId','actorId','editadoPor'].every(k=>typeof body[k]==='string'&&body[k].trim()&&body[k].length<=300)||![null,1,2,3,4].includes(body.nivel))return responder({error:'Colocación no válida.'},400);
+      if(esFacilitador()){
+        // El facilitador no modifica los tableros de los grupos: solo su tablero de ejemplo, que vive en su navegador.
+        if(body.grupoId!==EJEMPLO_GRUPO)return responder({error:'Los facilitadores ven los tableros de los grupos, pero no los modifican.'},403);
+        const catalogo=await actoresTier();
+        if(catalogo&&!catalogo.some(a=>a.id===body.actorId))return responder({error:'El actor no está en el catálogo.'},400);
+        const idEj=EJEMPLO_GRUPO+':'+body.actorId;
+        if(body.nivel===null){ejemplos.del('tierlist',idEj);return responder({ok:true});}
+        const regla=window.TierList.puedeMover(ejemplos.list('tierlist'),body.actorId,body.nivel);
+        if(!regla.ok)return responder({error:regla.motivo},409);
+        return responder(ejemplos.set('tierlist',idEj,{id:idEj,sorteoId:body.sorteoId,grupoId:EJEMPLO_GRUPO,actorId:body.actorId,nivel:body.nivel,editadoPor:body.editadoPor.trim(),updatedAt:new Date().toISOString()}));
+      }
       const vigente=await store.get('parejas','vigente'),grupo=vigente?.grupos.find(g=>g.id===body.grupoId);
       if(!grupo||body.sorteoId!==vigente.id)return responder({error:'El grupo no pertenece al sorteo vigente.'},400);
       const actores=await actoresTier();
@@ -205,12 +240,13 @@
     },
     'contactos': async function(m,body,qs){
       if(m === 'GET'){
-        var lista=await store.list('contactos'), actorId=qs.get('actorId');
+        var lista=await conEjemplos('contactos',await store.list('contactos')), actorId=qs.get('actorId');
         return responder(actorId===null?lista:lista.filter(c=>c.actorId===actorId));
       }
       if(m === 'DELETE'){
         var id=qs.get('id');
         if(!id) return responder({error:'Falta el contacto.'},400);
+        if(ejemplos.get('contactos',id)){ejemplos.del('contactos',id);return responder({ok:true});}
         await store.del('contactos',id); return responder({ok:true});
       }
       if(m !== 'POST') return responder({error:'method_not_allowed'},405);
@@ -220,6 +256,7 @@
       if(!validacion.ok) return responder(validacion,400);
       var rec=Object.assign({id:idCorto(texto(body.actorId,200)+':'),actorId:texto(body.actorId,200)},validacion.valor,{registradoPor:texto(body.registradoPor,80),createdAt:new Date().toISOString()});
       if(unescape(encodeURIComponent(JSON.stringify(rec))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
+      if(esFacilitador()) return responder(ejemplos.set('contactos',rec.id,rec));
       if(await store.count('contactos')>=2000) return responder({error:'Límite de contactos alcanzado.'},429);
       await store.set('contactos',rec.id,rec);return responder(rec);
     },
@@ -328,7 +365,7 @@
       }
     },
     'ideas': async function(m, body){
-      if(m === 'GET') return responder({ stickers: await store.list('ideas') });
+      if(m === 'GET') return responder({ stickers: await conEjemplos('ideas', await store.list('ideas')) });
       if(m === 'POST'){
         if(!body) return responder({ error: 'invalid_json' }, 400);
         var t = typeof body.texto === 'string' ? body.texto.trim() : '';
@@ -339,11 +376,13 @@
         var todas = await store.list('ideas');
         if(todas.filter(function(s){ return s.horizonte === body.horizonte; }).length >= 200) return responder({ error: 'too_many_rows' }, 429);
         var s = { id: idCorto('idea-'), horizonte: body.horizonte, preguntaId: body.preguntaId, texto: t, createdAt: new Date().toISOString() };
+        if(esFacilitador()) return responder({ sticker: ejemplos.set('ideas', s.id, s) }, 201);
         await store.set('ideas', s.id, s);
         return responder({ sticker: s }, 201);
       }
       if(m === 'DELETE'){
         if(!body || typeof body.id !== 'string') return responder({ error: 'missing_id' }, 400);
+        if(ejemplos.get('ideas', body.id)){ ejemplos.del('ideas', body.id); return responder({ ok: true }); }
         if(!(await store.get('ideas', body.id))) return responder({ error: 'not_found' }, 404);
         await store.del('ideas', body.id);
         return responder({ ok: true });
@@ -409,15 +448,16 @@
       return responder(await listaActividad5());
     },
     'rutas': async function(m,body){
-      if(m==='GET') return responder(await store.list('rutas'));
+      if(m==='GET') return responder(await conEjemplos('rutas',await store.list('rutas')));
       if(m!=='PUT') return responder({error:'Método no permitido.'},405);
       var lista=await listaActividad5();
       if(!lista.actorIds.length) return responder({error:'Todavía no hay actores en el Nivel 1 de la Actividad 3.'},409);
-      var v=window.Rutas.validar(body,lista.actorIds);
+      var v=window.Rutas.validar(body,lista.actorIds,{facilitadores:(await asistentes()).administradores||[]});
       if(!v.ok) return responder({error:Object.values(v.errores)[0],errores:v.errores},400);
       if(body.editadoPor!=null&&(typeof body.editadoPor!=='string'||body.editadoPor.length>80)) return responder({error:'Nombre de quien registra no válido.'},400);
       var rec=Object.assign({id:v.valor.actorId},v.valor,{editadoPor:texto(body.editadoPor,80),updatedAt:new Date().toISOString()});
       if(unescape(encodeURIComponent(JSON.stringify(rec))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
+      if(esFacilitador()) return responder(ejemplos.set('rutas',rec.id,rec));
       return responder(await store.set('rutas',rec.id,rec));
     },
     'seleccion': async function(m,body){
@@ -440,7 +480,7 @@
       }
       if(m === 'GET'){
         var votos = await store.list('priorizacion-votos');
-        if(params.get('resumen') !== '1') return responder(votos);
+        if(params.get('resumen') !== '1') return responder(await conEjemplos('priorizacion-votos', votos));
         var nivel = new Set((await nivel1Vigente()).actores.map(a=>a.actorId));
         var actores = {}; (await store.list('actors')).filter(a=>nivel.has(a.id)).forEach(function(a){ actores[a.id] = a; });
         var grupos = {};
@@ -464,11 +504,12 @@
       if(!body || typeof body.actorId !== 'string' || !body.actorId.trim() || body.actorId.length > 300 || /[\x00-\x1f/\\]/.test(body.actorId)) return responder({ error: 'Actor no válido.' }, 400);
       if(typeof body.votante !== 'string' || !body.votante.trim() || body.votante.length > 60) return responder({ error: 'Escribe un nombre de máximo 60 caracteres.' }, 400);
       var votante = body.votante.trim(), key = body.actorId + '--' + slugVotante(votante);
-      if(m === 'DELETE'){ await store.del('priorizacion-votos', key); return responder({ ok: true }); }
+      if(m === 'DELETE'){ if(esFacilitador()){ ejemplos.del('priorizacion-votos', key); return responder({ ok: true }); } await store.del('priorizacion-votos', key); return responder({ ok: true }); }
       var actor = await store.get('actors', body.actorId);
       if(!actor || !(await nivel1Vigente()).actores.some(a=>a.actorId===actor.id)) return responder({ error: 'El actor no está en el Nivel 1 de la Actividad 3.' }, 400);
       if(body.borrador || !ejeValido(body.impacto, 'impacto') || !ejeValido(body.esfuerzo, 'esfuerzo')) return responder({ error: 'Completa los diez criterios con enteros de 1 a 5. No se guardan borradores.' }, 400);
       var voto = { actorId: body.actorId, votante: votante, impacto: body.impacto, esfuerzo: body.esfuerzo, updatedAt: new Date().toISOString() };
+      if(esFacilitador()) return responder(ejemplos.set('priorizacion-votos', key, voto));
       await store.set('priorizacion-votos', key, voto);
       return responder(voto);
     }

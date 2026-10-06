@@ -8,7 +8,7 @@ const actores = read('../public/data/actores.json');
 const radarPath = new URL('../privado/actores-radar.json', import.meta.url);
 const industrias = ['financiero', 'energia', 'retail', 'industrial', 'telecom', 'salud', 'gremios_publico'];
 const subindustrias = ['energia', 'servicios_publicos', 'recursos_naturales'];
-const corte = '2026-10-06';
+const corte = '2026-10-07';
 const falta = 'No explícito en el informe';
 const porId = new Map(actores.map(actor => [actor.id, actor]));
 

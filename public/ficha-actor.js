@@ -11,11 +11,13 @@
     return Object.keys(errores).length?{ok:false,errores}:{ok:true,valor};
   }
   function etiquetaConfianza(c){return {alta:'Confianza alta',media:'Confianza media',baja:'Confianza baja · por verificar'}[c] || 'Contacto por identificar';}
+  // Ejemplo de un facilitador: solo existe en su navegador y no entra a la exportación de contactos.
+  const AD_FACILITADOR='<span class="ad-facilitador">Ad. Facilitador</span>';
   function htmlContactos(contactos,puedeQuitar){
     if(!contactos.length) return '<p class="ad-empty">Aún no hay contactos registrados</p>';
     return '<ul class="ad-contactos">'+contactos.map(c=>{
       const fecha=new Date(c.createdAt), fechaTexto=Number.isNaN(fecha.getTime())?'':fecha.toLocaleDateString();
-      return '<li><strong>'+esc(c.nombre)+'</strong><div>'+esc(c.cargo)+'</div>'+['telefono','correo'].filter(k=>c[k]).map(k=>'<div>'+esc(c[k])+'</div>').join('')+'<small>registrado por '+esc(c.registradoPor)+(fechaTexto?' · '+esc(fechaTexto):'')+'</small>'+(puedeQuitar?'<button type="button" class="btn ghost" data-quitar-contacto="'+esc(c.id)+'">Quitar</button>':'')+'</li>';
+      return '<li'+(c.facilitador?' class="es-ejemplo"':'')+'><strong>'+esc(c.nombre)+'</strong>'+(c.facilitador?AD_FACILITADOR:'')+'<div>'+esc(c.cargo)+'</div>'+['telefono','correo'].filter(k=>c[k]).map(k=>'<div>'+esc(c[k])+'</div>').join('')+'<small>registrado por '+esc(c.registradoPor)+(fechaTexto?' · '+esc(fechaTexto):'')+'</small>'+(puedeQuitar?'<button type="button" class="btn ghost" data-quitar-contacto="'+esc(c.id)+'">Quitar</button>':'')+'</li>';
     }).join('')+'</ul>';
   }
   function htmlFicha(actor,opciones){

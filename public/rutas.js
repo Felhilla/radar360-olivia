@@ -28,13 +28,20 @@
   const texto = (v,max) => typeof v==='string' ? v.trim().slice(0,max) : '';
 
   // Devuelve {ok, valor, errores}. valor queda normalizado: sin aristas si la etiqueta es venta inmediata.
-  function validar(datos, actorIds){
-    const d = datos || {}, errores = {};
+  // Un nombre es de un facilitador si contiene su apellido (última palabra de su nombre): «Ochoa», «Hillón».
+  const normalizarNombre = s => String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9ñ\s]/g,' ').split(/\s+/).filter(Boolean);
+  const esFacilitador = (nombre, facilitadores) => {
+    const palabras = new Set(normalizarNombre(nombre));
+    return (facilitadores||[]).some(f => { const p = normalizarNombre(f); const apellido = p[p.length-1]; return apellido && apellido.length>2 && palabras.has(apellido); });
+  };
+  function validar(datos, actorIds, opciones){
+    const d = datos || {}, errores = {}, facilitadores = (opciones && opciones.facilitadores) || [];
     if(typeof d.actorId!=='string' || !d.actorId.trim()) errores.actorId = 'Falta el actor.';
     else if(Array.isArray(actorIds) && !actorIds.includes(d.actorId)) errores.actorId = 'El actor no está en la lista confirmada de la Actividad 4.';
     if(!ETIQUETAS.some(e=>e[0]===d.etiqueta)) errores.etiqueta = 'Elige «Venta inmediata» o «Posicionamiento».';
     if(typeof d.responsable!=='string' || !d.responsable.trim()) errores.responsable = 'Indica quién es el responsable.';
     else if(d.responsable.trim().length>120) errores.responsable = 'Máximo 120 caracteres.';
+    else if(esFacilitador(d.responsable, facilitadores)) errores.responsable = 'Los facilitadores no pueden ser responsables. Elige a un participante.';
     for(const [k,,max] of CAMPOS){
       if(d[k]!=null && typeof d[k]!=='string') errores[k] = 'Texto no válido.';
       else if(typeof d[k]==='string' && d[k].trim().length>max) errores[k] = 'Máximo '+max+' caracteres.';
@@ -76,7 +83,7 @@
       h += '<p class="p5-ctx-contacto"><strong>'+esc(nombre)+'</strong><br>'+esc(c.cargo)+'</p><p class="p5-ctx-confianza">'+esc(conf)+'</p>';
     } else h += '<p class="p5-ctx-vacio">El informe no sugiere contacto para este actor.</p>';
     h += '</div><div class="p5-ctx-bloque"><h4>Contactos registrados en el taller</h4>';
-    h += contactos.length ? '<ul>'+contactos.map(x=>'<li><strong>'+esc(x.nombre)+'</strong> · '+esc(x.cargo)+['telefono','correo'].filter(k=>x[k]).map(k=>'<br>'+esc(x[k])).join('')+'</li>').join('')+'</ul>' : '<p class="p5-ctx-vacio">Aún no hay contactos registrados.</p>';
+    h += contactos.length ? '<ul>'+contactos.map(x=>'<li'+(x.facilitador?' class="es-ejemplo"':'')+'><strong>'+esc(x.nombre)+'</strong>'+(x.facilitador?'<span class="ad-facilitador">Ad. Facilitador</span>':'')+' · '+esc(x.cargo)+['telefono','correo'].filter(k=>x[k]).map(k=>'<br>'+esc(x[k])).join('')+'</li>').join('')+'</ul>' : '<p class="p5-ctx-vacio">Aún no hay contactos registrados.</p>';
     return h + '</div>';
   }
 
@@ -84,14 +91,14 @@
   function filasHoja(actorIds, rutas, nombres){
     const cab = ['posicion','actor','etiqueta','responsable',...CAMPOS.map(c=>c[1]),'aristas','registradoPor','ultimoGuardado'];
     const filas = actorIds.map((id,i)=>{
-      const r = rutas.find(x=>x.actorId===id) || {};
+      const r = rutas.find(x=>x.actorId===id && !x.facilitador) || {}; // los ejemplos del facilitador no van a la hoja
       const aristas = Object.entries(r.aristas||{}).filter(([,a])=>a&&a.activa).map(([k,a])=>aristaNombre(k)+(a.accion?': '+a.accion:'')).join(' | ');
       return [i+1, nombres[id]||id, etiquetaNombre(r.etiqueta), r.responsable||'', ...CAMPOS.map(([k])=>r[k]||''), aristas, r.editadoPor||'', r.updatedAt||''];
     });
     return [cab, ...filas];
   }
 
-  const api = {ETIQUETAS, ARISTAS, CAMPOS, PLACEHOLDER_INDICADOR, etiquetaNombre, aristaNombre, validar, htmlContexto, filasHoja};
+  const api = {ETIQUETAS, ARISTAS, CAMPOS, PLACEHOLDER_INDICADOR, etiquetaNombre, aristaNombre, esFacilitador, validar, htmlContexto, filasHoja};
   if(typeof module==='object' && module.exports) module.exports = api;
   else root.Rutas = api;
 })(typeof globalThis==='object'?globalThis:this);
