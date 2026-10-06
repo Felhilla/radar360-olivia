@@ -20,7 +20,7 @@ test('Radar09: orden compartido, nueve fichas y cuatro frentes citados',()=>{
  assert.deepEqual(Array.from(ctx.sortedSectorKeys('mercados',['Zulu','Minero','Otro'])),['Minero','Otro','Zulu']);
  const fichas=vm.runInContext('SECTOR_FICHAS',ctx);
  assert.deepEqual(Object.keys(fichas),expected);
- for(const ficha of Object.values(fichas)){assert.match(ficha.fuente,/informe v1.2/i);assert(ficha.estado.length && ficha.priorizacion.length);}
+ for(const ficha of Object.values(fichas)){assert.match(ficha.fuente,/informe v1.4/i);assert(ficha.estado.length && ficha.priorizacion.length);}
  assert(!forbidden.test(content));
 });
 test('Radar09: 48 registros completos preservados y siete altas mineras válidas',()=>{

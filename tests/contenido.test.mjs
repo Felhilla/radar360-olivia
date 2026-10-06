@@ -46,9 +46,10 @@ function fechasExplicitas(texto) {
   return fechas;
 }
 
-test('Contenido: exactamente 75 actores con ids únicos y campos obligatorios', () => {
-  assert.equal(actores.length, 75);
-  assert.equal(porId.size, 75);
+// 75 actores del informe v1.2 más 5 cuentas del frente minero-energético del informe v1.4 (sección 2.2).
+test('Contenido: exactamente 80 actores con ids únicos y campos obligatorios', () => {
+  assert.equal(actores.length, 80);
+  assert.equal(porId.size, 80);
   for (const a of actores) {
     assert(['empresa', 'gremio'].includes(a.tipo), a.id);
     for (const key of ['id', 'nombre', 'sector_radar', 'por_que', 'dolor', 'ruta_sugerida']) {
@@ -67,7 +68,7 @@ test('Contenido: exactamente 75 actores con ids únicos y campos obligatorios', 
     }
     if (a.propuesta_gh) assert(a.tipo === 'gremio' && a.tema_charla !== falta);
   }
-  assert.equal(actores.filter(a => a.tipo === 'empresa').length, 55);
+  assert.equal(actores.filter(a => a.tipo === 'empresa').length, 60);
   assert.equal(actores.filter(a => a.tipo === 'gremio').length, 20);
 });
 
@@ -151,8 +152,14 @@ test('Contenido: horizontes, asociaciones y rutas de doble plazo', () => {
   }
 });
 
-test('Contenido: cuatro textos de contexto en los cinco actores indicados y solo ellos', () => {
+test('Contenido: textos de contexto solo en los actores indicados', () => {
+  const hipotesis = 'Hipótesis de trabajo del informe v1.4: horizonte y ruta por verificar';
   const notas = {
+    'mercados-cenit-ocensa-y-odl-ecopetrol': hipotesis,
+    'mercados-tgi-grupo-energia-bogota': hipotesis,
+    'mercados-gecelca': hipotesis,
+    'mercados-tebsa-termovalle-proelectrica-y-otras-termicas': hipotesis,
+    'mercados-libero-copper-gold-mocoa': hipotesis,
     'mercados-ecopetrol-nacion-88-5': 'Olivia tiene contratos marco activos; validar horizonte',
     'mercados-isa-nacion': 'Olivia tiene contratos marco activos; validar horizonte',
     'mercados-davivienda-group-banco-davivienda-grupo-bolivar': 'Diego indica que la integración se maneja internamente',

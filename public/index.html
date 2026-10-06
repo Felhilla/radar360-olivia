@@ -1355,7 +1355,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   // Nota de universo: las cifras del mapa se calculan en vivo con los actores visibles del Radar.
   function renderGapNote(visible){
     var n = function(cat){ return visible.filter(function(a){ return a.categoria === cat; }).length; };
-    var nota = "El informe v1.2 «Colombia como mercado para Olivia» (25 de septiembre de 2026) parte de un universo de 56 empresas y 23 gremios con NIT verificado (79 entidades). Este mapa muestra " +
+    var nota = "El informe v1.4 «Colombia como mercado para Olivia» (5 de octubre de 2026) parte de un universo de 56 empresas y 23 gremios con NIT verificado (79 entidades). Este mapa muestra " +
       visible.length + " actores individualizados por el equipo (" + n("competidores") + " competidores, " + n("mercados") + " mercados, " + n("aliados") + " aliados y " + n("autoridades") + " autoridades). " +
       "Si falta alguna entidad del universo, agrégala con \"Agregar actor\" desde \"Empresas Olivia – NIT verificados.xlsx\" antes del 7 de octubre.";
     document.getElementById("gapNoteTech").textContent = nota;
@@ -2098,41 +2098,45 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       "La necesidad combina claridad de decisiones entre matriz y filiales, armonización cultural y absorción de cambios en originación y cobranza.",
       "Olivia puede aportar gestión del cambio, liderazgo y people analytics para orientar capacidades y evaluar adopción."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.1, 1.4 y 1.5. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.1, 1.4 y 1.5. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Energía": {
     "estado": [
       "El informe relaciona transición energética, automatización y digitalización con cambios en el trabajo de equipos de campo.",
-      "La versión v1.2 describe renovación directiva en Ecopetrol y transición de gobierno corporativo en ISA; GEB enfrenta coordinación de participadas.",
+      "La versión v1.4 confirma la nueva cúpula de Ecopetrol (presidente y tres vicepresidencias nuevas) y la transición de gobierno corporativo en ISA; GEB enfrenta coordinación de participadas.",
+      "Nuevo en v1.4: frente minero-energético con transporte de hidrocarburos (Cenit, Ocensa y ODL) y generación térmica (Gecelca y térmicas privadas), con El Niño como factor de presión operativa. Horizontes y rutas son hipótesis de trabajo por verificar.",
       "Este grupo conserva petróleo, transmisión y proyectos de generación; las cuentas cuyo foco comercial es distribución y continuidad del servicio se agrupan en Servicios públicos."
     ],
     "priorizacion": [
       "Alinear liderazgo, estrategia y modelo operativo y acompañar la adopción de nuevas prácticas en campo.",
-      "Para GEB, transmitir cultura y estándares a participadas sin control operativo; para proyectos renovables, desarrollar estructura y capacidades de escalamiento."
+      "Para GEB, transmitir cultura y estándares a participadas sin control operativo; para proyectos renovables, desarrollar estructura y capacidades de escalamiento.",
+      "En transporte, gas y térmicas el informe v1.4 prioriza la estrategia gremial sobre el acercamiento individual: gremio primero (ACP, Naturgas, Andeg, Acolgen), cuenta después."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §2.2. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §2.2. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Servicios públicos": {
     "estado": [
       "El informe vincula la continuidad y el restablecimiento de redes con EPM, Enel Colombia, Celsia, Promigas y Vatia.",
+      "Nuevo en v1.4: TGI (filial de GEB) entra por la puesta en marcha de infraestructura de regasificación (terminal Ballena) en pleno déficit de gas: Colombia importa el 34 % del gas que consume.",
       "La agrupación responde al foco de distribución, comercialización al usuario y servicios múltiples; varias empresas también generan o transportan energía."
     ],
     "priorizacion": [
       "Coordinar equipos de campo, procesos y datos para sostener el servicio y la ejecución territorial.",
       "Olivia puede acompañar liderazgo operativo, integración cultural y gestión del cambio entre negocios y filiales; primero debe precisarse la necesidad concreta de continuidad."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.2, 1.2 y 2.5. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.2, 1.2 y 2.5. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Minero": {
     "estado": [
-      "Nuevo grupo de mercados con Cerrejón, Drummond, AngloGold Ashanti (Colombia), Mineros S.A., Aris Mining, Fedeesmeraldas y Grupo Coquecol.",
+      "Grupo de mercados con Cerrejón, Drummond, AngloGold Ashanti (Colombia), Mineros S.A., Aris Mining, Fedeesmeraldas, Grupo Coquecol y, desde el informe v1.4, Libero Copper & Gold.",
+      "Nuevo en v1.4: el cobre es un mercado de oportunidad por la apertura del Gobierno a la exploración (derogación de los distritos mineros especiales); Quebradona tiene estudio ambiental a fines de 2027 y construcción desde 2028. Riesgos: conflictividad social, consulta previa y reversibilidad de la política.",
       "Incluye carbón, oro, proyectos mineros y un gremio esmeraldero como cliente. Grupo Coquecol representa a las carboneras; los proyectos de AngloGold no se presentan como minas productivas."
     ],
     "priorizacion": [
       "Hipótesis de trabajo: liderazgo operativo, cultura de seguridad, capacidades de innovación y gestión del cambio en equipos de campo.",
       "El informe no caracteriza estas siete entidades: el encaje se infiere de las prácticas de Olivia y del frente de gremios como cliente. Necesidad comercial y presupuesto sin verificar."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§1.5 y 2.5; caracterización empresarial en fuentes oficiales de cada ficha. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§1.5 y 2.5; caracterización empresarial en fuentes oficiales de cada ficha. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Retail": {
     "estado": [
@@ -2143,7 +2147,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       "Vincular productividad con gestión del cambio en tiendas, restaurantes, estaciones y plataformas comerciales.",
       "Desarrollar mandos y cultura de cumplimiento; atender primero continuidad y carga de los equipos cuando la operación esté afectada."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.3 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.3 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Consumo": {
     "estado": [
@@ -2154,40 +2158,40 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       "Acompañar cambios de estructura, liderazgo de planta y coordinación de cadenas de suministro y ventas.",
       "Olivia puede vincular cultura, gestión del cambio y people analytics con productividad; en multinacionales, ajustar el alcance a los marcos corporativos."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §2.3. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §2.3. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Industrial": {
     "estado": [
-      "La versión v1.2 combina la escisión de Cementos Argos con presión de ejecución por la reconstrucción descrita en Colombia.",
+      "La versión v1.4 combina la escisión de Cementos Argos con presión de ejecución por la reconstrucción descrita en Colombia.",
       "La construcción requiere coordinación de cuadrillas y suministros; el resto del grupo combina empresas familiares en profesionalización, holdings, manufactura y capital bursátil."
     ],
     "priorizacion": [
       "En Argos, separar personas, procesos y sistemas y construir las culturas de las organizaciones resultantes.",
       "Fortalecer liderazgo industrial y capacidad de ejecución, incluyendo adopción de automatización e innovación y coordinación entre empresas operativas."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.4 y 1.2. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.4 y 1.2. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Telecomunicaciones": {
     "estado": [
-      "El informe presenta la integración Tigo–Movistar como una reorganización de gran escala, con unificación de marca y cerca de 41 millones de líneas frente a 42 millones de Claro.",
+      "El informe presenta la integración Tigo–Movistar como una reorganización de gran escala, en fase de unificación (las dos marcas siguen operando, sin fecha anunciada de retiro de Movistar) y cerca de 41 millones de líneas frente a 42 millones de Claro.",
       "Claro enfrenta un competidor integrado y ETB participa en el frente de transformación y servicios tecnológicos."
     ],
     "priorizacion": [
       "La integración requiere arquitectura organizacional común, armonización cultural y cuidado de las personas durante la reorganización.",
       "Olivia puede aportar liderazgo y gestión del cambio; en otras operadoras, precisar la respuesta organizacional y las capacidades digitales necesarias."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.5 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.5 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
   "Salud": {
     "estado": [
       "El informe combina reorganización del sistema, traslados de usuarios y presión sobre redes privadas con daños de infraestructura en las regiones afectadas.",
-      "La versión v1.2 reporta entre 308 y 440 instituciones afectadas y 19 por reconstruir; las cifras dependen del corte y están sin verificar de forma independiente."
+      "La versión v1.4 reporta entre 308 y 440 instituciones afectadas, unos 400 establecimientos afectados en 14 de 16 departamentos y 19 por reconstruir; las cifras dependen del corte y están sin verificar de forma independiente."
     ],
     "priorizacion": [
       "Rediseñar capacidad asistencial, coordinación y turnos, con gestión del cambio y liderazgo clínico.",
       "Validar capacidad de pago y alcance por entidad antes de definir una intervención; la necesidad sectorial no equivale a demanda confirmada de cada prestador."
     ],
-    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.2, 25 de septiembre de 2026, §§2.5, 1.2 y 4.1. Lectura del informe; coyuntura sin verificar de forma independiente."
+    "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.5, 1.2 y 4.1. Lectura del informe; coyuntura sin verificar de forma independiente."
   }
 };
   // RADAR09: FIN CONTENIDO
@@ -2287,7 +2291,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         '<div class="ad-label">Relevancia para Olivia</div><div class="ad-just">' + esc(a.relevancia || 'Sin relevancia registrada.') + '</div>' +
         '<div class="ad-label">Necesidad y posibilidad de articulación con Olivia</div><div class="ad-just">' + esc(a.articulacion || 'Sin información de articulación registrada.') + '</div>' +
         (a.notaVerificacion ? '<p class="ad-note">' + esc(a.notaVerificacion) + '</p>' : '') +
-        '<p class="comp-src">Base: informe v1.2, sección 2 y prácticas de Olivia (§1.5). Articulación propuesta como hipótesis de trabajo.</p>' +
+        '<p class="comp-src">Base: informe v1.4, sección 2 y prácticas de Olivia (§1.5). Articulación propuesta como hipótesis de trabajo.</p>' +
         (Array.isArray(a.fuentes) ? '<div class="comp-src">' + a.fuentes.filter(function(f){ return f && /^https:\/\//.test(f.url); }).map(function(f){ return '<a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo || 'Fuente oficial') + '</a>'; }).join(' · ') + '</div>' : '');
     } else if(hasAliadoFicha){
       body = '<div class="ad-label">Qué es</div><div class="ad-just">' + esc(a.descripcion) + '</div>' +

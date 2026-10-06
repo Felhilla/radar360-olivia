@@ -13,7 +13,7 @@ const code=html.split('// ACTIVIDAD 3 TIERLIST: INICIO JS')[1].split('// ACTIVID
 const tick=()=>new Promise(r=>setImmediate(r));
 for(const [n,tamanos] of [[7,[2,2,3]],[8,[2,2,2,2]],[9,[2,2,2,3]],[2,[2]],[3,[3]],[4,[2,2]],[5,[2,3]]]){
  test(`Sorteo de ${n}: personas, cobertura, tamaños y reparto`,()=>{
-  assert.equal(actores.length,75);
+  assert.equal(actores.length,80);
   const s=sortear(n),gs=s.grupos;
   assert.deepEqual(gs.map(g=>g.integrantes.length),tamanos);
   assert.deepEqual(gs.flatMap(g=>g.integrantes).sort(),nombres(n).sort());
