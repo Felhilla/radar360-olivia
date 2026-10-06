@@ -163,7 +163,12 @@
   .entrada-msg{ min-height:1.4em; margin:12px 0 0 !important; color:var(--ink) !important; }
   /* Ejemplos de facilitador: se ven resaltados y no cuentan en los resultados del taller. */
   .ad-facilitador{ display:inline-block; margin:0 4px; padding:1px 8px; border-radius:999px; background:#FF971C; color:#13293D; font-size:.72rem; font-weight:700; line-height:1.5; letter-spacing:.02em; white-space:nowrap; vertical-align:middle; }
+  .ad-facilitador[hidden], .ejemplo-compartido[hidden], .nota-ejemplo[hidden]{ display:none; }
   .es-ejemplo{ outline:2px dashed #FF971C; outline-offset:2px; background:#FFF6EA !important; }
+  .ejemplo-compartido{ margin:12px 0; padding:12px 14px; border:2px dashed #FF971C; border-radius:12px; background:#FFF6EA; color:#13293D; font-size:.92rem; }
+  .ejemplo-compartido h3{ margin:0 0 6px; font-size:1rem; }
+  .ejemplo-compartido p{ margin:4px 0; white-space:pre-wrap; }
+  .ejemplo-compartido small{ color:#5C5C5C; }
   .nota-ejemplo{ margin:8px 0; padding:8px 12px; border-left:4px solid #FF971C; background:#FFF6EA; font-size:.88rem; color:#13293D; }
   .identidad{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:.84rem; color:var(--ink-soft); }
   .identidad strong{ color:var(--ink); }
@@ -919,6 +924,7 @@
   <h2>Construir rutas de acción</h2>
   <p>Actividad 5 · Trabajo grupal guiado por Germán y Julio. Para cada actor de la lista confirmada en la Actividad 4 (máximo 10), definan qué aporta Olivia, quién lo lleva, si es de venta inmediata o de posicionamiento, y las acciones para Q4-2026, Q1-2027 y el año 2027.</p>
   <p id="p5Estado" role="status" aria-live="polite">Abre esta actividad para cargar las rutas.</p>
+  <div class="ejemplo-compartido" data-ejemplo-compartido="a5" hidden></div>
   <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
   <nav id="p5Lista" class="p5-lista" aria-label="Actores de la lista confirmada"></nav>
   <div id="p5Editor"></div>
@@ -933,6 +939,7 @@
   <h2>Priorizar actores y mercados</h2>
   <p>Actividad 4 · Califica el impacto y el esfuerzo de los actores del Nivel 1 de la Actividad 3. Al final se confirma una lista de máximo 10 actores para la Actividad 5.</p>
   <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: tus calificaciones son ejemplos. Se ven solo en esta pantalla y no cuentan en la matriz, el corte ni la base del taller.</p>
+  <div class="ejemplo-compartido" data-ejemplo-compartido="a4" hidden></div>
   <p id="p4Provisional" class="p4-aviso" hidden><strong>Criterios provisionales</strong> · <span></span></p>
   <p id="p4Estado" role="status" aria-live="polite">Abre esta actividad para cargar las calificaciones.</p>
   <nav class="subviews" aria-label="Actividad 4">
@@ -1119,6 +1126,7 @@
   <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. Solo los del Nivel 1 pasan a la Actividad 4.</p>
   <p id="tlEstado" role="status" aria-live="polite"></p>
   <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: ves los tableros de los grupos sin modificarlos. Para mostrar un ejemplo elige «Ejemplo · Ad. Facilitador» en «Ver grupo»; ese tablero se ve solo en esta pantalla y no cuenta para el Nivel 1.</p>
+  <div class="ejemplo-compartido" data-ejemplo-compartido="a3" hidden></div>
   <div id="tlAdmin" hidden>
     <fieldset><legend>Participantes presentes</legend><div id="tlPresentes" class="tl-presentes"></div></fieldset>
     <button type="button" class="btn" id="tlSortear" disabled>Sortear parejas</button>
@@ -1277,6 +1285,58 @@
 <script>
 // Etiqueta de los ejemplos que registra un facilitador (viven solo en su navegador; ver api-supabase.js).
 window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" title="Ejemplo del facilitador: no se guarda en la base del taller ni cuenta en los resultados">Ad. Facilitador</span>'; };
+// EJEMPLOS COMPARTIDOS: registros que un facilitador dejó en la base como ejemplo ilustrativo (ruta /api/ejemplos).
+// Se muestran a todos, marcados «Ad. Facilitador», y no cuentan en ningún resultado del taller.
+(function(){
+  var cache = null, cargando = null;
+  function e(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function etiqueta(){ return window.etiquetaFacilitador ? window.etiquetaFacilitador() : 'Ad. Facilitador'; }
+  async function json(url){ var r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw Error(url); return r.json(); }
+  async function cargar(){
+    if(cache) return cache;
+    if(!cargando) cargando = Promise.all([json('/api/ejemplos'), json('data/actores.json'), json('priorizacion-criterios.json')])
+      .then(function(d){ cache = {ej:d[0], actores:d[1], cr:d[2]}; return cache; }).catch(function(){ cargando = null; return null; });
+    return cargando;
+  }
+  function nombre(c, id){ var a = c.actores.find(function(x){ return x.id === id; }); return a ? a.nombre : id; }
+  function indice(v, cr, eje){ return cr[eje].reduce(function(n, k){ return n + (v[eje] && v[eje][k.id] || 0) * k.peso; }, 0) / 100; }
+  function num(n){ return n.toFixed(2).replace('.', ','); }
+  function html(c, act){
+    var ej = c.ej, cab = '<h3>Ejemplo ilustrativo ' + etiqueta() + '</h3><small>Lo registró un facilitador para mostrar cómo se hace. No cuenta en los resultados del taller ni en el informe.</small>';
+    if(act === 'a3'){
+      if(!ej.tierlist.length) return '';
+      var pareja = ej.sorteo && ej.sorteo.grupos && ej.sorteo.grupos[0] ? '<p><strong>Pareja del ejemplo:</strong> ' + e(ej.sorteo.grupos[0].integrantes.join(' + ')) + '</p>' : '';
+      return cab + pareja + ej.tierlist.slice().sort(function(a, b){ return a.nivel - b.nivel; }).map(function(t){ return '<p><strong>Nivel ' + e(t.nivel) + ':</strong> ' + e(nombre(c, t.actorId)) + ' <small>· registrado por ' + e(t.editadoPor) + '</small></p>'; }).join('');
+    }
+    if(act === 'a4'){
+      if(!ej.votos.length) return '';
+      return cab + ej.votos.map(function(v){
+        var imp = indice(v, c.cr, 'impacto'), esf = indice(v, c.cr, 'esfuerzo');
+        var q = c.cr.cuadrantes.find(function(k){ return k.impacto === (imp >= c.cr.umbral ? 'alto' : 'bajo') && k.esfuerzo === (esf >= c.cr.umbral ? 'alto' : 'bajo'); });
+        return '<p><strong>' + e(nombre(c, v.actorId)) + ':</strong> índice de impacto ' + num(imp) + ' · índice de esfuerzo ' + num(esf) + (q ? ' · cuadrante «' + e(q.nombre) + '»' : '') + ' <small>· calificado por ' + e(v.votante) + '</small></p>';
+      }).join('');
+    }
+    if(act === 'a5'){
+      if(!ej.rutas.length || !window.Rutas) return '';
+      return cab + ej.rutas.map(function(r){
+        var ar = Object.entries(r.aristas || {}).filter(function(x){ return x[1] && x[1].activa; });
+        return '<p><strong>' + e(nombre(c, r.actorId)) + ' · ' + e(Rutas.etiquetaNombre(r.etiqueta)) + '</strong></p><p><strong>Responsable:</strong> ' + e(r.responsable) + '</p>' +
+          Rutas.CAMPOS.map(function(k){ return r[k[0]] ? '<p><strong>' + e(k[1]) + ':</strong> ' + e(r[k[0]]) + '</p>' : ''; }).join('') +
+          (ar.length ? '<p><strong>Aristas:</strong> ' + ar.map(function(x){ return e(Rutas.aristaNombre(x[0])) + (x[1].accion ? ' — ' + e(x[1].accion) : ''); }).join(' · ') + '</p>' : '') +
+          '<small>Registrado por ' + e(r.editadoPor) + '</small>';
+      }).join('<hr>');
+    }
+    return '';
+  }
+  async function pintar(){
+    var hosts = document.querySelectorAll('[data-ejemplo-compartido]');
+    if(!hosts.length || !window.Identidad) return;
+    var c = await cargar(); if(!c) return;
+    hosts.forEach(function(h){ var contenido = html(c, h.dataset.ejemploCompartido); h.innerHTML = contenido; h.hidden = !contenido; });
+  }
+  document.addEventListener('identidad:cambio', pintar);
+  window.addEventListener('hashchange', pintar);
+})();
 // ENTRADA: INICIO JS — filtro de entrada por lista de asistentes e informe PDF para administradores.
 // Es un filtro del lado del cliente para ordenar el taller, no un control de seguridad (docs/seguridad-revision.md).
 (function(){

@@ -80,6 +80,12 @@
     set: function(col, id, data){ var todo = leerEjemplos(); var rec = Object.assign({}, data, { facilitador: true }); (todo[col] = todo[col] || {})[id] = rec; escribirEjemplos(todo); return rec; },
     del: function(col, id){ var todo = leerEjemplos(); if(todo[col]) delete todo[col][id]; escribirEjemplos(todo); }
   };
+  // Ejemplos compartidos: registros de la base que un facilitador dejó como ejemplo ilustrativo (ejemploCompartido:true).
+  // Todos los ven en una tarjeta «Ad. Facilitador» (ruta /api/ejemplos), pero quedan fuera de las listas del taller,
+  // del Nivel 1, del corte, de la Actividad 5, de los CSV y del informe.
+  var EJEMPLO_SORTEO = 'ejemplo-facilitador';
+  async function delTaller(col){ return (await store.list(col)).filter(function(f){ return !(f && f.ejemploCompartido); }); }
+  async function ejemplosCompartidos(col){ return (await store.list(col)).filter(function(f){ return f && f.ejemploCompartido; }); }
   // Lista para mostrar: la base más, solo en la pantalla del facilitador, sus ejemplos.
   async function conEjemplos(col, filas){ return esFacilitador() ? filas.concat(ejemplos.list(col)) : filas; }
 
@@ -131,7 +137,7 @@
 
   async function nivel1Vigente(){
     const sorteo=await store.get('parejas','vigente');
-    const actores=TierList.nivel1(sorteo,await store.list('tierlist'));
+    const actores=TierList.nivel1(sorteo,await delTaller('tierlist'));
     return {sorteoId:sorteo?.id||null,actores};
   }
   // Lista que llega a la Actividad 5: la confirmada por el facilitador o, si no hay, la automática del corte.
@@ -208,7 +214,7 @@
       return responder(await store.set('parejas','vigente',rec));
     },
     'tierlist': async function(m,body,qs){
-      if(m==='GET'){const filas=await store.list('tierlist'),id=qs.get('sorteo');return responder((id===null?filas:filas.filter(f=>f.sorteoId===id)).concat(esFacilitador()?ejemplos.list('tierlist'):[]));}
+      if(m==='GET'){const filas=await delTaller('tierlist'),id=qs.get('sorteo');return responder((id===null?filas:filas.filter(f=>f.sorteoId===id)).concat(esFacilitador()?ejemplos.list('tierlist'):[]));}
       if(m!=='PUT')return responder({error:'method_not_allowed'},405);
       if(!body||!['sorteoId','grupoId','actorId','editadoPor'].every(k=>typeof body[k]==='string'&&body[k].trim()&&body[k].length<=300)||![null,1,2,3,4].includes(body.nivel))return responder({error:'Colocación no válida.'},400);
       if(esFacilitador()){
@@ -228,7 +234,7 @@
       if(actores&&!window.TierList.actoresDelGrupo(grupo,actores).some(a=>a.id===body.actorId))return responder({error:'El actor no pertenece a este grupo.'},400);
       const id=body.grupoId+':'+body.actorId;
       if(body.nivel===null){await store.del('tierlist',id);return responder({ok:true});}
-      const filas=(await store.list('tierlist')).filter(f=>f.sorteoId===body.sorteoId&&f.grupoId===body.grupoId);
+      const filas=(await delTaller('tierlist')).filter(f=>f.sorteoId===body.sorteoId&&f.grupoId===body.grupoId);
       const regla=window.TierList.puedeMover(filas,body.actorId,body.nivel);
       if(!regla.ok)return responder({error:regla.motivo},409);
       const rec={id,sorteoId:body.sorteoId,grupoId:body.grupoId,actorId:body.actorId,nivel:body.nivel,editadoPor:body.editadoPor.trim(),updatedAt:new Date().toISOString()};
@@ -443,12 +449,17 @@
       return responder(g, 201);
     },
     // Actividad 5: una ruta de acción por actor de la lista confirmada en la Actividad 4. Prevalece el último guardado.
+    'ejemplos': async function(m){
+      if(m!=='GET') return responder({error:'Método no permitido.'},405);
+      return responder({sorteo:await store.get('parejas',EJEMPLO_SORTEO),tierlist:await ejemplosCompartidos('tierlist'),
+        votos:await ejemplosCompartidos('priorizacion-votos'),rutas:await ejemplosCompartidos('rutas')});
+    },
     'lista-rutas': async function(m){
       if(m!=='GET') return responder({error:'Método no permitido.'},405);
       return responder(await listaActividad5());
     },
     'rutas': async function(m,body){
-      if(m==='GET') return responder(await conEjemplos('rutas',await store.list('rutas')));
+      if(m==='GET') return responder(await conEjemplos('rutas',await delTaller('rutas')));
       if(m!=='PUT') return responder({error:'Método no permitido.'},405);
       var lista=await listaActividad5();
       if(!lista.actorIds.length) return responder({error:'Todavía no hay actores en el Nivel 1 de la Actividad 3.'},409);
@@ -479,7 +490,7 @@
           cr[eje].every(function(c){ return Number.isInteger(v[c.id]) && v[c.id] >= 1 && v[c.id] <= 5; });
       }
       if(m === 'GET'){
-        var votos = await store.list('priorizacion-votos');
+        var votos = await delTaller('priorizacion-votos');
         if(params.get('resumen') !== '1') return responder(await conEjemplos('priorizacion-votos', votos));
         var nivel = new Set((await nivel1Vigente()).actores.map(a=>a.actorId));
         var actores = {}; (await store.list('actors')).filter(a=>nivel.has(a.id)).forEach(function(a){ actores[a.id] = a; });
