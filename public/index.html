@@ -846,6 +846,8 @@
 #view-matriz .tl-etiqueta{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8px 4px;color:var(--tl-tinta);background:var(--tl-color);}
 #view-matriz .tl-etiqueta h3{font-size:1.25rem;margin:0;}
 #view-matriz .tl-etiqueta small{font-size:.75rem;margin-top:6px;}
+#view-matriz .tl-cupo{display:block;line-height:1.2;margin-top:2px;}
+@media(max-width:700px){#view-matriz .tl-etiqueta small{font-size:.62rem;}}
 #view-matriz [data-tl-nivel="1"]{--tl-color:var(--tl-nivel-1);}
 #view-matriz [data-tl-nivel="1"] .tl-etiqueta{color:white;}
 #view-matriz [data-tl-nivel="2"]{--tl-color:var(--tl-nivel-2);}
@@ -1028,6 +1030,7 @@
     <h3>Corte final</h3>
     <div id="p4Confirmada"></div>
     <p id="p4CorteNota"></p>
+    <div id="p4FuturoCorte" class="p4-cuadrantes"></div>
     <p id="p4CorteEstado" role="status" aria-live="polite"></p>
     <div id="p4CorteAdmin" hidden>
       <button type="button" class="btn" id="p4Proponer">Proponer los 10 primeros</button>
@@ -1148,7 +1151,7 @@
 
 <section class="view" id="view-matriz">
   <h2>Tier list de actores</h2>
-  <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. Solo los del Nivel 1 pasan a la Actividad 4.</p>
+  <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. Solo los del Nivel 1 pasan a la Actividad 4. Por grupo: hasta 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales, y hasta 3 actores de los demás mercados, con cupos separados.</p>
   <p id="tlEstado" role="status" aria-live="polite"></p>
   <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: ves los tableros de los grupos sin modificarlos. Para mostrar un ejemplo elige «Ejemplo · Ad. Facilitador» en «Ver grupo»; ese tablero se ve solo en esta pantalla y no cuenta para el Nivel 1.</p>
   <div class="ejemplo-compartido" data-ejemplo-compartido="a3" hidden></div>
@@ -3132,7 +3135,13 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
             return heading+tarjeta(a,n);
           }).join('');
           const titulo=n?'Nivel '+n:'Sin clasificar';
-          return '<section class="'+(n?'tl-fila':'tl-bandeja')+'" data-tl-nivel="'+n+'" aria-label="'+titulo+'">'+(n?'<div class="tl-etiqueta"><h3>'+titulo+'</h3>'+(n===1?'<small>'+lista.filter(a=>nivelDe(a)===1).length+' de 3</small>':'')+'</div>':'<h3>'+titulo+'</h3>')+'<div class="tl-franja">'+(n===1?'<p id="tlLimite" role="status" aria-live="polite">'+(Date.now()<tlLimiteHasta?esc(tlLimiteMsg):'')+'</p>':'')+cards+'</div></section>';
+          const prioritario=a=>TierList.INDUSTRIAS_PRIORITARIAS.includes(a.industria);
+          const tienePrioritarios=lista.some(prioritario), tieneOtros=lista.some(a=>!prioritario(a));
+          const cuentaPrioritarios=lista.filter(a=>nivelDe(a)===1&&prioritario(a)).length+'/'+TierList.MAX_NIVEL_1_PRIORITARIO;
+          const cuentaOtros=lista.filter(a=>nivelDe(a)===1&&!prioritario(a)).length+'/'+TierList.MAX_NIVEL_1;
+          const cupo=(t,c)=>'<span class="tl-cupo">'+t+' <b>'+c+'</b></span>';
+          const cupos=tienePrioritarios&&tieneOtros?cupo('Prioritarios',cuentaPrioritarios)+cupo('Otros',cuentaOtros):tienePrioritarios?cupo('Máx.',cuentaPrioritarios):cupo('Máx.',cuentaOtros);
+          return '<section class="'+(n?'tl-fila':'tl-bandeja')+'" data-tl-nivel="'+n+'" aria-label="'+titulo+'">'+(n?'<div class="tl-etiqueta"><h3>'+titulo+'</h3>'+(n===1?'<small>'+cupos+'</small>':'')+'</div>':'<h3>'+titulo+'</h3>')+'<div class="tl-franja">'+(n===1?'<p id="tlLimite" role="status" aria-live="polite">'+(Date.now()<tlLimiteHasta?esc(tlLimiteMsg):'')+'</p>':'')+cards+'</div></section>';
         }).join('');
       }
       const elegidos=TierList.nivel1(sorteo,filas);
@@ -3170,7 +3179,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     function avisoLimite(t){tlLimiteMsg=t;tlLimiteHasta=Date.now()+6000;if($('tlLimite'))$('tlLimite').textContent=t;}
     async function mover(actorId,nivel){
       const g=grupo();if(ocupado||!g||!editable(g)||!identidad()||!TierList.actoresDelGrupo(g,actores).some(a=>a.id===actorId))return;
-      const regla=TierList.puedeMover(filas.filter(f=>f.grupoId===g.id),actorId,nivel);
+      const regla=TierList.puedeMover(filas.filter(f=>f.grupoId===g.id),actorId,nivel,actores);
       if(!regla.ok){avisoLimite(regla.motivo);return;}
       const anteriores=filas.slice(), body={sorteoId:sorteo?.id||'sin-sorteo',grupoId:g.id,actorId,nivel,editadoPor:identidad()};
       ocupado=true;revision++;filas=filas.filter(f=>!(f.grupoId===g.id&&f.actorId===actorId));if(nivel!==null)filas.push(body);render();aviso('Guardando cambio…');
@@ -3333,15 +3342,22 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       const r=resumen.find(r=>r.actorId===id);
       $('p4Detalle').textContent=r?textoDetalle(r):'Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';
     }
+    function interesFuturo(){
+      return ordenCorte().filter(r=>r.sinCalificar).map(r=>({...actores.find(a=>a.id===r.actorId),...r}));
+    }
+    function tarjetaFuturo(lista){
+      return '<article><h4>Interés futuro</h4><p>Sin calificaciones; no pasan automáticamente a la Actividad 5.</p>'+(lista.length?'<ul>'+lista.map(r=>'<li><button type="button" class="p4-enlace" data-ficha="'+esc(r.actorId)+'">'+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>No hay actores sin calificaciones.</p>')+'</article>';
+    }
+    function futurosVisibles(){return interesFuturo().filter(r=>visibles().some(a=>a.id===r.actorId)&&(!$('p4CategoriaMatriz').value||r.categoria===$('p4CategoriaMatriz').value));}
     function renderResultados(){
       if(!config) return;
       // En celular el SVG se ve a ~40 % de su tamaño: se agrandan textos y etiquetas y se omite la regla de cada cuadrante.
       const movil=!!(window.matchMedia&&window.matchMedia('(max-width:700px)').matches), zm=movil?2.1:1;
-      const datos=resultados(), firma=JSON.stringify([datos,orden,direccion,movil]);
+      const datos=resultados(), futuros=futurosVisibles(), firma=JSON.stringify([datos,futuros,orden,direccion,movil]);
       if(firma===firmaResultados) return;
       firmaResultados=firma;
       const ids=new Map(datos.map((r,i)=>[r.actorId,i+1]));
-      $('p4CSV').disabled=!datos.length;
+      $('p4CSV').disabled=!datos.length&&!futuros.length;
       const t=config.umbral, x=n=>80+(n-1)*190, y=n=>565-(n-1)*120;
       let svg='<title id="p4TituloGrafico">Impacto vertical, esfuerzo horizontal, escala de 1 a 5. Umbral '+t+'.</title>';
       const bloques=config.cuadrantes.map(q=>{
@@ -3374,6 +3390,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         const grupo=datos.filter(r=>r.cuadrante.id===q.id);
         return '<article><h4>'+esc(q.nombre)+'</h4><p>'+esc(q.regla)+'</p>'+(grupo.length?'<ul>'+grupo.map(r=>'<li><button class="p4-enlace" data-punto="'+esc(r.actorId)+'">'+ids.get(r.actorId)+'. '+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>Sin actores calificados.</p>')+'</article>';
       }).join('');
+      $('p4Cuadrantes').innerHTML+=tarjetaFuturo(futuros);
       const valor=(r,k)=>k==='cuadrante'?r.cuadrante.nombre:k==='categoria'?categorias[r.categoria]:r[k];
       const lista=datos.slice().sort((a,b)=>{const av=valor(a,orden),bv=valor(b,orden);return direccion*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'es'))||a.nombre.localeCompare(b.nombre,'es');});
       $('p4Cabecera').innerHTML=[['nombre','Actor'],['categoria','Categoría'],['indiceImpacto','Impacto'],['indiceEsfuerzo','Esfuerzo'],['cuadrante','Cuadrante'],['votos','Votos']].map(([k,n])=>'<th scope="col" aria-sort="'+(orden===k?(direccion===1?'ascending':'descending'):'none')+'"><button class="p4-enlace" data-orden="'+k+'">'+n+(orden===k?(direccion===1?' ↑':' ↓'):'')+'</button></th>').join('');
@@ -3410,8 +3427,9 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       $('p4CorteAdmin').hidden=!adminCorte()||!listo;$('p4AccionesTitulo').hidden=!adminCorte();
       if(!config)return;
       const ordenados=ordenCorte(),max=config.corte.maximo,ids=confirmada?.actorIds||[];
+      $('p4FuturoCorte').innerHTML=tarjetaFuturo(interesFuturo());
       const nombreActor=id=>actores.find(a=>a.id===id)?.nombre||id;
-      $('p4CorteNota').textContent=config.corte.nota+' Si el facilitador no confirma una lista, pasan automáticamente a la Actividad 5 los '+config.corte.maximo+' primeros de esta tabla, incluidos los que aún no tienen calificación.';
+      $('p4CorteNota').textContent=config.corte.nota+' Si el facilitador no confirma una lista, pasan automáticamente a la Actividad 5 hasta '+config.corte.maximo+' actores calificados en el orden de esta tabla. Los no calificados quedan como Interés futuro y no pasan automáticamente; el facilitador puede incluirlos manualmente.';
       $('p4Confirmada').hidden=!confirmada;
       $('p4Confirmada').innerHTML=confirmada?'<h4>Lista confirmada para la Actividad 5</h4><p>'+esc(confirmada.confirmadoPor)+' · '+esc(new Date(confirmada.confirmadoEn).toLocaleString('es-CO'))+'</p><ol>'+ids.map(id=>'<li>'+esc(nombreActor(id))+'</li>').join('')+'</ol>':'';
       const validacion=Corte.validarSeleccion(borrador,actores,config.corte);
@@ -3425,7 +3443,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       $('p4CorteFilas').innerHTML=ordenados.map((r,i)=>{
         const actor=actores.find(a=>a.id===r.actorId),lleno=borrador.length>=max;
         const agregar=borrador.includes(r.actorId)?'En el borrador':'<button type="button" class="btn secondary" data-corte="Agregar" data-id="'+esc(r.actorId)+'" '+(lleno||guardandoCorte?'disabled':'')+' '+(lleno?'title="La lista admite máximo 10 actores"':'')+'>Agregar</button>'+(lleno?'<small>La lista admite máximo 10 actores</small>':'');
-        return '<tr><td>'+(i+1)+'</td><td><button type="button" class="p4-ficha" data-ficha="'+esc(r.actorId)+'"><img src="'+esc(getLogo(actor))+'" alt="">'+esc(r.nombre)+'</button></td><td>'+esc(r.sinCalificar?'Sin calificar':r.cuadrante.nombre)+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceImpacto))+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceEsfuerzo))+'</td><td>'+r.votos+'</td><td>'+r.grupos+'</td><td>'+(ids.includes(r.actorId)?'Sí':'No')+'</td>'+(adminCorte()?'<td>'+agregar+'</td>':'')+'</tr>'+(i+1===max?linea:'');
+        return '<tr><td>'+(i+1)+'</td><td><button type="button" class="p4-ficha" data-ficha="'+esc(r.actorId)+'"><img src="'+esc(getLogo(actor))+'" alt="">'+esc(r.nombre)+'</button></td><td>'+esc(r.sinCalificar?'Interés futuro':r.cuadrante.nombre)+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceImpacto))+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceEsfuerzo))+'</td><td>'+r.votos+'</td><td>'+r.grupos+'</td><td>'+(ids.includes(r.actorId)?'Sí':'No')+'</td>'+(adminCorte()?'<td>'+agregar+'</td>':'')+'</tr>'+(i+1===max?linea:'');
       }).join('')+(ordenados.length<max?linea:'');
     }
     function editarCorte(e){
@@ -3466,7 +3484,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     $('p4Cancelar').onclick=()=>{accionPendiente=null;$('p4Confirmacion').hidden=true;};
     $('p4CorteCSV').onclick=()=>{
       if(!config)return;
-      const filas=[['Posición','Actor','Cuadrante','Índice de impacto','Índice de esfuerzo','Calificaciones','Grupos que lo eligieron','En la lista confirmada'],...ordenCorte().map((r,i)=>[i+1,r.nombre,r.sinCalificar?'Sin calificar':r.cuadrante.nombre,r.sinCalificar?'':r.indiceImpacto,r.sinCalificar?'':r.indiceEsfuerzo,r.votos,r.grupos,confirmada?.actorIds.includes(r.actorId)?'Sí':'No'])];
+      const filas=[['Posición','Actor','Cuadrante','Índice de impacto','Índice de esfuerzo','Calificaciones','Grupos que lo eligieron','En la lista confirmada'],...ordenCorte().map((r,i)=>[i+1,r.nombre,r.sinCalificar?'Interés futuro':r.cuadrante.nombre,r.sinCalificar?'':r.indiceImpacto,r.sinCalificar?'':r.indiceEsfuerzo,r.votos,r.grupos,confirmada?.actorIds.includes(r.actorId)?'Sí':'No'])];
       const url=URL.createObjectURL(new Blob([Embudo.csv(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
       a.href=url;a.download='corte_final.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     };
@@ -3477,6 +3495,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         filas.push(['resumen',...base,'','','','','','','']);
         votos.filter(v=>v.actorId===r.actorId&&!v.borrador&&!v.facilitador).forEach(v=>['impacto','esfuerzo'].forEach(eje=>config[eje].forEach(c=>filas.push(['detalle',...base,v.votante,eje,c.id,c.nombre,c.peso,v[eje][c.id],v.updatedAt]))));
       });
+      futurosVisibles().forEach(r=>filas.push(['resumen',r.actorId,r.nombre,r.categoria,r.sector,'','','','Interés futuro',0,'','','','','','','']));
       const celda=x=>{let s=String(x==null?'':x);if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
       const url=URL.createObjectURL(new Blob(['\ufeff'+filas.map(f=>f.map(celda).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}));
       const a=document.createElement('a');a.href=url;a.download='priorizacion_actores.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
@@ -3492,6 +3511,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     $('p4Cabecera').onclick=e=>{const b=e.target.closest('[data-orden]');if(b){direccion=orden===b.dataset.orden?-direccion:1;orden=b.dataset.orden;renderResultados();Array.from($('p4Cabecera').querySelectorAll('button')).find(el=>el.dataset.orden===orden).focus();}};
     ['p4SVG','p4Cuadrantes'].forEach(id=>['click','focusin','mouseover'].forEach(tipo=>$(id).addEventListener(tipo,e=>{const p=e.target.closest('[data-punto]');if(!p) return; if(tipo==='click') verActor(p.dataset.punto); else mostrarDetalle(p.dataset.punto);})));
     $('p4SVG').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const p=e.target.closest('[data-punto]');if(p){e.preventDefault();verActor(p.dataset.punto);}}});
+    ['p4Cuadrantes','p4FuturoCorte'].forEach(id=>$(id).onclick=e=>{const b=e.target.closest('[data-ficha]');if(b)window.abrirFichaActor?.(b.dataset.ficha);});
     $('p4CSV').onclick=descargar;
     $('view-priorizacion').addEventListener('vista:activar',()=>{
       // La navegación central emite el evento después de activar la vista.
@@ -3528,7 +3548,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
     function renderEditor(){
       const host=$('p5Editor');
-      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay actores en el Nivel 1 de la Actividad 3. En cuanto los grupos ubiquen actores en el Nivel 1, pasan aquí automáticamente (máximo 10, en el orden del corte de la Actividad 4).</p>';return;}
+      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay actores seleccionados para la Actividad 5. Pasan automáticamente los actores calificados de Nivel 1 (máximo 10, en el orden del corte de la Actividad 4). Los no calificados quedan como Interés futuro y el facilitador puede incluirlos manualmente.</p>';return;}
       if(!ids().includes(actual))actual=ids()[0];
       const a=actorInf(actual)||{id:actual,nombre:actual,tipo:'empresa'},d=dato(actual),des=guardando?' disabled':'';
       const sugerido=sugeridos.find(c=>c.actor_id===actual),registrados=contactos.filter(c=>c.actorId===actual);

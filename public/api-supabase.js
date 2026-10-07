@@ -152,7 +152,7 @@
       ordenados=Corte.ordenar(nivel.actores.map(a=>resumen.find(r=>r.actorId===a.actorId)||{actorId:a.actorId,nombre:nombre(a.actorId),votos:0}),cr.corte,grupos);
     }
     // Resultado del taller por actor, para explicar «por qué se priorizó» en la Actividad 5.
-    const detalles=Object.fromEntries(ordenados.map((r,i)=>[r.actorId,{posicion:i+1,grupos:r.grupos,cuadrante:r.sinCalificar?'':(r.cuadrante&&r.cuadrante.nombre)||'',calificaciones:r.votos||0}]));
+    const detalles=Object.fromEntries(ordenados.map((r,i)=>[r.actorId,{posicion:i+1,grupos:r.grupos,cuadrante:r.sinCalificar?'Interés futuro':(r.cuadrante&&r.cuadrante.nombre)||'',calificaciones:r.votos||0}]));
     if(sel&&Array.isArray(sel.actorIds)&&sel.actorIds.length) return {actorIds:sel.actorIds,origen:'confirmada',confirmadoPor:sel.confirmadoPor||'',confirmadoEn:sel.confirmadoEn||'',detalles};
     if(!ordenados.length) return {actorIds:[],origen:'vacia',detalles:{}};
     return {actorIds:Corte.automatica(ordenados,cr.corte).map(r=>r.actorId),origen:'automatica',detalles};
@@ -224,7 +224,7 @@
         if(catalogo&&!catalogo.some(a=>a.id===body.actorId))return responder({error:'El actor no está en el catálogo.'},400);
         const idEj=EJEMPLO_GRUPO+':'+body.actorId;
         if(body.nivel===null){ejemplos.del('tierlist',idEj);return responder({ok:true});}
-        const regla=window.TierList.puedeMover(ejemplos.list('tierlist'),body.actorId,body.nivel);
+        const regla=window.TierList.puedeMover(ejemplos.list('tierlist'),body.actorId,body.nivel,catalogo);
         if(!regla.ok)return responder({error:regla.motivo},409);
         return responder(ejemplos.set('tierlist',idEj,{id:idEj,sorteoId:body.sorteoId,grupoId:EJEMPLO_GRUPO,actorId:body.actorId,nivel:body.nivel,editadoPor:body.editadoPor.trim(),updatedAt:new Date().toISOString()}));
       }
@@ -235,7 +235,7 @@
       const id=body.grupoId+':'+body.actorId;
       if(body.nivel===null){await store.del('tierlist',id);return responder({ok:true});}
       const filas=(await delTaller('tierlist')).filter(f=>f.sorteoId===body.sorteoId&&f.grupoId===body.grupoId);
-      const regla=window.TierList.puedeMover(filas,body.actorId,body.nivel);
+      const regla=window.TierList.puedeMover(filas,body.actorId,body.nivel,actores);
       if(!regla.ok)return responder({error:regla.motivo},409);
       const rec={id,sorteoId:body.sorteoId,grupoId:body.grupoId,actorId:body.actorId,nivel:body.nivel,editadoPor:body.editadoPor.trim(),updatedAt:new Date().toISOString()};
       return responder(await store.set('tierlist',id,rec));

@@ -100,7 +100,7 @@ test('Vista: la Actividad 5 usa la lista confirmada y la colección rutas, no el
  assert.ok(html.indexOf('rutas.js')<html.indexOf('api-supabase.js'));
 });
 
-test('Paso automático: sin lista confirmada, pasan a la Actividad 5 los del Nivel 1 en el orden del corte (máx. 10), incluidos los sin calificar',async()=>{
+test('Paso automático: sin lista confirmada, pasan a la Actividad 5 los del Nivel 1 en el orden del corte (máx. 10), solo calificados',async()=>{
  const s=entorno();
  const ids=actores.filter(a=>a.tipo==='empresa').slice(0,12).map(a=>a.id);
  assert.deepEqual((await s.req('lista-rutas')).data,{actorIds:[],origen:'vacia',detalles:{}});
@@ -108,11 +108,11 @@ test('Paso automático: sin lista confirmada, pasan a la Actividad 5 los del Niv
  assert.equal((await s.req('priorizacion-votos','PUT',calificacion(ids[5],4,2))).status,200);
  await s.req('priorizacion-votos','PUT',calificacion(ids[7],5,4));
  const l=(await s.req('lista-rutas')).data;
- assert.equal(l.origen,'automatica');assert.equal(l.actorIds.length,10);
+ assert.equal(l.origen,'automatica');assert.equal(l.actorIds.length,2);
  assert.deepEqual(l.actorIds.slice(0,2),[ids[5],ids[7]]);
- // Se puede guardar la ruta de un actor de la lista automática aunque no esté calificado.
- const sinCalificar=l.actorIds[2];
- assert.equal((await s.req('rutas','PUT',completa({actorId:sinCalificar}))).status,200);
+ // Solo los calificados permiten guardar ruta automáticamente.
+ assert.equal((await s.req('rutas','PUT',completa({actorId:ids[5]}))).status,200);
+ assert.equal(l.detalles[ids[0]].cuadrante,'Interés futuro');
  // Un actor del Nivel 1 que quedó fuera del máximo no se acepta.
  const fuera=ids.find(id=>!l.actorIds.includes(id));
  assert.equal((await s.req('rutas','PUT',completa({actorId:fuera}))).status,400);
@@ -132,6 +132,15 @@ test('Tarjeta de contexto: «Qué hace», «Por qué se priorizó» con el resul
  assert.match(h,/<h4>Qué hace<\/h4>/);assert.match(h,/<h4>Por qué se priorizó<\/h4>/);
  assert.match(h,/En el taller: Elegido en el Nivel 1 por 2 grupos · cuadrante «Victorias tempranas» en la Actividad 4 · puesto 1 del corte\./);
  assert.ok(h.indexOf(empresa.necesidad.slice(0,40).replace(/[&<>"']/g,''))>0||h.includes('acaba de cambiar de presidente'));
- assert.match(Rutas.htmlContexto(empresa,{taller:{grupos:1,posicion:3}}),/aún sin calificar en la Actividad 4/);
+ assert.match(Rutas.htmlContexto(empresa,{taller:{grupos:1,posicion:3}}),/Interés futuro en la Actividad 4/);
  assert.doesNotMatch(Rutas.htmlContexto(empresa,{}),/En el taller/);
+});
+
+test('Interés futuro: sin votos no pasa automáticamente, pero admite selección manual y ruta',async()=>{
+ const s=entorno();s.actor(empresa.id);s.nivel1(empresa.id);
+ assert.deepEqual((await s.req('lista-rutas')).data.actorIds,[]);
+ assert.equal((await s.req('seleccion','PUT',{actorIds:[empresa.id],confirmadoPor:'Felipe Hillón'})).status,200);
+ const lista=(await s.req('lista-rutas')).data;
+ assert.equal(lista.origen,'confirmada');assert.deepEqual(lista.actorIds,[empresa.id]);assert.equal(lista.detalles[empresa.id].cuadrante,'Interés futuro');
+ assert.equal((await s.req('rutas','PUT',completa())).status,200);
 });

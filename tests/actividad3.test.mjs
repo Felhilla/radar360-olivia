@@ -53,7 +53,7 @@ test('Actores del grupo: gremios asociados sin duplicados y orden de industria/s
 test('Nivel 1: límite, permanencia, retiro y resumen por grupos sin duplicados',()=>{
  const s=sortear(8),g=s.grupos[0].id,h=s.grupos[1].id;
  const filas=['a','b','c'].map(actorId=>({sorteoId:s.id,grupoId:g,actorId,nivel:1}));
- assert.deepEqual(TierList.puedeMover(filas,'d',1),{ok:false,motivo:'El Nivel 1 admite máximo 3 actores por grupo'});
+ assert.deepEqual(TierList.puedeMover(filas,'d',1),{ok:false,motivo:'El Nivel 1 admite máximo 3 actores de los demás mercados'});
  for(const n of [null,2,3,4])assert(TierList.puedeMover(filas,'d',n).ok);
  assert(TierList.puedeMover(filas,'a',1).ok);assert(!TierList.puedeMover(filas,'a',5).ok);
  assert.deepEqual(TierList.nivel1(s,[...filas,filas[0],{...filas[0],grupoId:h},{...filas[0],grupoId:'otro',actorId:'x'},{...filas[0],sorteoId:'viejo',actorId:'y'}]),[{actorId:'a',grupos:[g,h]},{actorId:'b',grupos:[g]},{actorId:'c',grupos:[g]}]);
@@ -72,7 +72,7 @@ test('Ruta parejas: lectura, validación, inicio, reemplazo forzado y métodos',
 });
 test('Ruta tierlist: filas independientes, cuarto rechazado, retiro, pertenencia y filtro',async()=>{
  const s=entorno(),sorteo=sortear(8),g=sorteo.grupos[0];await s.req('parejas','PUT',sorteo);
- const lista=TierList.actoresDelGrupo(g,actores),body={sorteoId:sorteo.id,grupoId:g.id,editadoPor:'Ana',nivel:1};
+ const lista=TierList.actoresDelGrupo(g,actores).filter(a=>!TierList.INDUSTRIAS_PRIORITARIAS.includes(a.industria)),body={sorteoId:sorteo.id,grupoId:g.id,editadoPor:'Ana',nivel:1};
  const mover=(actorId,nivel=1,extra={})=>s.req('tierlist','PUT',{...body,actorId,nivel,...extra});
  for(const a of lista.slice(0,3))assert.equal((await mover(a.id)).status,200);
  assert.equal((await mover(lista[3].id)).status,409);
@@ -80,7 +80,7 @@ test('Ruta tierlist: filas independientes, cuarto rechazado, retiro, pertenencia
  assert.equal((await mover(lista[0].id,null)).status,200);
  assert.equal(s.bucket('tierlist').has(g.id+':'+lista[0].id),false);
  assert.equal((await mover(lista[3].id)).status,200);
- const ajeno=actores.find(a=>!lista.some(b=>a.id===b.id));assert.equal((await mover(ajeno.id,2)).status,400);
+ const ajeno=actores.find(a=>!TierList.actoresDelGrupo(g,actores).some(b=>a.id===b.id));assert.equal((await mover(ajeno.id,2)).status,400);
  assert.equal((await mover(lista[0].id,2,{grupoId:'ajeno'})).status,400);
  assert.equal((await mover(lista[0].id,2,{sorteoId:'viejo'})).status,400);
  assert.equal((await mover(lista[0].id,5)).status,400);
@@ -105,7 +105,7 @@ test('Vista: espera, sin grupo, inicio, identidad fija, movimientos, reversión,
  assert.match($('tlMiGrupo').innerHTML,/Espera a que el facilitador/);assert.equal($('tlAdmin').hidden,true);
  const sorteo=sortear(8);await s.req('parejas','PUT',sorteo);await v.cargar();
  assert.match($('tlMiGrupo').innerHTML,/todavía no inicia/);assert.match($('tlTablero').innerHTML,/disabled/);
- const g=TierList.grupoDe(sorteo,'Persona 1'),lista=TierList.actoresDelGrupo(g,actores);
+ const g=TierList.grupoDe(sorteo,'Persona 1'),lista=TierList.actoresDelGrupo(g,actores).filter(a=>!TierList.INDUSTRIAS_PRIORITARIAS.includes(a.industria));
  await v.mover(lista[0].id,1);assert.equal(s.bucket('tierlist').size,0);
  await s.req('parejas','PATCH',{iniciado:true});await v.cargar();
  assert.deepEqual([...$('tlTablero').innerHTML.matchAll(/data-tl-nivel="(\d)"/g)].map(m=>Number(m[1])),[1,2,3,4,0]);
@@ -135,7 +135,7 @@ test('Vista: arrastrar a fila y bandeja y sondeo del compañero',async()=>{
  await s.req('tierlist','PUT',{sorteoId:sorteo.id,grupoId:g.id,actorId:a.id,nivel:1,editadoPor:g.integrantes[1]});
  await v.intervalos.get(1)();
  assert.match($('tlResumen').innerHTML,new RegExp(a.nombre.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
- assert.match($('tlTablero').innerHTML,/<small>1 de 3<\/small>/);
+ assert.match($('tlTablero').innerHTML,/<small><span class="tl-cupo">Prioritarios <b>1\/5<\/b><\/span><span class="tl-cupo">Otros <b>0\/3<\/b><\/span><\/small>/);
 });
 test('Facilitador: ve los grupos sin modificarlos y su tablero de ejemplo no llega a la base ni al Nivel 1',async()=>{
  const s=entorno(),sorteo=sortear(8);sorteo.iniciado=true;await s.req('parejas','PUT',sorteo);
@@ -154,7 +154,7 @@ test('Facilitador: ve los grupos sin modificarlos y su tablero de ejemplo no lle
  const filas=(await s.req('tierlist?sorteo='+sorteo.id)).data;
  assert.equal(filas.length,1);assert.equal(filas[0].facilitador,true);assert.equal(filas[0].grupoId,'ejemplo-facilitador');
  assert.equal(TierList.nivel1(sorteo,filas).length,0);
- assert.match($('tlTablero').innerHTML,/<small>1 de 3<\/small>/);assert.match($('tlResumen').innerHTML,/Aún no hay actores en Nivel 1/);
+ assert.match($('tlTablero').innerHTML,/<small><span class="tl-cupo">Prioritarios <b>1\/5<\/b><\/span><span class="tl-cupo">Otros <b>0\/3<\/b><\/span><\/small>/);assert.match($('tlResumen').innerHTML,/Aún no hay actores en Nivel 1/);
 });
 test('Vista administrador: presentes desmarcados, confirmación interna, inicio y selección',async()=>{
  const s=entorno(),v=vista(s,{nombre:'Felipe Hillón',rol:'administrador'}),{$}=v;await v.cargar();
@@ -200,4 +200,39 @@ test('Salud y riesgos laborales: las tres altas conservan industria y entran en 
   assert(actor,id);assert.equal(actor.industria,'salud');assert.equal(actor.subindustria,null);
   assert.equal(actor.sector_radar,sector);assert(incluidos.has(id),id);
  }
+});
+
+test('Cupos separados: cinco prioritarios, tres otros, duplicados e industria desconocida',()=>{
+ assert.equal(TierList.MAX_NIVEL_1_PRIORITARIO,5);assert.equal(TierList.MAX_NIVEL_1,3);
+ assert.deepEqual(TierList.INDUSTRIAS_PRIORITARIAS,['energia','salud']);
+ const catalogo=[...['energia','energia','energia','salud','salud','salud'].map((industria,i)=>({id:'p'+i,industria,subindustria:['energia','servicios_publicos','recursos_naturales'][i%3]})),...Array.from({length:4},(_,i)=>({id:'o'+i,industria:'financiero'}))];
+ const filas=[];
+ for(const id of ['o0','o1','o2','p0','p1','p2','p3','p4']){
+  assert(TierList.puedeMover(filas,id,1,catalogo).ok);filas.push({actorId:id,nivel:1});
+ }
+ assert.equal(TierList.puedeMover(filas,'p5',1,catalogo).motivo,'El Nivel 1 admite máximo 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales');
+ for(const id of ['o3','desconocido'])assert.equal(TierList.puedeMover(filas,id,1,catalogo).motivo,'El Nivel 1 admite máximo 3 actores de los demás mercados');
+ for(const id of ['p0','o0'])assert(TierList.puedeMover([...filas,filas[0]],id,1,catalogo).ok);
+ for(const n of [null,2,3,4])assert(TierList.puedeMover(filas,'p5',n,catalogo).ok);
+ assert(TierList.puedeMover(filas.filter(f=>f.actorId!=='p0'),'p5',1,catalogo).ok);
+ assert(TierList.puedeMover(filas.filter(f=>f.actorId!=='o0'),'desconocido',1,catalogo).ok);
+});
+for(const ejemplo of [false,true])test('Adaptador y vista: cupos 5 + 3 '+(ejemplo?'en ejemplo':'en grupo'),async()=>{
+ const s=entorno(),sorteo=sortear(2);sorteo.iniciado=true;await s.req('parejas','PUT',sorteo);
+ const v=vista(s,ejemplo?{nombre:'Felipe Hillón',rol:'administrador'}:{nombre:sorteo.grupos[0].integrantes[0],rol:'participante'});await v.cargar();
+ if(ejemplo)v.$('tlGrupo').handlers.change({target:{value:'ejemplo-facilitador'}});
+ const prioritarios=actores.filter(a=>TierList.INDUSTRIAS_PRIORITARIAS.includes(a.industria)).slice(0,6),otros=actores.filter(a=>!TierList.INDUSTRIAS_PRIORITARIAS.includes(a.industria)).slice(0,4);
+ for(const a of [...prioritarios.slice(0,5),...otros.slice(0,3)])await v.mover(a.id,1);
+ assert.match(v.$('tlTablero').innerHTML,/<small><span class="tl-cupo">Prioritarios <b>5\/5<\/b><\/span><span class="tl-cupo">Otros <b>3\/3<\/b><\/span><\/small>/);
+ for(const [a,max] of [[prioritarios[5],5],[otros[3],3]]){
+  await v.mover(a.id,1);assert.match(v.$('tlLimite').textContent,new RegExp('máximo '+max));
+  const r=await s.req('tierlist','PUT',{sorteoId:sorteo.id,grupoId:ejemplo?'ejemplo-facilitador':sorteo.grupos[0].id,actorId:a.id,nivel:1,editadoPor:'Ana'});
+  assert.equal(r.status,409);assert.match(r.data.error,new RegExp('máximo '+max));
+ }
+ assert.equal(s.bucket('tierlist').size,ejemplo?0:8);
+});
+for(const [industria,contador] of [['salud','0/5'],['telecom','0/3']])test('Vista: contador único para '+industria,async()=>{
+ const s=entorno();s.bucket('parejas').set('vigente',{id:'solo',iniciado:true,grupos:[{id:'g',integrantes:['Ana'],industrias:[industria]}]});
+ const v=vista(s,{nombre:'Ana',rol:'participante'});await v.cargar();
+ assert(v.$('tlTablero').innerHTML.includes('<small><span class="tl-cupo">Máx. <b>'+contador+'</b></span></small>'));
 });

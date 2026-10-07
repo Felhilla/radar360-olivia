@@ -11,9 +11,8 @@
       a.nombre.localeCompare(b.nombre,'es'));
   }
   function propuesta(ordenados,corte){return ordenados.filter(r=>!r.sinCalificar&&r.votos>0).slice(0,corte.maximo);}
-  // Paso automático a la Actividad 5 cuando no hay lista confirmada: los primeros del orden, incluidos los
-  // aún sin calificar (van al final), hasta el máximo.
-  function automatica(ordenados,corte){return ordenados.slice(0,corte.maximo);}
+  // Interés futuro queda disponible para selección manual, fuera del paso automático.
+  function automatica(ordenados,corte){return propuesta(ordenados,corte);}
   function validarSeleccion(actorIds,universo,corte){
     if(!Array.isArray(actorIds))return {ok:false,motivo:'La selección debe ser una lista de actores.'};
     if(actorIds.length>corte.maximo)return {ok:false,motivo:'La lista admite máximo '+corte.maximo+' actores'};

@@ -75,7 +75,7 @@ test('Vista: sin universo oculta formulario; grupos, ficha, participantes y sond
  const s=entorno(),v=vista(s,'participante'),{$}=v;
  await v.cargar();assert.match($('p4Actores').innerHTML,/Todavía no hay actores en el Nivel 1 de la Actividad 3\./);assert.equal($('p4Editor').hidden,true);
  s.actor('a');s.nivel1('a');s.bucket('parejas').get('vigente').grupos.push({id:'g2'});s.bucket('tierlist').set('g2',{actorId:'a',sorteoId:'actual',grupoId:'g2',nivel:1});
- await v.cargar();assert.match($('p4Actores').innerHTML,/Elegido por 2 grupos/);assert.equal($('p4Editor').hidden,false);assert.match($('p4CorteFilas').innerHTML,/Sin calificar/);
+ await v.cargar();assert.match($('p4Actores').innerHTML,/Elegido por 2 grupos/);assert.equal($('p4Editor').hidden,false);assert.match($('p4CorteFilas').innerHTML,/Interés futuro/);
  assert.equal($('p4CorteAdmin').hidden,true);assert(!$('p4CorteFilas').innerHTML.includes('>Agregar<'));
  $('p4Proponer').onclick();$('p4Confirmar').onclick();await tick();assert.equal(s.bucket('seleccion').size,0);
  let ficha;s.context.window.abrirFichaActor=id=>ficha=id;
@@ -234,4 +234,33 @@ test("Criterios originales: todas las claves conservan sus valores",()=>{
   }
 };
  const {corte,...actual}=criterios;assert.deepEqual(actual,anterior);assert.equal(corte.maximo,10);
+});
+
+for(const n of [0,2,12])test('Corte automático excluye Interés futuro y respeta máximo con '+n+' calificados',()=>{
+ const calificados=Array.from({length:n},(_,i)=>({actorId:'c'+i,votos:1,sinCalificar:false}));
+ const futuro={actorId:'f',votos:0,sinCalificar:true};
+ assert.deepEqual(Corte.automatica([futuro,...calificados],corte),calificados.slice(0,corte.maximo));
+ assert(Corte.validarSeleccion(['f'],[futuro,...calificados],corte).ok);
+});
+test('Interés futuro: tarjetas, fichas, filtros y CSV de matriz y corte',async()=>{
+ const s=universo(2);s.actor('g','aliados',{nombre:'Gremio futuro'});s.nivel1('g');
+ await s.req('priorizacion-votos','PUT',calificacion('a1'));
+ const v=vista(s),{$}=v;await v.cargar();
+ for(const id of ['p4Cuadrantes','p4FuturoCorte']){
+  assert.match($(id).innerHTML,/<h4>Interés futuro<\/h4>/);assert.match($(id).innerHTML,/data-ficha="a2"/);assert.match($(id).innerHTML,/data-ficha="g"/);assert.doesNotMatch($(id).innerHTML,/data-ficha="a1"/);
+  let ficha;s.context.window.abrirFichaActor=id=>ficha=id;
+  $(id).onclick({target:{closest:()=>({dataset:{ficha:'a2'}})}});assert.equal(ficha,'a2');
+ }
+ assert.match($('p4CorteNota').textContent,/no pasan automáticamente/);
+ let blob;const FakeURL=class extends URL{};FakeURL.createObjectURL=b=>{blob=b;return 'blob:local';};FakeURL.revokeObjectURL=()=>{};s.context.URL=FakeURL;s.context.Blob=Blob;s.context.document.body={appendChild(){}};$('new').click=()=>{};$('new').remove=()=>{};
+ $('p4CSV').onclick();let csv=await blob.text();assert.match(csv,/"a2";"Actor 02";.*"Interés futuro";"0"/);assert.match(csv,/Gremio futuro/);
+ $('p4CorteCSV').onclick();assert.match(await blob.text(),/"Actor 02";"Interés futuro"/);
+ $('p4CategoriaMatriz').value='mercados';$('p4CategoriaMatriz').onchange();
+ assert.doesNotMatch($('p4Cuadrantes').innerHTML,/Gremio futuro/);assert.match($('p4FuturoCorte').innerHTML,/Gremio futuro/);
+ $('p4CSV').onclick();assert.doesNotMatch(await blob.text(),/Gremio futuro/);
+ // Sin calificados todavía se puede exportar, y el sondeo actualiza nuevos actores futuros.
+ s.bucket('priorizacion-votos').clear();await v.cargar();
+ assert.equal($('p4CSV').disabled,false);assert.match($('p4Cuadrantes').innerHTML,/data-ficha="a1"/);
+ s.actor('nuevo','mercados',{nombre:'Nuevo futuro'});s.nivel1('nuevo');await v.cargar();assert.match($('p4Cuadrantes').innerHTML,/Nuevo futuro/);
+ $('p4CSV').onclick();assert.match(await blob.text(),/Nuevo futuro/);
 });

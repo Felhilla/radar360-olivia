@@ -248,7 +248,7 @@
     {
       "numero": 3,
       "nombre": "Tier list de actores",
-      "proposito": "Ordenar en parejas sorteadas los actores de cada industria en cuatro niveles y seleccionar hasta tres para la Actividad 4.",
+      "proposito": "Ordenar en parejas sorteadas los actores de cada industria en cuatro niveles y seleccionar para la Actividad 4 hasta 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales y, aparte, hasta 3 de los demás mercados por grupo.",
       "vista": "matriz"
     },
     {

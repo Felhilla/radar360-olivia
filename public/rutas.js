@@ -70,7 +70,7 @@
     const bloque = (titulo, valor, extra) => '<div class="p5-ctx-bloque"><h4>'+esc(titulo)+'</h4><p class="'+(vacio(valor)?'p5-ctx-vacio':'')+'">'+esc(valor || 'No explícito en el informe')+(extra?' <span class="p5-ctx-nota">'+esc(extra)+'</span>':'')+'</p></div>';
     const necesidad = actor.tipo==='gremio' ? ({E:'(necesidad explícita del gremio)',A:'(necesidad de sus afiliadas)'}[actor.necesidad_tipo] || '') : '';
     const t = o.taller || {};
-    const enTaller = [t.grupos ? 'Elegido en el Nivel 1 por '+t.grupos+(t.grupos===1?' grupo':' grupos') : '', t.cuadrante ? 'cuadrante «'+t.cuadrante+'» en la Actividad 4' : (t.grupos ? 'aún sin calificar en la Actividad 4' : ''), t.posicion ? 'puesto '+t.posicion+' del corte' : ''].filter(Boolean).join(' · ');
+    const enTaller = [t.grupos ? 'Elegido en el Nivel 1 por '+t.grupos+(t.grupos===1?' grupo':' grupos') : '', t.cuadrante ? 'cuadrante «'+t.cuadrante+'» en la Actividad 4' : (t.grupos ? 'Interés futuro en la Actividad 4' : ''), t.posicion ? 'puesto '+t.posicion+' del corte' : ''].filter(Boolean).join(' · ');
     let h = bloque('Qué hace', actor.que_hace) +
       '<div class="p5-ctx-bloque"><h4>Por qué se priorizó</h4><p class="'+(vacio(actor.por_que)?'p5-ctx-vacio':'')+'">'+esc(actor.por_que || 'No explícito en el informe')+'</p>'+(enTaller?'<p class="p5-ctx-nota">En el taller: '+esc(enTaller)+'.</p>':'')+'</div>' +
       bloque('Necesidad o dolor', actor.necesidad || actor.dolor, necesidad) + bloque('Ruta sugerida', actor.ruta_sugerida);

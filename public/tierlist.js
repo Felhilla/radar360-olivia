@@ -6,7 +6,8 @@
     ['retail','Retail, consumo masivo y comercio'],['industrial','Industrial, manufactura y construcción'],
     ['telecom','Telecomunicaciones'],['salud','Salud y Gestión de riesgos laborales'],['gremios_publico','Gremios y sector público']
   ].map(([id,nombre])=>Object.freeze({id,nombre}));
-  const ids=INDUSTRIAS.map(i=>i.id), MAX_NIVEL_1=3;
+  const ids=INDUSTRIAS.map(i=>i.id), MAX_NIVEL_1=3, MAX_NIVEL_1_PRIORITARIO=5;
+  const INDUSTRIAS_PRIORITARIAS=Object.freeze(['energia','salud']);
   const normalizar=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
   function barajar(lista,rng){
     const out=lista.slice();
@@ -56,10 +57,13 @@
   }
   function grupoDe(sorteo,nombre){return sorteo?.grupos.find(g=>g.integrantes.some(n=>normalizar(n)===normalizar(nombre)))||null;}
   // colocaciones es la lista de filas de UN grupo.
-  function puedeMover(colocaciones,actorId,nivel){
+  function puedeMover(colocaciones,actorId,nivel,actores=[]){
     if(![null,1,2,3,4].includes(nivel)) return {ok:false,motivo:'Nivel no válido'};
-    if(nivel===1&&new Set(colocaciones.filter(c=>c.nivel===1&&c.actorId!==actorId).map(c=>c.actorId)).size>=MAX_NIVEL_1)
-      return {ok:false,motivo:'El Nivel 1 admite máximo 3 actores por grupo'};
+    const industrias=new Map((actores||[]).map(a=>[a.id,a.industria]));
+    const prioritario=id=>INDUSTRIAS_PRIORITARIAS.includes(industrias.get(id));
+    const esPrioritario=prioritario(actorId), max=esPrioritario?MAX_NIVEL_1_PRIORITARIO:MAX_NIVEL_1;
+    if(nivel===1&&new Set(colocaciones.filter(c=>c.nivel===1&&c.actorId!==actorId&&prioritario(c.actorId)===esPrioritario).map(c=>c.actorId)).size>=max)
+      return {ok:false,motivo:esPrioritario?'El Nivel 1 admite máximo 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales':'El Nivel 1 admite máximo 3 actores de los demás mercados'};
     return {ok:true,motivo:''};
   }
   function nivel1(sorteo,colocaciones){
@@ -69,6 +73,6 @@
     });
     return [...out].map(([actorId,gs])=>({actorId,grupos:[...gs]}));
   }
-  const api={INDUSTRIAS:Object.freeze(INDUSTRIAS),MAX_NIVEL_1,formarGrupos,repartirIndustrias,sortear,actoresDelGrupo,grupoDe,puedeMover,nivel1};
+  const api={INDUSTRIAS:Object.freeze(INDUSTRIAS),MAX_NIVEL_1,MAX_NIVEL_1_PRIORITARIO,INDUSTRIAS_PRIORITARIAS,formarGrupos,repartirIndustrias,sortear,actoresDelGrupo,grupoDe,puedeMover,nivel1};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.TierList=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
