@@ -3599,7 +3599,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('data/actores.json'),leer('/api/lista-rutas'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
         if(v!==version)return;
         actoresInf=inf;seleccion=sel;rutas=rs;sugeridos=sg;contactos=cs;
-        responsables=cfg?[...(cfg.participantes||[])]:responsables;facilitadores=cfg?[...(cfg.administradores||[])]:facilitadores; // Los facilitadores no son elegibles como responsables.
+        responsables=cfg?(cfg.participantes||[]).filter(n=>!(cfg.noResponsables||[]).includes(n)):responsables;facilitadores=cfg?[...(cfg.administradores||[])]:facilitadores; // Los facilitadores no son elegibles como responsables.
         render(false);
         mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+(seleccion&&seleccion.origen==='confirmada'?' · Lista confirmada por '+(seleccion.confirmadoPor||'el facilitador'):seleccion&&seleccion.origen==='automatica'?' · Lista automática: los primeros '+ids().length+' del corte de la Actividad 4':'')+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
       }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los cambios sin guardar.');}

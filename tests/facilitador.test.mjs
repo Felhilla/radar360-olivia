@@ -1,3 +1,4 @@
+import {readFileSync} from 'node:fs';
 // Ejemplos de facilitador: lo que registran Julio, Germán y Felipe se ve solo en su pantalla, con la etiqueta
 // «Ad. Facilitador», y nunca llega a Supabase ni a los resultados del taller (corte, Actividad 5, CSV, informe).
 import {test} from 'node:test';
@@ -19,7 +20,10 @@ test('Responsables: los facilitadores no son elegibles, ni escritos a mano',()=>
  for(const nombre of ['Luis Felipe Barrientos','Diego Espejo','Julio César Pérez'])assert.equal(Rutas.validar(ruta({responsable:nombre}),[empresa.id],f).ok,true,nombre);
  assert(!asistentes.participantes.some(n=>asistentes.administradores.includes(n)));
  const html=read('../public/index.html');
- assert.match(html,/responsables=cfg\?\[\.\.\.\(cfg\.participantes\|\|\[\]\)\]:responsables;/);
+ assert.match(html,/responsables=cfg\?\(cfg\.participantes\|\|\[\]\)\.filter\(n=>!\(cfg\.noResponsables\|\|\[\]\)\.includes\(n\)\):responsables;/);
+ const cfgA=JSON.parse(readFileSync(new URL('../public/asistentes-config.json',import.meta.url),'utf8'));
+ assert.deepEqual(cfgA.noResponsables,['Luis Felipe Barrientos','Hernan Tello']);
+ assert(cfgA.noResponsables.every(n=>cfgA.participantes.includes(n)),'siguen pudiendo entrar al sitio');
 });
 
 test('Ideas y contactos del facilitador: etiquetados, visibles solo para él y fuera de la base',async()=>{
