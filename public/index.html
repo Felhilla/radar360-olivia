@@ -726,6 +726,16 @@
 #view-priorizacion .p4-actor[aria-pressed="true"]{ border:2px solid var(--accent); background:var(--accent-soft); }
 #view-priorizacion .p4-actor img{ width:36px; height:36px; object-fit:contain; background:var(--logo-bg); border-radius:6px; }
 #view-priorizacion .p4-actor small{ display:block; color:var(--ink-soft); }
+#view-priorizacion .p4-mercado{ margin:12px 0 6px; font-size:.9rem; padding-bottom:4px; border-bottom:1px dashed var(--line); }
+#view-priorizacion .p4-mercado:first-child{ margin-top:0; }
+#view-priorizacion .p4-mercado small{ font-weight:400; color:var(--ink-soft); }
+#view-priorizacion .p4-mercado-prio{ color:var(--accent); border-bottom-color:var(--accent); }
+#view-priorizacion .p4-mercados{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; margin:8px 0 16px; }
+#view-priorizacion .p4-mercados article{ padding:12px; background:var(--panel); border:1px solid var(--line); border-radius:8px; min-width:0; overflow-wrap:anywhere; }
+#view-priorizacion .p4-mercados ul{ margin:0; padding:0; list-style:none; display:grid; gap:6px; }
+#view-priorizacion .p4-mercados .p4-enlace{ padding:0; }
+#view-priorizacion .p4-por-mercado{ margin-top:16px; }
+#view-priorizacion .p4-mercado-q{ display:block; font-size:.78rem; color:var(--ink-soft); }
 #view-priorizacion #p4Editor{ border:1px solid var(--line); background:var(--panel); border-radius:12px; padding:16px; min-width:0; overflow-wrap:anywhere; }
 #view-priorizacion .p4-ejes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 18px; align-items:stretch; }
 #view-priorizacion .p4-eje-cab h4{ margin:0; }
@@ -996,6 +1006,7 @@
     <p id="p4Leyenda"></p>
     <p class="hint">Cada número identifica un actor en las listas y la tabla. Pasa el cursor o enfoca con Tab un punto para ver su detalle; haz clic o tócalo para abrir la ficha del actor. Si coinciden, usa la lista de puntos. En celular, toca un número para abrir la ficha del actor.</p>
     <div class="p4-grafico" tabindex="0" role="region" aria-label="Gráfico desplazable Impacto–Esfuerzo"><svg id="p4SVG" viewBox="0 0 900 650" aria-labelledby="p4TituloGrafico" role="group"></svg></div>
+    <div id="p4PorMercado" class="p4-por-mercado"></div>
     <p id="p4Detalle" class="p4-detalle" aria-live="polite">Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.</p>
     <div id="p4Cuadrantes" class="p4-cuadrantes"></div>
     <div class="p4-tabla" tabindex="0" role="region" aria-label="Tabla de resultados desplazable">
@@ -3260,7 +3271,13 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     const numero = n => n.toLocaleString('es-CO',{minimumFractionDigits:2,maximumFractionDigits:2});
     const mensaje = t => { $('p4Estado').textContent = t; };
     const visibles = () => actores;
-    const filtrados = () => visibles().filter(a => (!$('p4Categoria').value || a.categoria === $('p4Categoria').value) && (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes($('p4Buscar').value.trim().toLocaleLowerCase('es'))).sort((a,b)=>a.nombre.localeCompare(b.nombre,'es'));
+    // Solo presentación: agrupa por mercado (priorizados primero). No cambia la calificación ni el corte.
+    const MERCADOS_PRIORIZADOS=['Energía','Servicios públicos','Minero','Salud y Gestión de riesgos laborales'];
+    const mercadoDe = a => a.categoria==='mercados' ? (a.sector||'Otros mercados') : (categorias[a.categoria]||a.categoria);
+    const rangoMercado = m => { const i=MERCADOS_PRIORIZADOS.indexOf(m); return i<0 ? MERCADOS_PRIORIZADOS.length : i; };
+    const porMercado = (a,b) => rangoMercado(mercadoDe(a))-rangoMercado(mercadoDe(b)) || mercadoDe(a).localeCompare(mercadoDe(b),'es') || a.nombre.localeCompare(b.nombre,'es');
+    const cabeceraMercado = (m,n) => '<h4 class="p4-mercado'+(MERCADOS_PRIORIZADOS.includes(m)?' p4-mercado-prio':'')+'">'+esc(m)+' <small>'+n+(n===1?' cuenta':' cuentas')+(MERCADOS_PRIORIZADOS.includes(m)?' · mercado priorizado':'')+'</small></h4>';
+    const filtrados = () => visibles().filter(a => (!$('p4Categoria').value || a.categoria === $('p4Categoria').value) && (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes($('p4Buscar').value.trim().toLocaleLowerCase('es'))).sort(porMercado);
     const resultados = () => resumen.filter(r => visibles().some(a=>a.id===r.actorId) && (!$('p4CategoriaMatriz').value || r.categoria===$('p4CategoriaMatriz').value));
     async function leer(url, opciones){
       const r = await fetch(url, Object.assign({cache:'no-store'},opciones));
@@ -3272,7 +3289,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       const lista = filtrados(), todos = visibles();
       $('p4Editor').hidden=!todos.length;
       $('p4Avance').textContent = 'Has calificado '+todos.filter(a=>mio(a.id)).length+' de '+todos.length+' · '+lista.length+' en este filtro.';
-      const html = lista.map(a=>'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+(gruposPorActor[a.id].length===1?' grupo':' grupos')+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores en el Nivel 1 de la Actividad 3.</p>');
+      const html = lista.map((a,i)=>(i===0||mercadoDe(lista[i-1])!==mercadoDe(a)?cabeceraMercado(mercadoDe(a),lista.filter(x=>mercadoDe(x)===mercadoDe(a)).length):'')+'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+(gruposPorActor[a.id].length===1?' grupo':' grupos')+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores en el Nivel 1 de la Actividad 3.</p>');
       if(html !== firmaLista){ $('p4Actores').innerHTML=html; firmaLista=html; }
     }
     function renderEditor(enfocar){
@@ -3391,6 +3408,9 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         return '<article><h4>'+esc(q.nombre)+'</h4><p>'+esc(q.regla)+'</p>'+(grupo.length?'<ul>'+grupo.map(r=>'<li><button class="p4-enlace" data-punto="'+esc(r.actorId)+'">'+ids.get(r.actorId)+'. '+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>Sin actores calificados.</p>')+'</article>';
       }).join('');
       $('p4Cuadrantes').innerHTML+=tarjetaFuturo(futuros);
+      const enMatriz=visibles().filter(a=>!$('p4CategoriaMatriz').value||a.categoria===$('p4CategoriaMatriz').value).slice().sort(porMercado), grupos=[];
+      enMatriz.forEach(a=>{const m=mercadoDe(a);let g=grupos.find(x=>x.m===m);if(!g){g={m,actores:[]};grupos.push(g);}g.actores.push(a);});
+      $('p4PorMercado').innerHTML=grupos.length?'<h3>Por mercado</h3><p class="hint">Cuentas del Nivel 1 agrupadas por mercado y el cuadrante en el que quedó cada una. Priorizar una abre camino hacia las demás del mismo mercado.</p><div class="p4-mercados">'+grupos.map(g=>'<article>'+cabeceraMercado(g.m,g.actores.length)+'<ul>'+g.actores.map(a=>{const r=datos.find(d=>d.actorId===a.id);return '<li><button type="button" class="p4-enlace" data-ficha="'+esc(a.id)+'">'+esc(a.nombre)+'</button> <span class="p4-mercado-q">'+esc(r?r.cuadrante.nombre:'Interés futuro')+'</span></li>';}).join('')+'</ul></article>').join('')+'</div>':'';
       const valor=(r,k)=>k==='cuadrante'?r.cuadrante.nombre:k==='categoria'?categorias[r.categoria]:r[k];
       const lista=datos.slice().sort((a,b)=>{const av=valor(a,orden),bv=valor(b,orden);return direccion*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'es'))||a.nombre.localeCompare(b.nombre,'es');});
       $('p4Cabecera').innerHTML=[['nombre','Actor'],['categoria','Categoría'],['indiceImpacto','Impacto'],['indiceEsfuerzo','Esfuerzo'],['cuadrante','Cuadrante'],['votos','Votos']].map(([k,n])=>'<th scope="col" aria-sort="'+(orden===k?(direccion===1?'ascending':'descending'):'none')+'"><button class="p4-enlace" data-orden="'+k+'">'+n+(orden===k?(direccion===1?' ↑':' ↓'):'')+'</button></th>').join('');
@@ -3511,7 +3531,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     $('p4Cabecera').onclick=e=>{const b=e.target.closest('[data-orden]');if(b){direccion=orden===b.dataset.orden?-direccion:1;orden=b.dataset.orden;renderResultados();Array.from($('p4Cabecera').querySelectorAll('button')).find(el=>el.dataset.orden===orden).focus();}};
     ['p4SVG','p4Cuadrantes'].forEach(id=>['click','focusin','mouseover'].forEach(tipo=>$(id).addEventListener(tipo,e=>{const p=e.target.closest('[data-punto]');if(!p) return; if(tipo==='click') verActor(p.dataset.punto); else mostrarDetalle(p.dataset.punto);})));
     $('p4SVG').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const p=e.target.closest('[data-punto]');if(p){e.preventDefault();verActor(p.dataset.punto);}}});
-    ['p4Cuadrantes','p4FuturoCorte'].forEach(id=>$(id).onclick=e=>{const b=e.target.closest('[data-ficha]');if(b)window.abrirFichaActor?.(b.dataset.ficha);});
+    ['p4Cuadrantes','p4FuturoCorte','p4PorMercado'].forEach(id=>$(id).onclick=e=>{const b=e.target.closest('[data-ficha]');if(b)window.abrirFichaActor?.(b.dataset.ficha);});
     $('p4CSV').onclick=descargar;
     $('view-priorizacion').addEventListener('vista:activar',()=>{
       // La navegación central emite el evento después de activar la vista.
