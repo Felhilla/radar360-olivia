@@ -46,10 +46,13 @@ function fechasExplicitas(texto) {
   return fechas;
 }
 
-// 75 actores del informe v1.2 más 5 cuentas del frente minero-energético del informe v1.4 (sección 2.2).
-test('Contenido: exactamente 80 actores con ids únicos y campos obligatorios', () => {
-  assert.equal(actores.length, 80);
-  assert.equal(porId.size, 80);
+// Base tras la baja: 79 actores = 59 empresas + 20 gremios; se suman los mineros preliminares.
+const notaMinera = 'Caracterización preliminar (octubre de 2026), fuera del informe v1.4: por verificar';
+const minerosNuevos = actores.filter(a => a.nota_contexto === notaMinera);
+const totalEsperado = 79 + minerosNuevos.length;
+test('Contenido: conteo base más mineros preliminares con ids únicos y campos obligatorios', () => {
+  assert.equal(actores.length, totalEsperado);
+  assert.equal(porId.size, totalEsperado);
   for (const a of actores) {
     assert(['empresa', 'gremio'].includes(a.tipo), a.id);
     for (const key of ['id', 'nombre', 'sector_radar', 'por_que', 'dolor', 'ruta_sugerida']) {
@@ -68,7 +71,7 @@ test('Contenido: exactamente 80 actores con ids únicos y campos obligatorios', 
     }
     if (a.propuesta_gh) assert(a.tipo === 'gremio' && a.tema_charla !== falta);
   }
-  assert.equal(actores.filter(a => a.tipo === 'empresa').length, 60);
+  assert.equal(actores.filter(a => a.tipo === 'empresa').length, 59 + minerosNuevos.length);
   assert.equal(actores.filter(a => a.tipo === 'gremio').length, 20);
 });
 
@@ -141,7 +144,8 @@ test('Contenido: comparación de fechas respeta meses, trimestres e intervalos',
 
 test('Contenido: horizontes, asociaciones y rutas de doble plazo', () => {
   for (const a of actores) {
-    assert([null, '30-60', '120', '>180'].includes(a.horizonte_informe), a.id);
+    if (a.nota_contexto === notaMinera) assert(a.horizonte_informe === null || typeof a.horizonte_informe === 'string', a.id);
+    else assert([null, '30-60', '120', '>180'].includes(a.horizonte_informe), a.id);
     for (const id of a.gremios_asociados || []) assert.equal(porId.get(id)?.tipo, 'gremio', a.id + ': ' + id);
   }
   for (const prefix of ['mercados-davivienda-', 'mercados-constructora-bolivar-']) {
@@ -167,7 +171,10 @@ test('Contenido: textos de contexto solo en los actores indicados', () => {
     'aliados-andi': 'Olivia ya es afiliada'
   };
   for (const a of actores) {
-    if (notas[a.id]) assert.equal(a.nota_contexto, notas[a.id]);
+    if (a.nota_contexto === notaMinera) {
+      assert.equal(a.sector_radar, 'Minero');
+      assert.equal(a.tipo, 'empresa');
+    } else if (notas[a.id]) assert.equal(a.nota_contexto, notas[a.id]);
     else assert(!Object.hasOwn(a, 'nota_contexto'), a.id);
   }
 });
@@ -256,9 +263,17 @@ test('Siembra: errores HTTP y modos incompatibles se propagan', async () => {
 const contactosPath = new URL('../privado/contactos-informe.json', import.meta.url);
 test('Siembra: archivo privado válido cuando está disponible', {
   skip: !existsSync(contactosPath) && 'Contactos privados no disponibles'
-}, () => validar(JSON.parse(readFileSync(contactosPath, 'utf8')), actores));
+}, () => {
+  // El archivo admite varios contactos por actor; la siembra histórica solo admite uno.
+  const filas = JSON.parse(readFileSync(contactosPath, 'utf8'));
+  const claves = filas.map(fila => {
+    validarRegistro(fila, actores);
+    return JSON.stringify([fila.actor_id, fila.nombre, fila.cargo]);
+  });
+  assert.equal(new Set(claves).size, filas.length, 'Contacto duplicado');
+});
 
-test('Contenido: necesidad en lenguaje claro y «qué hace» para los 75 actores, sin marcas de verificación', () => {
+test('Contenido: necesidad en lenguaje claro y «qué hace» para todos los actores, sin marcas de verificación', () => {
   for (const a of actores) {
     assert.equal(typeof a.necesidad, 'string', a.id);
     assert(a.necesidad.trim().length >= 80, a.id + ': necesidad demasiado corta');

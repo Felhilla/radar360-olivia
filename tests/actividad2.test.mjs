@@ -61,7 +61,8 @@ function fichaEntorno(){
 test('La ficha abre sin identidad ni contactos y conserva los bloques actuales',async()=>{
  const {s,dlg}=fichaEntorno();const calls=[];
  s.context.fetch=async(url,init)=>{calls.push([url,init]);return Response.json(url==='data/actores.json'?[{id:'a',por_que:'Informe',dolor:'Dolor'}]:[]);};
- s.context.openActorDialog('a');assert.equal(dlg.open,true);assert.match(dlg.innerHTML,/Qué hace/);
+ s.context.openActorDialog('a');assert.equal(dlg.open,true);assert.match(dlg.innerHTML,/<div class="ad-body"><div class="ad-label">Qué hace<\/div>/);
+ assert.equal((dlg.innerHTML.match(/>Qué hace<\/div>/g)||[]).length,1);
  await new Promise(r=>setImmediate(r));
  assert.equal(s.context.window.Identidad,undefined);
  const host={innerHTML:'',querySelector:()=>null};
@@ -98,4 +99,32 @@ test('Formulario: conserva lo escrito ante rechazo y limpia, pliega y refresca a
  falla=false;await ui.form.handlers.submit({preventDefault(){}});
  assert.equal(ui.form.hidden,true);assert.equal(ui.form.elements.nombre.value,'');assert.equal(toasts,1);assert.equal(lecturas,2);
  ui.abrir.handlers.click();ui.cancelar.handlers.click();assert.equal(ui.form.hidden,true);
+});
+
+
+test('Ficha: la descripción es el primer bloque en todas las categorías, sin duplicarse',()=>{
+ for(const [actor,titulo] of [[{categoria:'mercados',que_hace:'Actividad'},'Qué hace'],[{categoria:'aliados',descripcion:'Gremio'},'Qué es'],[{categoria:'autoridades',funciones:'Regulación'},'Funciones'],[{categoria:'competidores',descripcion:'Consultoría'},'Qué hace']]){
+  const h=FichaActor.htmlFicha(actor);
+  assert.ok(h.startsWith('<div class="ad-label">'+titulo+'</div>'));
+  assert.equal(h.split('>'+titulo+'</div>').length,2);
+  assert.ok(FichaActor.htmlFicha(actor,{omitirDescripcion:true}).startsWith('<div class="ad-label">Por qué está en el radar</div>'));
+ }
+});
+
+test('Logo: un actor nuevo sin entrada usa el genérico de su categoría',()=>{
+ const ctx=vm.createContext({});
+ vm.runInContext(html.slice(html.indexOf('  var GENERIC_LOGO ='),html.indexOf('  function getLogo('))+html.slice(html.indexOf('  function getLogo('),html.indexOf('  function getLogo(')+html.slice(html.indexOf('  function getLogo(')).indexOf('\n')),ctx);
+ assert.equal(ctx.getLogo({id:'mercados-sin-logo',categoria:'mercados'}),ctx.GENERIC_LOGO_BY_CAT.mercados);
+});
+
+test('Diálogo: la descripción precede al host de contactos y a los demás bloques',()=>{
+ for(const [categoria,campos,titulo] of [['mercados',{queHace:'Actividad'},'Qué hace'],['aliados',{descripcion:'Gremio'},'Qué es'],['autoridades',{funciones:'Regulación'},'Funciones'],['competidores',{descripcion:'Consultoría'},'Qué hace']]){
+  const {s,dlg}=fichaEntorno();
+  s.context.currentActors=()=>({a:{id:'a',nombre:'Actor',categoria,confianza:'alta',...campos}});
+  s.context.CATS={[categoria]:{label:categoria}};s.context.CONF={alta:{label:'Alta'}};
+  s.context.COMPETIDOR_FICHAS={};
+  s.context.openActorDialog('a');
+  assert.ok(dlg.innerHTML.includes('<div class="ad-body"><div class="ad-label">'+titulo+'</div>'));
+  assert.equal(dlg.innerHTML.split('>'+titulo+'</div>').length,2);
+ }
 });

@@ -1803,7 +1803,6 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     "mercados-anglogold-ashanti-colombia": "logos/mercados-anglogold-ashanti-colombia.jpeg",
     "mercados-mineros-sa": "logos/mercados-mineros-sa.png",
     "mercados-aris-mining": "logos/mercados-aris-mining.svg",
-    "mercados-fedeesmeraldas": "logos/mercados-fedeesmeraldas.png",
     "mercados-grupo-coquecol": "logos/mercados-grupo-coquecol.png",
     "mercados-productos-ramo": "logos/mercados-productos-ramo.png",
     "mercados-superpolo-jv-marcopolo-fanalca": "logos/mercados-superpolo-jv-marcopolo-fanalca.jpg",
@@ -2193,9 +2192,9 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   },
   "Minero": {
     "estado": [
-      "Grupo de mercados con Cerrejón, Drummond, AngloGold Ashanti (Colombia), Mineros S.A., Aris Mining, Fedeesmeraldas, Grupo Coquecol y, desde el informe v1.4, Libero Copper & Gold.",
+      "Grupo de mercados con Cerrejón, Drummond, AngloGold Ashanti (Colombia), Mineros S.A., Aris Mining, Grupo Coquecol y, desde el informe v1.4, Libero Copper & Gold. Se suman, fuera del informe y con caracterización preliminar: los gremios ACM y Fenalcarbón, CMH Colombia (El Alacrán, recién licenciada), Volador/Cobrasco (cobre del Chocó, con Rio Tinto al lado), Milpa y Goldin.",
       "Nuevo en v1.4: el cobre es un mercado de oportunidad por la apertura del Gobierno a la exploración (derogación de los distritos mineros especiales); Quebradona tiene estudio ambiental a fines de 2027 y construcción desde 2028. Riesgos: conflictividad social, consulta previa y reversibilidad de la política.",
-      "Incluye carbón, oro, proyectos mineros y un gremio esmeraldero como cliente. Grupo Coquecol representa a las carboneras; los proyectos de AngloGold no se presentan como minas productivas."
+      "Incluye carbón, coque, oro, cobre y dos gremios como clientes y puerta de entrada (ACM para la gran minería y Fenalcarbón para el carbón del interior). Grupo Coquecol y Milpa representan a las carboneras; los proyectos de AngloGold no se presentan como minas productivas."
     ],
     "priorizacion": [
       "Hipótesis de trabajo: liderazgo operativo, cultura de seguridad, capacidades de innovación y gestión del cambio en equipos de campo.",
@@ -2302,7 +2301,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       var lecturas=await Promise.allSettled([leerContactosRuta('contactos-informe'),leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id))]);
       var sugeridos=lecturas[0].status==='fulfilled'?lecturas[0].value:[], contactos=lecturas[1].status==='fulfilled'?lecturas[1].value:[];
       var administrador=!!(window.Identidad && window.Identidad.rol==='administrador');
-      host.innerHTML=FichaActor.htmlFicha(actor,{contactoInforme:sugeridos.find(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad,puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
+      host.innerHTML=FichaActor.htmlFicha(actor,{omitirDescripcion:true,contactoInforme:sugeridos.find(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad,puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
       var lista=host.querySelector('[data-contactos-lista]'), aviso=host.querySelector('[data-contactos-aviso]');
       async function refrescar(){
         try {contactos=await leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id));lista.innerHTML=FichaActor.htmlContactos(contactos,administrador);}
@@ -2350,22 +2349,25 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     var hasAliadoFicha = a.categoria === "aliados" && a.descripcion;
     var hasAutoridadFicha = a.categoria === "autoridades" && a.funciones;
     var empresas = Array.isArray(a.empresas) ? a.empresas : [];
+    var descripcion = hasMarketFicha ? (a.queHace || 'Sin descripción registrada.') : (hasAutoridadFicha ? a.funciones : (a.descripcion || a.queHace || ''));
+    var tituloDescripcion = hasAutoridadFicha ? 'Funciones' : (a.categoria === 'aliados' ? 'Qué es' : 'Qué hace');
+    var primero = descripcion ? '<div class="ad-label">' + tituloDescripcion + '</div><div class="ad-just">' + esc(descripcion) + '</div>' : '';
     var body;
     if(hasMarketFicha){
-      body = '<div class="ad-label">Qué hace</div><div class="ad-just">' + esc(a.queHace || 'Sin descripción registrada.') + '</div>' +
+      body = '' +
         '<div class="ad-label">Relevancia para Olivia</div><div class="ad-just">' + esc(a.relevancia || 'Sin relevancia registrada.') + '</div>' +
         '<div class="ad-label">Necesidad y posibilidad de articulación con Olivia</div><div class="ad-just">' + esc(a.articulacion || 'Sin información de articulación registrada.') + '</div>' +
         (a.notaVerificacion ? '<p class="ad-note">' + esc(a.notaVerificacion) + '</p>' : '') +
         '<p class="comp-src">Base: informe v1.4, sección 2 y prácticas de Olivia (§1.5). Articulación propuesta como hipótesis de trabajo.</p>' +
         (Array.isArray(a.fuentes) ? '<div class="comp-src">' + a.fuentes.filter(function(f){ return f && /^https:\/\//.test(f.url); }).map(function(f){ return '<a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo || 'Fuente oficial') + '</a>'; }).join(' · ') + '</div>' : '');
     } else if(hasAliadoFicha){
-      body = '<div class="ad-label">Qué es</div><div class="ad-just">' + esc(a.descripcion) + '</div>' +
+      body = '' +
         '<div class="ad-label">Empresas del gremio en el mapa</div>' +
         (empresas.length ? '<ul>' + empresas.map(function(e){ return '<li>' + esc(e) + '</li>'; }).join('') + '</ul>' : '') +
         (a.empresasNota ? '<div class="ad-note">' + esc(a.empresasNota) + '</div>' : '') +
         (a.relevancia ? '<div class="ad-label">Relación con Olivia</div><div class="ad-just">' + esc(a.relevancia) + '</div>' : '');
     } else if(hasAutoridadFicha){
-      body = '<div class="ad-label">Funciones</div><div class="ad-just">' + esc(a.funciones) + '</div>' +
+      body = '' +
         (a.relevancia ? '<div class="ad-label">Por qué importa para el despliegue de Olivia</div><div class="ad-just">' + esc(a.relevancia) + '</div>' : '');
     } else {
       body = '<div class="ad-label">Por qué es relevante</div>' +
@@ -2386,7 +2388,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         '</div>' +
         '<button type="button" class="btn ghost ad-close" data-close>Cerrar ×</button>' +
       '</div>' +
-      '<div class="ad-body">' + ((hasMarketFicha || a.categoria === 'aliados') ? '<div data-ficha-actor></div>' : '') + body +
+      '<div class="ad-body">' + primero + ((hasMarketFicha || a.categoria === 'aliados') ? '<div data-ficha-actor></div>' : '') + body +
         (ficha ? productosHtml(ficha) + '<div class="comp-src" style="margin-top:14px;">' + fuentesHtml(ficha) + '</div>' : '') +
       '</div>';
     dlg.innerHTML = h;

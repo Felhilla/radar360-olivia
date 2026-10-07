@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {mkdtempSync,mkdirSync,copyFileSync,writeFileSync,readFileSync,rmSync,existsSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {execFileSync} from 'node:child_process';
+const script=new URL('../privado/d/v15_mineros.py',import.meta.url);
+test('Mineros: alta, reemplazo, contactos múltiples y respaldo sin actor; no duplica al repetir', {skip:!existsSync(script)&&'Script privado no disponible'},()=>{
+ const root=mkdtempSync(join(tmpdir(),'radar-mineros-'));
+ const save=(p,x)=>writeFileSync(join(root,p),JSON.stringify(x));
+ const read=p=>JSON.parse(readFileSync(join(root,p),'utf8'));
+ try{
+  mkdirSync(join(root,'privado/d'),{recursive:true});mkdirSync(join(root,'public/data'),{recursive:true});
+  copyFileSync(script,join(root,'privado/d/v15_mineros.py'));
+  for(const p of ['public/data/actores.json','privado/actores-radar.json','privado/contactos-informe.json'])save(p,[]);
+  save('respaldo.json',[]);
+  const n={id:'mercados-prueba-temporal',nombre:'Prueba',por_que:'Motivo',dolor:'Dolor',necesidad:'Necesidad',que_hace:'Actividad',por_que_informe:'Motivo informe',ruta:'Ruta',relevancia:'Relevancia',articulacion:'Articulación',ubicacion:'Ubicación',relacion:'Relación',horizonte:null,confianza:'por_identificar',contactos:[],fuentes:[{titulo:'Fuente',url:'https://example.invalid'}]};
+  save('privado/d/v15_mineros_contenido.json',[n]);
+  const run=()=>execFileSync('python3',[join(root,'privado/d/v15_mineros.py'),join(root,'respaldo.json'),join(root,'lote.json')],{encoding:'utf8'});
+  assert.match(run(),/Contactos nuevos/);
+  assert.deepEqual(read('privado/contactos-informe.json'),[{actor_id:n.id,nombre:'Por identificar',cargo:'Por identificar',confianza:'por identificar'}]);
+  const creado=read('privado/actores-radar.json')[0].createdAt;
+  n.nombre='Nombre actualizado';n.contactos=[{nombre:'Ana',cargo:'Dirección',confianza:'alta'},{nombre:'Luis',cargo:'Talento',confianza:'media'}];
+  save('privado/d/v15_mineros_contenido.json',[n]);run();run();
+  assert.equal(read('public/data/actores.json').length,1);
+  assert.equal(read('public/data/actores.json')[0].nombre,n.nombre);
+  assert.equal(read('privado/contactos-informe.json').length,2);
+  const registros=read('privado/actores-radar.json');assert.equal(registros.length,1);assert.equal(registros[0].createdAt,creado);assert.deepEqual(registros[0].fuentes,n.fuentes);
+  const lote=read('lote.json');assert.equal(lote[0].coleccion,'actors');assert.deepEqual(lote[0].data,registros[0]);
+  save('respaldo.json',[{coleccion:'actors',id:n.id,data:{id:n.id,createdAt:'2026-01-01',campoPrevio:'conservar'}}]);run();
+  assert.equal(read('lote.json')[0].data.createdAt,'2026-01-01');assert.equal(read('lote.json')[0].data.campoPrevio,'conservar');
+ }finally{rmSync(root,{recursive:true,force:true});}
+});
