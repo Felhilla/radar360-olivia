@@ -49,7 +49,7 @@ function fechasExplicitas(texto) {
 // Base tras la baja: 79 actores = 59 empresas + 20 gremios; se suman los mineros preliminares.
 const notaMinera = 'Caracterización preliminar (octubre de 2026), fuera del informe v1.4: por verificar';
 const minerosNuevos = actores.filter(a => a.nota_contexto === notaMinera);
-const totalEsperado = 79 + minerosNuevos.length;
+const totalEsperado = 87;
 test('Contenido: conteo base más mineros preliminares con ids únicos y campos obligatorios', () => {
   assert.equal(actores.length, totalEsperado);
   assert.equal(porId.size, totalEsperado);
@@ -266,6 +266,7 @@ test('Siembra: archivo privado válido cuando está disponible', {
 }, () => {
   // El archivo admite varios contactos por actor; la siembra histórica solo admite uno.
   const filas = JSON.parse(readFileSync(contactosPath, 'utf8'));
+  assert.equal(filas.length, 74);
   const claves = filas.map(fila => {
     validarRegistro(fila, actores);
     return JSON.stringify([fila.actor_id, fila.nombre, fila.cargo]);
