@@ -484,6 +484,7 @@
   .ad-body{ padding:16px 20px 20px; font-size:.88rem; line-height:1.5; }
   .ad-label{ font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); margin:14px 0 6px; }
   .ad-label:first-child{ margin-top:0; }
+  .ad-body > [data-ficha-actor]:not(:first-child) > .ad-label:first-child{ margin-top:14px; }
   .ad-body ul{ margin:0; padding-left:18px; }
   .ad-body li{ margin-bottom:4px; }
   .ad-contactos{padding-left:20px;}
@@ -751,6 +752,8 @@
 #view-priorizacion .p4-acciones button{ white-space:normal; }
 #view-priorizacion .p4-grafico, #view-priorizacion .p4-tabla{ overflow-x:auto; max-width:100%; border:1px solid var(--line); border-radius:8px; }
 #view-priorizacion #p4SVG{ display:block; width:100%; min-width:760px; background:var(--panel); }
+/* En celular el gráfico cabe completo en el ancho de la pantalla (textos más grandes en el SVG). */
+@media(max-width:700px){ #view-priorizacion #p4SVG{ min-width:0; } }
 #view-priorizacion #p4SVG text{ fill:var(--ink); font-family:inherit; }
 #view-priorizacion #p4SVG .p4-punto{ cursor:pointer; }
 #view-priorizacion #p4SVG .p4-punto:focus circle, #view-priorizacion #p4SVG .p4-punto:hover circle{ stroke:var(--ink); stroke-width:4; }
@@ -867,6 +870,18 @@
 #view-matriz #tlLimite:empty{display:none;}
 #view-matriz #tlConfirmacion{padding:12px;border:1px solid var(--accent);margin:12px 0;}
 @media(max-width:700px){#view-matriz .tl-fila{grid-template-columns:56px minmax(0,1fr);}#view-matriz .tl-etiqueta h3{font-size:1rem;}#view-matriz .tl-mover button{min-height:32px;}#view-matriz .tl-card{flex:1 1 100%;width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:6px;align-items:center;}#view-matriz .tl-card small{grid-column:1;grid-row:2;margin:0;}#view-matriz .tl-mover{grid-column:2;grid-row:1 / span 2;}#view-matriz .tl-mover button{flex:0 0 28px;}}
+/* En celular la tarjeta muestra solo el actor; al tocarla se abre la ventana de calificación (#tlCalificar). */
+@media(max-width:700px){#view-matriz .tl-card{display:block;cursor:pointer;}#view-matriz .tl-mover{display:none;}#view-matriz .tl-card small{margin-top:2px;}}
+#tlCalificar .tl-cal-ayuda{margin:0 0 10px;font-size:.88rem;color:var(--ink-soft);}
+#tlCalificar .tl-cal-niveles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;}
+#tlCalificar .tl-cal-niveles button{min-height:56px;border-radius:10px;border:2px solid var(--line);background:var(--panel-2);color:var(--ink);font:inherit;font-weight:700;font-size:1rem;cursor:pointer;line-height:1.15;}
+#tlCalificar .tl-cal-niveles button small{display:block;font-size:.66rem;font-weight:600;color:var(--ink-soft);}
+#tlCalificar .tl-cal-niveles button[aria-pressed="true"]{border-color:var(--ink);background:var(--accent-soft);}
+#tlCalificar .tl-cal-niveles [data-nivel="1"]{border-top:6px solid #E51900;}#tlCalificar .tl-cal-niveles [data-nivel="2"]{border-top:6px solid #FF971C;}
+#tlCalificar .tl-cal-niveles [data-nivel="3"]{border-top:6px solid #EDD300;}#tlCalificar .tl-cal-niveles [data-nivel="4"]{border-top:6px solid #00B2B9;}
+#tlCalificar .tl-cal-quitar{margin-top:8px;width:100%;}
+#tlCalificar .tl-cal-caracterizacion{margin-top:16px;width:100%;min-height:48px;font-size:1rem;}
+#tlCalificar button:disabled{opacity:.55;cursor:default;}
 /* ACTIVIDAD 3 TIERLIST: FIN CSS */
 </style>
 </head>
@@ -977,7 +992,7 @@
       <button class="btn secondary" id="p4CSV" disabled>Descargar resultados (CSV)</button>
     </div>
     <p id="p4Leyenda"></p>
-    <p class="hint">Cada número identifica un actor en las listas y la tabla. Pasa el cursor o enfoca con Tab un punto para ver su detalle; haz clic o tócalo para abrir la ficha del actor. Si coinciden, usa la lista de puntos. En celular, desliza el gráfico horizontalmente.</p>
+    <p class="hint">Cada número identifica un actor en las listas y la tabla. Pasa el cursor o enfoca con Tab un punto para ver su detalle; haz clic o tócalo para abrir la ficha del actor. Si coinciden, usa la lista de puntos. En celular, toca un número para abrir la ficha del actor.</p>
     <div class="p4-grafico" tabindex="0" role="region" aria-label="Gráfico desplazable Impacto–Esfuerzo"><svg id="p4SVG" viewBox="0 0 900 650" aria-labelledby="p4TituloGrafico" role="group"></svg></div>
     <p id="p4Detalle" class="p4-detalle" aria-live="polite">Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.</p>
     <div id="p4Cuadrantes" class="p4-cuadrantes"></div>
@@ -1280,6 +1295,7 @@
 <footer class="credit">&copy; La información contenida en Ruta Colombia - Olivia es propiedad intelectual de GH Estudio y ha sido entregada para su estudio y evaluación. Las ideas, metodología y gráficos aquí contenidos no podrán ser empleados parcial o totalmente sin autorización expresa de GH Estudio. Cualquier utilización no autorizada del documento o del contenido del mismo, dará lugar a acciones legales en contra de quienes lo utilicen de manera indebida.</footer>
 <div class="toast" id="toast" hidden></div>
 <dialog class="actor-dialog" id="actorDialog" aria-labelledby="adTitle"></dialog>
+<dialog class="actor-dialog" id="tlCalificar" aria-labelledby="tlCalTitulo"></dialog>
 <dialog class="actor-dialog" id="sectorDialog" aria-labelledby="sdTitle"></dialog>
 
 <script src="config.js"></script>
@@ -3168,7 +3184,28 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     $('tlReemplazar').addEventListener('click',()=>guardarSorteo(false));
     $('tlIniciar').addEventListener('click',()=>guardarSorteo(true));
     $('tlGrupo').addEventListener('change',e=>{seleccionado=e.target.value;render();});
+    // Celular: la tarjeta abre una ventana con la escala y el botón «Caracterización» (la ficha se abre encima y, al cerrarla, se vuelve a la escala).
+    const esMovil=()=>!!(window.matchMedia&&window.matchMedia('(max-width:700px)').matches);
+    function abrirCalificar(actorId){
+      const dlg=$('tlCalificar'),g=grupo(),a=actores.find(x=>x.id===actorId);if(!dlg||!g||!a)return;
+      const nivel=filas.find(f=>f.grupoId===g.id&&f.actorId===actorId)?.nivel||0,des=(!editable(g)||ocupado)?' disabled':'';
+      const nombres={1:'Prioridad',2:'Alta',3:'Media',4:'Baja'};
+      dlg.innerHTML='<div class="ad-head"><img class="ad-logo" src="'+esc(getLogo({id:a.id,categoria:a.tipo==='gremio'?'aliados':'mercados'}))+'" alt=""><div><h3 id="tlCalTitulo">'+esc(a.nombre)+'</h3><div class="ad-pills"><span class="pill est">'+esc(abreviada(a))+'</span></div></div><button type="button" class="btn ghost ad-close" data-tl-cerrar>Cerrar ×</button></div>'+
+        '<div class="ad-body"><p class="tl-cal-ayuda">'+(des?'Vista de solo lectura: no puedes cambiar el nivel en este tablero.':(nivel?'Está en el Nivel '+nivel+'. Toca otro nivel para cambiarlo.':'Elige el nivel de este actor.'))+'</p>'+
+        '<div class="tl-cal-niveles">'+[1,2,3,4].map(n=>'<button type="button" data-tl-cal-nivel="'+n+'" data-nivel="'+n+'" aria-pressed="'+(nivel===n)+'"'+des+'>Nivel '+n+'</button>').join('')+'</div>'+
+        (nivel?'<button type="button" class="btn ghost tl-cal-quitar" data-tl-cal-nivel="0"'+des+'>Quitar nivel</button>':'')+
+        '<button type="button" class="btn tl-cal-caracterizacion" data-tl-cal-ficha>Caracterización</button></div>';
+      dlg.dataset.actor=actorId;
+      if(!dlg.open)dlg.showModal();
+    }
+    if($('tlCalificar'))$('tlCalificar').addEventListener('click',e=>{
+      const dlg=$('tlCalificar'),id=dlg.dataset.actor;
+      if(e.target===dlg||e.target.closest('[data-tl-cerrar]')){dlg.close();return;}
+      if(e.target.closest('[data-tl-cal-ficha]')){window.abrirFichaActor(id);return;}
+      const b=e.target.closest('[data-tl-cal-nivel]');if(b&&!b.disabled){dlg.close();mover(id,Number(b.dataset.tlCalNivel)||null);}
+    });
     $('tlTablero').addEventListener('click',e=>{
+      const card=e.target.closest('[data-tl-actor]');if(card&&esMovil()){abrirCalificar(card.dataset.tlActor);return;}
       const ficha=e.target.closest('[data-tl-ficha]');if(ficha){window.abrirFichaActor(ficha.dataset.tlFicha);return;}
       const b=e.target.closest('[data-tl-mover]');if(b)mover(b.dataset.tlMover,Number(b.dataset.nivel)||null);
     });
@@ -3293,7 +3330,9 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     }
     function renderResultados(){
       if(!config) return;
-      const datos=resultados(), firma=JSON.stringify([datos,orden,direccion]);
+      // En celular el SVG se ve a ~40 % de su tamaño: se agrandan textos y etiquetas y se omite la regla de cada cuadrante.
+      const movil=!!(window.matchMedia&&window.matchMedia('(max-width:700px)').matches), zm=movil?2.1:1;
+      const datos=resultados(), firma=JSON.stringify([datos,orden,direccion,movil]);
       if(firma===firmaResultados) return;
       firmaResultados=firma;
       const ids=new Map(datos.map((r,i)=>[r.actorId,i+1]));
@@ -3304,23 +3343,25 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         const izq=q.esfuerzo==='bajo', arriba=q.impacto==='alto';
         // los rótulos de los cuadrantes inferiores van al fondo para no tapar los puntos cercanos al umbral
         const x0=izq?80:x(t), x1=izq?x(t):840, y0=arriba?85:y(t), y1=arriba?y(t):565;
+        if(movil) return '<rect x="'+x0+'" y="'+y0+'" width="'+(x1-x0)+'" height="'+(y1-y0)+'" fill="var(--'+(arriba?'accent-soft':'panel-2')+')" opacity=".6"/><text x="'+(x0+10)+'" y="'+(arriba?y0+30:y1-12)+'" font-size="'+Math.min(30,Math.floor((x1-x0-20)/(q.nombre.length*0.56)))+'" font-weight="700">'+esc(q.nombre)+'</text>';
         return '<rect x="'+x0+'" y="'+y0+'" width="'+(x1-x0)+'" height="'+(y1-y0)+'" fill="var(--'+(arriba?'accent-soft':'panel-2')+')" opacity=".6"/><text x="'+(x0+12)+'" y="'+(arriba?y0+22:y1-31)+'" font-size="17" font-weight="600">'+esc(q.nombre)+'</text><text x="'+(x0+12)+'" y="'+(arriba?y0+43:y1-10)+'" font-size="13">'+esc(q.regla)+'</text>';
       }).join('');
       svg+=bloques;
-      for(let n=1;n<=5;n++) svg+='<text x="'+x(n)+'" y="590" text-anchor="middle" font-size="16">'+n+'</text><text x="60" y="'+(y(n)+5)+'" text-anchor="end" font-size="16">'+n+'</text>';
-      svg+='<path d="M80 85V565H840" stroke="var(--ink)" fill="none"/><path d="M'+x(t)+' 85V565M80 '+y(t)+'H840" stroke="var(--ink-soft)" stroke-dasharray="6 5"/><text x="450" y="625" text-anchor="middle" font-size="18">Esfuerzo → (5 = más esfuerzo)</text><text x="22" y="325" transform="rotate(-90 22 325)" text-anchor="middle" font-size="18">Impacto →</text>';
+      for(let n=1;n<=5;n++) svg+='<text x="'+x(n)+'" y="'+(movil?605:590)+'" text-anchor="middle" font-size="'+(16*zm)+'">'+n+'</text><text x="'+(movil?66:60)+'" y="'+(y(n)+5*zm)+'" text-anchor="end" font-size="'+(16*zm)+'">'+n+'</text>';
+      svg+='<path d="M80 85V565H840" stroke="var(--ink)" fill="none"/><path d="M'+x(t)+' 85V565M80 '+y(t)+'H840" stroke="var(--ink-soft)" stroke-dasharray="6 5"/><text x="450" y="'+(movil?645:625)+'" text-anchor="middle" font-size="'+(movil?30:18)+'">'+(movil?'Esfuerzo →':'Esfuerzo → (5 = más esfuerzo)')+'</text><text x="'+(movil?24:22)+'" y="325" transform="rotate(-90 '+(movil?24:22)+' 325)" text-anchor="middle" font-size="'+(movil?30:18)+'">Impacto →</text>';
       // Etiquetas numéricas separadas; los círculos mantienen los índices exactos, sin alterar los datos.
       const ocupados=[];
       datos.forEach(r=>{
-        const px=x(r.indiceEsfuerzo), py=y(r.indiceImpacto); let lx=px+15,ly=py-12;
+        const px=x(r.indiceEsfuerzo), py=y(r.indiceImpacto); let lx=px+15*zm,ly=py-12*zm;
+        const mx=12*zm, my=10*zm;
         for(let k=0;k<150;k++){
-          const ang=k*2.4, radio=18+Math.sqrt(k)*8;
-          lx=Math.max(92,Math.min(825,px+Math.cos(ang)*radio));ly=Math.max(98,Math.min(553,py+Math.sin(ang)*radio));
-          if(!ocupados.some(p=>Math.abs(p[0]-lx)<26&&Math.abs(p[1]-ly)<22)) break;
+          const ang=k*2.4, radio=(18+Math.sqrt(k)*8)*zm;
+          lx=Math.max(80+mx,Math.min(840-mx,px+Math.cos(ang)*radio));ly=Math.max(85+my,Math.min(565-my,py+Math.sin(ang)*radio));
+          if(!ocupados.some(p=>Math.abs(p[0]-lx)<26*zm&&Math.abs(p[1]-ly)<22*zm)) break;
         }
         ocupados.push([lx,ly]);
         const color='var(--cat-'+(categorias[r.categoria]?r.categoria:'mercados')+')';
-        svg+='<g class="p4-punto" tabindex="0" role="button" data-punto="'+esc(r.actorId)+'" aria-label="'+esc(textoDetalle(r))+'"><title>'+esc(textoDetalle(r))+'</title><path d="M'+px+' '+py+'L'+lx+' '+ly+'" stroke="'+color+'" opacity=".6"/><circle cx="'+px+'" cy="'+py+'" r="6" fill="'+color+'" stroke="var(--panel)" stroke-width="2"/><rect x="'+(lx-12)+'" y="'+(ly-10)+'" width="24" height="20" rx="4" fill="var(--panel)" stroke="'+color+'"/><text x="'+lx+'" y="'+(ly+5)+'" font-size="13" text-anchor="middle">'+ids.get(r.actorId)+'</text></g>';
+        svg+='<g class="p4-punto" tabindex="0" role="button" data-punto="'+esc(r.actorId)+'" aria-label="'+esc(textoDetalle(r))+'"><title>'+esc(textoDetalle(r))+'</title><path d="M'+px+' '+py+'L'+lx+' '+ly+'" stroke="'+color+'" opacity=".6"/><circle cx="'+px+'" cy="'+py+'" r="'+(movil?10:6)+'" fill="'+color+'" stroke="var(--panel)" stroke-width="2"/><rect x="'+(lx-mx)+'" y="'+(ly-my)+'" width="'+(2*mx)+'" height="'+(2*my)+'" rx="'+(4*zm)+'" fill="var(--panel)" stroke="'+color+'" stroke-width="'+(movil?3:1)+'"/><text x="'+lx+'" y="'+(ly+5*zm)+'" font-size="'+(13*zm)+'" text-anchor="middle">'+ids.get(r.actorId)+'</text></g>';
       });
       const foco=$('p4SVG').contains(document.activeElement)?document.activeElement.dataset.punto:null;
       if($('p4SVG').innerHTML!==svg){$('p4SVG').innerHTML=svg;if(foco) Array.from($('p4SVG').querySelectorAll('[data-punto]')).find(el=>el.dataset.punto===foco)?.focus();}
