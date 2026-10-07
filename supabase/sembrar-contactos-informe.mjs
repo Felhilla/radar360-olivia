@@ -39,13 +39,25 @@ export function validarRegistro(fila, actores) {
 export function validar(filas, actores) {
   if (!Array.isArray(filas)) throw new Error('Contactos debe ser un arreglo.');
   if (!Array.isArray(actores)) throw new Error('Actores debe ser un arreglo.');
-  const ids = new Set();
+  const vistos = new Set();
   for (const fila of filas) {
     validarRegistro(fila, actores);
-    if (ids.has(fila.actor_id)) throw new Error('actor_id duplicado.');
-    ids.add(fila.actor_id);
+    const clave = fila.actor_id + '|' + fila.nombre;
+    if (vistos.has(clave)) throw new Error('Contacto duplicado.');
+    vistos.add(clave);
   }
   return filas;
+}
+
+// Un actor puede tener varios contactos (p. ej. ACM): el primero conserva el id del actor
+// y los siguientes llevan sufijo --2, --3…
+export function idsRegistros(filas) {
+  const cuenta = new Map();
+  return filas.map(fila => {
+    const n = (cuenta.get(fila.actor_id) || 0) + 1;
+    cuenta.set(fila.actor_id, n);
+    return n === 1 ? fila.actor_id : fila.actor_id + '--' + n;
+  });
 }
 
 export function opciones(args) {
@@ -102,9 +114,9 @@ export async function ejecutar({
     const response = await fetchImpl(endpoint, {
       method: 'POST',
       headers: {...headers, Prefer: 'resolution=merge-duplicates,return=minimal'},
-      body: JSON.stringify(filas.map(fila => ({
-        coleccion: COLECCION, id: fila.actor_id, data: fila
-      })))
+      body: JSON.stringify((ids => filas.map((fila, i) => ({
+        coleccion: COLECCION, id: ids[i], data: fila
+      })))(idsRegistros(filas)))
     });
     if (!response.ok) throw new Error('Upsert rechazado: HTTP ' + response.status);
   }
