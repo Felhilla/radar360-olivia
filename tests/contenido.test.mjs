@@ -49,7 +49,7 @@ function fechasExplicitas(texto) {
 // Base tras la baja: 79 actores = 59 empresas + 20 gremios; se suman los mineros preliminares.
 const notaMinera = 'Caracterización preliminar (octubre de 2026), fuera del informe v1.4: por verificar';
 const minerosNuevos = actores.filter(a => a.nota_contexto === notaMinera);
-const totalEsperado = 87;
+const totalEsperado = 90;
 test('Contenido: conteo base más mineros preliminares con ids únicos y campos obligatorios', () => {
   assert.equal(actores.length, totalEsperado);
   assert.equal(porId.size, totalEsperado);
@@ -172,7 +172,8 @@ test('Contenido: textos de contexto solo en los actores indicados', () => {
   };
   for (const a of actores) {
     if (a.nota_contexto === notaMinera) {
-      assert.equal(a.sector_radar, 'Minero');
+      const salud = ['mercados-axa-colpatria', 'mercados-seguros-bolivar', 'mercados-consejo-colombiano-de-seguridad'].includes(a.id);
+      assert.equal(a.sector_radar, salud ? 'Salud y Gestión de riesgos laborales' : 'Minero');
       assert.equal(a.tipo, 'empresa');
     } else if (notas[a.id]) assert.equal(a.nota_contexto, notas[a.id]);
     else assert(!Object.hasOwn(a, 'nota_contexto'), a.id);
@@ -266,7 +267,7 @@ test('Siembra: archivo privado válido cuando está disponible', {
 }, () => {
   // El archivo admite varios contactos por actor; la siembra histórica solo admite uno.
   const filas = JSON.parse(readFileSync(contactosPath, 'utf8'));
-  assert.equal(filas.length, 74);
+  assert.equal(filas.length, 77);
   const claves = filas.map(fila => {
     validarRegistro(fila, actores);
     return JSON.stringify([fila.actor_id, fila.nombre, fila.cargo]);

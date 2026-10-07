@@ -10,7 +10,7 @@ const base=JSON.parse(read('../../Radar360-web-backups/supabase_20260925_pre-rad
 const original=new Map(base.filter(r=>r.coleccion==='actors').map(r=>[r.id,r.data]));
 const orderCode=html.slice(html.indexOf('  var SECTOR_ORDER ='),html.indexOf('  var GENERIC_LOGO ='));
 const content=html.split('// RADAR09: INICIO CONTENIDO')[1].split('// RADAR09: FIN CONTENIDO')[0];
-const expected=['Financiero','Energía','Servicios públicos','Minero','Retail','Consumo','Industrial','Telecomunicaciones','Salud'];
+const expected=['Financiero','Energía','Servicios públicos','Minero','Retail','Consumo','Industrial','Telecomunicaciones','Salud y Gestión de riesgos laborales'];
 const forbidden=/días|Tello|Barrientos|por identificar|confianza|vía |interlocutor|contacto/iu;
 
 test('Radar09: orden compartido, nueve fichas y cuatro frentes citados',()=>{

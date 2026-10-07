@@ -4,7 +4,7 @@
   const INDUSTRIAS = [
     ['financiero','Financiero y fintech'],['energia','Energía, servicios públicos y recursos naturales'],
     ['retail','Retail, consumo masivo y comercio'],['industrial','Industrial, manufactura y construcción'],
-    ['telecom','Telecomunicaciones'],['salud','Salud privada'],['gremios_publico','Gremios y sector público']
+    ['telecom','Telecomunicaciones'],['salud','Salud y Gestión de riesgos laborales'],['gremios_publico','Gremios y sector público']
   ].map(([id,nombre])=>Object.freeze({id,nombre}));
   const ids=INDUSTRIAS.map(i=>i.id), MAX_NIVEL_1=3;
   const normalizar=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');

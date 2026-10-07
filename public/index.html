@@ -1735,7 +1735,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   }
 
   var SECTOR_ORDER = {
-    mercados: ["Financiero", "Energía", "Servicios públicos", "Minero", "Retail", "Consumo", "Industrial", "Telecomunicaciones", "Salud"],
+    mercados: ["Financiero", "Energía", "Servicios públicos", "Minero", "Retail", "Consumo", "Industrial", "Telecomunicaciones", "Salud y Gestión de riesgos laborales"],
     aliados: ["Prioridad máxima","Prioridad alta","Prioridad media","Prioridad baja-media","Prioridad no evaluada en el informe"],
     competidores: ["Firma global","Boutique / talento especializado","Por confirmar"],
     autoridades: ["Ministerio","Entidad adscrita"]
@@ -2281,9 +2281,9 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     ],
     "fuente": "Fuente: «Colombia como mercado para Olivia», informe v1.4, 5 de octubre de 2026, §§2.5 y 1.4. Lectura del informe; coyuntura sin verificar de forma independiente."
   },
-  "Salud": {
+  "Salud y Gestión de riesgos laborales": {
     "estado": [
-      "El informe combina reorganización del sistema, traslados de usuarios y presión sobre redes privadas con daños de infraestructura en las regiones afectadas.",
+      "La categoría incorpora, junto a los prestadores de salud, ARL (aseguradoras de riesgos laborales) y el Consejo Colombiano de Seguridad (AXA Colpatria, Seguros Bolívar, CCS). El informe combina reorganización del sistema, traslados de usuarios y presión sobre redes privadas con daños de infraestructura en las regiones afectadas.",
       "La versión v1.4 reporta entre 308 y 440 instituciones afectadas, unos 400 establecimientos afectados en 14 de 16 departamentos y 19 por reconstruir; las cifras dependen del corte y están sin verificar de forma independiente."
     ],
     "priorizacion": [
@@ -3079,7 +3079,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     const identidad=()=>window.Identidad?.nombre||'';
     const industria=id=>TierList.INDUSTRIAS.find(i=>i.id===id)?.nombre||id;
     const subnombre=id=>({energia:'Energía',servicios_publicos:'Servicios públicos',recursos_naturales:'Recursos naturales'}[id]||'');
-    const abreviada=a=>subnombre(a.subindustria)||({financiero:'Financiero',retail:'Retail y consumo',industrial:'Industrial',telecom:'Telecom',salud:'Salud',gremios_publico:'Gremios y sector público'}[a.industria]||industria(a.industria));
+    const abreviada=a=>subnombre(a.subindustria)||({financiero:'Financiero',retail:'Retail y consumo',industrial:'Industrial',telecom:'Telecom',salud:'Salud y riesgos laborales',gremios_publico:'Gremios y sector público'}[a.industria]||industria(a.industria));
     // Tablero de ejemplo del facilitador: todas las industrias; vive solo en su navegador y no cuenta para el Nivel 1.
     const EJEMPLO={id:'ejemplo-facilitador',integrantes:['Ejemplo · Ad. Facilitador'],industrias:TierList.INDUSTRIAS.map(i=>i.id)};
     const esEjemplo=g=>!!g&&g.id===EJEMPLO.id;

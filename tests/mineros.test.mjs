@@ -19,15 +19,24 @@ test('Mineros: alta, reemplazo, contactos múltiples y respaldo sin actor; no du
   const run=()=>execFileSync('python3',[join(root,'privado/d/v15_mineros.py'),join(root,'respaldo.json'),join(root,'lote.json')],{encoding:'utf8'});
   assert.match(run(),/Contactos nuevos/);
   assert.deepEqual(read('privado/contactos-informe.json'),[{actor_id:n.id,nombre:'Por identificar',cargo:'Por identificar',confianza:'por identificar'}]);
+  assert.equal(read('public/data/actores.json')[0].industria,'energia');
+  assert.equal(read('public/data/actores.json')[0].subindustria,'recursos_naturales');
+  assert.equal(read('public/data/actores.json')[0].sector_radar,'Minero');
   const creado=read('privado/actores-radar.json')[0].createdAt;
+  n.industria='salud';n.subindustria=null;n.sector='Salud y Gestión de riesgos laborales';
   n.nombre='Nombre actualizado';n.contactos=[{nombre:'Ana',cargo:'Dirección',confianza:'alta'},{nombre:'Luis',cargo:'Talento',confianza:'media'}];
   save('privado/d/v15_mineros_contenido.json',[n]);run();run();
   assert.equal(read('public/data/actores.json').length,1);
   assert.equal(read('public/data/actores.json')[0].nombre,n.nombre);
   assert.equal(read('privado/contactos-informe.json').length,2);
+  const cat=read('public/data/actores.json')[0];
+  assert.equal(cat.industria,n.industria);assert.equal(cat.subindustria,null);assert.equal(cat.sector_radar,n.sector);
+  assert.equal(read('privado/actores-radar.json')[0].sector,n.sector);
   const registros=read('privado/actores-radar.json');assert.equal(registros.length,1);assert.equal(registros[0].createdAt,creado);assert.deepEqual(registros[0].fuentes,n.fuentes);
   const lote=read('lote.json');assert.equal(lote[0].coleccion,'actors');assert.deepEqual(lote[0].data,registros[0]);
-  save('respaldo.json',[{coleccion:'actors',id:n.id,data:{id:n.id,createdAt:'2026-01-01',campoPrevio:'conservar'}}]);run();
+  save('respaldo.json',[{coleccion:'actors',id:n.id,data:{id:n.id,createdAt:'2026-01-01',campoPrevio:'conservar',sector:'Salud'}}]);run();
+  const renombre=read('renombre_salud_lote.json');
+  assert.deepEqual(renombre,[{coleccion:'actors',id:n.id,data:{id:n.id,createdAt:'2026-01-01',campoPrevio:'conservar',sector:n.sector,updatedAt:read('lote.json')[0].data.updatedAt}}]);
   assert.equal(read('lote.json')[0].data.createdAt,'2026-01-01');assert.equal(read('lote.json')[0].data.campoPrevio,'conservar');
  }finally{rmSync(root,{recursive:true,force:true});}
 });

@@ -13,7 +13,7 @@ const code=html.split('// ACTIVIDAD 3 TIERLIST: INICIO JS')[1].split('// ACTIVID
 const tick=()=>new Promise(r=>setImmediate(r));
 for(const [n,tamanos] of [[7,[2,2,3]],[8,[2,2,2,2]],[9,[2,2,2,3]],[2,[2]],[3,[3]],[4,[2,2]],[5,[2,3]]]){
  test(`Sorteo de ${n}: personas, cobertura, tamaños y reparto`,()=>{
-  assert.equal(actores.length,87);
+  assert.equal(actores.length,90);
   assert.equal(new Set(actores.map(a=>a.id)).size,actores.length);
   const s=sortear(n),gs=s.grupos;
   assert.deepEqual(gs.map(g=>g.integrantes.length),tamanos);
@@ -188,4 +188,16 @@ test('HTML y Radar: ids retirados sin referencias ejecutables, template intacto 
  const css=html.split('/* ACTIVIDAD 3 TIERLIST: INICIO CSS */')[1].split('/* ACTIVIDAD 3 TIERLIST: FIN CSS */')[0];
  for(const c of ['#E51900','#FF971C','#EDD300','#00B2B9','#1C1A15'])assert(css.includes(c));
  assert.match(css,/grid-template-columns:88px minmax\(0,1fr\)/);assert.match(css,/grid-template-columns:56px minmax\(0,1fr\)/);assert.match(css,/flex-wrap:wrap/);
+});
+
+test('Salud y riesgos laborales: las tres altas conservan industria y entran en su grupo',()=>{
+ const sector='Salud y Gestión de riesgos laborales';
+ assert.equal(TierList.INDUSTRIAS.find(i=>i.id==='salud').nombre,sector);
+ const grupo=sortear(8).grupos.find(g=>g.industrias.includes('salud'));
+ const incluidos=new Set(TierList.actoresDelGrupo(grupo,actores).map(a=>a.id));
+ for(const id of ['mercados-axa-colpatria','mercados-seguros-bolivar','mercados-consejo-colombiano-de-seguridad']){
+  const actor=actores.find(a=>a.id===id);
+  assert(actor,id);assert.equal(actor.industria,'salud');assert.equal(actor.subindustria,null);
+  assert.equal(actor.sector_radar,sector);assert(incluidos.has(id),id);
+ }
 });
