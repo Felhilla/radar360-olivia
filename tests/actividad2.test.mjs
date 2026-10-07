@@ -128,3 +128,8 @@ test('Diálogo: la descripción precede al host de contactos y a los demás bloq
   assert.equal(dlg.innerHTML.split('>'+titulo+'</div>').length,2);
  }
 });
+
+test('Actividad 2: la ficha muestra todos los contactos sugeridos de un actor', () => {
+  const h=FichaActor.htmlFicha({por_que:'x',dolor:'y'},{contactoInforme:[{nombre:'Juan Camilo Nariño Alcocer',cargo:'Presidente',confianza:'alta'},{nombre:'Carolina Gutiérrez Hernández',cargo:'Sostenibilidad',confianza:'media'}]});
+  assert.match(h,/Juan Camilo Nariño/); assert.match(h,/Carolina Gutiérrez/);
+});

@@ -2301,7 +2301,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       var lecturas=await Promise.allSettled([leerContactosRuta('contactos-informe'),leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id))]);
       var sugeridos=lecturas[0].status==='fulfilled'?lecturas[0].value:[], contactos=lecturas[1].status==='fulfilled'?lecturas[1].value:[];
       var administrador=!!(window.Identidad && window.Identidad.rol==='administrador');
-      host.innerHTML=FichaActor.htmlFicha(actor,{omitirDescripcion:true,contactoInforme:sugeridos.find(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad,puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
+      host.innerHTML=FichaActor.htmlFicha(actor,{omitirDescripcion:true,contactoInforme:sugeridos.filter(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad,puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
       var lista=host.querySelector('[data-contactos-lista]'), aviso=host.querySelector('[data-contactos-aviso]');
       async function refrescar(){
         try {contactos=await leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id));lista.innerHTML=FichaActor.htmlContactos(contactos,administrador);}

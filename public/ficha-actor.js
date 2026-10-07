@@ -28,7 +28,9 @@
     const descripcion=actor.categoria==='autoridades'?actor.funciones:(actor.queHace || actor.que_hace || actor.descripcion);
     let h=(!o.omitirDescripcion && descripcion?bloque(titulo,descripcion):'')+bloque('Por qué está en el radar',actor.por_que)+bloque('Necesidad o dolor',String(actor.necesidad || actor.dolor || '')+necesidad);
     h+='<div class="ad-label">Contacto sugerido por el informe</div>';
-    h+=c?'<div class="ad-just">'+esc(c.nombre==='Por identificar'?'Nombre por identificar':c.nombre)+'<div>'+esc(c.cargo)+'</div><span class="ad-confianza ad-confianza-'+(['alta','media','baja'].includes(c.confianza)?c.confianza:'pendiente')+'">'+esc(etiquetaConfianza(c.confianza))+'</span></div>':'<p class="ad-empty">El informe no sugiere contacto para este actor</p>';
+    // Un actor puede tener más de un contacto sugerido (p. ej. ACM): se aceptan uno o varios.
+    const sugeridos=(Array.isArray(c)?c:(c?[c]:[]));
+    h+=sugeridos.length?sugeridos.map(c=>'<div class="ad-just">'+esc(c.nombre==='Por identificar'?'Nombre por identificar':c.nombre)+'<div>'+esc(c.cargo)+'</div><span class="ad-confianza ad-confianza-'+(['alta','media','baja'].includes(c.confianza)?c.confianza:'pendiente')+'">'+esc(etiquetaConfianza(c.confianza))+'</span></div>').join(''):'<p class="ad-empty">El informe no sugiere contacto para este actor</p>';
     h+='<div class="ad-label">Contactos registrados en el taller</div><div data-contactos-lista>'+htmlContactos(o.contactos || [],o.puedeQuitar)+'</div><p class="ad-empty" data-contactos-aviso aria-live="polite">'+esc(o.aviso || '')+'</p>';
     if(o.puedeAgregar){
       h+='<button type="button" class="btn ghost" data-agregar-contacto aria-expanded="false" aria-controls="adContactoForm">Agregar contacto (opcional)</button><form id="adContactoForm" class="ad-contacto-form" hidden novalidate autocomplete="off"><p>Registra solo datos de contacto corporativo. La información se entregará al equipo comercial de Olivia y se borrará de esta plataforma después del taller.</p>';
