@@ -6,9 +6,27 @@
     ['retail','Retail, consumo masivo y comercio'],['industrial','Industrial, manufactura y construcción'],
     ['telecom','Telecomunicaciones'],['salud','Salud y Gestión de riesgos laborales'],['gremios_publico','Gremios y sector público']
   ].map(([id,nombre])=>Object.freeze({id,nombre}));
-  const ids=INDUSTRIAS.map(i=>i.id), MAX_NIVEL_1=3, MAX_NIVEL_1_PRIORITARIO=5;
+  const ids=INDUSTRIAS.map(i=>i.id);
   const INDUSTRIAS_PRIORITARIAS=Object.freeze(['energia','salud']);
   const normalizar=s=>String(s||'').trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  // El catálogo conserva su caracterización; los actores nuevos se incorporan desde el Radar.
+  function catalogoVigente(catalogo, radar){
+    const sectores={financiero:['financiero'],energia:['energia','energia'],
+      'servicios publicos':['energia','servicios_publicos'],minero:['energia','recursos_naturales'],
+      retail:['retail'],consumo:['retail'],'retail/consumo':['retail'],industrial:['industrial'],
+      telecomunicaciones:['telecom'],salud:['salud'],'salud y gestion de riesgos laborales':['salud']};
+    const convertir=a=>{
+      const [industria,subindustria]=a.categoria==='aliados'?['gremios_publico']:(sectores[normalizar(a.sector)]||['gremios_publico']);
+      return {...a,tipo:a.categoria==='aliados'?'gremio':'empresa',industria,...(subindustria?{subindustria}:{}),que_hace:a.queHace||a.descripcion||'',gremios_asociados:[]};
+    };
+    const resultado=new Map((catalogo||[]).map(a=>[a.id,{...a,categoria:a.categoria||(a.tipo==='gremio'?'aliados':'mercados')} ]));
+    for(const a of radar||[]){
+      if(!a.id||!a.nombre||!['mercados','aliados'].includes(a.categoria)||a.estado==='descartado')continue;
+      if(!resultado.has(a.id))resultado.set(a.id,convertir(a));
+      else resultado.set(a.id,{...resultado.get(a.id),...a,industria:resultado.get(a.id).industria});
+    }
+    return [...resultado.values()];
+  }
   function barajar(lista,rng){
     const out=lista.slice();
     for(let i=out.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[out[i],out[j]]=[out[j],out[i]];}
@@ -59,11 +77,6 @@
   // colocaciones es la lista de filas de UN grupo.
   function puedeMover(colocaciones,actorId,nivel,actores=[]){
     if(![null,1,2,3,4].includes(nivel)) return {ok:false,motivo:'Nivel no válido'};
-    const industrias=new Map((actores||[]).map(a=>[a.id,a.industria]));
-    const prioritario=id=>INDUSTRIAS_PRIORITARIAS.includes(industrias.get(id));
-    const esPrioritario=prioritario(actorId), max=esPrioritario?MAX_NIVEL_1_PRIORITARIO:MAX_NIVEL_1;
-    if(nivel===1&&new Set(colocaciones.filter(c=>c.nivel===1&&c.actorId!==actorId&&prioritario(c.actorId)===esPrioritario).map(c=>c.actorId)).size>=max)
-      return {ok:false,motivo:esPrioritario?'El Nivel 1 admite máximo 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales':'El Nivel 1 admite máximo 3 actores de los demás mercados'};
     return {ok:true,motivo:''};
   }
   function nivel1(sorteo,colocaciones){
@@ -73,6 +86,24 @@
     });
     return [...out].map(([actorId,gs])=>({actorId,grupos:[...gs]}));
   }
-  const api={INDUSTRIAS:Object.freeze(INDUSTRIAS),MAX_NIVEL_1,MAX_NIVEL_1_PRIORITARIO,INDUSTRIAS_PRIORITARIAS,formarGrupos,repartirIndustrias,sortear,actoresDelGrupo,grupoDe,puedeMover,nivel1};
+  // Una ubicación por actor y grupo; ante duplicados prevalece el nivel más alto de prioridad.
+  function ubicados(sorteo,colocaciones=[]){
+    if(!sorteo || sorteo.ejemploCompartido || sorteo.facilitador)return [];
+    const grupos=new Set((sorteo.grupos||[]).map(g=>g.id)), actores=new Map();
+    for(const c of colocaciones){
+      if(c.ejemploCompartido||c.facilitador||c.sorteoId!==sorteo.id||!grupos.has(c.grupoId)||![1,2,3,4].includes(c.nivel))continue;
+      if(!actores.has(c.actorId))actores.set(c.actorId,new Map());
+      const niveles=actores.get(c.actorId);
+      niveles.set(c.grupoId,Math.min(niveles.get(c.grupoId)||4,c.nivel));
+    }
+    return [...actores].map(([actorId,gs])=>{
+      const niveles={1:0,2:0,3:0,4:0};
+      for(const nivel of gs.values())niveles[nivel]++;
+      return {actorId,mejorNivel:Math.min(...gs.values()),niveles,grupos:[...gs.keys()]};
+    });
+  }
+  const COLORES=Object.freeze({1:'#E51900',2:'#FF971C',3:'#EDD300',4:'#00B2B9'});
+  function chip(nivel){return COLORES[nivel]?'<span class="tier-chip" style="background:'+COLORES[nivel]+';color:'+(nivel===1?'#fff':'#1C1A15')+'">Tier '+nivel+'</span>':'';}
+  const api={catalogoVigente,INDUSTRIAS:Object.freeze(INDUSTRIAS),COLORES,chip,ubicados,INDUSTRIAS_PRIORITARIAS,formarGrupos,repartirIndustrias,sortear,actoresDelGrupo,grupoDe,puedeMover,nivel1};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.TierList=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

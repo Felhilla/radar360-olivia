@@ -72,14 +72,29 @@
 };
   var palabrasVacias = 'a al algo algun alguna algunas alguno algunos ante antes bajo cabe cada como con contra cual cuales cuando de del desde donde durante e el ella ellas ello ellos en entre era eramos eran eras eres es esa esas ese eso esos esta estaba estaban estado estamos estan estar estas este esto estos estoy fue fueron ha haber habia habian hacia han hasta hay he hemos la las le les lo los mas me mediante mi mis mismo mucha muchas mucho muchos muy nada ni no nos nosotros nuestra nuestras nuestro nuestros o os otra otras otro otros para pero poco por porque que quien quienes se sea sean segun ser si sido siendo sin so sobre sois solo somos son soy su sus te tiene tienen toda todas todo todos tras tu tus un una unas uno unos usted ustedes va vamos van versus via y ya yo'.split(' ');
   function normalizar(texto){ return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+  function clavePalabra(texto){ return normalizar(String(texto).toLowerCase().normalize('NFC')); }
+  function tokens(texto){ return String(texto || '').match(/[\p{L}\p{M}]+/gu) || []; }
+  function escaparHTML(texto){
+    return String(texto).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
+  }
+  function resaltar(texto, palabra){
+    var clave = clavePalabra(palabra), fin = 0, html = '';
+    String(texto || '').replace(/[\p{L}\p{M}]+/gu, function(token, inicio, original){
+      html += escaparHTML(original.slice(fin, inicio));
+      html += clavePalabra(token) === clave ? '<mark>' + escaparHTML(token) + '</mark>' : escaparHTML(token);
+      fin = inicio + token.length;
+      return token;
+    });
+    return html + escaparHTML(String(texto || '').slice(fin));
+  }
   function preguntaValida(hz, id){ return Object.prototype.hasOwnProperty.call(preguntas, hz) && preguntas[hz].some(function(p){ return p.id === id; }); }
   function contar(respuestas, opciones){
     opciones = opciones || {};
     var vacias = new Set(palabrasVacias.concat(opciones.excluirOlivia === false ? [] : ['olivia']));
     var conteos = new Map();
     respuestas.forEach(function(r){
-      var tokens = String(r.texto || '').toLowerCase().normalize('NFC').match(/[\p{L}\p{M}]+/gu) || [];
-      tokens.forEach(function(forma){
+      tokens(r.texto).forEach(function(token){
+        var forma = token.toLowerCase().normalize('NFC');
         var clave = normalizar(forma);
         if(clave.length < 2 || vacias.has(clave)) return;
         if(!conteos.has(clave)) conteos.set(clave, {frecuencia:0, formas:new Map()});
@@ -92,7 +107,29 @@
       return {palabra:formas[0][0], frecuencia:c.frecuencia};
     }).sort(function(a,b){ return b.frecuencia-a.frecuencia || a.palabra.localeCompare(b.palabra, 'es'); }).slice(0, opciones.maxPalabras === undefined ? 40 : opciones.maxPalabras);
   }
-  var api = {preguntas:preguntas, preguntaValida:preguntaValida, contar:contar, palabrasVacias:palabrasVacias};
+  // Modelo puro compartido por el resumen, la nube y el detalle; no modifica las respuestas.
+  function resultados(respuestas, hz, activa){
+    var propias = respuestas.filter(function(r){ return r.horizonte === hz && !r.facilitador && !r.ejemploCompartido; });
+    var grupos = (preguntas[hz] || []).map(function(p, i){
+      return {id:p.id, texto:p.texto, etiqueta:'P' + (i + 1), respuestas:propias.filter(function(r){ return r.preguntaId === p.id; })};
+    });
+    var antiguas = propias.filter(function(r){ return !preguntaValida(hz, r.preguntaId); });
+    if(antiguas.length) grupos.push({id:'sin-pregunta', texto:'Respuestas anteriores sin pregunta asociada', etiqueta:'Sin pregunta', respuestas:antiguas});
+    var palabras = contar(propias);
+    var seleccion = activa && palabras.find(function(p){ return clavePalabra(p.palabra) === clavePalabra(activa); });
+    var detalle = null;
+    if(seleccion){
+      var clave = clavePalabra(seleccion.palabra);
+      var coincidencias = grupos.map(function(g){
+        return {id:g.id, texto:g.texto, respuestas:g.respuestas.filter(function(r){
+          return tokens(r.texto).some(function(t){ return clavePalabra(t) === clave; });
+        })};
+      }).filter(function(g){ return g.respuestas.length; });
+      detalle = {palabra:seleccion.palabra, frecuencia:seleccion.frecuencia, total:coincidencias.reduce(function(n,g){ return n + g.respuestas.length; },0), grupos:coincidencias};
+    }
+    return {total:propias.length, grupos:grupos, palabras:palabras, activa:seleccion ? clavePalabra(seleccion.palabra) : null, detalle:detalle};
+  }
+  var api = {preguntas:preguntas, preguntaValida:preguntaValida, contar:contar, palabrasVacias:palabrasVacias, clavePalabra:clavePalabra, escaparHTML:escaparHTML, resaltar:resaltar, resultados:resultados};
   if(typeof module === 'object' && module.exports) module.exports = api;
   else root.Ideas = api;
 })(typeof globalThis === 'object' ? globalThis : this);

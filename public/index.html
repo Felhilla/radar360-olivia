@@ -161,6 +161,14 @@
   .entrada-caja input{ width:100%; box-sizing:border-box; font:inherit; padding:11px 12px; border:1px solid var(--line); border-radius:9px; background:var(--panel); color:var(--ink); margin-bottom:12px; }
   .entrada-caja .btn{ width:100%; padding:11px 16px; }
   .entrada-msg{ min-height:1.4em; margin:12px 0 0 !important; color:var(--ink) !important; }
+  /* Los controles de escritura desaparecen al observar, incluso si se regeneran en un sondeo. */
+  body[data-rol="disenador"] :is(.ficha-add,.idea-del,.actor-add-contact,#openAdd,#addPanel,.row-actions button,[data-agregar-contacto],[data-quitar-contacto]){display:none!important}
+  body[data-rol="disenador"] .radar-cell .switch{pointer-events:none}
+  body[data-rol="disenador"] #view-radar::before{content:"Los diseñadores observan el instrumento; no lo editan.";display:block;padding:12px;color:#52606d}
+  #historialDialog{width:min(900px,92vw);max-height:85vh;overflow:auto;border:1px solid var(--line);border-radius:12px;padding:24px;background:var(--panel);color:var(--ink);box-shadow:var(--shadow)}
+  #historialDialog::backdrop{background:rgba(28,26,21,.45)}
+  #historialDialog pre{white-space:pre-wrap;overflow-wrap:anywhere}
+  #historialLista article{border-top:1px solid #ddd;padding:12px 0}
   /* Ejemplos de facilitador: se ven resaltados y no cuentan en los resultados del taller. */
   .ad-facilitador{ display:inline-block; margin:0 4px; padding:1px 8px; border-radius:999px; background:#FF971C; color:#13293D; font-size:.72rem; font-weight:700; line-height:1.5; letter-spacing:.02em; white-space:nowrap; vertical-align:middle; }
   .ad-facilitador[hidden], .ejemplo-compartido[hidden], .nota-ejemplo[hidden]{ display:none; }
@@ -623,8 +631,16 @@
   #view-ideas .ideas-antiguas, #view-ideas .ideas-nube-contenido{ padding:18px; }
   #view-ideas .ideas-resultado{ margin-top:16px; }
   #view-ideas .ideas-nube{ display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:12px 18px; padding:20px 0; }
-  #view-ideas .ideas-nube span{ max-width:100%; overflow-wrap:anywhere; line-height:1.2; font-weight:600; color:var(--ink); }
-  #view-ideas .ideas-nube span:nth-child(3n){ color:var(--hz); }
+  #view-ideas .ideas-nube button{ max-width:100%; overflow-wrap:anywhere; line-height:1.2; font-weight:600; color:var(--ink); }
+  #view-ideas .ideas-nube button:nth-child(3n){ color:var(--hz); }
+  #view-ideas .ideas-nube button{ background:transparent; border:1px solid transparent; border-radius:8px; padding:8px; min-height:44px; cursor:pointer; font-family:inherit; }
+  #view-ideas .ideas-nube button[aria-pressed="true"]{ border-color:var(--ink); background:var(--panel); text-decoration:underline; }
+  #view-ideas .ideas-nube button:focus-visible, #view-ideas .ideas-detalle button:focus-visible{ outline:3px solid var(--ink); outline-offset:3px; }
+  #view-ideas .ideas-detalle{ border:1px solid var(--ink-soft); border-radius:8px; padding:14px; margin:12px 0; overflow-wrap:anywhere; }
+  #view-ideas .ideas-detalle li{ white-space:pre-wrap; margin-bottom:10px; }
+  #view-ideas .ideas-detalle ul{ padding-left:20px; }
+  #view-ideas .ideas-detalle mark{ background:#ffe08a; color:#222; }
+  #view-ideas .ideas-resumen{ font-size:.9rem; overflow-wrap:anywhere; }
   #view-ideas .ideas-nube-contenido summary{ cursor:pointer; color:var(--ink-soft); }
 
 
@@ -806,6 +822,8 @@
 #view-canvas .p5-lista small{color:var(--ink-soft);font-size:.72rem;}
 #view-canvas .p5-editor{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:20px;align-items:start;}
 #view-canvas .p5-form{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0;}
+#view-canvas .p5-personas{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:500px){#view-canvas .p5-personas{grid-template-columns:1fr}}
 #view-canvas .p5-form h3{margin-top:0;}
 #view-canvas .p5-form > label, #view-canvas .p5-form > fieldset{margin-top:14px;}
 #view-canvas fieldset{border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;}
@@ -856,7 +874,7 @@
 #view-matriz .tl-etiqueta{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:8px 4px;color:var(--tl-tinta);background:var(--tl-color);}
 #view-matriz .tl-etiqueta h3{font-size:1.25rem;margin:0;}
 #view-matriz .tl-etiqueta small{font-size:.75rem;margin-top:6px;}
-#view-matriz .tl-cupo{display:block;line-height:1.2;margin-top:2px;}
+.tier-chip{display:inline-block;border-radius:5px;padding:2px 7px;font-size:.78rem;font-weight:700;white-space:nowrap;margin:2px 5px 2px 0;}
 @media(max-width:700px){#view-matriz .tl-etiqueta small{font-size:.62rem;}}
 #view-matriz [data-tl-nivel="1"]{--tl-color:var(--tl-nivel-1);}
 #view-matriz [data-tl-nivel="1"] .tl-etiqueta{color:white;}
@@ -906,7 +924,16 @@
     <p>Taller estratégico &middot; 7 de octubre de 2026. Escribe tu nombre y apellido tal como aparecen en la invitación.</p>
     <label for="entradaNombre">Nombre y apellido</label>
     <input id="entradaNombre" maxlength="80" autocomplete="name" required>
-    <button type="submit" class="btn">Entrar</button>
+    <div id="entradaClaveCampos" hidden>
+      <label for="entradaClave">Contraseña</label><input id="entradaClave" type="password" autocomplete="current-password">
+    </div>
+    <div id="entradaNuevaCampos" hidden>
+      <p>Debes cambiar la contraseña inicial antes de entrar. Escribe la nueva contraseña dos veces.</p>
+      <label for="entradaNueva">Nueva contraseña (mínimo 8 caracteres)</label><input id="entradaNueva" type="password" minlength="8" autocomplete="new-password">
+      <label for="entradaConfirmacion">Confirmar nueva contraseña</label><input id="entradaConfirmacion" type="password" minlength="8" autocomplete="new-password">
+    </div>
+    <button type="submit" class="btn" id="entradaEnviar">Entrar</button>
+    <button type="button" class="btn ghost" id="entradaCancelar" hidden>Elegir otra persona</button>
     <p class="entrada-msg" id="entradaMsg" role="status" aria-live="polite"></p>
   </form>
 </main>
@@ -922,14 +949,22 @@
   </div>
   <div class="top-right">
     <span class="identidad" id="identidad" hidden>
-      <span>Ingresaste como <strong id="identidadNombre"></strong><span class="ad-facilitador" id="identidadFacilitador" hidden>Ad. Facilitador</span></span>
+      <span>Ingresaste como <strong id="identidadNombre"></strong><span class="ad-facilitador" id="identidadFacilitador" hidden>Diseñador</span></span>
       <button type="button" class="btn secondary" id="descargarInforme" hidden>Descargar informe (PDF)</button>
+      <button type="button" class="btn secondary" id="verHistorial" hidden>Control de cambios</button>
       <button type="button" class="btn ghost" id="cambiarPersona">Cambiar de persona</button>
     </span>
     <span class="live-dot" id="liveDot"><span class="d"></span> <span id="liveLabel">conectando…</span></span>
   </div>
 </header>
 
+<dialog id="historialDialog" aria-labelledby="historialTitulo">
+  <button type="button" id="historialCerrar" class="btn ghost">Cerrar</button>
+  <h2 id="historialTitulo">Control de cambios</h2>
+  <label>Actividad <select id="historialActividad"><option value="">Todas</option><option>A1</option><option>A2</option><option>A3</option><option>A4</option><option>A5</option><option>Radar</option><option>Acceso</option></select></label>
+  <label>Buscar <input id="historialBuscar" type="search" placeholder="Persona, actor o cambio"></label>
+  <p id="historialEstado" role="status"></p><div id="historialLista"></div>
+</dialog>
 <!-- LANDING: INICIO HTML -->
 <nav class="ruta-nav" aria-label="Ruta del taller">
   <div id="rutaEnlaces" class="ruta-enlaces"></div>
@@ -959,35 +994,38 @@
 <!-- ACTIVIDAD 5: INICIO HTML -->
 <section class="view" id="view-canvas">
   <h2>Construir rutas de acción</h2>
-  <p>Actividad 5 · Trabajo grupal guiado por Germán y Julio. Para cada actor de la lista confirmada en la Actividad 4 (máximo 10), definan qué aporta Olivia, quién lo lleva, si es de venta inmediata o de posicionamiento, y las acciones para Q4-2026, Q1-2027 y el año 2027.</p>
+  <p>Actividad 5 · Trabajo grupal guiado por Germán y Julio. Para los actores de Tier 1 y 2, con o sin calificación, construyan y actualicen las rutas a su ritmo: qué aporta Olivia, quién lo lleva, si es de venta inmediata o de posicionamiento, y las acciones para Q4-2026, Q1-2027 y el año 2027.</p>
   <p id="p5Estado" role="status" aria-live="polite">Abre esta actividad para cargar las rutas.</p>
   <div class="ejemplo-compartido" data-ejemplo-compartido="a5" hidden></div>
   <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
-  <nav id="p5Lista" class="p5-lista" aria-label="Actores de la lista confirmada"></nav>
+  <label class="field">Buscar cuenta o mercado <input id="p5Buscar" type="search" placeholder="Nombre o mercado"></label>
+  <nav id="p5Lista" class="p5-lista" aria-label="Actores de Tier 1 y 2"></nav>
   <div id="p5Editor"></div>
   <details class="p5-hoja"><summary>Hoja consolidada</summary>
     <button type="button" class="btn secondary" id="p5CSV" disabled>Descargar hoja consolidada (CSV)</button>
     <div id="p5Hoja"></div>
   </details>
-  <p id="p5Historicos"></p>
+  <div id="p5Historicos"></div>
 </section>
 <!-- ACTIVIDAD 5: FIN HTML -->
 <section class="view" id="view-priorizacion">
   <h2>Priorizar actores y mercados</h2>
-  <p>Actividad 4 · Califica el impacto y el esfuerzo de los actores del Nivel 1 de la Actividad 3. Al final se confirma una lista de máximo 10 actores para la Actividad 5.</p>
-  <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: tus calificaciones son ejemplos. Se ven solo en esta pantalla y no cuentan en la matriz, el corte ni la base del taller.</p>
+  <p>Actividad 4 · Califica y actualiza el impacto y el esfuerzo de los actores ubicados en los cuatro niveles de la Actividad 3. Puedes dejar actores sin calificar y volver en otra sesión. Todos los Tier 1 y 2 están disponibles en la Actividad 5.</p>
+  <p class="nota-ejemplo" data-solo-facilitador hidden>Los diseñadores observan el instrumento; no lo editan.</p>
   <div class="ejemplo-compartido" data-ejemplo-compartido="a4" hidden></div>
   <p id="p4Provisional" class="p4-aviso" hidden><strong>Criterios provisionales</strong> · <span></span></p>
   <p id="p4Estado" role="status" aria-live="polite">Abre esta actividad para cargar las calificaciones.</p>
   <nav class="subviews" aria-label="Actividad 4">
     <button data-subview="p4-calificar" class="active">Calificar</button>
     <button data-subview="p4-matriz">Matriz Impacto–Esfuerzo</button>
-    <button data-subview="p4-corte">Corte final</button>
+    <button data-subview="p4-corte">Orden sugerido</button>
   </nav>
   <div class="subview active" id="subview-p4-calificar">
     <div class="p4-filtros">
       <label class="field">Tu nombre <input id="p4Nombre" maxlength="60" autocomplete="name" aria-describedby="p4Identidad"></label>
-      <label class="field">Grupo <select id="p4Categoria"><option value="">Todos los grupos</option></select></label>
+      <label class="field">Tier <select id="p4Tier"><option value="">Todos</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+      <label class="field">Mercado <select id="p4Mercado"><option value="">Todos</option></select></label>
+      <label class="field">Estado <select id="p4FiltroEstado"><option value="">Todos</option><option value="calificados">Calificados</option><option value="sin">Sin calificar</option></select></label>
       <label class="field">Buscar actor <input id="p4Buscar" type="search" placeholder="Nombre o sector"></label>
     </div>
     <p class="hint" id="p4Identidad">Tu nombre se toma de la entrada al sitio; con él puedes cambiar tu calificación. Los nombres y votos se incluyen en la descarga. Las respuestas sin guardar se conservan en esta pestaña mientras esté abierta.</p>
@@ -1000,7 +1038,9 @@
   <div class="subview" id="subview-p4-matriz">
     <h3>Matriz Impacto–Esfuerzo</h3>
     <div class="p4-filtros">
-      <label class="field">Grupo <select id="p4CategoriaMatriz"><option value="">Todos los grupos</option></select></label>
+      <label class="field">Tier <select id="p4TierMatriz"><option value="">Todos</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+      <label class="field">Mercado <select id="p4MercadoMatriz"><option value="">Todos</option></select></label>
+      <label class="field">Estado <select id="p4FiltroEstadoMatriz"><option value="">Todos</option><option value="calificados">Calificados</option><option value="sin">Sin calificar</option></select></label>
       <button class="btn secondary" id="p4CSV" disabled>Descargar resultados (CSV)</button>
     </div>
     <p id="p4Leyenda"></p>
@@ -1015,7 +1055,7 @@
     <details class="tech">
       <summary>Conexión con Herramienta 5 · esquema de datos</summary>
       <div class="tech-body">
-        <p><code>GET /api/priorizacion-votos?resumen=1</code> devuelve un arreglo JSON (vacío si no hay calificaciones). Cada elemento tiene exactamente esta forma:</p>
+        <p><code>GET /api/priorizacion-votos?resumen=1</code> devuelve un arreglo JSON (vacío si no hay calificaciones). Cada elemento incluye estos datos y su ubicación (mejorNivel, niveles y grupos):</p>
         <pre class="schema">{
   "actorId": "mercados-ejemplo",
   "nombre": "Actor de ejemplo",
@@ -1030,7 +1070,7 @@
   "votos": 3
 }</pre>
         <p><code>actorId</code>, <code>nombre</code>, <code>categoria</code>, <code>sector</code> y los campos de <code>cuadrante</code> son cadenas. Categoría: mercados (Empresas) o aliados (Gremios-aliados). Índices: números entre 1 y 5, redondeados a dos decimales (JSON puede omitir ceros finales). Votos: entero positivo. Cada persona pesa igual: se promedian sus índices ponderados completos; no se guardan calificaciones parciales.</p>
-        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Solo se incluyen actores del Nivel 1 del sorteo vigente, aunque estén ocultos del Radar. La matriz y su CSV respetan el filtro de grupo. En Corte final se confirma la lista de máximo 10 actores para la Actividad 5.</p>
+        <p>La clasificación usa el promedio sin redondear y considera alto un índice mayor o igual al umbral. Se incluyen actores ubicados en Tier 1–4 del sorteo vigente, aunque estén ocultos del Radar. La matriz y su CSV respetan los filtros de Tier, mercado y estado. El Orden sugerido es de solo lectura; todos los Tier 1 y 2 pasan a la Actividad 5.</p>
         <p>La fuente única es <code>GET /api/priorizacion-votos?criterios=1</code>: criterios, pesos, escalas, umbral y cuadrantes. <code>GET /api/priorizacion-votos</code> devuelve votos completos. PUT reemplaza el voto identificado por actor y nombre; DELETE recibe <code>{actorId, votante}</code>. Sin autenticación, como Gremios.</p>
         <p>Nota metodológica: el Excel menciona una redistribución para «no aplica» que el documento no desarrolla. Se exigen diez respuestas de 1 a 5, sin redistribución. Si no tienes información suficiente, deja ese actor sin calificar.</p>
         <div id="p4Metodologia"></div>
@@ -1038,27 +1078,12 @@
     </details>
   </div>
   <div class="subview" id="subview-p4-corte">
-    <h3>Corte final</h3>
-    <div id="p4Confirmada"></div>
+    <h3>Orden sugerido</h3>
     <p id="p4CorteNota"></p>
     <div id="p4FuturoCorte" class="p4-cuadrantes"></div>
-    <p id="p4CorteEstado" role="status" aria-live="polite"></p>
-    <div id="p4CorteAdmin" hidden>
-      <button type="button" class="btn" id="p4Proponer">Proponer los 10 primeros</button>
-      <h4>Borrador de la lista</h4>
-      <ol id="p4Borrador"></ol>
-      <p id="p4Validacion"></p>
-      <button type="button" class="btn" id="p4Confirmar">Confirmar lista</button>
-      <button type="button" class="btn secondary" id="p4QuitarConfirmacion">Quitar confirmación</button>
-      <div id="p4Confirmacion" hidden>
-        <p id="p4ConfirmacionTexto"></p>
-        <button type="button" class="btn" id="p4Aceptar">Confirmar cambio</button>
-        <button type="button" class="btn secondary" id="p4Cancelar">Cancelar</button>
-      </div>
-    </div>
-    <button type="button" class="btn secondary" id="p4CorteCSV">Descargar corte (CSV)</button>
-    <div class="p4-tabla" tabindex="0" role="region" aria-label="Tabla de corte desplazable">
-      <table class="actors"><caption>Orden para el corte final</caption><thead><tr><th>Posición</th><th>Actor</th><th>Cuadrante</th><th>Índice de impacto</th><th>Índice de esfuerzo</th><th>Calificaciones</th><th>Grupos que lo eligieron</th><th>En la lista confirmada</th><th id="p4AccionesTitulo" hidden>Borrador</th></tr></thead><tbody id="p4CorteFilas"></tbody></table>
+    <button type="button" class="btn secondary" id="p4CorteCSV">Descargar orden sugerido (CSV)</button>
+    <div class="p4-tabla" tabindex="0" role="region" aria-label="Tabla del orden sugerido">
+      <table class="actors"><caption>Orden sugerido</caption><thead><tr><th>Posición</th><th>Actor</th><th>Tier</th><th>Cuadrante</th><th>Índice de impacto</th><th>Índice de esfuerzo</th><th>Calificaciones</th><th>Grupos que lo eligieron</th></tr></thead><tbody id="p4CorteFilas"></tbody></table>
     </div>
   </div>
 </section>
@@ -1162,9 +1187,9 @@
 
 <section class="view" id="view-matriz">
   <h2>Tier list de actores</h2>
-  <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. Solo los del Nivel 1 pasan a la Actividad 4. Por grupo: hasta 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales, y hasta 3 actores de los demás mercados, con cupos separados.</p>
+  <p>Actividad 3 · En parejas, ordena los actores de tus industrias en cuatro niveles. No hay límite por nivel. Todos los actores ubicados pasan a la Actividad 4; puedes volver a clasificarlos en futuras sesiones.</p>
   <p id="tlEstado" role="status" aria-live="polite"></p>
-  <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: ves los tableros de los grupos sin modificarlos. Para mostrar un ejemplo elige «Ejemplo · Ad. Facilitador» en «Ver grupo»; ese tablero se ve solo en esta pantalla y no cuenta para el Nivel 1.</p>
+  <p class="nota-ejemplo" data-solo-facilitador hidden>Los diseñadores observan el instrumento; no lo editan.</p>
   <div class="ejemplo-compartido" data-ejemplo-compartido="a3" hidden></div>
   <div id="tlAdmin" hidden>
     <fieldset><legend>Participantes presentes</legend><div id="tlPresentes" class="tl-presentes"></div></fieldset>
@@ -1225,7 +1250,7 @@
     <strong>Actividad 1 &middot; Alinear el juego (8:00–8:15): </strong>
     "¿Cuál es el objetivo que busca Olivia en Q4-2026, Q1-2027 y el año 2027 en materia de acceso a mercado y consolidación en Colombia?" Se llena una ficha por horizonte, empezando por Q4-2026.
   </div>
-  <p class="nota-ejemplo" data-solo-facilitador hidden><span class="ad-facilitador">Ad. Facilitador</span> Estás como facilitador: tus respuestas son ejemplos. Se ven solo en esta pantalla, resaltadas, y no entran a los resultados ni a la base del taller.</p>
+  <p class="nota-ejemplo" data-solo-facilitador hidden>Los diseñadores observan el instrumento; no lo editan.</p>
 
   <nav class="subviews">
     <button data-subview="ideas-corto" class="active">Q4-2026</button>
@@ -1321,20 +1346,22 @@
 <script src="ideas.js"></script>
 <script src="api-supabase.js"></script>
 <script src="asistentes.js"></script>
+<script src="acceso.js"></script>
 <script src="informe.js"></script>
+<script src="historial.js"></script>
 <script>
-// Etiqueta de los ejemplos que registra un facilitador (viven solo en su navegador; ver api-supabase.js).
-window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" title="Ejemplo del facilitador: no se guarda en la base del taller ni cuenta en los resultados">Ad. Facilitador</span>'; };
+// Etiqueta de los ejemplos históricos compartidos, excluidos de los resultados.
+window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" title="Ejemplo histórico del diseñador: no cuenta en los resultados">Diseñador</span>'; };
 // EJEMPLOS COMPARTIDOS: registros que un facilitador dejó en la base como ejemplo ilustrativo (ruta /api/ejemplos).
-// Se muestran a todos, marcados «Ad. Facilitador», y no cuentan en ningún resultado del taller.
+// Se muestran a todos, marcados «Diseñador», y no cuentan en ningún resultado del taller.
 (function(){
   var cache = null, cargando = null;
   function e(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-  function etiqueta(){ return window.etiquetaFacilitador ? window.etiquetaFacilitador() : 'Ad. Facilitador'; }
+  function etiqueta(){ return window.etiquetaFacilitador ? window.etiquetaFacilitador() : 'Diseñador'; }
   async function json(url){ var r = await fetch(url, {cache:'no-store'}); if(!r.ok) throw Error(url); return r.json(); }
   async function cargar(){
     if(cache) return cache;
-    if(!cargando) cargando = Promise.all([json('/api/ejemplos'), json('data/actores.json'), json('priorizacion-criterios.json')])
+    if(!cargando) cargando = Promise.all([json('/api/ejemplos'), json('/api/catalogo-actores'), json('priorizacion-criterios.json')])
       .then(function(d){ cache = {ej:d[0], actores:d[1], cr:d[2]}; return cache; }).catch(function(){ cargando = null; return null; });
     return cargando;
   }
@@ -1342,7 +1369,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   function indice(v, cr, eje){ return cr[eje].reduce(function(n, k){ return n + (v[eje] && v[eje][k.id] || 0) * k.peso; }, 0) / 100; }
   function num(n){ return n.toFixed(2).replace('.', ','); }
   function html(c, act){
-    var ej = c.ej, cab = '<h3>Ejemplo ilustrativo ' + etiqueta() + '</h3><small>Lo registró un facilitador para mostrar cómo se hace. No cuenta en los resultados del taller ni en el informe.</small>';
+    var ej = c.ej, cab = '<h3>Ejemplo ilustrativo ' + etiqueta() + '</h3><small>Lo registró un diseñador para mostrar cómo se hace. No cuenta en los resultados del taller ni en el informe.</small>';
     if(act === 'a3'){
       if(!ej.tierlist.length) return '';
       var pareja = ej.sorteo && ej.sorteo.grupos && ej.sorteo.grupos[0] ? '<p><strong>Pareja del ejemplo:</strong> ' + e(ej.sorteo.grupos[0].integrantes.join(' + ')) + '</p>' : '';
@@ -1390,15 +1417,20 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     document.body.classList.toggle("sin-acceso", !persona);
     $("identidad").hidden = !persona;
     $("identidadNombre").textContent = persona ? persona.nombre : "";
-    $("identidadFacilitador").hidden = !(persona && persona.rol === "administrador");
-    $("descargarInforme").hidden = !(persona && persona.rol === "administrador");
-    document.querySelectorAll("[data-solo-facilitador]").forEach(function(el){ el.hidden = !(persona && persona.rol === "administrador"); });
+    const observa=persona?.rol==='disenador', privilegiado=observa||persona?.rol==='administrador';
+    document.body.dataset.rol=persona?.rol||'';
+    document.querySelectorAll('dialog[open]').forEach(el=>el.close());
+    $("identidadFacilitador").hidden = !privilegiado;
+    $("identidadFacilitador").textContent = observa?'Diseñador':'Administrador';
+    $("verHistorial").hidden = !privilegiado;
+    $("descargarInforme").hidden = !privilegiado;
+    document.querySelectorAll("[data-solo-facilitador]").forEach(function(el){ el.hidden = !observa; });
     document.dispatchEvent(new CustomEvent("identidad:cambio", {detail:persona}));
     if(!persona) setTimeout(function(){ $("entradaNombre").focus(); }, 0);
   }
   var MENSAJES = {
     corto:"Escribe al menos tu nombre y un apellido.",
-    ninguna:"Ese nombre no está en la lista de asistentes del taller. Revisa cómo lo escribiste o pide ayuda a los facilitadores.",
+    ninguna:"Ese nombre no está en la lista de asistentes del taller. Revisa cómo lo escribiste o pide ayuda a los diseñadores.",
     ambigua:"Ese nombre coincide con más de una persona de la lista. Escribe tu nombre completo."
   };
   function cargarLista(){ return fetch("asistentes-config.json", {cache:"no-store"}).then(function(r){ return r.json(); }).then(function(c){ config = c; return c; }); }
@@ -1409,17 +1441,38 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     // Si el nombre no aparece, se vuelve a leer la lista: así una persona agregada después de abrir la página entra sin recargar.
     if(!r.ok && r.motivo === "ninguna"){ try{ r = Asistentes.identificar(nombre, await cargarLista()); }catch(err){} }
     if(!r.ok){ $("entradaMsg").textContent = MENSAJES[r.motivo]; return; }
-    $("entradaMsg").textContent = ""; $("entradaNombre").value = "";
-    guardar(r.persona.nombre); aplicar(r.persona);
+    const boton=$("entradaEnviar");if(boton.disabled)return;boton.disabled=true;
+    try{
+      if(r.persona.rol==='administrador'){
+        if(window.Acceso.pendiente?.nombre===r.persona.nombre){
+          await window.Acceso.cambiar($("entradaNueva").value,$("entradaConfirmacion").value,config);
+        }else{
+          $("entradaClaveCampos").hidden=false;
+          if(!$("entradaClave").value){$("entradaMsg").textContent="Escribe tu contraseña de administrador.";$("entradaClave").focus();return;}
+          const resultado=await window.Acceso.verificar(r.persona,$("entradaClave").value,config);
+          if(resultado.cambioObligatorio){
+            $("entradaClaveCampos").hidden=true;$("entradaNuevaCampos").hidden=false;$("entradaNombre").readOnly=true;$("entradaCancelar").hidden=false;$("entradaClave").value="";
+            $("entradaMsg").textContent="Crea una contraseña nueva para continuar.";$("entradaNueva").focus();return;
+          }
+        }
+      }
+      $("entradaMsg").textContent="";limpiarEntrada();guardar(r.persona.nombre);aplicar(r.persona);
+    }catch(err){$("entradaMsg").textContent=err.message;}
+    finally{boton.disabled=false;}
   });
-  $("cambiarPersona").addEventListener("click", function(){ guardar(""); aplicar(null); });
+  function limpiarEntrada(){
+    ["entradaNombre","entradaClave","entradaNueva","entradaConfirmacion"].forEach(id=>$(id).value="");
+    $("entradaCancelar").hidden=true;$("entradaNombre").readOnly=false;$("entradaClaveCampos").hidden=true;$("entradaNuevaCampos").hidden=true;
+  }
+  $("entradaCancelar").addEventListener("click",function(){window.Acceso.cerrar();limpiarEntrada();$("entradaMsg").textContent="";});
+  $("cambiarPersona").addEventListener("click", function(){ window.Acceso.cerrar();limpiarEntrada();guardar(""); aplicar(null); });
   $("descargarInforme").addEventListener("click", async function(){
-    var boton = this; if(!window.Identidad || window.Identidad.rol !== "administrador") return;
+    var boton = this; if(!window.Identidad || !["administrador","disenador"].includes(window.Identidad.rol)) return;
     boton.disabled = true; var texto = boton.textContent; boton.textContent = "Generando informe…";
     try{
       if(!window.jspdf) await new Promise(function(ok, falla){ var sc = document.createElement("script"); sc.src = "vendor/jspdf.umd.min.js"; sc.onload = ok; sc.onerror = function(){ falla(new Error("No se pudo cargar el generador de PDF.")); }; document.head.appendChild(sc); });
       var leer = async function(url){ var r = await fetch(url, {cache:"no-store"}); var d = await r.json(); if(!r.ok) throw new Error(d.error || "No se pudo leer " + url); return d; };
-      var datos = await Informe.recopilar(leer, {Embudo:Embudo, Ideas:Ideas}, window.ordenarSectoresInforme);
+      var datos = await Informe.recopilar(leer, {Embudo:Embudo, Ideas:Ideas, TierList:TierList, Rutas:Rutas}, window.ordenarSectoresInforme);
       Informe.generar(datos, window.jspdf.jsPDF).save(Informe.nombreArchivo(datos.generado));
     }catch(err){ alertaSuave("No se pudo generar el informe: " + err.message); }
     finally{ boton.disabled = false; boton.textContent = texto; }
@@ -1427,7 +1480,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   function alertaSuave(t){ var el = $("toast"); if(!el) return; el.textContent = t; el.hidden = false; setTimeout(function(){ el.hidden = true; }, 6000); }
   cargarLista().then(function(c){
     var guardada = leerGuardada(), r = guardada ? Asistentes.identificar(guardada, c) : null;
-    aplicar(r && r.ok ? r.persona : null);
+    aplicar(r && r.ok && (r.persona.rol!=="administrador" || window.Acceso.sesion(r.persona.nombre)) ? r.persona : null);
   }).catch(function(){ $("entradaMsg").textContent = "No se pudo cargar la lista de asistentes. Revisa la conexión y recarga la página."; });
 })();
 // ENTRADA: FIN JS
@@ -2336,7 +2389,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   // ACTIVIDAD 2 FICHA: carga independiente del avance del taller.
   var actoresInformePromesa;
   function cargarActoresInforme(){
-    if(!actoresInformePromesa) actoresInformePromesa=fetch('data/actores.json',{cache:'no-store'}).then(function(r){if(!r.ok) throw Error('informe');return r.json();});
+    actoresInformePromesa=fetch('/api/catalogo-actores',{cache:'no-store'}).then(function(r){if(!r.ok) throw Error('informe');return r.json();});
     return actoresInformePromesa;
   }
   async function leerContactosRuta(ruta){
@@ -2353,7 +2406,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       var lecturas=await Promise.allSettled([leerContactosRuta('contactos-informe'),leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id))]);
       var sugeridos=lecturas[0].status==='fulfilled'?lecturas[0].value:[], contactos=lecturas[1].status==='fulfilled'?lecturas[1].value:[];
       var administrador=!!(window.Identidad && window.Identidad.rol==='administrador');
-      host.innerHTML=FichaActor.htmlFicha(actor,{omitirDescripcion:true,contactoInforme:sugeridos.filter(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad,puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
+      host.innerHTML=FichaActor.htmlFicha(actor,{omitirDescripcion:true,contactoInforme:sugeridos.filter(function(c){return c.actor_id===a.id;}),contactos:contactos,puedeAgregar:!!window.Identidad && window.Identidad.rol!=='disenador',puedeQuitar:administrador,aviso:lecturas.some(function(r){return r.status==='rejected';})?'No se pudieron cargar todos los contactos. Intenta abrir la ficha de nuevo.':''});
       var lista=host.querySelector('[data-contactos-lista]'), aviso=host.querySelector('[data-contactos-aviso]');
       async function refrescar(){
         try {contactos=await leerContactosRuta('contactos?actorId='+encodeURIComponent(a.id));lista.innerHTML=FichaActor.htmlContactos(contactos,administrador);}
@@ -2368,7 +2421,6 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       });
       var form=host.querySelector('form'), abrir=host.querySelector('[data-agregar-contacto]');
       if(!form) return;
-      if(administrador) form.insertAdjacentHTML('afterbegin','<p class="nota-ejemplo">'+window.etiquetaFacilitador()+' Como facilitador, el contacto que agregues es un ejemplo: solo se ve en esta pantalla y no se registra en la base del taller.</p>');
       function plegar(){form.reset();form.hidden=true;abrir.setAttribute('aria-expanded','false');form.querySelectorAll('[data-error], [data-contacto-error]').forEach(function(el){el.textContent='';});}
       abrir.addEventListener('click',function(){form.hidden=false;abrir.setAttribute('aria-expanded','true');form.elements.nombre.focus();});
       form.querySelector('[data-cancelar-contacto]').addEventListener('click',plegar);
@@ -2531,13 +2583,13 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       var tr = document.createElement("tr");
       if(a.estado === "descartado") tr.className = "discarded";
 
-      if(editingId === a.id){
+      if(editingId === a.id && window.Identidad?.rol!=='disenador'){
         tr.appendChild(td('<input type="text" class="e-nombre" value="'+esc(a.nombre)+'">'));
         tr.appendChild(td(selectHtml("e-categoria", CATS, CAT_ORDER, a.categoria)));
         tr.appendChild(td('<input type="text" class="e-sector" value="'+esc(a.sector||"")+'">'));
         tr.appendChild(td(selectHtml("e-confianza", CONF, CONF_ORDER, a.confianza)));
         tr.appendChild(td('<textarea class="e-justificacion">'+esc(a.justificacion||"")+'</textarea>'));
-        tr.appendChild(td(selectHtml("e-estado", EST, ["verificado","por_validar","agregado_taller","descartado"], a.estado)));
+        tr.appendChild(td(selectHtml("e-estado", EST, ["verificado","por_validar","agregado_taller",...(window.Identidad?.rol==='administrador'?["descartado"]:[])], a.estado)));
         tr.appendChild(radarCell(a));
         tr.appendChild(td('<span class="mono" style="font-size:.76rem;">'+fmtTime(a.updatedAt)+'</span>'));
         var tdA = document.createElement("td"); tdA.className="row-actions";
@@ -2559,9 +2611,9 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         if(a.estado === "por_validar"){
           tdA2.appendChild(btn("Validar", function(){ patchActor(a.id, {estado:"agregado_taller"}); }, "ghost"));
         }
-        if(a.estado !== "descartado"){
+        if(a.estado !== "descartado" && window.Identidad?.rol==='administrador'){
           tdA2.appendChild(btn("Descartar", function(){ patchActor(a.id, {estado:"descartado"}); }, "ghost"));
-        } else {
+        } else if(a.estado === "descartado") {
           tdA2.appendChild(btn("Restaurar", function(){ patchActor(a.id, {estado:"verificado"}); }, "ghost"));
         }
         tr.appendChild(tdA2);
@@ -2577,6 +2629,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     }
   }
 
+  document.addEventListener('identidad:cambio',()=>{editingId=null;renderTable();});
   function radarCell(a){
     var t = document.createElement("td");
     var id = "radar-" + a.id;
@@ -2584,6 +2637,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     var label = document.createElement("label"); label.className = "switch"; label.htmlFor = id;
     var input = document.createElement("input");
     input.type = "checkbox"; input.id = id; input.checked = a.mostrarEnRadar !== false;
+    input.disabled = window.Identidad?.rol==='disenador';
     input.addEventListener("change", function(){ patchActor(a.id, {mostrarEnRadar: input.checked}); });
     label.appendChild(input);
     label.appendChild(Object.assign(document.createElement("span"), {className:"track"}));
@@ -2868,7 +2922,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       '<dt>Cuentas objetivo dentro</dt><dd>'+(g.cuentas ? esc(g.cuentas) : vacio)+'</dd>'+
       '<dt>Qué ofrecer</dt><dd>'+(g.oferta ? esc(g.oferta) : vacio)+'</dd></dl>'+
       '<fieldset><legend>Horizonte para activar '+esc(g.nombre)+'</legend>'+GREMIOS_HORIZONTES.map(function(h){ return '<button type="button" class="gremio-voto" data-gremio="'+esc(g.id)+'" data-valor="'+h.valor+'" aria-pressed="false" disabled style="--voto-color:'+h.color+'">'+h.etiqueta+'</button>'; }).join('')+'</fieldset>'+
-      (taller ? '<button type="button" class="btn ghost gremio-borrar" data-borrar="'+esc(g.id)+'">'+(gremiosBorrarPendiente === g.id ? 'Confirmar: eliminar gremio y sus votos' : 'Eliminar gremio')+'</button>' : '')+
+      (taller && window.Identidad?.rol==='administrador' ? '<button type="button" class="btn ghost gremio-borrar" data-borrar="'+esc(g.id)+'">'+(gremiosBorrarPendiente === g.id ? 'Confirmar: eliminar gremio y sus votos' : 'Eliminar gremio')+'</button>' : '')+
       '</article>';
   }
   function renderGremiosCards(){
@@ -2995,6 +3049,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   }
 
   function deleteIdea(id){
+    if(window.Identidad?.rol!=='administrador')return;
     return fetch(API_IDEAS, { method:"DELETE", headers:{"content-type":"application/json"}, body: JSON.stringify({id:id}) })
       .then(function(res){
         if(!res.ok) return res.json().then(function(e){ throw new Error(e.error || ("http_"+res.status)); });
@@ -3025,31 +3080,56 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       del.setAttribute("aria-label", "Eliminar respuesta: " + s.texto);
       del.textContent = "×";
       del.addEventListener("click", function(){ deleteIdea(s.id); });
-      chip.appendChild(del);
+      if(window.Identidad?.rol==='administrador')chip.appendChild(del);
       body.appendChild(chip);
     });
   }
 
+  var ideasPalabrasActivas = {};
   function renderResultadosIdeas(){
     HORIZON_ORDER.forEach(function(hz){
-      // Los ejemplos del facilitador no entran a los resultados.
-      var respuestas = (ideasState.stickers || []).filter(function(s){ return s.horizonte === hz && !s.facilitador; });
-      var palabras = Ideas.contar(respuestas);
+      var modelo = Ideas.resultados(ideasState.stickers || [], hz, ideasPalabrasActivas[hz]);
+      ideasPalabrasActivas[hz] = modelo.activa;
+      var palabras = modelo.palabras;
       var host = document.getElementById("ideasNube-" + hz);
+      var foco = document.activeElement;
+      var focoId = foco && host.contains && host.contains(foco) ? foco.id : null;
+      var escape = Ideas.escaparHTML;
+      var resumen = '<p class="ideas-resumen">' + modelo.total + ' respuestas' + modelo.grupos.map(function(g){
+        return ' · <span title="' + escape(g.texto) + '">' + g.etiqueta + ': ' + g.respuestas.length + '</span>';
+      }).join('') + '</p><details><summary>Preguntas de este horizonte</summary><ul>' + modelo.grupos.map(function(g){
+        return '<li>' + g.etiqueta + ': ' + escape(g.texto) + ' (' + g.respuestas.length + ' respuestas)</li>';
+      }).join('') + '</ul></details>';
       if(!palabras.length){
-        host.innerHTML = '<p class="ideas-empty">' + (respuestas.length ? 'Las respuestas aún no contienen palabras significativas para la nube.' : 'Aún no hay respuestas en este horizonte. Responde las preguntas guía para construir la nube.') + '</p>';
+        host.innerHTML = resumen + '<p class="ideas-empty">' + (modelo.total ? 'Las respuestas aún no contienen palabras significativas para la nube.' : 'Aún no hay respuestas en este horizonte. Responde las preguntas guía para construir la nube.') + '</p>';
         return;
       }
-      // Filas flexibles centradas: el navegador coloca las palabras sin superposición,
-      // incluso al cambiar el ancho, la fuente o el tamaño de texto del dispositivo.
-      // Tamaño entre 1 y 3 rem según la frecuencia relativa; si todas empatan, tamaño medio.
       var fMax = palabras[0].frecuencia, fMin = palabras[palabras.length - 1].frecuencia;
-      host.innerHTML = '<div class="ideas-nube" aria-hidden="true">' + palabras.map(function(p){
+      host.innerHTML = resumen + '<div class="ideas-nube" role="group" aria-label="Palabras: selecciona para ver respuestas">' + palabras.map(function(p){
+        var clave = Ideas.clavePalabra(p.palabra);
         var tam = fMax === fMin ? 1.5 : 1 + 2 * (p.frecuencia - fMin) / (fMax - fMin);
-        return '<span style="font-size:' + tam.toFixed(2) + 'rem">' + esc(p.palabra) + '</span>';
-      }).join('') + '</div><details><summary>Palabras y frecuencias (' + palabras.length + ')</summary><ul>' + palabras.map(function(p){
-        return '<li>' + esc(p.palabra) + ': ' + p.frecuencia + '</li>';
+        return '<button type="button" id="ideasPalabra-' + hz + '-' + escape(clave) + '" data-palabra="' + escape(clave) + '" aria-pressed="' + (modelo.activa === clave) + '" aria-controls="ideasDetalle-' + hz + '" style="font-size:' + tam.toFixed(2) + 'rem">' + escape(p.palabra) + '</button>';
+      }).join('') + '</div><div id="ideasDetalle-' + hz + '">' + (modelo.detalle ?
+        '<section class="ideas-detalle" aria-labelledby="ideasDetalleTitulo-' + hz + '"><h4 id="ideasDetalleTitulo-' + hz + '">«' + escape(modelo.detalle.palabra) + '» aparece ' + modelo.detalle.frecuencia + ' veces en ' + modelo.detalle.total + ' respuestas</h4><button type="button" class="btn" id="ideasCerrar-' + hz + '" data-cerrar-detalle>Cerrar detalle</button>' + modelo.detalle.grupos.map(function(g){
+          return '<h5>' + escape(g.texto) + '</h5><ul>' + g.respuestas.map(function(r){ return '<li>' + Ideas.resaltar(r.texto, modelo.detalle.palabra) + '</li>'; }).join('') + '</ul>';
+        }).join('') + '</section>' : '') + '</div><details><summary>Palabras y frecuencias (' + palabras.length + ')</summary><ul>' + palabras.map(function(p){
+        return '<li>' + escape(p.palabra) + ': ' + p.frecuencia + '</li>';
       }).join('') + '</ul></details>';
+      host.onclick = function(e){
+        var boton = e.target.closest('button');
+        if(!boton || !host.contains(boton)) return;
+        var anterior = ideasPalabrasActivas[hz];
+        if(boton.hasAttribute('data-palabra')) ideasPalabrasActivas[hz] = boton.dataset.palabra;
+        else if(boton.hasAttribute('data-cerrar-detalle')) ideasPalabrasActivas[hz] = null;
+        else return;
+        renderResultadosIdeas();
+        var destino = document.getElementById(ideasPalabrasActivas[hz] ? 'ideasCerrar-' + hz : 'ideasPalabra-' + hz + '-' + anterior);
+        if(destino) destino.focus();
+      };
+      if(focoId){
+        var restaurado = document.getElementById(focoId);
+        if(restaurado) restaurado.focus();
+      }
     });
   }
 
@@ -3097,13 +3177,10 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     const industria=id=>TierList.INDUSTRIAS.find(i=>i.id===id)?.nombre||id;
     const subnombre=id=>({energia:'Energía',servicios_publicos:'Servicios públicos',recursos_naturales:'Recursos naturales'}[id]||'');
     const abreviada=a=>subnombre(a.subindustria)||({financiero:'Financiero',retail:'Retail y consumo',industrial:'Industrial',telecom:'Telecom',salud:'Salud y riesgos laborales',gremios_publico:'Gremios y sector público'}[a.industria]||industria(a.industria));
-    // Tablero de ejemplo del facilitador: todas las industrias; vive solo en su navegador y no cuenta para el Nivel 1.
-    const EJEMPLO={id:'ejemplo-facilitador',integrantes:['Ejemplo · Ad. Facilitador'],industrias:TierList.INDUSTRIAS.map(i=>i.id)};
-    const esEjemplo=g=>!!g&&g.id===EJEMPLO.id;
-    const etiqueta=()=>window.etiquetaFacilitador?window.etiquetaFacilitador():'<span class="ad-facilitador">Ad. Facilitador</span>';
-    const grupo=()=>admin()?(seleccionado===EJEMPLO.id||!sorteo?EJEMPLO:(sorteo.grupos.find(g=>g.id===seleccionado)||sorteo.grupos[0])):TierList.grupoDe(sorteo,identidad());
-    // Un participante mueve en su grupo cuando la actividad empezó; el facilitador solo mueve en su tablero de ejemplo.
-    const editable=g=>esEjemplo(g)?admin():!!sorteo?.iniciado&&!admin();
+    const puedeVerGrupos=()=>['administrador','disenador'].includes(window.Identidad?.rol);
+    const grupo=()=>puedeVerGrupos()?(sorteo?.grupos.find(g=>g.id===seleccionado)||sorteo?.grupos[0]):TierList.grupoDe(sorteo,identidad());
+    // El administrador edita cualquier grupo; el participante, el suyo después del inicio.
+    const editable=g=>!!g&&(admin()||(window.Identidad?.rol==='participante'&&!!sorteo?.iniciado&&g.integrantes.includes(identidad())));
     const aviso=t=>{$('tlEstado').textContent=t;};
     async function api(url,method,body){
       const r=await fetch(url,{cache:'no-store',...(method?{method,headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{})});
@@ -3111,10 +3188,10 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     }
     function controles(){
       const presentes=$('tlPresentes').querySelectorAll('input:checked').length;
-      $('tlSortear').disabled=ocupado||cargando||presentes<2||!!sorteo?.iniciado;
+      $('tlSortear').disabled=!admin()||ocupado||cargando||presentes<2||!!sorteo?.iniciado;
       $('tlSortear').textContent=sorteo?.iniciado?'La actividad ya empezó':'Sortear parejas';
-      $('tlIniciar').disabled=ocupado||cargando||!sorteo||!!sorteo.iniciado;
-      $('tlReemplazar').disabled=ocupado;
+      $('tlIniciar').disabled=!admin()||ocupado||cargando||!sorteo||!!sorteo.iniciado;
+      $('tlReemplazar').disabled=!admin()||ocupado;
       $('tlGrupo').disabled=ocupado;
     }
     function tarjeta(a,nivel){
@@ -3122,16 +3199,16 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       return '<article class="tl-card" data-tl-actor="'+esc(a.id)+'" draggable="'+(!des)+'"><button type="button" class="tl-ficha" data-tl-ficha="'+esc(a.id)+'" aria-label="Abrir ficha de '+esc(a.nombre)+'"><img src="'+esc(getLogo({id:a.id,categoria:a.tipo==='gremio'?'aliados':'mercados'}))+'" alt=""><strong>'+esc(a.nombre)+'</strong></button><small>'+(a.tipo==='gremio'?'<span class="tl-gremio">Gremio</span> · ':'')+esc(abreviada(a))+'</small><div class="tl-mover">'+[1,2,3,4].map(n=>'<button type="button" data-tl-mover="'+esc(a.id)+'" data-nivel="'+n+'" aria-label="Mover '+esc(a.nombre)+' al Nivel '+n+'" aria-pressed="'+(nivel===n)+'"'+des+'>'+n+'</button>').join('')+(nivel?'<button type="button" data-tl-mover="'+esc(a.id)+'" data-nivel="0" aria-label="Quitar nivel de '+esc(a.nombre)+'" title="Quitar nivel"'+des+'>×</button>':'')+'</div></article>';
     }
     function render(){
-      $('tlAdmin').hidden=!admin();
-      if(admin()){
+      $('tlAdmin').hidden=!puedeVerGrupos();
+      if(puedeVerGrupos()){
         $('tlResultado').innerHTML=(sorteo?.grupos||[]).map(g=>'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong> · '+g.industrias.map(i=>esc(industria(i))).join(' · ')+' · '+TierList.actoresDelGrupo(g,actores).length+' actores</p>').join('');
         const g=grupo();seleccionado=g?.id||'';
-        $('tlGrupo').innerHTML=[EJEMPLO,...(sorteo?.grupos||[])].map(g=>'<option value="'+esc(g.id)+'" '+(g.id===seleccionado?'selected':'')+'>'+g.integrantes.map(esc).join(' + ')+'</option>').join('');
+        $('tlGrupo').innerHTML=(sorteo?.grupos||[]).map(g=>'<option value="'+esc(g.id)+'" '+(g.id===seleccionado?'selected':'')+'>'+g.integrantes.map(esc).join(' + ')+'</option>').join('');
       }
       controles();
       const g=grupo();
-      $('tlMiGrupo').innerHTML=esEjemplo(g)?'<p class="nota-ejemplo"><strong>Tablero de ejemplo</strong> '+etiqueta()+'<br>Todas las industrias. Se ve solo en esta pantalla y no cuenta para el Nivel 1 ni la Actividad 4.</p>':!sorteo?'<p>Espera a que el facilitador sortee las parejas.</p>':!g?'<p>No estás en ningún grupo del sorteo. Avísale al facilitador.</p>':'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong><br>'+g.industrias.map(i=>esc(industria(i))).join(' · ')+'</p>'+(!sorteo.iniciado?'<p>El facilitador todavía no inicia la actividad</p>':'')+(admin()?'<p class="hint">Vista de solo lectura: los facilitadores no modifican los tableros de los grupos.</p>':'');
-      const tb=$('tlTablero');tb.className=String(tb.className||'').replace(/\s*es-ejemplo/g,'')+(esEjemplo(g)?' es-ejemplo':'');
+      $('tlMiGrupo').innerHTML=!sorteo?'<p>Espera a que el administrador sortee las parejas.</p>':!g?'<p>No estás en ningún grupo del sorteo. Avísale al administrador.</p>':'<p><strong>'+g.integrantes.map(esc).join(' + ')+'</strong><br>'+g.industrias.map(i=>esc(industria(i))).join(' · ')+'</p>'+(!sorteo.iniciado?'<p>El administrador todavía no inicia la actividad</p>':'')+(window.Identidad?.rol==='disenador'?'<p class="hint">Los diseñadores observan el instrumento; no lo editan.</p>':'');
+      const tb=$('tlTablero');tb.className=String(tb.className||'').replace(/\s*es-ejemplo/g,'');
       if(!g)$('tlTablero').innerHTML='';
       else{
         const lista=TierList.actoresDelGrupo(g,actores), colocaciones=filas.filter(f=>f.grupoId===g.id), nivelDe=a=>colocaciones.find(f=>f.actorId===a.id)?.nivel||0;
@@ -3146,13 +3223,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
             return heading+tarjeta(a,n);
           }).join('');
           const titulo=n?'Nivel '+n:'Sin clasificar';
-          const prioritario=a=>TierList.INDUSTRIAS_PRIORITARIAS.includes(a.industria);
-          const tienePrioritarios=lista.some(prioritario), tieneOtros=lista.some(a=>!prioritario(a));
-          const cuentaPrioritarios=lista.filter(a=>nivelDe(a)===1&&prioritario(a)).length+'/'+TierList.MAX_NIVEL_1_PRIORITARIO;
-          const cuentaOtros=lista.filter(a=>nivelDe(a)===1&&!prioritario(a)).length+'/'+TierList.MAX_NIVEL_1;
-          const cupo=(t,c)=>'<span class="tl-cupo">'+t+' <b>'+c+'</b></span>';
-          const cupos=tienePrioritarios&&tieneOtros?cupo('Prioritarios',cuentaPrioritarios)+cupo('Otros',cuentaOtros):tienePrioritarios?cupo('Máx.',cuentaPrioritarios):cupo('Máx.',cuentaOtros);
-          return '<section class="'+(n?'tl-fila':'tl-bandeja')+'" data-tl-nivel="'+n+'" aria-label="'+titulo+'">'+(n?'<div class="tl-etiqueta"><h3>'+titulo+'</h3>'+(n===1?'<small>'+cupos+'</small>':'')+'</div>':'<h3>'+titulo+'</h3>')+'<div class="tl-franja">'+(n===1?'<p id="tlLimite" role="status" aria-live="polite">'+(Date.now()<tlLimiteHasta?esc(tlLimiteMsg):'')+'</p>':'')+cards+'</div></section>';
+          return '<section class="'+(n?'tl-fila':'tl-bandeja')+'" data-tl-nivel="'+n+'" aria-label="'+titulo+'">'+(n?'<div class="tl-etiqueta"><h3>'+titulo+'</h3></div>':'<h3>'+titulo+'</h3>')+'<div class="tl-franja">'+cards+'</div></section>';
         }).join('');
       }
       const elegidos=TierList.nivel1(sorteo,filas);
@@ -3162,7 +3233,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       if(cargando||ocupado||!view.classList.contains('active'))return;
       cargando=true;const version=revision;
       try{
-        if(!actores.length)actores=await api('data/actores.json');
+        actores=await api('/api/catalogo-actores');
         if(admin()&&!participantes){
           participantes=(await api('asistentes-config.json')).participantes;
           $('tlPresentes').innerHTML=participantes.map(n=>'<label><input type="checkbox" value="'+esc(n)+'"> '+esc(n)+'</label>').join('');
@@ -3185,20 +3256,17 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       }catch(e){aviso(e.status===409?'La actividad ya empezó':'No se pudo guardar el sorteo. Intenta de nuevo.');}
       finally{ocupado=false;render();}
     }
-    // El aviso del límite sobrevive a los refrescos periódicos durante unos segundos.
-    var tlLimiteMsg='',tlLimiteHasta=0;
-    function avisoLimite(t){tlLimiteMsg=t;tlLimiteHasta=Date.now()+6000;if($('tlLimite'))$('tlLimite').textContent=t;}
     async function mover(actorId,nivel){
       const g=grupo();if(ocupado||!g||!editable(g)||!identidad()||!TierList.actoresDelGrupo(g,actores).some(a=>a.id===actorId))return;
       const regla=TierList.puedeMover(filas.filter(f=>f.grupoId===g.id),actorId,nivel,actores);
-      if(!regla.ok){avisoLimite(regla.motivo);return;}
+      if(!regla.ok){aviso(regla.motivo);return;}
       const anteriores=filas.slice(), body={sorteoId:sorteo?.id||'sin-sorteo',grupoId:g.id,actorId,nivel,editadoPor:identidad()};
       ocupado=true;revision++;filas=filas.filter(f=>!(f.grupoId===g.id&&f.actorId===actorId));if(nivel!==null)filas.push(body);render();aviso('Guardando cambio…');
       let rechazo='';
       try{await api('/api/tierlist','PUT',body);aviso('Cambio guardado.');}
       catch(e){filas=anteriores;rechazo=e.status===409?e.message:'';aviso('No se pudo guardar el cambio. Intenta de nuevo.');}
       finally{
-        ocupado=false;render();if(rechazo)avisoLimite(rechazo);
+        ocupado=false;render();if(rechazo)aviso(rechazo);
         const boton=Array.from($('tlTablero').querySelectorAll('[data-tl-mover]')).find(b=>b.dataset.tlMover===actorId&&Number(b.dataset.nivel)===(nivel||0));
         if(boton)boton.focus();
       }
@@ -3244,6 +3312,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       if(view.classList.contains('active')){if(timer===null)timer=setInterval(cargar,5000);cargar();}
       else{if(timer!==null)clearInterval(timer);timer=null;revision++;}
     }
+    document.addEventListener('identidad:cambio',()=>{seleccionado='';revision++;render();sincronizar();});
     view.addEventListener('vista:activar',sincronizar);
     // La navegación existente cambia la clase; el observador detiene el reloj al salir.
     new MutationObserver(sincronizar).observe(view,{attributes:true,attributeFilter:['class']});
@@ -3260,7 +3329,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     const $ = id => document.getElementById(id), API4 = '/api/priorizacion-votos';
     const categorias = {mercados:'Empresas', aliados:'Gremios-aliados'};
     let config = null, actores = [], votos = [], resumen = [], seleccionado = null;
-    let gruposPorActor = {}, confirmada = null, borrador = [], accionPendiente = null, guardandoCorte = false;
+    let gruposPorActor = {};
     let cargando = false, guardando = false, version = 0, listo = false, iniciado = false;
     let orden = 'nombre', direccion = 1, firmaLista = '', firmaResultados = '', detalleId = null;
     const pendientes = new Map();
@@ -3277,8 +3346,18 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     const rangoMercado = m => { const i=MERCADOS_PRIORIZADOS.indexOf(m); return i<0 ? MERCADOS_PRIORIZADOS.length : i; };
     const porMercado = (a,b) => rangoMercado(mercadoDe(a))-rangoMercado(mercadoDe(b)) || mercadoDe(a).localeCompare(mercadoDe(b),'es') || a.nombre.localeCompare(b.nombre,'es');
     const cabeceraMercado = (m,n) => '<h4 class="p4-mercado'+(MERCADOS_PRIORIZADOS.includes(m)?' p4-mercado-prio':'')+'">'+esc(m)+' <small>'+n+(n===1?' cuenta':' cuentas')+(MERCADOS_PRIORIZADOS.includes(m)?' · mercado priorizado':'')+'</small></h4>';
-    const filtrados = () => visibles().filter(a => (!$('p4Categoria').value || a.categoria === $('p4Categoria').value) && (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes($('p4Buscar').value.trim().toLocaleLowerCase('es'))).sort(porMercado);
-    const resultados = () => resumen.filter(r => visibles().some(a=>a.id===r.actorId) && (!$('p4CategoriaMatriz').value || r.categoria===$('p4CategoriaMatriz').value));
+    const filtros = suf => ({tier:$('p4Tier'+suf).value,mercado:$('p4Mercado'+suf).value,estado:$('p4FiltroEstado'+suf).value,texto:suf?'':$('p4Buscar').value});
+    const enMatriz = () => Corte.filtrar(visibles(),filtros('Matriz'),mercadoDe,a=>resumen.some(r=>r.actorId===a.id&&r.votos>0));
+    const filtrados = () => Corte.filtrar(visibles(),filtros(''),mercadoDe,a=>!!mio(a.id)).sort(porMercado);
+    const resultados = () => resumen.filter(r=>enMatriz().some(a=>a.id===r.actorId));
+    function opcionesMercados(){
+      const mercados=[...new Set(actores.slice().sort(porMercado).map(mercadoDe))];
+      for(const suf of ['', 'Matriz']){
+        const el=$('p4Mercado'+suf),valor=el.value;
+        el.innerHTML='<option value="">Todos</option>'+mercados.map(m=>'<option value="'+esc(m)+'">'+esc(m)+'</option>').join('');
+        el.value=mercados.includes(valor)?valor:'';
+      }
+    }
     async function leer(url, opciones){
       const r = await fetch(url, Object.assign({cache:'no-store'},opciones));
       const data = await r.json();
@@ -3288,12 +3367,13 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     function renderLista(){
       const lista = filtrados(), todos = visibles();
       $('p4Editor').hidden=!todos.length;
-      $('p4Avance').textContent = 'Has calificado '+todos.filter(a=>mio(a.id)).length+' de '+todos.length+' · '+lista.length+' en este filtro.';
-      const html = lista.map((a,i)=>(i===0||mercadoDe(lista[i-1])!==mercadoDe(a)?cabeceraMercado(mercadoDe(a),lista.filter(x=>mercadoDe(x)===mercadoDe(a)).length):'')+'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+(gruposPorActor[a.id].length===1?' grupo':' grupos')+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores en el Nivel 1 de la Actividad 3.</p>');
+      $('p4Avance').textContent = 'Has calificado '+lista.filter(a=>mio(a.id)).length+' de '+lista.length+' · '+lista.length+' en este filtro.';
+      const html = lista.map((a,i)=>(i===0||mercadoDe(lista[i-1])!==mercadoDe(a)?cabeceraMercado(mercadoDe(a),lista.filter(x=>mercadoDe(x)===mercadoDe(a)).length):'')+'<button type="button" class="p4-actor" data-actor="'+esc(a.id)+'" aria-pressed="'+(seleccionado===a.id)+'" '+(guardando?'disabled':'')+'><img src="'+esc(getLogo(a))+'" alt=""><span>'+TierList.chip(a.mejorNivel)+esc(a.nombre)+'<small>'+esc(categorias[a.categoria]||a.categoria)+' · Elegido por '+gruposPorActor[a.id].length+(gruposPorActor[a.id].length===1?' grupo':' grupos')+' · '+(mio(a.id)?'✓ Ya calificado por ti':'Sin calificar por ti')+(pendientes.has(clave(a.id))?' · Cambios sin guardar':'')+'</small></span></button>').join('') || (todos.length?'<p>No hay actores que coincidan con este filtro.</p>':'<p>Todavía no hay actores ubicados en la Actividad 3.</p>');
       if(html !== firmaLista){ $('p4Actores').innerHTML=html; firmaLista=html; }
     }
     function renderEditor(enfocar){
-      const actor = visibles().find(a=>a.id===seleccionado);
+      if(window.Identidad?.rol!=='administrador'){$('p4Editor').innerHTML='<p>Solo los administradores califican en esta actividad</p>';return;}
+      const actor = filtrados().find(a=>a.id===seleccionado);
       if(!actor || !config){ $('p4Editor').innerHTML='<p>Selecciona un actor para calificarlo.</p>'; return; }
       const voto = pendientes.get(clave(actor.id)) || mio(actor.id) || {impacto:{},esfuerzo:{}};
       $('p4Editor').innerHTML='<h3 id="p4ActorTitulo" tabindex="-1">'+esc(actor.nombre)+'</h3><p class="hint">'+esc(categorias[actor.categoria])+' · '+esc(actor.sector||'Sin sector')+'</p>'+
@@ -3320,17 +3400,19 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     function abrir(id){ if(guardando) return; seleccionado=id; renderLista(); renderEditor(true); }
     function mover(paso){
       const lista=filtrados(), i=lista.findIndex(a=>a.id===seleccionado), next=lista[i+paso];
-      if(next) abrir(next.id); else mensaje('Llegaste al final de los actores de este filtro. Puedes elegir otra categoría.');
+      if(next) abrir(next.id); else mensaje('Llegaste al final de los actores de este filtro. Puedes cambiar los filtros.');
     }
     function bloquear(valor){
-      $('p4Nombre').disabled=valor; $('p4Categoria').disabled=valor; $('p4Buscar').disabled=valor;
+      $('p4Nombre').disabled=valor; ['p4Tier','p4Mercado','p4FiltroEstado'].forEach(id=>$(id).disabled=valor); $('p4Buscar').disabled=valor;
       $('p4Editor').querySelectorAll('input,button').forEach(el=>{el.disabled=valor;});
       renderLista();
     }
     async function guardar(borrar,siguiente){
+      if(window.Identidad?.rol!=='administrador')return;
       if(guardando || !listo) return;
       if(!nombre()){mensaje('Escribe tu nombre antes de guardar.');$('p4Nombre').focus();return;}
       const actorId=seleccionado, votante=nombre(), key=clave(actorId), valores=recoger();
+      const listaAntes=filtrados(), siguienteId=listaAntes[listaAntes.findIndex(a=>a.id===actorId)+1]?.id;
       guardando=true; version++; bloquear(true); mensaje(borrar?'Borrando calificación…':'Guardando calificación…');
       try{
         const data=await leer(API4,{method:borrar?'DELETE':'PUT',headers:{'content-type':'application/json'},body:JSON.stringify(Object.assign({actorId,votante},valores))});
@@ -3339,7 +3421,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         pendientes.delete(key);
         mensaje(borrar?'Calificación borrada.':'Calificación guardada.');
         guardando=false; bloquear(false); renderEditor(false);
-        if(siguiente) mover(1);
+        if(siguiente&&siguienteId)abrir(siguienteId);
       }catch(e){mensaje(e.message+' Tus respuestas siguen en el formulario.');}
       finally{guardando=false;version++;bloquear(false);renderEditor(false);}
       cargar();
@@ -3359,22 +3441,21 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       const r=resumen.find(r=>r.actorId===id);
       $('p4Detalle').textContent=r?textoDetalle(r):'Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';
     }
-    function interesFuturo(){
-      return ordenCorte().filter(r=>r.sinCalificar).map(r=>({...actores.find(a=>a.id===r.actorId),...r}));
+    function interesFuturo(){return ordenCorte().filter(r=>r.sinCalificar&&r.mejorNivel<=2);}
+    function tarjetaFuturo(lista,titulo='Interés futuro'){
+      return '<article><h4>'+titulo+'</h4><p>'+(titulo==='Interés futuro'?'Tier 1–2 sin calificación, disponibles para construir ruta.':'Tier 3–4 sin calificación.')+'</p>'+(lista.length?'<ul>'+lista.map(r=>'<li>'+TierList.chip(r.mejorNivel)+'<button type="button" class="p4-enlace" data-ficha="'+esc(r.actorId)+'">'+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>No hay actores en este estado.</p>')+'</article>';
     }
-    function tarjetaFuturo(lista){
-      return '<article><h4>Interés futuro</h4><p>Sin calificaciones; no pasan automáticamente a la Actividad 5.</p>'+(lista.length?'<ul>'+lista.map(r=>'<li><button type="button" class="p4-enlace" data-ficha="'+esc(r.actorId)+'">'+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>No hay actores sin calificaciones.</p>')+'</article>';
-    }
-    function futurosVisibles(){return interesFuturo().filter(r=>visibles().some(a=>a.id===r.actorId)&&(!$('p4CategoriaMatriz').value||r.categoria===$('p4CategoriaMatriz').value));}
+    function sinCalificarVisibles(){return ordenCorte().filter(r=>r.sinCalificar&&enMatriz().some(a=>a.id===r.actorId));}
+    function futurosVisibles(){return sinCalificarVisibles().filter(r=>r.mejorNivel<=2);}
     function renderResultados(){
       if(!config) return;
       // En celular el SVG se ve a ~40 % de su tamaño: se agrandan textos y etiquetas y se omite la regla de cada cuadrante.
       const movil=!!(window.matchMedia&&window.matchMedia('(max-width:700px)').matches), zm=movil?2.1:1;
-      const datos=resultados(), futuros=futurosVisibles(), firma=JSON.stringify([datos,futuros,orden,direccion,movil]);
+      const datos=resultados(), futuros=futurosVisibles(), firma=JSON.stringify([datos,sinCalificarVisibles(),enMatriz(),orden,direccion,movil]);
       if(firma===firmaResultados) return;
       firmaResultados=firma;
       const ids=new Map(datos.map((r,i)=>[r.actorId,i+1]));
-      $('p4CSV').disabled=!datos.length&&!futuros.length;
+      $('p4CSV').disabled=!enMatriz().length;
       const t=config.umbral, x=n=>80+(n-1)*190, y=n=>565-(n-1)*120;
       let svg='<title id="p4TituloGrafico">Impacto vertical, esfuerzo horizontal, escala de 1 a 5. Umbral '+t+'.</title>';
       const bloques=config.cuadrantes.map(q=>{
@@ -3398,7 +3479,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
           if(!ocupados.some(p=>Math.abs(p[0]-lx)<26*zm&&Math.abs(p[1]-ly)<22*zm)) break;
         }
         ocupados.push([lx,ly]);
-        const color='var(--cat-'+(categorias[r.categoria]?r.categoria:'mercados')+')';
+        const color=TierList.COLORES[r.mejorNivel];
         svg+='<g class="p4-punto" tabindex="0" role="button" data-punto="'+esc(r.actorId)+'" aria-label="'+esc(textoDetalle(r))+'"><title>'+esc(textoDetalle(r))+'</title><path d="M'+px+' '+py+'L'+lx+' '+ly+'" stroke="'+color+'" opacity=".6"/><circle cx="'+px+'" cy="'+py+'" r="'+(movil?10:6)+'" fill="'+color+'" stroke="var(--panel)" stroke-width="2"/><rect x="'+(lx-mx)+'" y="'+(ly-my)+'" width="'+(2*mx)+'" height="'+(2*my)+'" rx="'+(4*zm)+'" fill="var(--panel)" stroke="'+color+'" stroke-width="'+(movil?3:1)+'"/><text x="'+lx+'" y="'+(ly+5*zm)+'" font-size="'+(13*zm)+'" text-anchor="middle">'+ids.get(r.actorId)+'</text></g>';
       });
       const foco=$('p4SVG').contains(document.activeElement)?document.activeElement.dataset.punto:null;
@@ -3407,18 +3488,18 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
         const grupo=datos.filter(r=>r.cuadrante.id===q.id);
         return '<article><h4>'+esc(q.nombre)+'</h4><p>'+esc(q.regla)+'</p>'+(grupo.length?'<ul>'+grupo.map(r=>'<li><button class="p4-enlace" data-punto="'+esc(r.actorId)+'">'+ids.get(r.actorId)+'. '+esc(r.nombre)+'</button></li>').join('')+'</ul>':'<p>Sin actores calificados.</p>')+'</article>';
       }).join('');
-      $('p4Cuadrantes').innerHTML+=tarjetaFuturo(futuros);
-      const enMatriz=visibles().filter(a=>!$('p4CategoriaMatriz').value||a.categoria===$('p4CategoriaMatriz').value).slice().sort(porMercado), grupos=[];
-      enMatriz.forEach(a=>{const m=mercadoDe(a);let g=grupos.find(x=>x.m===m);if(!g){g={m,actores:[]};grupos.push(g);}g.actores.push(a);});
-      $('p4PorMercado').innerHTML=grupos.length?'<h3>Por mercado</h3><p class="hint">Cuentas del Nivel 1 agrupadas por mercado y el cuadrante en el que quedó cada una. Priorizar una abre camino hacia las demás del mismo mercado.</p><div class="p4-mercados">'+grupos.map(g=>'<article>'+cabeceraMercado(g.m,g.actores.length)+'<ul>'+g.actores.map(a=>{const r=datos.find(d=>d.actorId===a.id);return '<li><button type="button" class="p4-enlace" data-ficha="'+esc(a.id)+'">'+esc(a.nombre)+'</button> <span class="p4-mercado-q">'+esc(r?r.cuadrante.nombre:'Interés futuro')+'</span></li>';}).join('')+'</ul></article>').join('')+'</div>':'';
-      const valor=(r,k)=>k==='cuadrante'?r.cuadrante.nombre:k==='categoria'?categorias[r.categoria]:r[k];
-      const lista=datos.slice().sort((a,b)=>{const av=valor(a,orden),bv=valor(b,orden);return direccion*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'es'))||a.nombre.localeCompare(b.nombre,'es');});
-      $('p4Cabecera').innerHTML=[['nombre','Actor'],['categoria','Categoría'],['indiceImpacto','Impacto'],['indiceEsfuerzo','Esfuerzo'],['cuadrante','Cuadrante'],['votos','Votos']].map(([k,n])=>'<th scope="col" aria-sort="'+(orden===k?(direccion===1?'ascending':'descending'):'none')+'"><button class="p4-enlace" data-orden="'+k+'">'+n+(orden===k?(direccion===1?' ↑':' ↓'):'')+'</button></th>').join('');
-      $('p4Resultados').innerHTML=lista.map(r=>'<tr><td>'+ids.get(r.actorId)+'. '+esc(r.nombre)+'</td><td><span class="p4-color" style="background:var(--cat-'+esc(r.categoria)+')"></span>'+esc(categorias[r.categoria])+'</td><td>'+numero(r.indiceImpacto)+'</td><td>'+numero(r.indiceEsfuerzo)+'</td><td>'+esc(r.cuadrante.nombre)+'</td><td>'+r.votos+'</td></tr>').join('')||'<tr><td colspan="6">Aún no hay calificaciones completas para este filtro.</td></tr>';
+      $('p4Cuadrantes').innerHTML+=tarjetaFuturo(futuros)+tarjetaFuturo(sinCalificarVisibles().filter(r=>r.mejorNivel>2),'Sin calificar');
+      const listaMatriz=enMatriz().slice().sort(porMercado), grupos=[];
+      listaMatriz.forEach(a=>{const m=mercadoDe(a);let g=grupos.find(x=>x.m===m);if(!g){g={m,actores:[]};grupos.push(g);}g.actores.push(a);});
+      $('p4PorMercado').innerHTML=grupos.length?'<h3>Por mercado</h3><p class="hint">Cuentas de Tier 1–4 agrupadas por mercado y el cuadrante en el que quedó cada una. Priorizar una abre camino hacia las demás del mismo mercado.</p><div class="p4-mercados">'+grupos.map(g=>'<article>'+cabeceraMercado(g.m,g.actores.length)+'<ul>'+g.actores.map(a=>{const r=datos.find(d=>d.actorId===a.id);return '<li>'+TierList.chip(a.mejorNivel)+'<button type="button" class="p4-enlace" data-ficha="'+esc(a.id)+'">'+esc(a.nombre)+'</button> <span class="p4-mercado-q">'+esc(r?r.cuadrante.nombre:Corte.estado({...a,votos:0}))+'</span></li>';}).join('')+'</ul></article>').join('')+'</div>':'';
+      const valor=(r,k)=>k==='cuadrante'?(r.cuadrante?.nombre||Corte.estado(r)):k==='categoria'?categorias[r.categoria]:r[k];
+      const lista=[...datos,...sinCalificarVisibles()].sort((a,b)=>{const av=valor(a,orden),bv=valor(b,orden);return direccion*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'es'))||a.nombre.localeCompare(b.nombre,'es');});
+      $('p4Cabecera').innerHTML=[['nombre','Actor'],['mejorNivel','Tier'],['categoria','Categoría'],['indiceImpacto','Impacto'],['indiceEsfuerzo','Esfuerzo'],['cuadrante','Cuadrante'],['votos','Votos']].map(([k,n])=>'<th scope="col" aria-sort="'+(orden===k?(direccion===1?'ascending':'descending'):'none')+'"><button class="p4-enlace" data-orden="'+k+'">'+n+(orden===k?(direccion===1?' ↑':' ↓'):'')+'</button></th>').join('');
+      $('p4Resultados').innerHTML=lista.map(r=>'<tr><td>'+(ids.has(r.actorId)?ids.get(r.actorId)+'. ':'')+esc(r.nombre)+'</td><td>'+TierList.chip(r.mejorNivel)+'</td><td><span class="p4-color" style="background:var(--cat-'+esc(r.categoria)+')"></span>'+esc(categorias[r.categoria])+'</td><td>'+(r.votos?numero(r.indiceImpacto):'—')+'</td><td>'+(r.votos?numero(r.indiceEsfuerzo):'—')+'</td><td>'+esc(r.votos?r.cuadrante.nombre:Corte.estado(r))+'</td><td>'+r.votos+'</td></tr>').join('')||'<tr><td colspan="7">Aún no hay calificaciones completas para este filtro.</td></tr>';
       if(detalleId) mostrarDetalle(detalleId);
     }
     async function cargar(){
-      if(cargando||guardando||guardandoCorte||!$('view-priorizacion').classList.contains('active')) return;
+      if(cargando||guardando||!$('view-priorizacion').classList.contains('active')) return;
       cargando=true; const v=version;
       try{
         if(!config){
@@ -3427,106 +3508,54 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
           $('p4Metodologia').textContent=config.metodologia.adaptacion;
         }
         const sorteo=await leer('/api/parejas');
-        const data=await Promise.all([leer('/api/actors'),leer(API4),leer(API4+'?resumen=1'),sorteo?leer('/api/tierlist?sorteo='+encodeURIComponent(sorteo.id)):Promise.resolve([]),leer('/api/seleccion')]);
+        const data=await Promise.all([leer('/api/catalogo-actores'),leer(API4),leer(API4+'?resumen=1'),sorteo?leer('/api/tierlist?sorteo='+encodeURIComponent(sorteo.id)):Promise.resolve([])]);
         if(v!==version) return;
         [actores,votos,resumen]=data;
-        gruposPorActor=Object.fromEntries(TierList.nivel1(sorteo,data[3]).map(a=>[a.actorId,a.grupos]));
-        actores=actores.filter(a=>Object.hasOwn(gruposPorActor,a.id));confirmada=data[4];listo=true;
+        const ubicaciones=TierList.ubicados(sorteo,data[3]);
+        gruposPorActor=Object.fromEntries(ubicaciones.map(a=>[a.actorId,a.grupos]));
+        actores=actores.filter(a=>Object.hasOwn(gruposPorActor,a.id)).map(a=>({...a,...ubicaciones.find(u=>u.actorId===a.id)}));
+        opcionesMercados();listo=true;
         if(seleccionado&&!visibles().some(a=>a.id===seleccionado)){seleccionado=null;renderEditor(false);}
-        renderLista();renderResultados();renderCorte();
+        renderLista();renderResultados();renderCorte();if(window.Identidad?.rol!=='administrador')renderEditor(false);
         mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · Se actualiza cada 10 segundos.');
       }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan tus respuestas y los últimos resultados. Se reintentará automáticamente.');}
       finally{cargando=false;}
     }
-    const adminCorte=()=>window.Identidad?.rol==='administrador';
     function ordenCorte(){
-      return Corte.ordenar(actores.map(a=>resumen.find(r=>r.actorId===a.id)||{actorId:a.id,nombre:a.nombre,votos:0}),config.corte,gruposPorActor);
+      if(!config)return [];
+      return Corte.ordenar(actores.map(a=>({...a,actorId:a.id,votos:0,...resumen.find(r=>r.actorId===a.id)})),config.corte,gruposPorActor);
     }
-    const avisoCorte=t=>{$('p4CorteEstado').textContent=t;};
     function renderCorte(){
-      $('p4CorteAdmin').hidden=!adminCorte()||!listo;$('p4AccionesTitulo').hidden=!adminCorte();
       if(!config)return;
-      const ordenados=ordenCorte(),max=config.corte.maximo,ids=confirmada?.actorIds||[];
+      $('p4CorteNota').textContent=config.corte.nota+' Después aparecen los actores sin calificar. Todos los Tier 1 y 2 están disponibles en la Actividad 5, sin límite ni confirmación.';
       $('p4FuturoCorte').innerHTML=tarjetaFuturo(interesFuturo());
-      const nombreActor=id=>actores.find(a=>a.id===id)?.nombre||id;
-      $('p4CorteNota').textContent=config.corte.nota+' Si el facilitador no confirma una lista, pasan automáticamente a la Actividad 5 hasta '+config.corte.maximo+' actores calificados en el orden de esta tabla. Los no calificados quedan como Interés futuro y no pasan automáticamente; el facilitador puede incluirlos manualmente.';
-      $('p4Confirmada').hidden=!confirmada;
-      $('p4Confirmada').innerHTML=confirmada?'<h4>Lista confirmada para la Actividad 5</h4><p>'+esc(confirmada.confirmadoPor)+' · '+esc(new Date(confirmada.confirmadoEn).toLocaleString('es-CO'))+'</p><ol>'+ids.map(id=>'<li>'+esc(nombreActor(id))+'</li>').join('')+'</ol>':'';
-      const validacion=Corte.validarSeleccion(borrador,actores,config.corte);
-      $('p4Validacion').textContent=validacion.motivo||borrador.length+' de '+max+' actores';
-      $('p4Confirmar').disabled=!validacion.ok||guardandoCorte;
-      $('p4Proponer').disabled=guardandoCorte;
-      $('p4QuitarConfirmacion').disabled=!confirmada||guardandoCorte;
-      $('p4Aceptar').disabled=guardandoCorte;$('p4Cancelar').disabled=guardandoCorte;
-      $('p4Borrador').innerHTML=borrador.map((id,i)=>'<li>'+esc(nombreActor(id))+' '+['Subir','Bajar','Quitar'].map((texto,k)=>'<button type="button" class="btn secondary" data-corte="'+texto+'" data-id="'+esc(id)+'" '+(guardandoCorte||(k===0&&i===0)||(k===1&&i===borrador.length-1)?'disabled':'')+'>'+texto+'</button>').join('')+'</li>').join('');
-      const linea='<tr class="p4-linea-corte"><td colspan="'+(adminCorte()?9:8)+'">Corte: máximo '+max+' actores pasan a la Actividad 5</td></tr>';
-      $('p4CorteFilas').innerHTML=ordenados.map((r,i)=>{
-        const actor=actores.find(a=>a.id===r.actorId),lleno=borrador.length>=max;
-        const agregar=borrador.includes(r.actorId)?'En el borrador':'<button type="button" class="btn secondary" data-corte="Agregar" data-id="'+esc(r.actorId)+'" '+(lleno||guardandoCorte?'disabled':'')+' '+(lleno?'title="La lista admite máximo 10 actores"':'')+'>Agregar</button>'+(lleno?'<small>La lista admite máximo 10 actores</small>':'');
-        return '<tr><td>'+(i+1)+'</td><td><button type="button" class="p4-ficha" data-ficha="'+esc(r.actorId)+'"><img src="'+esc(getLogo(actor))+'" alt="">'+esc(r.nombre)+'</button></td><td>'+esc(r.sinCalificar?'Interés futuro':r.cuadrante.nombre)+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceImpacto))+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceEsfuerzo))+'</td><td>'+r.votos+'</td><td>'+r.grupos+'</td><td>'+(ids.includes(r.actorId)?'Sí':'No')+'</td>'+(adminCorte()?'<td>'+agregar+'</td>':'')+'</tr>'+(i+1===max?linea:'');
-      }).join('')+(ordenados.length<max?linea:'');
+      $('p4CorteFilas').innerHTML=ordenCorte().map((r,i)=>'<tr><td>'+(i+1)+'</td><td><button type="button" class="p4-ficha" data-ficha="'+esc(r.actorId)+'">'+esc(r.nombre)+'</button></td><td>'+TierList.chip(r.mejorNivel)+'</td><td>'+esc(r.sinCalificar?Corte.estado(r):r.cuadrante.nombre)+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceImpacto))+'</td><td>'+(r.sinCalificar?'—':numero(r.indiceEsfuerzo))+'</td><td>'+r.votos+'</td><td>'+r.grupos+'</td></tr>').join('');
     }
-    function editarCorte(e){
-      const ficha=e.target.closest('[data-ficha]');
-      if(ficha){window.abrirFichaActor?.(ficha.dataset.ficha);return;}
-      const b=e.target.closest('[data-corte]');
-      if(!b||!adminCorte()||guardandoCorte||b.disabled)return;
-      const id=b.dataset.id,i=borrador.indexOf(id),accion=b.dataset.corte;
-      if(accion==='Agregar'&&i<0&&borrador.length<config.corte.maximo)borrador.push(id);
-      if(accion==='Quitar'&&i>=0)borrador.splice(i,1);
-      const j=i+(accion==='Subir'?-1:1);
-      if(['Subir','Bajar'].includes(accion)&&i>=0&&j>=0&&j<borrador.length)[borrador[i],borrador[j]]=[borrador[j],borrador[i]];
-      accionPendiente=null;$('p4Confirmacion').hidden=true;renderCorte();
-    }
-    async function guardarCorte(accion){
-      if(!adminCorte()||guardandoCorte)return;
-      if(accion==='PUT'){
-        const v=Corte.validarSeleccion(borrador,actores,config.corte);
-        if(!v.ok){avisoCorte(v.motivo);return;}
-      }
-      guardandoCorte=true;version++;renderCorte();
-      try{
-        const data=await leer('/api/seleccion',{method:accion,headers:{'content-type':'application/json'},...(accion==='PUT'?{body:JSON.stringify({actorIds:borrador,confirmadoPor:window.Identidad.nombre})}:{})});
-        confirmada=accion==='DELETE'?null:data;accionPendiente=null;$('p4Confirmacion').hidden=true;
-        avisoCorte(accion==='DELETE'?'Confirmación retirada.':'Lista confirmada.');
-      }catch(e){avisoCorte(e.message);}
-      finally{guardandoCorte=false;version++;renderCorte();}
-    }
-    function pedirCambio(accion){
-      if(!adminCorte()||guardandoCorte)return;
-      if(!confirmada&&accion==='PUT'){guardarCorte(accion);return;}
-      accionPendiente=accion;$('p4ConfirmacionTexto').textContent=accion==='DELETE'?'¿Quitar la confirmación de la lista?':'¿Reemplazar la lista confirmada por este borrador?';$('p4Confirmacion').hidden=false;
-    }
-    $('p4CorteFilas').onclick=editarCorte;$('p4Borrador').onclick=editarCorte;
-    $('p4Proponer').onclick=()=>{if(!adminCorte()||guardandoCorte||!config)return;borrador=Corte.propuesta(ordenCorte(),config.corte).map(r=>r.actorId);accionPendiente=null;$('p4Confirmacion').hidden=true;renderCorte();};
-    $('p4Confirmar').onclick=()=>pedirCambio('PUT');$('p4QuitarConfirmacion').onclick=()=>pedirCambio('DELETE');
-    $('p4Aceptar').onclick=()=>{if(accionPendiente)guardarCorte(accionPendiente);};
-    $('p4Cancelar').onclick=()=>{accionPendiente=null;$('p4Confirmacion').hidden=true;};
+    $('p4CorteFilas').onclick=e=>{const b=e.target.closest('[data-ficha]');if(b)window.abrirFichaActor?.(b.dataset.ficha);};
     $('p4CorteCSV').onclick=()=>{
       if(!config)return;
-      const filas=[['Posición','Actor','Cuadrante','Índice de impacto','Índice de esfuerzo','Calificaciones','Grupos que lo eligieron','En la lista confirmada'],...ordenCorte().map((r,i)=>[i+1,r.nombre,r.sinCalificar?'Interés futuro':r.cuadrante.nombre,r.sinCalificar?'':r.indiceImpacto,r.sinCalificar?'':r.indiceEsfuerzo,r.votos,r.grupos,confirmada?.actorIds.includes(r.actorId)?'Sí':'No'])];
+      const filas=[['Posición','Actor','Tier','Mercado','Cuadrante','Índice de impacto','Índice de esfuerzo','Calificaciones','Grupos que lo ubicaron'],...ordenCorte().map((r,i)=>[i+1,r.nombre,r.mejorNivel,mercadoDe(r),r.sinCalificar?Corte.estado(r):r.cuadrante.nombre,r.sinCalificar?'':r.indiceImpacto,r.sinCalificar?'':r.indiceEsfuerzo,r.votos,r.grupos])];
       const url=URL.createObjectURL(new Blob([Embudo.csv(filas)],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
-      a.href=url;a.download='corte_final.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      a.href=url;a.download='orden_sugerido.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     };
     function descargar(){
-      const datos=resultados(), filas=[['tipo','actorId','nombre','categoria','sector','indiceImpacto','indiceEsfuerzo','cuadranteId','cuadrante','votos','votante','eje','criterioId','criterio','pesoPorcentaje','valor','updatedAt']];
+      const datos=resultados(), filas=[['tipo','actorId','nombre','categoria','sector','indiceImpacto','indiceEsfuerzo','cuadranteId','cuadrante','votos','votante','eje','criterioId','criterio','pesoPorcentaje','valor','updatedAt','tier','mercado']];
       datos.forEach(r=>{
         const base=[r.actorId,r.nombre,r.categoria,r.sector,r.indiceImpacto,r.indiceEsfuerzo,r.cuadrante.id,r.cuadrante.nombre,r.votos];
-        filas.push(['resumen',...base,'','','','','','','']);
-        votos.filter(v=>v.actorId===r.actorId&&!v.borrador&&!v.facilitador).forEach(v=>['impacto','esfuerzo'].forEach(eje=>config[eje].forEach(c=>filas.push(['detalle',...base,v.votante,eje,c.id,c.nombre,c.peso,v[eje][c.id],v.updatedAt]))));
+        filas.push(['resumen',...base,'','','','','','','',r.mejorNivel,mercadoDe(r)]);
+        votos.filter(v=>v.actorId===r.actorId&&!v.borrador&&!v.facilitador).forEach(v=>['impacto','esfuerzo'].forEach(eje=>config[eje].forEach(c=>filas.push(['detalle',...base,v.votante,eje,c.id,c.nombre,c.peso,v[eje][c.id],v.updatedAt,r.mejorNivel,mercadoDe(r)]))));
       });
-      futurosVisibles().forEach(r=>filas.push(['resumen',r.actorId,r.nombre,r.categoria,r.sector,'','','','Interés futuro',0,'','','','','','','']));
+      sinCalificarVisibles().forEach(r=>filas.push(['resumen',r.actorId,r.nombre,r.categoria,r.sector,'','','',Corte.estado(r),0,'','','','','','','',r.mejorNivel,mercadoDe(r)]));
       const celda=x=>{let s=String(x==null?'':x);if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
       const url=URL.createObjectURL(new Blob(['\ufeff'+filas.map(f=>f.map(celda).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}));
       const a=document.createElement('a');a.href=url;a.download='priorizacion_actores.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
     }
-    ['p4Categoria','p4CategoriaMatriz'].forEach(id=>Object.entries(categorias).forEach(([k,n])=>{const o=document.createElement('option');o.value=k;o.textContent=n;$(id).appendChild(o);}));
-    $('p4Leyenda').innerHTML=Object.entries(categorias).map(([k,n])=>'<span class="p4-leyenda"><span class="p4-color" style="background:var(--cat-'+k+')"></span>'+n+'</span>').join('');
+    $('p4Leyenda').innerHTML=[1,2,3,4].map(TierList.chip).join(' ');
     // El nombre viene de la lista de asistentes validada en la entrada; no se edita aquí.
-    const ponerNombre=()=>{if(!window.Identidad)return;$('p4Nombre').value=window.Identidad.nombre;$('p4Nombre').readOnly=true;renderLista();renderEditor(false);renderCorte();};
+    const ponerNombre=()=>{version++;pendientes.clear();if(!window.Identidad){renderEditor(false);return;}$('p4Nombre').value=window.Identidad.nombre;$('p4Nombre').readOnly=true;renderLista();renderEditor(false);renderCorte();};
     ponerNombre();document.addEventListener('identidad:cambio',ponerNombre);
-    ['p4Categoria','p4Buscar'].forEach(id=>$(id).addEventListener('input',()=>{renderLista();renderEditor(false);}));
-    $('p4CategoriaMatriz').onchange=()=>{detalleId=null;$('p4Detalle').textContent='Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';renderResultados();};
+    ['p4Tier','p4Mercado','p4FiltroEstado','p4Buscar'].forEach(id=>$(id).addEventListener('input',()=>{renderLista();renderEditor(false);}));
+    ['p4TierMatriz','p4MercadoMatriz','p4FiltroEstadoMatriz'].forEach(id=>$(id).onchange=()=>{detalleId=null;$('p4Detalle').textContent='Pasa el cursor sobre un punto para ver su detalle; haz clic para abrir la ficha del actor.';renderResultados();});
     $('p4Actores').onclick=e=>{const b=e.target.closest('[data-actor]');if(b)abrir(b.dataset.actor);};
     $('p4Cabecera').onclick=e=>{const b=e.target.closest('[data-orden]');if(b){direccion=orden===b.dataset.orden?-direccion:1;orden=b.dataset.orden;renderResultados();Array.from($('p4Cabecera').querySelectorAll('button')).find(el=>el.dataset.orden===orden).focus();}};
     ['p4SVG','p4Cuadrantes'].forEach(id=>['click','focusin','mouseover'].forEach(tipo=>$(id).addEventListener(tipo,e=>{const p=e.target.closest('[data-punto]');if(!p) return; if(tipo==='click') verActor(p.dataset.punto); else mostrarDetalle(p.dataset.punto);})));
@@ -3541,36 +3570,39 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
   // ACTIVIDAD 4: FIN JS
 
   // ACTIVIDAD 5: INICIO JS
-  // Ruta de acción por actor de la lista confirmada en la Actividad 4 (colección "rutas"). La colección "canvas" queda como histórico.
+  // Ruta de acción por actor de Tier 1 o 2 (colección "rutas"). La colección "canvas" queda como histórico.
   (function iniciarRutas(){
     const $=id=>document.getElementById(id), drafts=new Map();
-    let actoresInf=[],seleccion=null,rutas=[],sugeridos=[],contactos=[],responsables=[],facilitadores=[],actual=null,cargando=false,guardando=false,iniciado=false,version=0,errores={};
+    let actoresInf=[],seleccion=null,rutas=[],sugeridos=[],contactos=[],responsables=[],apoyos=[],facilitadores=[],actual=null,cargando=false,guardando=false,iniciado=false,version=0,errores={};
     const mensaje=t=>$('p5Estado').textContent=t;
     const identidad=()=>window.Identidad?window.Identidad.nombre:'';
     const ids=()=>seleccion&&Array.isArray(seleccion.actorIds)?seleccion.actorIds:[];
     const actorInf=id=>actoresInf.find(a=>a.id===id);
     const nombreDe=id=>(actorInf(id)||{}).nombre||id;
     const esAdmin=()=>window.Identidad?.rol==='administrador';
-    // En la pantalla del facilitador se muestra primero su ejemplo; la hoja y el CSV usan solo la ruta del grupo.
+    // La ficha, la hoja y el CSV usan la ruta vigente de la base.
     const deGrupo=id=>rutas.find(r=>r.actorId===id&&!r.facilitador);
-    const guardada=id=>rutas.find(r=>r.actorId===id&&r.facilitador)||deGrupo(id);
+    const guardada=id=>deGrupo(id);
     const sello=r=>r&&r.updatedAt?'Último guardado: '+new Date(r.updatedAt).toLocaleString('es-CO')+(r.editadoPor?' · '+r.editadoPor:''):'Sin guardar';
     async function leer(url,opts){const r=await fetch(url,{cache:'no-store',...opts}),d=await r.json();if(!r.ok){const e=Error(d&&d.error||'No se pudo cargar.');e.errores=d&&d.errores;throw e;}return d;}
     // Datos del formulario: borrador sin guardar, si existe; si no, el último guardado.
     function dato(id){return drafts.get(id)||Object.assign({actorId:id,etiqueta:'',responsable:'',aristas:{}},guardada(id)||{});}
+    const mercadoDe=a=>a?.categoria==='aliados'?'Gremios-aliados':a?.sector||'Otros mercados';
+    const etiquetaTier=id=>TierList.chip(seleccion?.detalles?.[id]?.mejorNivel);
     function renderLista(){
-      const lista=ids();
+      const buscar=$('p5Buscar').value.trim().toLocaleLowerCase('es');
+      const lista=ids().filter(id=>(nombreDe(id)+' '+mercadoDe(actorInf(id))).toLocaleLowerCase('es').includes(buscar));
       $('p5Lista').innerHTML=lista.map((id,i)=>{
-        const r=guardada(id),estado=drafts.has(id)?'Cambios sin guardar':r?Rutas.etiquetaNombre(r.etiqueta)+' · '+(r.responsable||'sin responsable'):'Sin guardar';
-        return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'"'+(r&&r.facilitador&&!drafts.has(id)?' class="es-ejemplo"':'')+'><span>'+(i+1)+'. '+esc(nombreDe(id))+'</span><small>'+esc(estado)+(r&&r.facilitador&&!drafts.has(id)?' '+window.etiquetaFacilitador():'')+'</small></button>';
+        const r=guardada(id),estado=drafts.has(id)?'Cambios sin guardar':r?Rutas.etiquetaNombre(r.etiqueta)+' · '+(r.responsable||'sin responsable')+(r.apoyo?' · Apoyo: '+r.apoyo:''):'Sin guardar';
+        return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'"'+(r&&r.facilitador&&!drafts.has(id)?' class="es-ejemplo"':'')+'><span>'+(i+1)+'. '+esc(nombreDe(id))+'</span><small>'+etiquetaTier(id)+esc(mercadoDe(actorInf(id)))+' · '+esc(estado)+(r&&r.facilitador&&!drafts.has(id)?' '+window.etiquetaFacilitador():'')+'</small></button>';
       }).join('');
     }
     function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
     function renderEditor(){
       const host=$('p5Editor');
-      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay actores seleccionados para la Actividad 5. Pasan automáticamente los actores calificados de Nivel 1 (máximo 10, en el orden del corte de la Actividad 4). Los no calificados quedan como Interés futuro y el facilitador puede incluirlos manualmente.</p>';return;}
+      if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay actores en Tier 1 o 2. Al ubicarlos en la Actividad 3 aparecerán aquí, con o sin calificación y sin límite. Puedes construir sus rutas en distintas sesiones.</p>';return;}
       if(!ids().includes(actual))actual=ids()[0];
-      const a=actorInf(actual)||{id:actual,nombre:actual,tipo:'empresa'},d=dato(actual),des=guardando?' disabled':'';
+      const a=actorInf(actual)||{id:actual,nombre:actual,tipo:'empresa'},d=dato(actual),des=(guardando||!esAdmin())?' disabled':'';
       const sugerido=sugeridos.find(c=>c.actor_id===actual),registrados=contactos.filter(c=>c.actorId===actual);
       const otro=!!d.responsable&&d.responsable!=='__otro'&&!responsables.includes(d.responsable),pideOtro=otro||d.responsable==='__otro';
       const opciones='<option value="">Elige un responsable</option>'+responsables.map(n=>'<option'+(d.responsable===n?' selected':'')+'>'+esc(n)+'</option>').join('')+'<option value="__otro"'+(pideOtro?' selected':'')+'>Otra persona…</option>';
@@ -3578,9 +3610,10 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       const campo=([k,t,max])=>k==='indicador'
         ?'<label>'+esc(t)+'<input type="text" data-campo="'+k+'" maxlength="'+max+'" placeholder="'+esc(Rutas.PLACEHOLDER_INDICADOR[d.etiqueta||''])+'" value="'+esc(d[k]||'')+'"'+des+'></label>'+campoError(k)
         :'<label>'+esc(t)+'<textarea data-campo="'+k+'" rows="3" maxlength="'+max+'"'+des+'>'+esc(d[k]||'')+'</textarea></label>'+campoError(k);
-      host.innerHTML='<div class="p5-editor"><form class="p5-form'+(esAdmin()?' es-ejemplo':'')+'" id="p5Form" novalidate><h3>'+esc(a.nombre)+(esAdmin()?' '+window.etiquetaFacilitador():'')+'</h3>'+(esAdmin()?'<p class="nota-ejemplo">Estás como facilitador: lo que guardes aquí es un ejemplo. Solo se ve en esta pantalla y no se registra en la base del taller ni en la hoja consolidada.</p>':'')+
+      host.innerHTML='<div class="p5-editor"><form class="p5-form" id="p5Form" novalidate><h3>'+esc(a.nombre)+'</h3><p>'+etiquetaTier(actual)+esc(mercadoDe(a))+'</p>'+(!esAdmin()?'<p class="hint">Solo los administradores editan las rutas en esta actividad.</p>':'')+
         '<fieldset><legend>Etiqueta (obligatoria)</legend><div class="p5-opciones">'+Rutas.ETIQUETAS.map(([k,t])=>'<label><input type="radio" name="p5Etiqueta" value="'+k+'"'+(d.etiqueta===k?' checked':'')+des+'> '+esc(t)+'</label>').join('')+'</div>'+campoError('etiqueta')+'</fieldset>'+
-        '<label>Responsable<select id="p5Responsable"'+des+'>'+opciones+'</select></label>'+(pideOtro?'<label>Nombre del responsable<input type="text" id="p5ResponsableOtro" maxlength="120" value="'+esc(otro?d.responsable:'')+'"'+des+'></label>':'')+campoError('responsable')+
+        '<div class="p5-personas"><div><label>Responsable<select id="p5Responsable"'+des+'>'+opciones+'</select></label>'+(pideOtro?'<label>Nombre del responsable<input type="text" id="p5ResponsableOtro" maxlength="120" value="'+esc(otro?d.responsable:'')+'"'+des+'></label>':'')+campoError('responsable')+'</div>'+
+        '<div><label>Apoyo (opcional)<select id="p5Apoyo"'+des+'><option value="">Sin apoyo</option>'+Rutas.opcionesApoyo(apoyos,d.responsable).map(n=>'<option'+(n===d.apoyo?' selected':'')+'>'+esc(n)+'</option>').join('')+'</select></label>'+campoError('apoyo')+'</div></div>'+
         Rutas.CAMPOS.map(campo).join('')+
         (d.etiqueta==='posicionamiento'?'<fieldset><legend>Aristas de posicionamiento</legend><p class="hint">Marca las que apliquen y escribe la acción de cada una.</p>'+aristas+'</fieldset>':'')+
         '<div class="p5-acciones"><button type="submit" class="btn"'+des+'>Guardar ruta</button><span class="p5-sello" aria-live="polite">'+esc(sello(guardada(actual)))+(drafts.has(actual)?' · Cambios sin guardar':'')+'</span></div></form>'+
@@ -3591,6 +3624,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       const d={actorId:actual,etiqueta:(f.querySelector('[name=p5Etiqueta]:checked')||{}).value||'',aristas:{}};
       const sel=$('p5Responsable').value;
       d.responsable=sel==='__otro'?(($('p5ResponsableOtro')&&$('p5ResponsableOtro').value)||'__otro'):sel;
+      d.apoyo=Rutas.limpiarApoyo($('p5Apoyo').value,d.responsable);
       f.querySelectorAll('[data-campo]').forEach(el=>{d[el.dataset.campo]=el.value;});
       f.querySelectorAll('[data-arista]').forEach(el=>{if(el.checked){const t=f.querySelector('[data-arista-accion="'+el.dataset.arista+'"]');d.aristas[el.dataset.arista]={activa:true,accion:t?t.value:''};}});
       return d;
@@ -3600,12 +3634,12 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       $('p5CSV').disabled=!lista.length;
       $('p5Hoja').innerHTML=lista.map((id,i)=>{
         const r=deGrupo(id);
-        if(!r)return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+'</h4><p>Sin ruta guardada.</p></article>';
+        if(!r)return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+'</h4><p>Ruta por construir.</p></article>';
         const ar=Object.entries(r.aristas||{}).filter(([,x])=>x&&x.activa);
-        return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+' · '+esc(Rutas.etiquetaNombre(r.etiqueta))+'</h4><p><strong>Responsable:</strong> '+esc(r.responsable)+'</p>'+Rutas.CAMPOS.map(([k,t])=>'<p><strong>'+esc(t)+':</strong> '+esc(r[k]||'Pendiente')+'</p>').join('')+(ar.length?'<p><strong>Aristas:</strong> '+ar.map(([k,x])=>esc(Rutas.aristaNombre(k))+(x.accion?' — '+esc(x.accion):'')).join(' · ')+'</p>':'')+'<small>'+esc(sello(r))+'</small></article>';
-      }).join('')||'<p>Aún no hay lista confirmada.</p>';
+        return '<article class="p5-hoja-card"><h4>'+(i+1)+'. '+esc(nombres[id])+' · '+esc(Rutas.etiquetaNombre(r.etiqueta))+'</h4><p><strong>Responsable:</strong> '+esc(r.responsable)+'</p><p><strong>Apoyo:</strong> '+esc(r.apoyo||'Sin apoyo')+'</p>'+Rutas.CAMPOS.map(([k,t])=>'<p><strong>'+esc(t)+':</strong> '+esc(r[k]||'Pendiente')+'</p>').join('')+(ar.length?'<p><strong>Aristas:</strong> '+ar.map(([k,x])=>esc(Rutas.aristaNombre(k))+(x.accion?' — '+esc(x.accion):'')).join(' · ')+'</p>':'')+'<small>'+esc(sello(r))+'</small></article>';
+      }).join('')||'<p>Aún no hay actores de Tier 1 o 2.</p>';
       const otros=rutas.filter(r=>!r.facilitador&&!lista.includes(r.actorId));
-      $('p5Historicos').textContent=otros.length?'Hay '+otros.length+' ruta(s) guardada(s) de actores que ya no están en la lista confirmada; se conservan en la base pero no se muestran.':'';
+      $('p5Historicos').innerHTML=otros.length?'<details><summary>Rutas guardadas fuera del Tier 1–2 actual ('+otros.length+')</summary>'+otros.map(r=>'<article class="p5-hoja-card"><h4>'+esc(nombreDe(r.actorId))+'</h4><p>'+esc(Rutas.etiquetaNombre(r.etiqueta))+' · Responsable: '+esc(r.responsable||'Pendiente')+' · Apoyo: '+esc(r.apoyo||'Sin apoyo')+'</p>'+Rutas.CAMPOS.map(([k,t])=>'<p><strong>'+esc(t)+':</strong> '+esc(r[k]||'Pendiente')+'</p>').join('')+'</article>').join('')+'</details>':'';
     }
     function render(forzar){
       renderLista();renderHoja();
@@ -3616,36 +3650,37 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       if(cargando||guardando||!$('view-canvas').classList.contains('active'))return;
       cargando=true;const v=version;
       try{
-        const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('data/actores.json'),leer('/api/lista-rutas'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
+        const [inf,sel,rs,sg,cs,cfg]=await Promise.all([leer('/api/catalogo-actores'),leer('/api/lista-rutas'),leer('/api/rutas'),leer('/api/contactos-informe').catch(()=>[]),leer('/api/contactos').catch(()=>[]),leer('asistentes-config.json').catch(()=>null)]);
         if(v!==version)return;
         actoresInf=inf;seleccion=sel;rutas=rs;sugeridos=sg;contactos=cs;
-        responsables=cfg?(cfg.participantes||[]).filter(n=>!(cfg.noResponsables||[]).includes(n)):responsables;facilitadores=cfg?[...(cfg.administradores||[])]:facilitadores; // Los facilitadores no son elegibles como responsables.
+        responsables=cfg?(cfg.participantes||[]):responsables;apoyos=cfg?[...responsables,...(cfg.administradores||[])]:apoyos;facilitadores=cfg?[...(cfg.disenadores||[])]:facilitadores; // Los diseñadores no son elegibles como responsables.
         render(false);
-        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+(seleccion&&seleccion.origen==='confirmada'?' · Lista confirmada por '+(seleccion.confirmadoPor||'el facilitador'):seleccion&&seleccion.origen==='automatica'?' · Lista automática: los primeros '+ids().length+' del corte de la Actividad 4':'')+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
+        mensaje('Actualizado '+new Date().toLocaleTimeString('es-CO')+' · '+ids().length+' actores de Tier 1 y 2'+' · Los cambios sin guardar se conservan mientras esta página esté abierta.');
       }catch(e){mensaje('No se pudo actualizar: '+e.message+' Se conservan los cambios sin guardar.');}
       finally{cargando=false;}
     }
     async function guardar(){
-      const d=recoger();if(!d||guardando)return;
+      const d=recoger();if(!esAdmin()||!d||guardando)return;
       drafts.set(actual,d);
       const v=Rutas.validar(Object.assign({},d,{responsable:d.responsable==='__otro'?'':d.responsable}),ids(),{facilitadores});
       if(!v.ok){errores=v.errores;renderEditor();mensaje('Revisa los campos marcados. Tus cambios siguen en el formulario.');return;}
       errores={};guardando=true;version++;renderEditor();mensaje('Guardando…');
       try{
         const rec=await leer('/api/rutas',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({},v.valor,{editadoPor:identidad()}))});
-        rutas=rutas.filter(r=>!(r.actorId===rec.actorId&&!!r.facilitador===!!rec.facilitador)).concat(rec);drafts.delete(rec.actorId);mensaje((rec.facilitador?'Ejemplo guardado solo en esta pantalla (Ad. Facilitador). ':'Ruta guardada. ')+sello(rec));
+        rutas=rutas.filter(r=>!(r.actorId===rec.actorId&&!!r.facilitador===!!rec.facilitador)).concat(rec);drafts.delete(rec.actorId);mensaje((rec.facilitador?'Ejemplo guardado solo en esta pantalla (Diseñador). ':'Ruta guardada. ')+sello(rec));
       }catch(e){errores=e.errores||{};mensaje(e.message+' Tus cambios siguen en el formulario.');}
       finally{guardando=false;version++;render(true);}
     }
+    $('p5Buscar').addEventListener('input',renderLista);
     $('p5Lista').addEventListener('click',e=>{
       const b=e.target.closest('[data-p5-actor]');if(!b||guardando)return;
       // Los borradores ya se guardan en memoria con cada cambio (eventos input/change).
       actual=b.dataset.p5Actor;errores={};render(true);
     });
-    $('p5Editor').addEventListener('input',()=>{const d=recoger();if(!d)return;drafts.set(actual,d);const s=$('p5Editor').querySelector('.p5-sello');if(s)s.textContent=sello(guardada(actual))+' · Cambios sin guardar';});
+    $('p5Editor').addEventListener('input',()=>{if(!esAdmin())return;const d=recoger();if(!d)return;if($('p5Apoyo')){$('p5Apoyo').value=d.apoyo;Array.from($('p5Apoyo').options).forEach(o=>{o.hidden=!!o.value&&Rutas.mismoNombre(o.value,d.responsable);});}drafts.set(actual,d);const s=$('p5Editor').querySelector('.p5-sello');if(s)s.textContent=sello(guardada(actual))+' · Cambios sin guardar';});
     // Cambios que muestran u ocultan partes del formulario: etiqueta, aristas y «Otra persona».
     $('p5Editor').addEventListener('change',e=>{
-      if(!e.target.matches('[name=p5Etiqueta],[data-arista],#p5Responsable'))return;
+      if(!e.target.matches('[name=p5Etiqueta],[data-arista],#p5Responsable,#p5ResponsableOtro'))return;
       const d=recoger();if(!d)return;
       if(e.target.id==='p5Responsable'&&e.target.value==='__otro')d.responsable='__otro';
       drafts.set(actual,d);renderEditor();renderLista();
@@ -3653,6 +3688,7 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       if(foco)foco.focus();
     });
     $('p5Editor').addEventListener('submit',e=>{e.preventDefault();guardar();});
+    document.addEventListener('identidad:cambio',()=>{drafts.clear();errores={};version++;render(true);cargar();});
     $('p5CSV').onclick=()=>{const lista=ids();descargarEmbudo(Rutas.filasHoja(lista,rutas,Object.fromEntries(lista.map(id=>[id,nombreDe(id)]))),'rutas-de-accion.csv');};
     $('p5Reintentar').onclick=cargar;
     $('view-canvas').addEventListener('vista:activar',()=>setTimeout(()=>{if(!iniciado){iniciado=true;setInterval(cargar,POLL_MS);}cargar();},0));

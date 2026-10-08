@@ -75,7 +75,7 @@
     ]
   },
   "equipo": {
-    "titulo": "Equipo facilitador",
+    "titulo": "Equipo diseñador",
     "personas": [
       {
         "nombre": "Germán Hillón",
@@ -248,19 +248,19 @@
     {
       "numero": 3,
       "nombre": "Tier list de actores",
-      "proposito": "Ordenar en parejas sorteadas los actores de cada industria en cuatro niveles y seleccionar para la Actividad 4 hasta 5 actores de Energía, Servicios públicos, Minería y Salud y Gestión de riesgos laborales y, aparte, hasta 3 de los demás mercados por grupo.",
+      "proposito": "Ordenar los actores en cuatro niveles sin límite por nivel. Todos los ubicados pasan a la Actividad 4 y pueden actualizarse en futuras sesiones.",
       "vista": "matriz"
     },
     {
       "numero": 4,
       "nombre": "Priorizar actores y mercados",
-      "proposito": "Calificar el impacto y esfuerzo de los actores del Nivel 1 y confirmar una lista de máximo 10 para la Actividad 5.",
+      "proposito": "Calificar a su ritmo el impacto y esfuerzo de los actores de Tier 1–4 y consultar su orden sugerido. Los Tier 1 y 2 pasan a la Actividad 5 con o sin calificación.",
       "vista": "priorizacion"
     },
     {
       "numero": 5,
       "nombre": "Construir rutas de acción",
-      "proposito": "Definir en grupo, con Germán y Julio, la ruta de acción de cada actor priorizado: qué aporta Olivia, quién lo lleva y las acciones para Q4-2026, Q1-2027 y el año 2027.",
+      "proposito": "Construir y actualizar en distintas sesiones las rutas de todos los actores de Tier 1 y 2, sin límite: aporte de Olivia, responsable, apoyo y acciones por horizonte.",
       "vista": "canvas"
     }
   ],

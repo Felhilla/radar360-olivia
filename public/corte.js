@@ -1,7 +1,7 @@
 /* Reglas puras del corte de la Actividad 4. */
 (function(root){
   'use strict';
-  // resumen incluye una fila por actor del Nivel 1, incluso sin votos.
+  // resumen incluye una fila por actor ubicado, incluso sin votos.
   function ordenar(resumen,corte,gruposPorActor={}){
     const grupos=id=>Array.isArray(gruposPorActor[id])?new Set(gruposPorActor[id]).size:Number(gruposPorActor[id]||0);
     const rango=r=>{const i=corte.ordenCuadrantes.indexOf(r.cuadrante?.id);return i<0?Infinity:i;};
@@ -10,17 +10,15 @@
       (!a.sinCalificar&&(rango(a)-rango(b)||b.indiceImpacto-a.indiceImpacto||a.indiceEsfuerzo-b.indiceEsfuerzo||b.grupos-a.grupos))||
       a.nombre.localeCompare(b.nombre,'es'));
   }
-  function propuesta(ordenados,corte){return ordenados.filter(r=>!r.sinCalificar&&r.votos>0).slice(0,corte.maximo);}
-  // Interés futuro queda disponible para selección manual, fuera del paso automático.
-  function automatica(ordenados,corte){return propuesta(ordenados,corte);}
-  function validarSeleccion(actorIds,universo,corte){
-    if(!Array.isArray(actorIds))return {ok:false,motivo:'La selección debe ser una lista de actores.'};
-    if(actorIds.length>corte.maximo)return {ok:false,motivo:'La lista admite máximo '+corte.maximo+' actores'};
-    if(new Set(actorIds).size!==actorIds.length)return {ok:false,motivo:'La lista contiene actores duplicados.'};
-    const ids=new Set(universo.map(a=>typeof a==='string'?a:a.actorId||a.id));
-    if(actorIds.some(id=>typeof id!=='string'||!ids.has(id)))return {ok:false,motivo:'El actor no está en el Nivel 1 de la Actividad 3.'};
-    return {ok:true,motivo:''};
+  function estado(r){return r.votos>0?'Calificados':r.mejorNivel<=2?'Interés futuro':'Sin calificar';}
+  // Calificar usa el voto propio; Matriz usa cualquier calificación válida del actor.
+  function filtrar(lista,filtros,mercadoDe,calificado){
+    const texto=String(filtros.texto||'').trim().toLocaleLowerCase('es');
+    return lista.filter(a=>(!filtros.tier||a.mejorNivel===Number(filtros.tier))&&
+      (!filtros.mercado||mercadoDe(a)===filtros.mercado)&&
+      (!filtros.estado||(filtros.estado==='calificados'?calificado(a):!calificado(a)))&&
+      (a.nombre+' '+(a.sector||'')).toLocaleLowerCase('es').includes(texto));
   }
-  const api={ordenar,propuesta,automatica,validarSeleccion};
+  const api={ordenar,estado,filtrar};
   if(typeof module==='object'&&module.exports)module.exports=api;else root.Corte=api;
 })(typeof globalThis==='object'?globalThis:this);

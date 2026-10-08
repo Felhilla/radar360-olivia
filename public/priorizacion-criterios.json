@@ -119,13 +119,12 @@
     "calculo": "Promedio de los índices ponderados individuales. Clasificación antes del redondeo, alto si índice >= umbral. Se redondean únicamente los índices publicados a dos decimales."
   },
   "corte": {
-    "maximo": 10,
     "ordenCuadrantes": [
       "victorias-tempranas",
       "apuestas-estrategicas",
       "mantenimiento-selectivo",
       "racionalizacion"
     ],
-    "nota": "Orden para el corte: primero por cuadrante en este orden; dentro de cada cuadrante, mayor índice de impacto; si empatan, menor índice de esfuerzo; si siguen empatados, más grupos que lo eligieron; luego nombre."
+    "nota": "Orden sugerido: primero por cuadrante en este orden; dentro de cada cuadrante, mayor índice de impacto; si empatan, menor índice de esfuerzo; si siguen empatados, más grupos que lo eligieron; luego nombre."
   }
 }

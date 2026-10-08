@@ -9,6 +9,7 @@
     const lista = [];
     (config && config.participantes || []).forEach(nombre => lista.push({nombre, rol:'participante'}));
     (config && config.administradores || []).forEach(nombre => lista.push({nombre, rol:'administrador'}));
+    (config && config.disenadores || []).forEach(nombre => lista.push({nombre, rol:'disenador'}));
     return lista;
   }
   // Devuelve {ok:true, persona} si el nombre coincide en al menos `minimoPalabras` palabras con una sola persona.

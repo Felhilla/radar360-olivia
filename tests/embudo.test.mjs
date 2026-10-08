@@ -27,15 +27,15 @@ test('Promedio exacto 1,5 inclusivo, estricto configurable y sin votos',()=>{
  assert.equal(Embudo.activados(as,[...vs,{...vs[0],valor:1}],config).length,0);
  assert.throws(()=>Embudo.resumen(as,vs,{umbral:3,inclusivo:true}));
 });
-test('Actividad 4: solo Nivel 1, incluye ocultos y conserva contrato',async()=>{
+test('Actividad 4: Tier 1–4, incluye ocultos y conserva contrato',async()=>{
  const s=entorno();s.actor('e','mercados',{mostrarEnRadar:false});s.actor('g','aliados');s.actor('c','competidores');s.actor('r','autoridades');s.actor('d','aliados',{estado:'descartado'});
  for(const id of ['e','g','c','r','d'])assert.equal((await s.req('priorizacion-votos','PUT',calificacion(id))).status,400);
  s.nivel1('e');s.nivel1('g');
  for(const id of ['e','g'])assert.equal((await s.req('priorizacion-votos','PUT',calificacion(id))).status,200);
  for(const id of ['c','r','d'])assert.equal((await s.activar(id)).status,400);
  let rs=(await s.req('priorizacion-votos?resumen=1')).data;
- assert.equal(rs.length,2);assert.deepEqual(Object.keys(rs[0]),['actorId','nombre','categoria','sector','indiceImpacto','indiceEsfuerzo','cuadrante','votos']);
- s.nivel1('e',2);rs=(await s.req('priorizacion-votos?resumen=1')).data;assert.deepEqual(rs.map(r=>r.actorId),['g']);
+ assert.equal(rs.length,2);assert.deepEqual(Object.keys(rs[0]),['actorId','mejorNivel','niveles','grupos','nombre','categoria','sector','indiceImpacto','indiceEsfuerzo','cuadrante','votos']);
+ s.nivel1('e',2);rs=(await s.req('priorizacion-votos?resumen=1')).data;assert.deepEqual(rs.map(r=>r.actorId),['e','g']);
  assert.equal((await s.req('priorizacion-votos')).data.length,2,'se conservan calificaciones históricas');
  assert.equal(criterios.provisional,false);
  const prev=JSON.parse(read('../netlify/functions/priorizacion-criterios.json'));
@@ -76,13 +76,13 @@ test('Embudo histórico: CSV de activados sigue disponible para consumidores exi
  assert.equal(activados.length,1);
  assert.match(Embudo.csv(activados.map(a=>[a.nombre])),/Empresa/);
 });
-test('Vista Actividad 4: carga viva, filtros de grupo y salida del Nivel 1',async()=>{
+test('Vista Actividad 4: carga viva, filtros de mercado y cambio de nivel',async()=>{
  const s=entorno();s.actor('e','mercados',{nombre:'Empresa visible'});s.actor('g','aliados',{nombre:'Aliado visible'});s.actor('x','competidores');
  const $=dom(s.context);vm.runInContext(html.split('// ACTIVIDAD 4: INICIO JS')[1].split('// ACTIVIDAD 4: FIN JS')[0],s.context);
  const cargar=async()=>{await $('view-priorizacion').handlers['vista:activar']();await new Promise(r=>setImmediate(r));};
- await cargar();assert.match($('p4Actores').innerHTML,/Todavía no hay actores en el Nivel 1/);assert.equal($('p4Provisional').hidden,true);
+ await cargar();assert.match($('p4Actores').innerHTML,/Todavía no hay actores ubicados/);assert.equal($('p4Provisional').hidden,true);
  s.nivel1('e');s.nivel1('g');await cargar();
  assert.match($('p4Actores').innerHTML,/Empresa visible/);assert.match($('p4Actores').innerHTML,/Aliado visible/);assert(!$('p4Actores').innerHTML.includes('data-actor="x"'));
- $('p4Categoria').value='aliados';$('p4Categoria').handlers.input();assert(!$('p4Actores').innerHTML.includes('Empresa visible'));assert.match($('p4Actores').innerHTML,/Aliado visible/);
- s.nivel1('g',2);await cargar();assert(!$('p4Actores').innerHTML.includes('Aliado visible'));
+ $('p4Mercado').value='Gremios-aliados';$('p4Mercado').handlers.input();assert(!$('p4Actores').innerHTML.includes('Empresa visible'));assert.match($('p4Actores').innerHTML,/Aliado visible/);
+ s.nivel1('g',2);await cargar();assert.match($('p4Actores').innerHTML,/Aliado visible/);assert.match($('p4Actores').innerHTML,/Tier 2/);
 });

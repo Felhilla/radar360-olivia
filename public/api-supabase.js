@@ -64,30 +64,13 @@
     }
   };
 
-  // ---------- ejemplos de facilitador ----------
-  // Lo que registra un administrador (Julio, Germán, Felipe) es un ejemplo para mostrar en pantalla: se guarda solo en
-  // su navegador (localStorage), lleva facilitador:true y nunca llega a Supabase. Por eso no entra al Nivel 1, al corte,
-  // a la Actividad 5, a los CSV ni al informe, que se calculan con los datos de la base.
-  var EJEMPLO_GRUPO = 'ejemplo-facilitador';
-  var CLAVE_EJEMPLOS = 'ruta-ejemplos-facilitador';
-  var ejemplosMemoria = {};
-  function esFacilitador(){ return !!(window.Identidad && window.Identidad.rol === 'administrador'); }
-  function leerEjemplos(){ try { var v = JSON.parse(localStorage.getItem(CLAVE_EJEMPLOS)); return v && typeof v === 'object' ? v : ejemplosMemoria; } catch(e){ return ejemplosMemoria; } }
-  function escribirEjemplos(todo){ ejemplosMemoria = todo; try { localStorage.setItem(CLAVE_EJEMPLOS, JSON.stringify(todo)); } catch(e){} }
-  var ejemplos = {
-    list: function(col){ var c = leerEjemplos()[col] || {}; return Object.keys(c).sort().map(function(id){ return c[id]; }); },
-    get: function(col, id){ var c = leerEjemplos()[col] || {}; return c[id] || null; },
-    set: function(col, id, data){ var todo = leerEjemplos(); var rec = Object.assign({}, data, { facilitador: true }); (todo[col] = todo[col] || {})[id] = rec; escribirEjemplos(todo); return rec; },
-    del: function(col, id){ var todo = leerEjemplos(); if(todo[col]) delete todo[col][id]; escribirEjemplos(todo); }
-  };
-  // Ejemplos compartidos: registros de la base que un facilitador dejó como ejemplo ilustrativo (ejemploCompartido:true).
-  // Todos los ven en una tarjeta «Ad. Facilitador» (ruta /api/ejemplos), pero quedan fuera de las listas del taller,
+  // Los ejemplos compartidos históricos siguen siendo de solo lectura.
+  // Ejemplos compartidos: registros de la base que un diseñador dejó como ejemplo ilustrativo (ejemploCompartido:true).
+  // Todos los ven en una tarjeta «Diseñador» (ruta /api/ejemplos), pero quedan fuera de las listas del taller,
   // del Nivel 1, del corte, de la Actividad 5, de los CSV y del informe.
   var EJEMPLO_SORTEO = 'ejemplo-facilitador';
   async function delTaller(col){ return (await store.list(col)).filter(function(f){ return !(f && f.ejemploCompartido); }); }
   async function ejemplosCompartidos(col){ return (await store.list(col)).filter(function(f){ return f && f.ejemploCompartido; }); }
-  // Lista para mostrar: la base más, solo en la pantalla del facilitador, sus ejemplos.
-  async function conEjemplos(col, filas){ return esFacilitador() ? filas.concat(ejemplos.list(col)) : filas; }
 
   // ---------- validación de actores (seguridad: solo campos editables y valores permitidos) ----------
   var CONFIANZAS = ['alta', 'media', 'baja', 'por_identificar'];
@@ -135,27 +118,23 @@
     return criteriosPromesa;
   }
 
-  async function nivel1Vigente(){
+  async function ubicadosVigentes(){
     const sorteo=await store.get('parejas','vigente');
-    const actores=TierList.nivel1(sorteo,await delTaller('tierlist'));
+    const actores=TierList.ubicados(sorteo,await delTaller('tierlist'));
     return {sorteoId:sorteo?.id||null,actores};
   }
-  // Lista que llega a la Actividad 5: la confirmada por el facilitador o, si no hay, la automática del corte.
+  // La selección histórica se conserva, pero no determina el universo de rutas.
   async function listaActividad5(){
-    const sel=await store.get('seleccion','vigente'), nivel=await nivel1Vigente();
-    let ordenados=[], cr=null;
-    if(nivel.actores.length){
-      cr=await criterios();
-      const resumen=await (await rutas['priorizacion-votos']('GET',null,new URLSearchParams('resumen=1'))).json();
-      const catalogo=(await actoresTier())||[], nombre=id=>(catalogo.find(a=>a.id===id)||{}).nombre||id;
-      const grupos=Object.fromEntries(nivel.actores.map(a=>[a.actorId,a.grupos]));
-      ordenados=Corte.ordenar(nivel.actores.map(a=>resumen.find(r=>r.actorId===a.actorId)||{actorId:a.actorId,nombre:nombre(a.actorId),votos:0}),cr.corte,grupos);
-    }
-    // Resultado del taller por actor, para explicar «por qué se priorizó» en la Actividad 5.
-    const detalles=Object.fromEntries(ordenados.map((r,i)=>[r.actorId,{posicion:i+1,grupos:r.grupos,cuadrante:r.sinCalificar?'Interés futuro':(r.cuadrante&&r.cuadrante.nombre)||'',calificaciones:r.votos||0}]));
-    if(sel&&Array.isArray(sel.actorIds)&&sel.actorIds.length) return {actorIds:sel.actorIds,origen:'confirmada',confirmadoPor:sel.confirmadoPor||'',confirmadoEn:sel.confirmadoEn||'',detalles};
-    if(!ordenados.length) return {actorIds:[],origen:'vacia',detalles:{}};
-    return {actorIds:Corte.automatica(ordenados,cr.corte).map(r=>r.actorId),origen:'automatica',detalles};
+    const nivel=await ubicadosVigentes();
+    const elegibles=nivel.actores.filter(a=>a.mejorNivel<=2);
+    if(!elegibles.length)return {actorIds:[],origen:'vacia',detalles:{}};
+    const cr=await criterios();
+    const resumen=await (await rutas['priorizacion-votos']('GET',null,new URLSearchParams('resumen=1'))).json();
+    const catalogo=await actoresTier(), porId=new Map(catalogo.map(a=>[a.id,a]));
+    const grupos=Object.fromEntries(elegibles.map(a=>[a.actorId,a.grupos]));
+    const ordenados=Corte.ordenar(elegibles.map(a=>({...a,nombre:porId.get(a.actorId)?.nombre||a.actorId,votos:0,...resumen.find(r=>r.actorId===a.actorId)})),cr.corte,grupos);
+    const detalles=Object.fromEntries(ordenados.map((r,i)=>[r.actorId,{posicion:i+1,mejorNivel:r.mejorNivel,grupos:r.grupos,cuadrante:r.sinCalificar?'Interés futuro':r.cuadrante.nombre,calificaciones:r.votos||0}]));
+    return {actorIds:ordenados.map(r=>r.actorId),origen:'automatica',detalles};
   }
   async function activosEmbudo(){
     var r=await nativeFetch('embudo-config.json',{cache:'no-store'});
@@ -180,12 +159,11 @@
     if((d.correo!=null && typeof d.correo!=='string') || (valor.correo && (valor.correo.length>160 || !/^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(valor.correo)))) errores.correo='Escribe un correo válido de máximo 160 caracteres.';
     return Object.keys(errores).length?{ok:false,errores}:{ok:true,valor};
   }
-  // Catálogo compartido: se intenta cargar una sola vez por sesión.
-  var actoresTierPromesa;
-  function actoresTier(){
-    if(!actoresTierPromesa) actoresTierPromesa=nativeFetch('data/actores.json',{cache:'no-store'})
-      .then(r=>{if(!r.ok)throw Error('catálogo');return r.json();}).then(a=>Array.isArray(a)?a:null).catch(()=>null);
-    return actoresTierPromesa;
+  // Cada carga consulta el Radar: no queda una promesa con actores obsoletos.
+  async function actoresTier(){
+    const res=await nativeFetch('data/actores.json',{cache:'no-store'});
+    if(!res.ok)throw Error('No se pudo cargar el catálogo.');
+    return TierList.catalogoVigente(await res.json(),await store.list('actors'));
   }
   function sorteoValido(s){
     const ids=window.TierList.INDUSTRIAS.map(i=>i.id), nombres=new Set(), grupos=new Set(), cubiertas=new Set();
@@ -199,7 +177,55 @@
     }
     return cubiertas.size===ids.length;
   }
+  // Historial de escrituras confirmadas. Se serializan los guardados de esta pestaña para
+  // conservar el primer estado y contar los movimientos de A3 en cada ventana.
+  const actividades={ideas:'A1',actors:'Radar',contactos:'A2',tierlist:'A3',parejas:'A3','priorizacion-votos':'A4',seleccion:'A4',rutas:'A5',credenciales:'Acceso'};
+  const guardarBase=store.set.bind(store), borrarBase=store.del.bind(store);
+  let autorEscritura=null;
+  async function registrar(col,id,antes,despues,persona,tableroAntes){
+    const fecha=new Date().toISOString(), grupo=(despues||antes||{}).grupoId;
+    const agrupado=col==='tierlist'&&grupo;
+    const historialId=agrupado?'tierlist:'+grupo+':'+Math.floor(Date.now()/600000):fecha+'-'+Math.random().toString(36).slice(2);
+    const anterior=agrupado?await store.get('historial',historialId):null;
+    let rec={id:historialId,coleccion:col,docId:agrupado?grupo:id,actividad:actividades[col],accion:despues===null?'borrar':antes?'editar':'crear',quien:persona?.nombre||'Sin identificar',rol:persona?.rol||'participante',fecha,antes,despues};
+    if(col==='credenciales'){rec.antes=null;rec.despues='Contraseña cambiada';}
+    if(agrupado){
+      rec={...rec,accion:'editar',antes:anterior?anterior.antes:tableroAntes,despues:(await store.list('tierlist')).filter(f=>f.grupoId===grupo),movimientos:(anterior?.movimientos||0)+1};
+      rec.autores=[...new Set([...(anterior?.autores||[]),rec.quien])];
+    }
+    await guardarBase('historial',historialId,rec);
+  }
+  async function escribir(col,id,data,borrar){
+    if(!actividades[col])return borrar?borrarBase(col,id):guardarBase(col,id,data);
+    const persona=autorEscritura;
+    const antes=await store.get(col,id);
+    const grupo=(data||antes||{}).grupoId;
+    const tableroAntes=col==='tierlist'?(await store.list(col)).filter(f=>f.grupoId===grupo):null;
+    const resultado=await (borrar?borrarBase(col,id):guardarBase(col,id,data));
+    try{await registrar(col,id,antes,borrar?null:data,persona,tableroAntes);}
+    catch(e){throw Error('El dato se guardó, pero no se pudo registrar el control de cambios. Revisa la conexión y la colección historial.');}
+    return resultado;
+  }
+  store.set=(col,id,data)=>escribir(col,id,data,false);
+  store.del=(col,id)=>escribir(col,id,null,true);
   var rutas = {
+    'catalogo-actores': async function(m){return m==='GET'?responder(await actoresTier()):responder({error:'Método no permitido.'},405);},
+    'historial': async function(m){
+      if(!['administrador','disenador'].includes(window.Identidad?.rol))return responder({error:'Solo administradores y diseñadores pueden consultar el control de cambios.'},403);
+      return m==='GET'?responder((await store.list('historial')).sort((a,b)=>b.fecha.localeCompare(a.fecha))):responder({error:'El historial solo admite registros generados por los guardados.'},405);
+    },
+    // Control de pantalla, no seguridad real: la API pública puede eludirlo. Riesgo aceptado por el cliente.
+    'credenciales': async function(m,body,qs){
+      const cfg=await asistentes(),id=m==='GET'?qs.get('id'):body?.id;
+      const nombre=(cfg.administradores||[]).find(n=>slugVotante(n)===id);
+      if(!nombre)return responder({error:'Administrador no válido.'},400);
+      if(m==='GET')return responder(await store.get('credenciales',id));
+      if(m!=='PUT')return responder({error:'Método no permitido.'},405);
+      const persona=autorEscritura;
+      if(persona?.rol!=='administrador'||persona.nombre!==nombre)return responder({error:'Verifica primero tu contraseña.'},403);
+      if(!/^[a-f0-9]{32}$/.test(body.salt)||!/^[a-f0-9]{64}$/.test(body.hash))return responder({error:'Credencial no válida.'},400);
+      return responder(await store.set('credenciales',id,{salt:body.salt,hash:body.hash,cambiadaEn:new Date().toISOString()}));
+    },
     'parejas': async function(m,body){
       if(!['GET','PUT','PATCH'].includes(m))return responder({error:'method_not_allowed'},405);
       const vigente=await store.get('parejas','vigente');
@@ -214,22 +240,12 @@
       return responder(await store.set('parejas','vigente',rec));
     },
     'tierlist': async function(m,body,qs){
-      if(m==='GET'){const filas=await delTaller('tierlist'),id=qs.get('sorteo');return responder((id===null?filas:filas.filter(f=>f.sorteoId===id)).concat(esFacilitador()?ejemplos.list('tierlist'):[]));}
+      if(m==='GET'){const filas=await delTaller('tierlist'),id=qs.get('sorteo');return responder(id===null?filas:filas.filter(f=>f.sorteoId===id));}
       if(m!=='PUT')return responder({error:'method_not_allowed'},405);
       if(!body||!['sorteoId','grupoId','actorId','editadoPor'].every(k=>typeof body[k]==='string'&&body[k].trim()&&body[k].length<=300)||![null,1,2,3,4].includes(body.nivel))return responder({error:'Colocación no válida.'},400);
-      if(esFacilitador()){
-        // El facilitador no modifica los tableros de los grupos: solo su tablero de ejemplo, que vive en su navegador.
-        if(body.grupoId!==EJEMPLO_GRUPO)return responder({error:'Los facilitadores ven los tableros de los grupos, pero no los modifican.'},403);
-        const catalogo=await actoresTier();
-        if(catalogo&&!catalogo.some(a=>a.id===body.actorId))return responder({error:'El actor no está en el catálogo.'},400);
-        const idEj=EJEMPLO_GRUPO+':'+body.actorId;
-        if(body.nivel===null){ejemplos.del('tierlist',idEj);return responder({ok:true});}
-        const regla=window.TierList.puedeMover(ejemplos.list('tierlist'),body.actorId,body.nivel,catalogo);
-        if(!regla.ok)return responder({error:regla.motivo},409);
-        return responder(ejemplos.set('tierlist',idEj,{id:idEj,sorteoId:body.sorteoId,grupoId:EJEMPLO_GRUPO,actorId:body.actorId,nivel:body.nivel,editadoPor:body.editadoPor.trim(),updatedAt:new Date().toISOString()}));
-      }
       const vigente=await store.get('parejas','vigente'),grupo=vigente?.grupos.find(g=>g.id===body.grupoId);
       if(!grupo||body.sorteoId!==vigente.id)return responder({error:'El grupo no pertenece al sorteo vigente.'},400);
+      if(autorEscritura?.rol!=='administrador' && (!vigente.iniciado || !grupo.integrantes?.includes(autorEscritura?.nombre))) return responder({error:'Solo puedes editar tu grupo cuando la actividad haya iniciado.'},403);
       const actores=await actoresTier();
       if(actores&&!window.TierList.actoresDelGrupo(grupo,actores).some(a=>a.id===body.actorId))return responder({error:'El actor no pertenece a este grupo.'},400);
       const id=body.grupoId+':'+body.actorId;
@@ -246,13 +262,12 @@
     },
     'contactos': async function(m,body,qs){
       if(m === 'GET'){
-        var lista=await conEjemplos('contactos',await store.list('contactos')), actorId=qs.get('actorId');
+        var lista=await store.list('contactos'), actorId=qs.get('actorId');
         return responder(actorId===null?lista:lista.filter(c=>c.actorId===actorId));
       }
       if(m === 'DELETE'){
         var id=qs.get('id');
         if(!id) return responder({error:'Falta el contacto.'},400);
-        if(ejemplos.get('contactos',id)){ejemplos.del('contactos',id);return responder({ok:true});}
         await store.del('contactos',id); return responder({ok:true});
       }
       if(m !== 'POST') return responder({error:'method_not_allowed'},405);
@@ -262,7 +277,6 @@
       if(!validacion.ok) return responder(validacion,400);
       var rec=Object.assign({id:idCorto(texto(body.actorId,200)+':'),actorId:texto(body.actorId,200)},validacion.valor,{registradoPor:texto(body.registradoPor,80),createdAt:new Date().toISOString()});
       if(unescape(encodeURIComponent(JSON.stringify(rec))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
-      if(esFacilitador()) return responder(ejemplos.set('contactos',rec.id,rec));
       if(await store.count('contactos')>=2000) return responder({error:'Límite de contactos alcanzado.'},429);
       await store.set('contactos',rec.id,rec);return responder(rec);
     },
@@ -371,7 +385,7 @@
       }
     },
     'ideas': async function(m, body){
-      if(m === 'GET') return responder({ stickers: await conEjemplos('ideas', await store.list('ideas')) });
+      if(m === 'GET') return responder({ stickers: await store.list('ideas') });
       if(m === 'POST'){
         if(!body) return responder({ error: 'invalid_json' }, 400);
         var t = typeof body.texto === 'string' ? body.texto.trim() : '';
@@ -382,13 +396,11 @@
         var todas = await store.list('ideas');
         if(todas.filter(function(s){ return s.horizonte === body.horizonte; }).length >= 200) return responder({ error: 'too_many_rows' }, 429);
         var s = { id: idCorto('idea-'), horizonte: body.horizonte, preguntaId: body.preguntaId, texto: t, createdAt: new Date().toISOString() };
-        if(esFacilitador()) return responder({ sticker: ejemplos.set('ideas', s.id, s) }, 201);
         await store.set('ideas', s.id, s);
         return responder({ sticker: s }, 201);
       }
       if(m === 'DELETE'){
         if(!body || typeof body.id !== 'string') return responder({ error: 'missing_id' }, 400);
-        if(ejemplos.get('ideas', body.id)){ ejemplos.del('ideas', body.id); return responder({ ok: true }); }
         if(!(await store.get('ideas', body.id))) return responder({ error: 'not_found' }, 404);
         await store.del('ideas', body.id);
         return responder({ ok: true });
@@ -448,7 +460,7 @@
       await store.set('gremios-taller', g.id, g);
       return responder(g, 201);
     },
-    // Actividad 5: una ruta de acción por actor de la lista confirmada en la Actividad 4. Prevalece el último guardado.
+    // Actividad 5: una ruta de acción por actor de Tier 1 o 2. Prevalece el último guardado.
     'ejemplos': async function(m){
       if(m!=='GET') return responder({error:'Método no permitido.'},405);
       return responder({sorteo:await store.get('parejas',EJEMPLO_SORTEO),tierlist:await ejemplosCompartidos('tierlist'),
@@ -459,28 +471,21 @@
       return responder(await listaActividad5());
     },
     'rutas': async function(m,body){
-      if(m==='GET') return responder(await conEjemplos('rutas',await delTaller('rutas')));
+      if(m==='GET') return responder(await delTaller('rutas'));
       if(m!=='PUT') return responder({error:'Método no permitido.'},405);
       var lista=await listaActividad5();
-      if(!lista.actorIds.length) return responder({error:'Todavía no hay actores en el Nivel 1 de la Actividad 3.'},409);
-      var v=window.Rutas.validar(body,lista.actorIds,{facilitadores:(await asistentes()).administradores||[]});
+      if(!lista.actorIds.length) return responder({error:'Todavía no hay actores en Tier 1 o 2 de la Actividad 3.'},409);
+      var v=window.Rutas.validar(body,lista.actorIds,{disenadores:(await asistentes()).disenadores||[]});
       if(!v.ok) return responder({error:Object.values(v.errores)[0],errores:v.errores},400);
       if(body.editadoPor!=null&&(typeof body.editadoPor!=='string'||body.editadoPor.length>80)) return responder({error:'Nombre de quien registra no válido.'},400);
       var rec=Object.assign({id:v.valor.actorId},v.valor,{editadoPor:texto(body.editadoPor,80),updatedAt:new Date().toISOString()});
       if(unescape(encodeURIComponent(JSON.stringify(rec))).length>20*1024) return responder({error:'Registro demasiado grande.'},400);
-      if(esFacilitador()) return responder(ejemplos.set('rutas',rec.id,rec));
       return responder(await store.set('rutas',rec.id,rec));
     },
-    'seleccion': async function(m,body){
-      if(m==='GET') return responder(await store.get('seleccion','vigente'));
-      if(m==='DELETE'){await store.del('seleccion','vigente');return responder({ok:true});}
-      if(m!=='PUT') return responder({error:'Método no permitido.'},405);
-      const nivel=await nivel1Vigente(),cr=await criterios();
-      const validacion=Corte.validarSeleccion(body?.actorIds,nivel.actores,cr.corte);
-      if(!validacion.ok) return responder({error:validacion.motivo},400);
-      if(typeof body.confirmadoPor!=='string'||!body.confirmadoPor.trim()||body.confirmadoPor.length>80)
-        return responder({error:'Escribe quién confirma la lista (1–80 caracteres).'},400);
-      return responder(await store.set('seleccion','vigente',{actorIds:body.actorIds,confirmadoPor:body.confirmadoPor.trim(),confirmadoEn:new Date().toISOString(),sorteoId:nivel.sorteoId}));
+    // Solo lectura histórica: el orden sugerido no se confirma ni se guarda.
+    'seleccion': async function(m){
+      if(m==='GET')return responder(await store.get('seleccion','vigente'));
+      return responder({error:'El orden sugerido es de solo lectura.'},405);
     },
     'priorizacion-votos': async function(m, body, params){
       var cr = await criterios();
@@ -491,9 +496,10 @@
       }
       if(m === 'GET'){
         var votos = await delTaller('priorizacion-votos');
-        if(params.get('resumen') !== '1') return responder(await conEjemplos('priorizacion-votos', votos));
-        var nivel = new Set((await nivel1Vigente()).actores.map(a=>a.actorId));
-        var actores = {}; (await store.list('actors')).filter(a=>nivel.has(a.id)).forEach(function(a){ actores[a.id] = a; });
+        if(params.get('resumen') !== '1') return responder(votos);
+        var ubicaciones = (await ubicadosVigentes()).actores;
+        var nivel = new Set(ubicaciones.map(a=>a.actorId));
+        var actores = {}; (await actoresTier()).filter(a=>nivel.has(a.id)).forEach(function(a){ actores[a.id] = a; });
         var grupos = {};
         votos.forEach(function(v){
           if(v.borrador || !ejeValido(v.impacto, 'impacto') || !ejeValido(v.esfuerzo, 'esfuerzo')) return;
@@ -507,7 +513,7 @@
           var prom = function(eje){ return vs.reduce(function(s, v){ return s + cr[eje].reduce(function(n, c){ return n + v[eje][c.id] * c.peso; }, 0); }, 0) / (100 * vs.length); };
           var imp = prom('impacto'), esf = prom('esfuerzo');
           var q = cr.cuadrantes.find(function(c){ return c.impacto === (imp >= cr.umbral ? 'alto' : 'bajo') && c.esfuerzo === (esf >= cr.umbral ? 'alto' : 'bajo'); });
-          res.push({ actorId: id, nombre: a.nombre, categoria: a.categoria, sector: a.sector || '', indiceImpacto: Number(imp.toFixed(2)),
+          res.push({ ...ubicaciones.find(a=>a.actorId===id), actorId: id, nombre: a.nombre, categoria: a.categoria, sector: a.sector || '', indiceImpacto: Number(imp.toFixed(2)),
             indiceEsfuerzo: Number(esf.toFixed(2)), cuadrante: { id: q.id, nombre: q.nombre }, votos: vs.length });
         });
         return responder(res.sort(function(a, b){ return a.nombre.localeCompare(b.nombre, 'es'); }));
@@ -515,17 +521,17 @@
       if(!body || typeof body.actorId !== 'string' || !body.actorId.trim() || body.actorId.length > 300 || /[\x00-\x1f/\\]/.test(body.actorId)) return responder({ error: 'Actor no válido.' }, 400);
       if(typeof body.votante !== 'string' || !body.votante.trim() || body.votante.length > 60) return responder({ error: 'Escribe un nombre de máximo 60 caracteres.' }, 400);
       var votante = body.votante.trim(), key = body.actorId + '--' + slugVotante(votante);
-      if(m === 'DELETE'){ if(esFacilitador()){ ejemplos.del('priorizacion-votos', key); return responder({ ok: true }); } await store.del('priorizacion-votos', key); return responder({ ok: true }); }
-      var actor = await store.get('actors', body.actorId);
-      if(!actor || !(await nivel1Vigente()).actores.some(a=>a.actorId===actor.id)) return responder({ error: 'El actor no está en el Nivel 1 de la Actividad 3.' }, 400);
+      if(m === 'DELETE'){ await store.del('priorizacion-votos', key); return responder({ ok: true }); }
+      var actor = (await actoresTier()).find(a=>a.id===body.actorId);
+      if(!actor || !(await ubicadosVigentes()).actores.some(a=>a.actorId===actor.id)) return responder({ error: 'El actor no está ubicado en la Actividad 3.' }, 400);
       if(body.borrador || !ejeValido(body.impacto, 'impacto') || !ejeValido(body.esfuerzo, 'esfuerzo')) return responder({ error: 'Completa los diez criterios con enteros de 1 a 5. No se guardan borradores.' }, 400);
       var voto = { actorId: body.actorId, votante: votante, impacto: body.impacto, esfuerzo: body.esfuerzo, updatedAt: new Date().toISOString() };
-      if(esFacilitador()) return responder(ejemplos.set('priorizacion-votos', key, voto));
       await store.set('priorizacion-votos', key, voto);
       return responder(voto);
     }
   };
 
+  let colaEscrituras=Promise.resolve();
   window.fetch = async function(input, init){
     var url = typeof input === 'string' ? input : (input && input.url) || '';
     var u; try { u = new URL(url, location.href); } catch(e){ return nativeFetch(input, init); }
@@ -534,12 +540,30 @@
     if(!URL_BASE || !KEY) return responder({ error: 'Falta configurar Supabase en config.js.' }, 503);
     var metodo = ((init && init.method) || 'GET').toUpperCase(), body = null;
     if(init && init.body){ try { body = JSON.parse(init.body); } catch(e){ return responder({ error: 'invalid_json' }, 400); } }
-    try {
-      var r = await rutas[m[1]](metodo, body, u.searchParams);
-      return r || responder({ error: 'method_not_allowed' }, 405);
-    } catch(e){
-      console.error('[api-supabase]', e);
-      return responder({ error: 'No se pudo conectar con la base de datos. Inténtalo de nuevo.' }, 500);
+    const persona=window.Identidad||window.Acceso?.pendiente;
+    const autor=persona?{nombre:persona.nombre,rol:persona.rol}:null;
+    if(metodo!=='GET'){
+      const rol=window.Identidad?.rol;
+      if(rol==='disenador')return responder({error:'Los diseñadores observan el instrumento; no lo editan.'},403);
+      if(rol!=='administrador'&&(metodo==='DELETE'||(m[1]==='actors'&&(body?.estado==='descartado'||body?.patch?.estado==='descartado'))))return responder({error:'Solo los administradores pueden borrar o descartar.'},403);
+      if(['priorizacion-votos','seleccion','rutas','parejas'].includes(m[1])&&rol!=='administrador')return responder({error:'Solo los administradores editan esta actividad.'},403);
+      if(m[1]!=='credenciales'&&!['administrador','participante'].includes(rol))return responder({error:'Identifícate antes de editar.'},403);
     }
+    const ejecutar=async()=>{
+      if(metodo!=='GET')autorEscritura=autor;
+      try {
+        var r = await rutas[m[1]](metodo, body, u.searchParams);
+        return r || responder({ error: 'method_not_allowed' }, 405);
+      } catch(e){
+        console.error('[api-supabase]', e);
+        return responder({ error: e.message.startsWith('El dato se guardó')?e.message:'No se pudo conectar con la base de datos. Inténtalo de nuevo.' }, 500);
+      } finally {
+        if(metodo!=='GET')autorEscritura=null;
+      }
+    };
+    if(metodo==='GET')return ejecutar();
+    const pendiente=colaEscrituras.then(ejecutar);
+    colaEscrituras=pendiente.catch(()=>{});
+    return pendiente;
   };
 })();

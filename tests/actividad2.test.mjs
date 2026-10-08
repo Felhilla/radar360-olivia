@@ -59,8 +59,8 @@ function fichaEntorno(){
  return {s,$,dlg};
 }
 test('La ficha abre sin identidad ni contactos y conserva los bloques actuales',async()=>{
- const {s,dlg}=fichaEntorno();const calls=[];
- s.context.fetch=async(url,init)=>{calls.push([url,init]);return Response.json(url==='data/actores.json'?[{id:'a',por_que:'Informe',dolor:'Dolor'}]:[]);};
+ const {s,dlg}=fichaEntorno();delete s.context.window.Identidad;const calls=[];
+ s.context.fetch=async(url,init)=>{calls.push([url,init]);return Response.json(url==='/api/catalogo-actores'?[{id:'a',por_que:'Informe',dolor:'Dolor'}]:[]);};
  s.context.openActorDialog('a');assert.equal(dlg.open,true);assert.match(dlg.innerHTML,/<div class="ad-body"><div class="ad-label">Qué hace<\/div>/);
  assert.equal((dlg.innerHTML.match(/>Qué hace<\/div>/g)||[]).length,1);
  await new Promise(r=>setImmediate(r));
@@ -69,10 +69,10 @@ test('La ficha abre sin identidad ni contactos y conserva los bloques actuales',
  // Sin formulario, el montaje solo necesita lista y aviso.
  host.querySelector=q=>q==='[data-contactos-lista]'?{addEventListener(){}}:q==='[data-contactos-aviso]'?{}:null;
  await s.context.montarFichaActor({id:'a'},host);assert.doesNotMatch(host.innerHTML,/Agregar contacto/);assert.match(host.innerHTML,/Aún no hay contactos registrados/);
- assert.equal(calls.filter(([u])=>u==='data/actores.json').length,1);assert.ok(calls.every(([,i])=>i.cache==='no-store'));
+ assert.equal(calls.filter(([u])=>u==='/api/catalogo-actores').length,2);assert.ok(calls.every(([,i])=>i.cache==='no-store'));
 });
 test('Un fallo de lectura conserva los textos del informe y muestra aviso',async()=>{
- const {s}=fichaEntorno();s.context.fetch=async url=>{if(url==='data/actores.json')return Response.json([{id:'a',por_que:'Informe disponible',dolor:'Dolor'}]);throw Error('sin red');};
+ const {s}=fichaEntorno();s.context.fetch=async url=>{if(url==='/api/catalogo-actores')return Response.json([{id:'a',por_que:'Informe disponible',dolor:'Dolor'}]);throw Error('sin red');};
  const host={innerHTML:'',querySelector:q=>q==='[data-contactos-lista]'?{addEventListener(){}}:q==='[data-contactos-aviso]'?{}:null};
  await s.context.montarFichaActor({id:'a'},host);assert.match(host.innerHTML,/Informe disponible/);assert.match(host.innerHTML,/No se pudieron cargar todos los contactos/);
 });
@@ -88,7 +88,7 @@ test('Formulario: conserva lo escrito ante rechazo y limpia, pliega y refresca a
  const {s}=fichaEntorno(),ui=formularioHost();let falla=true,lecturas=0,toasts=0;
  s.context.window.Identidad={nombre:'Felipe',rol:'participante'};s.context.showToast=()=>toasts++;
  s.context.fetch=async(url,init={})=>{
-  if(url==='data/actores.json')return Response.json([{id:'a',por_que:'Informe'}]);
+  if(url==='/api/catalogo-actores')return Response.json([{id:'a',por_que:'Informe'}]);
   if(init.method==='POST')return Response.json({}, {status:falla?500:200});
   if(url.includes('contactos?'))lecturas++;
   return Response.json([]);

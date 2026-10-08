@@ -1,14 +1,12 @@
 {
-  "nota": "Lista de asistentes del taller del 7 de octubre de 2026, compartida por Julio el 25 de septiembre (con la corrección de «Barry» a Luis Felipe Barrientos). Se entra si coinciden al menos 2 palabras del nombre con una sola persona, sin importar tildes ni mayúsculas. El 5 de octubre se agregaron Carlos Díaz, Diego Martínez, Natalia Chaparro y Olga Lucía Castillo (lista del grupo de WhatsApp del taller). Si cambia la lista, se edita este archivo.",
+  "nota": "Entrega al cliente: diseñadores observan; administradores entran con contraseña y editan todo; participantes editan A1–A3. Responsables de A5: participantes. El acceso es un control de pantalla, no seguridad real.",
   "minimoPalabras": 2,
   "participantes": [
     "Angela Urbano",
     "Diana Ramos",
     "Ariel Jiménez",
-    "Hernan Tello",
     "Helen Santos",
     "Juliana Figueredo",
-    "Luis Felipe Barrientos",
     "Diego Espejo",
     "Carlos Díaz",
     "Diego Martínez",
@@ -16,13 +14,22 @@
     "Olga Lucía Castillo"
   ],
   "administradores": [
+    "Luis Felipe Barrientos",
+    "Hernan Tello"
+  ],
+  "disenadores": [
     "Germán Hillón",
     "Felipe Hillón",
     "Julio Ochoa"
   ],
-  "noResponsables": [
-    "Luis Felipe Barrientos",
-    "Hernan Tello"
-  ],
-  "notaNoResponsables": "Participantes que pueden entrar al sitio pero no aparecen como responsables en la Actividad 5 (pedido del 7 de octubre de 2026)."
+  "credenciales": {
+    "Luis Felipe Barrientos": {
+      "salt": "8e86156a5baa7359",
+      "hashInicial": "a5c0d588d437f6086bef2bae2248aeb51ae49c602cc27f2fc9650ee4df37a4e0"
+    },
+    "Hernan Tello": {
+      "salt": "baafb2ed131386fd",
+      "hashInicial": "645e0f34fd8effdda306496c3c6006a86486e3c17fc17a2bc6e8728d36c071e2"
+    }
+  }
 }

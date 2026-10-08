@@ -11,8 +11,8 @@
     return Object.keys(errores).length?{ok:false,errores}:{ok:true,valor};
   }
   function etiquetaConfianza(c){return {alta:'Confianza alta',media:'Confianza media',baja:'Confianza baja · por verificar'}[c] || 'Contacto por identificar';}
-  // Ejemplo de un facilitador: solo existe en su navegador y no entra a la exportación de contactos.
-  const AD_FACILITADOR='<span class="ad-facilitador">Ad. Facilitador</span>';
+  // Ejemplo histórico de un diseñador: no entra a la exportación de contactos.
+  const AD_FACILITADOR='<span class="ad-facilitador">Diseñador</span>';
   function htmlContactos(contactos,puedeQuitar){
     if(!contactos.length) return '<p class="ad-empty">Aún no hay contactos registrados</p>';
     return '<ul class="ad-contactos">'+contactos.map(c=>{

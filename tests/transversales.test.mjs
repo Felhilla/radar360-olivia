@@ -6,20 +6,22 @@ import {createRequire} from 'node:module';
 import {entorno,dom,html,read,config,canvasConfig,criterios} from './embudo-support.mjs';
 import Embudo from '../public/embudo.js';
 import Ideas from '../public/ideas.js';
+import TierList from '../public/tierlist.js';
+import Rutas from '../public/rutas.js';
 const require=createRequire(import.meta.url);
 const Asistentes=require('../public/asistentes.js');
 const Informe=require('../public/informe.js');
 const asistentes=JSON.parse(read('../public/asistentes-config.json'));
 
 test('Transversales: lista de asistentes completa y sin ambigüedades',()=>{
- assert.equal(asistentes.participantes.length,12);assert.deepEqual(asistentes.administradores,['Germán Hillón','Felipe Hillón','Julio Ochoa']);
+ assert.equal(asistentes.participantes.length,10);assert.deepEqual(asistentes.disenadores,['Germán Hillón','Felipe Hillón','Julio Ochoa']);assert.deepEqual(asistentes.administradores,['Luis Felipe Barrientos','Hernan Tello']);
  assert.deepEqual(Asistentes.ambiguedades(asistentes),[]);
 });
 test('Transversales: coincidencia de 2 palabras sin tildes ni mayúsculas',()=>{
  const id=n=>Asistentes.identificar(n,asistentes);
- assert.deepEqual(id('felipe hillon').persona,{nombre:'Felipe Hillón',rol:'administrador'});
+ assert.deepEqual(id('felipe hillon').persona,{nombre:'Felipe Hillón',rol:'disenador'});
  assert.equal(id('GERMÁN HILLON').persona.nombre,'Germán Hillón');
- assert.equal(id('Hernán Tello García').persona.rol,'participante');
+ assert.equal(id('Hernán Tello García').persona.rol,'administrador');
  assert.equal(id('Luis Barrientos').persona.nombre,'Luis Felipe Barrientos');
  assert.equal(id('Angela de Urbano').persona.nombre,'Angela Urbano');
  assert.equal(id('Felipe').motivo,'corto');assert.equal(id('Hillón').motivo,'corto');
@@ -60,18 +62,18 @@ test('Transversales: informe PDF reúne las 5 actividades con datos en vivo',asy
  const actores=[{id:'m1',nombre:'Empresa Uno',categoria:'mercados',sector:'Financiero',estado:'verificado'},{id:'a1',nombre:'Gremio Uno',categoria:'aliados',sector:'Prioridad alta',estado:'verificado'},{id:'d1',nombre:'Descartado',categoria:'mercados',estado:'descartado'}];
  const votos=[{actorId:'m1',grupo:'empresas',votante:'Diana Ramos',valor:2},{actorId:'a1',grupo:'aliados',votante:'Diana Ramos',valor:2}];
  const resumen=[{actorId:'m1',nombre:'Empresa Uno',categoria:'mercados',indiceImpacto:4,indiceEsfuerzo:2,cuadrante:{id:'victorias-tempranas',nombre:'Victorias tempranas'},votos:1},{actorId:'a1',nombre:'Gremio Uno',categoria:'aliados',indiceImpacto:2,indiceEsfuerzo:4,cuadrante:{id:'racionalizacion',nombre:'Racionalización'},votos:1}];
- const R={'/api/actors':actores,'/api/ideas':{stickers:[{horizonte:'corto',texto:'Clientes y clientes en Colombia'}]},'/api/activacion-votos':votos,'embudo-config.json':config,
-  '/api/priorizacion-votos?resumen=1':resumen,'priorizacion-criterios.json':criterios,'/api/canvas':[{id:'empresa:m1',actorId:'m1',grupo:'empresas',acciones30:'Reunión'}],'canvas-config.json':canvasConfig};
- const d=await Informe.recopilar(async u=>{assert(u in R,u);return R[u];},{Embudo,Ideas});
+ const R={'/api/actors':actores,'/api/ideas':{stickers:[{horizonte:'corto',texto:'Clientes y clientes en Colombia'}]},'data/actores.json':[], '/api/parejas':{id:'s',grupos:[{id:'g'}]}, '/api/tierlist?sorteo=s':votos.map(v=>({actorId:v.actorId,grupoId:'g',sorteoId:'s',nivel:1})),
+  '/api/priorizacion-votos?resumen=1':resumen,'priorizacion-criterios.json':criterios,'/api/lista-rutas':{actorIds:['m1'],origen:'confirmada',detalles:{}},'/api/rutas':[{actorId:'m1',etiqueta:'venta_inmediata',responsable:'Diana Ramos',accionesQ4:'Reunión'}]};
+ const d=await Informe.recopilar(async u=>{assert(u in R,u);return R[u];},{TierList,Rutas,Ideas});
  assert.equal(d.a1[0].palabras[0].palabra,'clientes');assert.equal(d.a1[0].palabras[0].frecuencia,2);
  assert.equal(d.a2.find(c=>c.id==='mercados').total,1);
- assert.deepEqual(d.a3.map(g=>g.actores.map(a=>a.nombre)),[['Empresa Uno'],['Gremio Uno']]);
+ assert.deepEqual(d.a3.mercados.map(g=>g.items.map(a=>a.nombre)),[['Gremio Uno'],['Empresa Uno']]);
  assert.deepEqual(d.a4.priorizados.map(r=>r.nombre),['Empresa Uno','Gremio Uno']);
- assert.equal(d.a5[1].fichas[0].ficha.acciones30,'Reunión');assert.equal(d.a5[0].fichas.length,0);
+ assert.equal(d.a5.rutas[0].ruta.accionesQ4,'Reunión');assert.equal(d.a5.rutas.length,2);
  const textos=[];class Falso{constructor(){this.internal={pageSize:{getWidth:()=>595,getHeight:()=>842},getNumberOfPages:()=>1};}
   text(t){textos.push(Array.isArray(t)?t.join(' '):t);}splitTextToSize(t){return [t];}getTextWidth(t){return t.length*5;}}
- for(const m of ['setFont','setFontSize','setTextColor','setDrawColor','setLineWidth','line','addPage','setPage','setFillColor','rect','circle','setLineDashPattern'])Falso.prototype[m]=function(){return this;};
+ for(const m of ['setFont','setFontSize','setTextColor','setDrawColor','setLineWidth','line','addPage','setPage','setFillColor','rect','roundedRect','circle','setLineDashPattern'])Falso.prototype[m]=function(){return this;};
  Informe.generar(d,Falso);const todo=textos.join('\n');
- for(const t of ['Ruta Colombia - Olivia','propiedad intelectual de GH Estudio','Alinear el juego','Radar 360','Empresa Uno','Victorias tempranas','Acciones a 30 días: Reunión'])assert(todo.includes(t),t);
+ for(const t of ['Ruta Colombia - Olivia','propiedad intelectual de GH Estudio','Alinear el juego','Radar 360','Empresa Uno','Victorias tempranas','Acciones Q4-2026: Reunión'])assert(todo.includes(t),t);
  assert.match(Informe.nombreArchivo(new Date('2026-10-06T12:00:00Z')),/^Ruta-Colombia-Olivia_informe_2026-10-06\.pdf$/);
 });
