@@ -159,6 +159,13 @@ test('A5: selector busca entre 40 actores y conserva las diez rutas, incluso fue
  tier(1);assert.equal($('p5Lista').hidden,false);assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,20);assert.match($('p5Lista').innerHTML,/Tier 1 \(20\)/);assert.match($('p5Lista').innerHTML,/Ruta guardada/);
  tier(2);assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,19);
  tier(2);assert.equal($('p5Lista').hidden,true);
+ // Ficha del Tier: división por sector y filtros por estado de la ruta y por responsable.
+ tier(1);assert.match($('p5Lista').innerHTML,/class="p5-sector">Retail <small>20 cuentas/);
+ const filtro=(k,v)=>$('p5Lista').handlers.change({target:{value:v,dataset:{p5Filtro:k},closest:()=>({value:v,dataset:{p5Filtro:k}})}});
+ filtro('ruta','con');assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,5);assert.match($('p5Lista').innerHTML,/5 con estos filtros/);
+ filtro('ruta','sin');assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,15);
+ filtro('ruta','');filtro('resp','__sin');assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,15);
+ filtro('resp','');tier(1);
  for(let i=2;i<=10;i++)assert($('p5Hoja').innerHTML.includes('Aporte guardado '+i));
  assert.match($('p5Historicos').innerHTML,/Cuenta 01/);assert.match($('p5Historicos').innerHTML,/Aporte guardado 1/);
  $('p5Buscar').value='Cuenta 39';$('p5Buscar').handlers.input();assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,1);assert.match($('p5Lista').innerHTML,/Cuenta 39/);

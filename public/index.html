@@ -825,7 +825,14 @@
 #view-canvas .p5-tier .car{font-size:.78rem;color:var(--ink-soft);}
 #view-canvas .p5-lista{display:block;margin:0 0 18px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);}
 #view-canvas .p5-lista[hidden]{display:none;}
-#view-canvas .p5-lista h3{margin:0 0 12px;font-size:1.05rem;}
+#view-canvas .p5-lista h3{margin:0;font-size:1.05rem;}
+#view-canvas .p5-lista-cab{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:10px 16px;margin-bottom:6px;}
+#view-canvas .p5-filtros{display:flex;flex-wrap:wrap;gap:8px 12px;}
+#view-canvas .p5-filtros label{display:flex;flex-direction:column;gap:2px;font-size:.75rem;font-weight:600;color:var(--ink-soft);}
+#view-canvas .p5-filtros select{min-width:150px;max-width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;font-size:.85rem;}
+#view-canvas .p5-sector{margin:16px 0 10px;padding-bottom:5px;border-bottom:1px dashed var(--line);font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+#view-canvas .p5-sector small{text-transform:none;letter-spacing:0;font-weight:400;}
+@media(max-width:640px){#view-canvas .p5-filtros{width:100%;}#view-canvas .p5-filtros label{flex:1 1 140px;}#view-canvas .p5-filtros select{min-width:0;width:100%;}}
 #view-canvas .p5-cuentas{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:16px 12px;}
 #view-canvas .p5-cuentas button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0;border:0;background:none;color:var(--ink);font:inherit;text-align:center;cursor:pointer;}
 #view-canvas .p5-logo{position:relative;width:100%;aspect-ratio:1;border:1px solid var(--line);border-radius:12px;background:var(--logo-bg);display:flex;align-items:center;justify-content:center;padding:14%;overflow:hidden;}
@@ -3608,7 +3615,10 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     const mercadoDe=a=>a?.categoria==='aliados'?'Gremios-aliados':a?.sector||'Otros mercados';
     const etiquetaTier=id=>TierList.chip(seleccion?.detalles?.[id]?.mejorNivel);
     // Tarjetas Tier 1 / Tier 2 y cuadrícula de cuentas del Tier abierto (o resultados de la búsqueda en ambos).
-    let tierAbierto=null;
+    let tierAbierto=null,filtroResp='',filtroRuta='';
+    const SECTORES_PRIORIZADOS=['Energía','Servicios públicos','Minero','Salud y Gestión de riesgos laborales'];
+    const sectorDe=id=>{const m=mercadoDe(actorInf(id));return SECTORES_PRIORIZADOS.find(x=>x.toLocaleLowerCase('es')===String(m).toLocaleLowerCase('es'))||m;};
+    const rangoSector=m=>{const i=SECTORES_PRIORIZADOS.indexOf(m);return i<0?SECTORES_PRIORIZADOS.length:i;};
     const tierDe=id=>Number(seleccion?.detalles?.[id]?.mejorNivel)||null;
     const logoDe=id=>{const a=actorInf(id)||{id};return getLogo({id,categoria:a.categoria||(a.tipo==='gremio'?'aliados':'mercados')});};
     function tarjetaCuenta(id){
@@ -3623,7 +3633,17 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       if(buscar){lista=ids().filter(id=>(nombreDe(id)+' '+mercadoDe(actorInf(id))).toLocaleLowerCase('es').includes(buscar));titulo='Resultados para «'+$('p5Buscar').value.trim()+'» ('+lista.length+')';}
       else if(tierAbierto){lista=ids().filter(id=>tierDe(id)===tierAbierto);titulo='Tier '+tierAbierto+' ('+lista.length+')';}
       $('p5Lista').hidden=!buscar&&!tierAbierto;
-      $('p5Lista').innerHTML=$('p5Lista').hidden?'':'<h3>'+esc(titulo)+'</h3>'+(lista.length?'<div class="p5-cuentas">'+lista.map(tarjetaCuenta).join('')+'</div>':'<p class="p5-vacio">No hay cuentas que coincidan.</p>');
+      if($('p5Lista').hidden){$('p5Lista').innerHTML='';return;}
+      // Filtros de la ficha: responsable y estado de la ruta. Luego, división por sector (priorizados primero).
+      const responsableDe=id=>(guardada(id)||{}).responsable||'';
+      const opcionesResp=[...new Set(lista.map(responsableDe).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
+      if(filtroResp&&filtroResp!=='__sin'&&!opcionesResp.includes(filtroResp))filtroResp='';
+      const filtrada=lista.filter(id=>(!filtroResp||(filtroResp==='__sin'?!responsableDe(id):responsableDe(id)===filtroResp))&&(!filtroRuta||(filtroRuta==='con'?!!guardada(id):!guardada(id))));
+      const sectores=[];
+      filtrada.forEach(id=>{const m=sectorDe(id);let g=sectores.find(x=>x.m===m);if(!g){g={m,ids:[]};sectores.push(g);}g.ids.push(id);});
+      sectores.sort((a,b)=>rangoSector(a.m)-rangoSector(b.m)||a.m.localeCompare(b.m,'es'));
+      const filtros='<div class="p5-filtros"><label>Responsable <select data-p5-filtro="resp"><option value="">Todos</option><option value="__sin"'+(filtroResp==='__sin'?' selected':'')+'>Sin responsable</option>'+opcionesResp.map(n=>'<option'+(filtroResp===n?' selected':'')+'>'+esc(n)+'</option>').join('')+'</select></label><label>Ruta <select data-p5-filtro="ruta"><option value="">Todas</option><option value="con"'+(filtroRuta==='con'?' selected':'')+'>Ruta guardada</option><option value="sin"'+(filtroRuta==='sin'?' selected':'')+'>Sin ruta</option></select></label></div>';
+      $('p5Lista').innerHTML='<div class="p5-lista-cab"><h3>'+esc(titulo)+(filtrada.length!==lista.length?' · '+filtrada.length+' con estos filtros':'')+'</h3>'+filtros+'</div>'+(filtrada.length?sectores.map(g=>'<h4 class="p5-sector">'+esc(g.m)+' <small>'+g.ids.length+(g.ids.length===1?' cuenta':' cuentas')+'</small></h4><div class="p5-cuentas">'+g.ids.map(tarjetaCuenta).join('')+'</div>').join(''):'<p class="p5-vacio">No hay cuentas que coincidan.</p>');
       $('p5Lista').querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.src=GENERIC_LOGO;},{once:true}));
     }
     function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
@@ -3705,6 +3725,11 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     $('p5Tiers').addEventListener('click',e=>{
       const b=e.target.closest('[data-p5-tier]');if(!b)return;
       const n=Number(b.dataset.p5Tier);$('p5Buscar').value='';tierAbierto=tierAbierto===n?null:n;renderLista();
+    });
+    $('p5Lista').addEventListener('change',e=>{
+      const f=e.target.closest('[data-p5-filtro]');if(!f)return;
+      if(f.dataset.p5Filtro==='resp')filtroResp=f.value;else filtroRuta=f.value;
+      renderLista();const vuelta=$('p5Lista').querySelector('[data-p5-filtro="'+f.dataset.p5Filtro+'"]');if(vuelta)vuelta.focus();
     });
     $('p5Lista').addEventListener('click',e=>{
       const b=e.target.closest('[data-p5-actor]');if(!b||guardando)return;
