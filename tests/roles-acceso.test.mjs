@@ -178,6 +178,7 @@ test('A5: administrador ve responsable y apoyo; observadores ven rutas en vivo c
   let sondeo;s.context.setInterval=fn=>{sondeo=fn;return 1;};
   vm.runInContext(html.split('// ACTIVIDAD 5: INICIO JS')[1].split('// ACTIVIDAD 5: FIN JS')[0],s.context);
   $('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));
+  $('p5Lista').handlers.click({target:{closest:()=>({dataset:{p5Actor:'nuevo'}})}});
   const editor=$('p5Editor').innerHTML;assert.match(editor,/Nuevo actor/);assert.match(editor,/id="p5Apoyo"/);assert.match($('p5Hoja').innerHTML,/Apoyo:<\/strong> Luis Felipe Barrientos/);
   const responsable=editor.match(/id="p5Responsable"[^>]*>(.*?)<\/select>/)[1],apoyo=editor.match(/id="p5Apoyo"[^>]*>(.*?)<\/select>/)[1];
   for(const n of cfg.administradores)assert(!responsable.includes(n));for(const n of cfg.disenadores)assert(!responsable.includes(n)&&!apoyo.includes(n));assert(!apoyo.includes(participante.nombre));assert(apoyo.includes(admin.nombre));

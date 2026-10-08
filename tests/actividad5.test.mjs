@@ -152,8 +152,13 @@ test('A5: selector busca entre 40 actores y conserva las diez rutas, incluso fue
  s.nivel1('cuenta1',4);
  vm.runInContext(html.split('// ACTIVIDAD 5: INICIO JS')[1].split('// ACTIVIDAD 5: FIN JS')[0],s.context);
  $('view-canvas').handlers['vista:activar']();await new Promise(r=>setImmediate(r));
- assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,39);
- assert.match($('p5Lista').innerHTML,/Tier 1/);assert.match($('p5Lista').innerHTML,/Tier 2/);
+ // Diseño por Tier: la cuadrícula aparece al tocar la tarjeta del Tier (Tier 1 = pares, Tier 2 = impares salvo cuenta1, que bajó a Tier 4).
+ assert.equal($('p5Lista').hidden,true);assert.match($('p5Tiers').innerHTML,/Tier 1: 20/);assert.match($('p5Tiers').innerHTML,/Tier 2: 19/);
+ assert.match($('p5Editor').innerHTML,/Elige Tier 1 o Tier 2/);
+ const tier=n=>$('p5Tiers').handlers.click({target:{closest:()=>({dataset:{p5Tier:String(n)}})}});
+ tier(1);assert.equal($('p5Lista').hidden,false);assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,20);assert.match($('p5Lista').innerHTML,/Tier 1 \(20\)/);assert.match($('p5Lista').innerHTML,/Ruta guardada/);
+ tier(2);assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,19);
+ tier(2);assert.equal($('p5Lista').hidden,true);
  for(let i=2;i<=10;i++)assert($('p5Hoja').innerHTML.includes('Aporte guardado '+i));
  assert.match($('p5Historicos').innerHTML,/Cuenta 01/);assert.match($('p5Historicos').innerHTML,/Aporte guardado 1/);
  $('p5Buscar').value='Cuenta 39';$('p5Buscar').handlers.input();assert.equal(($('p5Lista').innerHTML.match(/data-p5-actor=/g)||[]).length,1);assert.match($('p5Lista').innerHTML,/Cuenta 39/);

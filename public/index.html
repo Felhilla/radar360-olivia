@@ -816,10 +816,27 @@
 #view-canvas label{display:block;min-width:0;}
 #view-canvas input[type=text], #view-canvas textarea, #view-canvas select{display:block;width:100%;min-width:0;max-width:100%;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px;font:inherit;margin-top:4px;}
 #view-canvas textarea{resize:vertical;}
-#view-canvas .p5-lista{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;}
-#view-canvas .p5-lista button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);cursor:pointer;font:inherit;font-size:.85rem;text-align:left;max-width:240px;}
-#view-canvas .p5-lista button[aria-current="true"]{border:2px solid var(--accent);background:var(--accent-soft);}
-#view-canvas .p5-lista small{color:var(--ink-soft);font-size:.72rem;}
+/* A5: dos tarjetas de Tier; al tocar una se despliega su cuadrícula de cuentas (logo + nombre); al tocar una cuenta, su ruta. */
+#view-canvas .p5-tiers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0;}
+#view-canvas .p5-tier{display:flex;flex-direction:column;gap:6px;align-items:flex-start;padding:22px 20px;border:1px solid var(--line);border-top:8px solid var(--tier-color);border-radius:14px;background:var(--panel);color:var(--ink);font:inherit;text-align:left;cursor:pointer;box-shadow:var(--shadow);}
+#view-canvas .p5-tier[aria-expanded="true"]{border-color:var(--tier-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--tier-color) 25%,transparent),var(--shadow);}
+#view-canvas .p5-tier strong{font-family:'Fraunces',Georgia,serif;font-size:1.6rem;line-height:1.1;}
+#view-canvas .p5-tier small{color:var(--ink-soft);font-size:.82rem;}
+#view-canvas .p5-tier .car{font-size:.78rem;color:var(--ink-soft);}
+#view-canvas .p5-lista{display:block;margin:0 0 18px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--panel);}
+#view-canvas .p5-lista[hidden]{display:none;}
+#view-canvas .p5-lista h3{margin:0 0 12px;font-size:1.05rem;}
+#view-canvas .p5-cuentas{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:16px 12px;}
+#view-canvas .p5-cuentas button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0;border:0;background:none;color:var(--ink);font:inherit;text-align:center;cursor:pointer;}
+#view-canvas .p5-logo{position:relative;width:100%;aspect-ratio:1;border:1px solid var(--line);border-radius:12px;background:var(--logo-bg);display:flex;align-items:center;justify-content:center;padding:14%;overflow:hidden;}
+#view-canvas .p5-logo img{width:100%;height:100%;object-fit:contain;}
+#view-canvas .p5-cuentas button[aria-current="true"] .p5-logo,#view-canvas .p5-cuentas button:hover .p5-logo,#view-canvas .p5-cuentas button:focus-visible .p5-logo{border:2px solid var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+#view-canvas .p5-cuentas button:focus-visible{outline:none;}
+#view-canvas .p5-nombre{font-size:.8rem;font-weight:600;line-height:1.25;overflow-wrap:anywhere;}
+#view-canvas .p5-ruta{white-space:nowrap;font-size:.64rem;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--ink-soft);background:var(--panel-2);}
+#view-canvas .p5-ruta.ok{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);}
+#view-canvas .p5-vacio{color:var(--ink-soft);font-style:italic;margin:0;}
+@media(max-width:640px){#view-canvas .p5-tiers{gap:10px;}#view-canvas .p5-tier{padding:16px 14px;}#view-canvas .p5-tier strong{font-size:1.3rem;}#view-canvas .p5-cuentas{grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:12px 8px;}}
 #view-canvas .p5-editor{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:20px;align-items:start;}
 #view-canvas .p5-form{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0;}
 #view-canvas .p5-personas{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
@@ -850,7 +867,7 @@
 #view-canvas .p5-hoja-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0;}
 #view-canvas .p5-hoja-card p{margin:4px 0;white-space:pre-wrap;}
 #view-canvas :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-@media(max-width:800px){#view-canvas .p5-editor{grid-template-columns:1fr;}#view-canvas .p5-ctx{order:-1;position:static;}#view-canvas .p5-form{padding:12px;}#view-canvas .p5-lista button{max-width:100%;}}
+@media(max-width:800px){#view-canvas .p5-editor{grid-template-columns:1fr;}#view-canvas .p5-ctx{order:-1;position:static;}#view-canvas .p5-form{padding:12px;}}
 /* ACTIVIDAD 5: FIN CSS */
 /* Embudo: controles acotados a sus vistas y colores del tema vigente. */
 #view-matriz .a3-form{display:grid;gap:12px;max-width:650px;}
@@ -998,8 +1015,9 @@
   <p id="p5Estado" role="status" aria-live="polite">Abre esta actividad para cargar las rutas.</p>
   <div class="ejemplo-compartido" data-ejemplo-compartido="a5" hidden></div>
   <button type="button" class="btn secondary" id="p5Reintentar">Actualizar datos</button>
-  <label class="field">Buscar cuenta o mercado <input id="p5Buscar" type="search" placeholder="Nombre o mercado"></label>
-  <nav id="p5Lista" class="p5-lista" aria-label="Actores de Tier 1 y 2"></nav>
+  <label class="field">Buscar cuenta <input id="p5Buscar" type="search" placeholder="Nombre de la cuenta o mercado"></label>
+  <div id="p5Tiers" class="p5-tiers" role="group" aria-label="Cuentas por Tier"></div>
+  <nav id="p5Lista" class="p5-lista" aria-label="Cuentas del Tier elegido" hidden></nav>
   <div id="p5Editor"></div>
   <details class="p5-hoja"><summary>Hoja consolidada</summary>
     <button type="button" class="btn secondary" id="p5CSV" disabled>Descargar hoja consolidada (CSV)</button>
@@ -3589,19 +3607,31 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
     function dato(id){return drafts.get(id)||Object.assign({actorId:id,etiqueta:'',responsable:'',aristas:{}},guardada(id)||{});}
     const mercadoDe=a=>a?.categoria==='aliados'?'Gremios-aliados':a?.sector||'Otros mercados';
     const etiquetaTier=id=>TierList.chip(seleccion?.detalles?.[id]?.mejorNivel);
+    // Tarjetas Tier 1 / Tier 2 y cuadrícula de cuentas del Tier abierto (o resultados de la búsqueda en ambos).
+    let tierAbierto=null;
+    const tierDe=id=>Number(seleccion?.detalles?.[id]?.mejorNivel)||null;
+    const logoDe=id=>{const a=actorInf(id)||{id};return getLogo({id,categoria:a.categoria||(a.tipo==='gremio'?'aliados':'mercados')});};
+    function tarjetaCuenta(id){
+      const r=guardada(id),estado=drafts.has(id)?'<span class="p5-ruta">Sin guardar</span>':r?'<span class="p5-ruta ok">Ruta guardada</span>':'<span class="p5-ruta">Sin ruta</span>';
+      return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'" title="'+esc(nombreDe(id)+' · '+mercadoDe(actorInf(id)))+'"><span class="p5-logo"><img src="'+esc(logoDe(id))+'" alt="" loading="lazy"></span><span class="p5-nombre">'+esc(nombreDe(id))+'</span>'+estado+'</button>';
+    }
     function renderLista(){
       const buscar=$('p5Buscar').value.trim().toLocaleLowerCase('es');
-      const lista=ids().filter(id=>(nombreDe(id)+' '+mercadoDe(actorInf(id))).toLocaleLowerCase('es').includes(buscar));
-      $('p5Lista').innerHTML=lista.map((id,i)=>{
-        const r=guardada(id),estado=drafts.has(id)?'Cambios sin guardar':r?Rutas.etiquetaNombre(r.etiqueta)+' · '+(r.responsable||'sin responsable')+(r.apoyo?' · Apoyo: '+r.apoyo:''):'Sin guardar';
-        return '<button type="button" data-p5-actor="'+esc(id)+'" aria-current="'+(id===actual)+'"'+(r&&r.facilitador&&!drafts.has(id)?' class="es-ejemplo"':'')+'><span>'+(i+1)+'. '+esc(nombreDe(id))+'</span><small>'+etiquetaTier(id)+esc(mercadoDe(actorInf(id)))+' · '+esc(estado)+(r&&r.facilitador&&!drafts.has(id)?' '+window.etiquetaFacilitador():'')+'</small></button>';
-      }).join('');
+      const conRuta=n=>ids().filter(id=>tierDe(id)===n&&guardada(id)).length, total=n=>ids().filter(id=>tierDe(id)===n).length;
+      $('p5Tiers').innerHTML=[1,2].map(n=>'<button type="button" class="p5-tier" data-p5-tier="'+n+'" aria-expanded="'+(tierAbierto===n&&!buscar)+'" aria-controls="p5Lista" style="--tier-color:'+TierList.COLORES[n]+'"><strong>Tier '+n+': '+total(n)+'</strong><small>'+conRuta(n)+' con ruta guardada</small><span class="car">'+(tierAbierto===n&&!buscar?'Ocultar cuentas ▴':'Ver cuentas ▾')+'</span></button>').join('');
+      let titulo='',lista=[];
+      if(buscar){lista=ids().filter(id=>(nombreDe(id)+' '+mercadoDe(actorInf(id))).toLocaleLowerCase('es').includes(buscar));titulo='Resultados para «'+$('p5Buscar').value.trim()+'» ('+lista.length+')';}
+      else if(tierAbierto){lista=ids().filter(id=>tierDe(id)===tierAbierto);titulo='Tier '+tierAbierto+' ('+lista.length+')';}
+      $('p5Lista').hidden=!buscar&&!tierAbierto;
+      $('p5Lista').innerHTML=$('p5Lista').hidden?'':'<h3>'+esc(titulo)+'</h3>'+(lista.length?'<div class="p5-cuentas">'+lista.map(tarjetaCuenta).join('')+'</div>':'<p class="p5-vacio">No hay cuentas que coincidan.</p>');
+      $('p5Lista').querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.src=GENERIC_LOGO;},{once:true}));
     }
     function campoError(k){return '<p class="p5-error" id="p5Error-'+k+'" aria-live="polite">'+esc(errores[k]||'')+'</p>';}
     function renderEditor(){
       const host=$('p5Editor');
       if(!seleccion||!ids().length){host.innerHTML='<p class="p5-hoja-card">Todavía no hay actores en Tier 1 o 2. Al ubicarlos en la Actividad 3 aparecerán aquí, con o sin calificación y sin límite. Puedes construir sus rutas en distintas sesiones.</p>';return;}
-      if(!ids().includes(actual))actual=ids()[0];
+      if(!ids().includes(actual))actual=null;
+      if(!actual){host.innerHTML='<p class="p5-hoja-card">Elige Tier 1 o Tier 2 (o busca una cuenta) y toca una cuenta para ver y construir su ruta.</p>';return;}
       const a=actorInf(actual)||{id:actual,nombre:actual,tipo:'empresa'},d=dato(actual),des=(guardando||!esAdmin())?' disabled':'';
       const sugerido=sugeridos.find(c=>c.actor_id===actual),registrados=contactos.filter(c=>c.actorId===actual);
       const otro=!!d.responsable&&d.responsable!=='__otro'&&!responsables.includes(d.responsable),pideOtro=otro||d.responsable==='__otro';
@@ -3672,10 +3702,15 @@ window.etiquetaFacilitador = function(){ return '<span class="ad-facilitador" ti
       finally{guardando=false;version++;render(true);}
     }
     $('p5Buscar').addEventListener('input',renderLista);
+    $('p5Tiers').addEventListener('click',e=>{
+      const b=e.target.closest('[data-p5-tier]');if(!b)return;
+      const n=Number(b.dataset.p5Tier);$('p5Buscar').value='';tierAbierto=tierAbierto===n?null:n;renderLista();
+    });
     $('p5Lista').addEventListener('click',e=>{
       const b=e.target.closest('[data-p5-actor]');if(!b||guardando)return;
       // Los borradores ya se guardan en memoria con cada cambio (eventos input/change).
       actual=b.dataset.p5Actor;errores={};render(true);
+      const ed=$('p5Editor');if(ed&&ed.scrollIntoView)ed.scrollIntoView({behavior:'smooth',block:'start'});
     });
     $('p5Editor').addEventListener('input',()=>{if(!esAdmin())return;const d=recoger();if(!d)return;if($('p5Apoyo')){$('p5Apoyo').value=d.apoyo;Array.from($('p5Apoyo').options).forEach(o=>{o.hidden=!!o.value&&Rutas.mismoNombre(o.value,d.responsable);});}drafts.set(actual,d);const s=$('p5Editor').querySelector('.p5-sello');if(s)s.textContent=sello(guardada(actual))+' · Cambios sin guardar';});
     // Cambios que muestran u ocultan partes del formulario: etiqueta, aristas y «Otra persona».
